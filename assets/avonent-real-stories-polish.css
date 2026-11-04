@@ -1,0 +1,189 @@
+/* Avonent Real Stories — compact Resilia-inspired polish. Scoped to the new Real Stories section only. */
+.avrs__story-tile{
+  width:184px !important;
+  height:164px !important;
+  border-radius:10px !important;
+}
+
+.avrs__marquee-group{
+  gap:8px !important;
+  padding-right:8px !important;
+}
+
+.avrs__marquee{
+  margin-bottom:36px !important;
+}
+
+.avrs__slider{
+  width:min(100%,860px) !important;
+}
+
+.avrs__card{
+  padding:30px 34px 26px !important;
+  min-height:380px !important;
+  border-radius:9px !important;
+  box-shadow:0 10px 32px rgba(22,67,79,.055) !important;
+}
+
+.avrs__rating-row{
+  gap:9px !important;
+}
+
+.avrs__rating-number{
+  font-size:18px !important;
+  font-weight:500 !important;
+}
+
+.avrs__card-stars{
+  font-size:19px !important;
+}
+
+.avrs__review-title{
+  position:relative;
+  margin:24px 0 12px !important;
+  font-size:22px !important;
+  line-height:1.22 !important;
+}
+
+.avrs__review-title::before{content:'“';}
+.avrs__review-title::after{content:'”';}
+
+.avrs__review-copy{
+  font-size:17px !important;
+  line-height:1.5 !important;
+}
+
+.avrs__customer-row{
+  margin-top:24px !important;
+  gap:12px !important;
+}
+
+.avrs__customer{
+  gap:8px !important;
+}
+
+.avrs__avatar{
+  width:34px !important;
+  height:34px !important;
+}
+
+.avrs__avatar--initial{
+  font-size:13px !important;
+}
+
+.avrs__customer-name{
+  font-size:13px !important;
+  font-weight:600 !important;
+}
+
+.avrs__verified{
+  gap:4px !important;
+  font-size:11px !important;
+  font-weight:700 !important;
+  letter-spacing:.01em;
+}
+
+.avrs__verified svg{
+  width:15px !important;
+  height:15px !important;
+}
+
+.avrs__tags{
+  gap:10px !important;
+  margin-top:22px !important;
+}
+
+.avrs__tags span{
+  padding:9px 12px !important;
+  font-size:12px !important;
+}
+
+.avrs__dots{
+  margin-top:15px !important;
+}
+
+.avrs__controls{
+  margin-top:10px !important;
+}
+
+.avrs__arrow{
+  width:42px !important;
+  height:42px !important;
+}
+
+@media (max-width:749px){
+  .avrs__story-tile{
+    width:29vw !important;
+    max-width:118px !important;
+    height:126px !important;
+  }
+
+  .avrs__marquee-group{
+    gap:7px !important;
+    padding-right:7px !important;
+  }
+
+  .avrs__marquee{
+    margin-bottom:30px !important;
+  }
+
+  .avrs__card{
+    padding:25px 20px 23px !important;
+    min-height:405px !important;
+  }
+
+  .avrs__rating-number{
+    font-size:16px !important;
+  }
+
+  .avrs__card-stars{
+    font-size:18px !important;
+  }
+
+  .avrs__review-title{
+    margin-top:21px !important;
+    font-size:19px !important;
+  }
+
+  .avrs__review-copy{
+    font-size:16px !important;
+    line-height:1.48 !important;
+  }
+
+  .avrs__customer-row{
+    align-items:center !important;
+    margin-top:22px !important;
+  }
+
+  .avrs__avatar{
+    width:30px !important;
+    height:30px !important;
+  }
+
+  .avrs__avatar--initial{
+    font-size:12px !important;
+  }
+
+  .avrs__customer-name{
+    font-size:12px !important;
+  }
+
+  .avrs__verified{
+    font-size:10px !important;
+  }
+
+  .avrs__verified svg{
+    width:14px !important;
+    height:14px !important;
+  }
+
+  .avrs__tags{
+    gap:8px !important;
+    margin-top:20px !important;
+  }
+
+  .avrs__tags span{
+    font-size:11px !important;
+    padding:8px 7px !important;
+  }
+}
