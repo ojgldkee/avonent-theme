@@ -40,5 +40,16 @@ jobs:
             echo "All referenced theme media already backed up."
           else
             git commit -m "Back up referenced Avonent landing-page media"
-            git push origin HEAD:main
+            for attempt in 1 2 3 4; do
+              git fetch origin main --quiet
+              git rebase origin/main
+              if git push origin HEAD:main; then
+                echo "Media backups committed successfully."
+                exit 0
+              fi
+              echo "Concurrent update detected; retrying push..."
+              sleep 2
+            done
+            echo "Could not publish image backup after retries." >&2
+            exit 1
           fi
