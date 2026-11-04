@@ -1,0 +1,1459 @@
+{% render '00-cinnamon-berberine-page', product: product, editor: section %}
+<style>
+/* Cinnamon page: review compactness + controls. Scoped to this section only. */
+#shopify-section-{{ section.id }} .av-cb__reviews{padding:30px 0 28px}
+#shopify-section-{{ section.id }} .av-cb__reviews-head>span{font-size:26px}
+#shopify-section-{{ section.id }} .av-cb__reviews-head h2{font-size:clamp(28px,4vw,38px);margin:10px 0 8px}
+#shopify-section-{{ section.id }} .av-cb__reviews-head p{font-size:15px;margin:0 0 10px}
+#shopify-section-{{ section.id }} .av-cb__review-track{align-items:flex-start;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:10px}
+#shopify-section-{{ section.id }} .av-cb__review-track::-webkit-scrollbar{display:none}
+#shopify-section-{{ section.id }} .av-cb__review-card{padding:20px;align-self:flex-start}
+#shopify-section-{{ section.id }} .av-cb__review-rating{gap:8px}
+#shopify-section-{{ section.id }} .av-cb__review-score{font-size:17px}
+#shopify-section-{{ section.id }} .av-cb__review-stars{font-size:20px}
+#shopify-section-{{ section.id }} .av-cb__review-card h3{font-size:19px;line-height:1.25;margin:14px 0 9px}
+#shopify-section-{{ section.id }} .av-cb__review-card p{font-size:14.5px;line-height:1.48;margin:0}
+#shopify-section-{{ section.id }} .av-cb__review-card footer{margin-top:18px;padding-top:17px;font-size:12.5px}
+#shopify-section-{{ section.id }} .av-cb__review-tags{gap:9px;margin-top:14px}
+#shopify-section-{{ section.id }} .av-cb__review-tag{min-height:32px;padding:6px 9px;font-size:11px}
+#shopify-section-{{ section.id }} .av-cb__review-controls{display:flex;flex-direction:column;align-items:center;gap:14px;margin:14px 0 0}
+#shopify-section-{{ section.id }} .av-cb__review-dots{display:flex;align-items:center;justify-content:center;gap:9px}
+#shopify-section-{{ section.id }} .av-cb__review-dot{width:10px;height:10px;padding:0;border:0;border-radius:999px;background:#d6d3d0;cursor:pointer;transition:.2s ease}
+#shopify-section-{{ section.id }} .av-cb__review-dot.is-active{width:44px;background:#A84F1B}
+#shopify-section-{{ section.id }} .av-cb__review-arrows{display:flex;gap:12px}
+#shopify-section-{{ section.id }} .av-cb__review-arrow{width:46px;height:46px;border:1px solid #e5cbbb;border-radius:50%;background:#fff7f2;color:#A84F1B;display:grid;place-items:center;cursor:pointer}
+#shopify-section-{{ section.id }} .av-cb__review-arrow svg{width:21px;height:21px}
+
+/* Auto-moving customer photo strip above reviews */
+#shopify-section-{{ section.id }} .av-cb__photo-track{
+  display:block!important;
+  gap:0!important;
+  overflow:hidden!important;
+  scroll-snap-type:none!important;
+  scrollbar-width:none!important;
+  -ms-overflow-style:none!important;
+  padding:10px 0 16px!important;
+  pointer-events:none!important;
+  touch-action:pan-y!important;
+}
+#shopify-section-{{ section.id }} .av-cb__photo-track::-webkit-scrollbar{display:none!important}
+#shopify-section-{{ section.id }} .av-cb__photo-marquee-inner{
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:max-content!important;
+  will-change:transform!important;
+  transform:translate3d(0,0,0);
+}
+#shopify-section-{{ section.id }} .av-cb__photo-track figure{
+  flex:0 0 96px!important;
+  width:96px!important;
+  height:96px!important;
+  aspect-ratio:1/1!important;
+  border-radius:9px!important;
+  scroll-snap-align:none!important;
+}
+#shopify-section-{{ section.id }} .av-cb__photo-track img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+}
+@media(max-width:600px){
+  #shopify-section-{{ section.id }} .av-cb__review-card{flex:0 0 100%;padding:17px}
+  #shopify-section-{{ section.id }} .av-cb__review-card h3{font-size:19px;margin:15px 0 9px}
+  #shopify-section-{{ section.id }} .av-cb__review-card p{font-size:13.25px;line-height:1.5}
+  #shopify-section-{{ section.id }} .av-cb__review-card footer{padding-top:16px}
+  #shopify-section-{{ section.id }} .av-cb__review-tags{margin-top:13px}
+  #shopify-section-{{ section.id }} .av-cb__reviews{padding:24px 0 24px}
+  #shopify-section-{{ section.id }} .av-cb__photo-track{padding:8px 0 14px!important}
+  #shopify-section-{{ section.id }} .av-cb__photo-marquee-inner{gap:8px!important}
+  #shopify-section-{{ section.id }} .av-cb__photo-track figure{flex-basis:82px!important;width:82px!important;height:82px!important;aspect-ratio:1/1!important;border-radius:8px!important}
+}
+</style>
+<script>
+(() => {
+  const host = document.getElementById('shopify-section-{{ section.id }}');
+  if (!host) return;
+  const root = host.querySelector('[data-av-cb]');
+  if (!root) return;
+
+  const reviews = root.querySelector('.av-cb__reviews');
+
+  const photoTrack = reviews?.querySelector('.av-cb__photo-track');
+  if (photoTrack && !photoTrack.dataset.avCbPhotoAutoReady) {
+    photoTrack.dataset.avCbPhotoAutoReady = 'true';
+    photoTrack.removeAttribute('tabindex');
+
+    const originals = Array.from(photoTrack.querySelectorAll('figure')).slice(0, 10);
+    if (originals.length > 1) {
+      const inner = document.createElement('div');
+      inner.className = 'av-cb__photo-marquee-inner';
+
+      originals.forEach((figure) => inner.appendChild(figure));
+
+      for (let repeat = 0; repeat < 3; repeat += 1) {
+        originals.forEach((figure) => {
+          const clone = figure.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          inner.appendChild(clone);
+        });
+      }
+
+      photoTrack.appendChild(inner);
+
+      let offset = 0;
+      let loopWidth = 0;
+      let lastTime = 0;
+      const speed = 22;
+
+      const measure = () => {
+        const all = inner.querySelectorAll('figure');
+        const first = all[0];
+        const firstRepeat = all[originals.length];
+        if (first && firstRepeat) {
+          loopWidth = firstRepeat.offsetLeft - first.offsetLeft;
+        }
+      };
+
+      const animate = (time) => {
+        if (!lastTime) lastTime = time;
+        const delta = Math.min((time - lastTime) / 1000, 0.05);
+        lastTime = time;
+
+        if (!document.hidden && loopWidth > 0) {
+          offset += speed * delta;
+          if (offset >= loopWidth) offset -= loopWidth;
+          inner.style.transform = 'translate3d(' + (-offset) + 'px,0,0)';
+        }
+
+        requestAnimationFrame(animate);
+      };
+
+      requestAnimationFrame(() => {
+        measure();
+        requestAnimationFrame(animate);
+      });
+
+      window.addEventListener('resize', () => {
+        measure();
+        if (loopWidth > 0) offset %= loopWidth;
+      }, {passive:true});
+
+      document.addEventListener('visibilitychange', () => {
+        lastTime = 0;
+      }, {passive:true});
+    }
+  }
+
+  const reviewHead = reviews?.querySelector('.av-cb__reviews-head');
+  if (reviewHead) {
+    const h2 = reviewHead.querySelector('h2');
+    const p = reviewHead.querySelector('p');
+    if (h2) h2.textContent = 'Real Stories, Real Results';
+    if (p) p.textContent = 'Honest experiences from Avonent customers.';
+  }
+
+  const benefits = root.querySelector('.av-cb__benefits-section');
+  const science = root.querySelector('.av-cb__science-section');
+  if (reviews && benefits && science && benefits.previousElementSibling !== reviews) {
+    science.parentNode.insertBefore(benefits, science);
+  }
+
+  const track = reviews?.querySelector('.av-cb__review-track');
+  if (!track) return;
+  const cards = Array.from(track.querySelectorAll('.av-cb__review-card'));
+  if (!cards.length) return;
+
+  let controls = reviews.querySelector('.av-cb__review-controls');
+  if (!controls) {
+    controls = document.createElement('div');
+    controls.className = 'av-cb__review-controls';
+    controls.innerHTML = '<div class="av-cb__review-dots" aria-label="Choose customer review"></div><div class="av-cb__review-arrows"><button class="av-cb__review-arrow" type="button" data-av-cb-live-review-prev aria-label="Previous review"><svg viewBox="0 0 24 24" fill="none"><path d="m14.5 6-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="av-cb__review-arrow" type="button" data-av-cb-live-review-next aria-label="Next review"><svg viewBox="0 0 24 24" fill="none"><path d="m9.5 6 6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>';
+    track.insertAdjacentElement('afterend', controls);
+  }
+
+  const dotsBox = controls.querySelector('.av-cb__review-dots');
+  if (dotsBox && !dotsBox.children.length) {
+    cards.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'av-cb__review-dot' + (i === 0 ? ' is-active' : '');
+      dot.setAttribute('aria-label', 'Go to review ' + (i + 1));
+      dot.dataset.reviewIndex = String(i);
+      dotsBox.appendChild(dot);
+    });
+  }
+
+  const dots = Array.from(controls.querySelectorAll('.av-cb__review-dot'));
+  const prev = controls.querySelector('[data-av-cb-review-prev], [data-av-cb-live-review-prev]');
+  const next = controls.querySelector('[data-av-cb-review-next], [data-av-cb-live-review-next]');
+
+  const setActive = index => dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
+  const currentIndex = () => {
+    const left = track.getBoundingClientRect().left;
+    let best = 0, distance = Infinity;
+    cards.forEach((card, i) => {
+      const d = Math.abs(card.getBoundingClientRect().left - left);
+      if (d < distance) { distance = d; best = i; }
+    });
+    return best;
+  };
+  const goTo = raw => {
+    const index = ((raw % cards.length) + cards.length) % cards.length;
+    track.scrollTo({left: cards[index].offsetLeft - track.offsetLeft, behavior:'smooth'});
+    setActive(index);
+  };
+
+  if (!controls.dataset.avCbReady) {
+    controls.dataset.avCbReady = 'true';
+    prev?.addEventListener('click', () => goTo(currentIndex() - 1));
+    next?.addEventListener('click', () => goTo(currentIndex() + 1));
+    dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+    let timer;
+    track.addEventListener('scroll', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => setActive(currentIndex()), 70);
+    }, {passive:true});
+  }
+})();
+</script>
+
+
+<style>
+  .av-cb__post-risk-read-more-wrap{
+    display:flex!important;
+    justify-content:center!important;
+    align-items:center!important;
+    width:100%!important;
+    text-align:center!important;
+  }
+  .av-cb__post-risk-read-more{
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    color:#111!important;
+    text-align:center!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Cinnamon page editor",
+  "settings": [
+    {
+      "type": "text",
+      "id": "reviews_heading",
+      "label": "Reviews heading",
+      "default": "Real Stories, Real Results"
+    },
+    {
+      "type": "textarea",
+      "id": "reviews_intro",
+      "label": "Reviews introduction",
+      "default": "Honest experiences from Avonent customers."
+    },
+    {
+      "type": "header",
+      "content": "WHY TRUST AVONENT"
+    },
+    {
+      "type": "image_picker",
+      "id": "trust_image",
+      "label": "Why Trust Avonent image — EDIT HERE"
+    },
+    {
+      "type": "text",
+      "id": "trust_image_alt",
+      "label": "Why Trust Avonent image alt",
+      "default": "Why Trust Avonent"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "name": "Hero content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "hero_image",
+          "label": "Main product image override"
+        },
+        {
+          "type": "textarea",
+          "id": "display_title",
+          "label": "Display title"
+        },
+        {
+          "type": "textarea",
+          "id": "hero_description",
+          "label": "Hero description"
+        },
+        {
+          "type": "textarea",
+          "id": "rating_text",
+          "label": "Rating text"
+        },
+        {
+          "type": "textarea",
+          "id": "benefit_1",
+          "label": "Benefit 1"
+        },
+        {
+          "type": "textarea",
+          "id": "benefit_2",
+          "label": "Benefit 2"
+        },
+        {
+          "type": "textarea",
+          "id": "benefit_3",
+          "label": "Benefit 3"
+        },
+        {
+          "type": "textarea",
+          "id": "benefit_4",
+          "label": "Benefit 4"
+        },
+        {
+          "type": "textarea",
+          "id": "sold_percent",
+          "label": "Sold percent"
+        },
+        {
+          "type": "textarea",
+          "id": "sale_badge",
+          "label": "Sale badge"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_2_badge",
+          "label": "Bundle 2 badge",
+          "default": "Free Shipping"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_3_badge",
+          "label": "Bundle 3 badge",
+          "default": "Free Shipping + E-Book"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_1_title",
+          "label": "Bundle 1 title"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_1_subtitle",
+          "label": "Bundle 1 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_2_title",
+          "label": "Bundle 2 title"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_2_subtitle",
+          "label": "Bundle 2 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_3_title",
+          "label": "Bundle 3 title"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_3_subtitle",
+          "label": "Bundle 3 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "add_to_cart_text",
+          "label": "Add to cart text"
+        },
+        {
+          "type": "textarea",
+          "id": "refill_text",
+          "label": "Refill text"
+        },
+        {
+          "type": "textarea",
+          "id": "cancel_text",
+          "label": "Cancel text"
+        }
+      ]
+    },
+    {
+      "type": "results",
+      "name": "Results content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "stats_heading",
+          "label": "Stats heading"
+        },
+        {
+          "type": "image_picker",
+          "id": "stats_bg",
+          "label": "Stats bg"
+        },
+        {
+          "type": "color",
+          "id": "stats_overlay_color",
+          "label": "Stats overlay color"
+        },
+        {
+          "type": "textarea",
+          "id": "stats_overlay_opacity",
+          "label": "Stats overlay opacity"
+        },
+        {
+          "type": "textarea",
+          "id": "stats_duration",
+          "label": "Stats duration"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_1_start",
+          "label": "Stat 1 start"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_1_end",
+          "label": "Stat 1 end"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_1_label",
+          "label": "Stat 1 label"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_2_start",
+          "label": "Stat 2 start"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_2_end",
+          "label": "Stat 2 end"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_2_label",
+          "label": "Stat 2 label"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_3_start",
+          "label": "Stat 3 start"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_3_end",
+          "label": "Stat 3 end"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_3_label",
+          "label": "Stat 3 label"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_4_start",
+          "label": "Stat 4 start"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_4_end",
+          "label": "Stat 4 end"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_4_label",
+          "label": "Stat 4 label"
+        },
+        {
+          "type": "textarea",
+          "id": "stats_cta",
+          "label": "Stats cta"
+        },
+        {
+          "type": "textarea",
+          "id": "stats_guarantee",
+          "label": "Stats guarantee"
+        },
+        {
+          "type": "image_picker",
+          "id": "stats_guarantee_icon",
+          "label": "Stats guarantee icon"
+        },
+        {
+          "type": "color",
+          "id": "stats_text_color",
+          "label": "Stats text color"
+        },
+        {
+          "type": "checkbox",
+          "id": "stats_show",
+          "label": "Stats show",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "carousel",
+      "name": "Carousel content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "carousel_heading",
+          "label": "Carousel heading"
+        },
+        {
+          "type": "image_picker",
+          "id": "carousel_1_image",
+          "label": "Carousel 1 image"
+        },
+        {
+          "type": "textarea",
+          "id": "carousel_1_title",
+          "label": "Carousel 1 title"
+        },
+        {
+          "type": "textarea",
+          "id": "carousel_1_body",
+          "label": "Carousel 1 body"
+        },
+        {
+          "type": "image_picker",
+          "id": "carousel_2_image",
+          "label": "Carousel 2 image"
+        },
+        {
+          "type": "textarea",
+          "id": "carousel_2_title",
+          "label": "Carousel 2 title"
+        },
+        {
+          "type": "textarea",
+          "id": "carousel_2_body",
+          "label": "Carousel 2 body"
+        },
+        {
+          "type": "image_picker",
+          "id": "carousel_3_image",
+          "label": "Carousel 3 image"
+        },
+        {
+          "type": "textarea",
+          "id": "carousel_3_title",
+          "label": "Carousel 3 title"
+        },
+        {
+          "type": "textarea",
+          "id": "carousel_3_body",
+          "label": "Carousel 3 body"
+        },
+        {
+          "type": "image_picker",
+          "id": "carousel_4_image",
+          "label": "Carousel 4 image"
+        },
+        {
+          "type": "textarea",
+          "id": "carousel_4_title",
+          "label": "Carousel 4 title"
+        },
+        {
+          "type": "textarea",
+          "id": "carousel_4_body",
+          "label": "Carousel 4 body"
+        }
+      ]
+    },
+    {
+      "type": "science",
+      "name": "Science content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "science_heading",
+          "label": "Science heading"
+        },
+        {
+          "type": "textarea",
+          "id": "science_intro",
+          "label": "Science intro"
+        },
+        {
+          "type": "image_picker",
+          "id": "science_1_image",
+          "label": "Science 1 image"
+        },
+        {
+          "type": "textarea",
+          "id": "science_1_title",
+          "label": "Science 1 title"
+        },
+        {
+          "type": "textarea",
+          "id": "science_1_subtitle",
+          "label": "Science 1 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "science_1_body",
+          "label": "Science 1 body"
+        },
+        {
+          "type": "image_picker",
+          "id": "science_2_image",
+          "label": "Science 2 image"
+        },
+        {
+          "type": "textarea",
+          "id": "science_2_title",
+          "label": "Science 2 title"
+        },
+        {
+          "type": "textarea",
+          "id": "science_2_subtitle",
+          "label": "Science 2 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "science_2_body",
+          "label": "Science 2 body"
+        },
+        {
+          "type": "image_picker",
+          "id": "science_3_image",
+          "label": "Science 3 image"
+        },
+        {
+          "type": "textarea",
+          "id": "science_3_title",
+          "label": "Science 3 title"
+        },
+        {
+          "type": "textarea",
+          "id": "science_3_subtitle",
+          "label": "Science 3 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "science_3_body",
+          "label": "Science 3 body"
+        },
+        {
+          "type": "image_picker",
+          "id": "science_4_image",
+          "label": "Science 4 image"
+        },
+        {
+          "type": "textarea",
+          "id": "science_4_title",
+          "label": "Science 4 title"
+        },
+        {
+          "type": "textarea",
+          "id": "science_4_subtitle",
+          "label": "Science 4 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "science_4_body",
+          "label": "Science 4 body"
+        },
+        {
+          "type": "textarea",
+          "id": "science_cta",
+          "label": "Science cta"
+        },
+        {
+          "type": "textarea",
+          "id": "science_guarantee",
+          "label": "Science guarantee"
+        },
+        {
+          "type": "textarea",
+          "id": "science_ticker_1",
+          "label": "Science ticker 1"
+        },
+        {
+          "type": "textarea",
+          "id": "science_ticker_2",
+          "label": "Science ticker 2"
+        },
+        {
+          "type": "textarea",
+          "id": "science_ticker_3",
+          "label": "Science ticker 3"
+        },
+        {
+          "type": "textarea",
+          "id": "science_ticker_4",
+          "label": "Science ticker 4"
+        },
+        {
+          "type": "color",
+          "id": "science_bg",
+          "label": "Science bg"
+        },
+        {
+          "type": "textarea",
+          "id": "science_accent",
+          "label": "Science accent"
+        }
+      ]
+    },
+    {
+      "type": "journey",
+      "name": "Journey content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "journey_image",
+          "label": "Journey image"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_eyebrow",
+          "label": "Journey eyebrow"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_heading",
+          "label": "Journey heading"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_intro",
+          "label": "Journey intro"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_1_label",
+          "label": "Journey 1 label"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_1_body",
+          "label": "Journey 1 body"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_2_label",
+          "label": "Journey 2 label"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_2_body",
+          "label": "Journey 2 body"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_3_label",
+          "label": "Journey 3 label"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_3_body",
+          "label": "Journey 3 body"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_4_label",
+          "label": "Journey 4 label"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_4_body",
+          "label": "Journey 4 body"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_5_label",
+          "label": "Journey 5 label"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_5_body",
+          "label": "Journey 5 body"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_6_label",
+          "label": "Journey 6 label"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_6_body",
+          "label": "Journey 6 body"
+        }
+      ]
+    },
+    {
+      "type": "compare",
+      "name": "Compare content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "compare_price",
+          "label": "Compare price"
+        },
+        {
+          "type": "textarea",
+          "id": "compare_heading",
+          "label": "Compare heading"
+        },
+        {
+          "type": "textarea",
+          "id": "compare_subheading",
+          "label": "Compare subheading"
+        },
+        {
+          "type": "textarea",
+          "id": "compare_cta",
+          "label": "Compare cta"
+        },
+        {
+          "type": "textarea",
+          "id": "compare_guarantee",
+          "label": "Compare guarantee"
+        },
+        {
+          "type": "image_picker",
+          "id": "ours_image",
+          "label": "Avonent overlapping image"
+        },
+        {
+          "type": "image_picker",
+          "id": "other_image",
+          "label": "Other brand overlapping image"
+        },
+        {
+          "type": "text",
+          "id": "ours_name",
+          "label": "Avonent column heading",
+          "default": "Avonent"
+        },
+        {
+          "type": "text",
+          "id": "other_name",
+          "label": "Other column heading",
+          "default": "Other brands"
+        },
+        {
+          "type": "text",
+          "id": "ours_1",
+          "label": "Avonent benefit 1",
+          "default": "Independently Lab Tested"
+        },
+        {
+          "type": "text",
+          "id": "other_1",
+          "label": "Other brand point 1",
+          "default": "No Verified Testing"
+        },
+        {
+          "type": "text",
+          "id": "ours_2",
+          "label": "Avonent benefit 2",
+          "default": "No Coumarin — True Ceylon"
+        },
+        {
+          "type": "text",
+          "id": "other_2",
+          "label": "Other brand point 2",
+          "default": "Cheap Cassia, Higher in Coumarin"
+        },
+        {
+          "type": "text",
+          "id": "ours_3",
+          "label": "Avonent benefit 3",
+          "default": "Full-Strength 12:1 Ceylon Extract"
+        },
+        {
+          "type": "text",
+          "id": "other_3",
+          "label": "Other brand point 3",
+          "default": "Weak Low-Dose Formulas"
+        },
+        {
+          "type": "text",
+          "id": "ours_4",
+          "label": "Avonent benefit 4",
+          "default": "400 mg Berberine HCl Included"
+        },
+        {
+          "type": "text",
+          "id": "other_4",
+          "label": "Other brand point 4",
+          "default": "Berberine Often Not Included"
+        },
+        {
+          "type": "text",
+          "id": "ours_5",
+          "label": "Avonent benefit 5",
+          "default": "MCT Oil Softgel Delivery"
+        },
+        {
+          "type": "text",
+          "id": "other_5",
+          "label": "Other brand point 5",
+          "default": "Basic Dry-Powder Capsules"
+        },
+        {
+          "type": "text",
+          "id": "ours_6",
+          "label": "Avonent benefit 6",
+          "default": "Easy-to-Swallow Softgels"
+        },
+        {
+          "type": "text",
+          "id": "other_6",
+          "label": "Other brand point 6",
+          "default": "Hard-to-Swallow Capsules"
+        }
+      ]
+    },
+    {
+      "type": "benefits",
+      "name": "4 Benefits + Image",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "benefits_heading",
+          "label": "Benefits heading"
+        },
+        {
+          "type": "textarea",
+          "id": "benefits_subheading",
+          "label": "Benefits subheading"
+        },
+        {
+          "type": "textarea",
+          "id": "benefits_item_1",
+          "label": "Benefit 1",
+          "default": "Blood Sugar Support*"
+        },
+        {
+          "type": "textarea",
+          "id": "benefits_item_2",
+          "label": "Benefit 2",
+          "default": "Gentle on the Stomach"
+        },
+        {
+          "type": "textarea",
+          "id": "benefits_item_3",
+          "label": "Benefit 3",
+          "default": "MCT Oil Delivery"
+        },
+        {
+          "type": "textarea",
+          "id": "benefits_item_4",
+          "label": "Benefit 4",
+          "default": "Coumarin-Free Ceylon"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefits_icon_1",
+          "label": "Benefit 1 icon (optional override)"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefits_icon_2",
+          "label": "Benefit 2 icon (optional override)"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefits_icon_3",
+          "label": "Benefit 3 icon (optional override)"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefits_icon_4",
+          "label": "Benefit 4 icon (optional override)"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefits_image",
+          "label": "Large image under benefits — EDIT HERE"
+        },
+        {
+          "type": "color",
+          "id": "benefits_bg",
+          "label": "Benefits bg"
+        },
+        {
+          "type": "color",
+          "id": "benefits_text",
+          "label": "Benefits text"
+        },
+        {
+          "type": "textarea",
+          "id": "benefits_disclaimer",
+          "label": "Optional FDA disclaimer below this section",
+          "info": "Leave blank if your footer already displays the FDA disclaimer."
+        }
+      ]
+    },
+    {
+      "type": "five_reasons",
+      "name": "5 Reasons Why slider",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_section",
+          "label": "Show section",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Top badge",
+          "default": "5 REASONS WHY"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Why Avonent Ceylon Cinnamon Is Different"
+        },
+        {
+          "type": "textarea",
+          "id": "intro",
+          "label": "Intro text",
+          "default": "Five details that make this formula easier to understand—and easier to use consistently."
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Try Risk-Free Today"
+        },
+        {
+          "type": "text",
+          "id": "guarantee_text",
+          "label": "Guarantee text",
+          "default": "90-Day Money-Back Guarantee"
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Section background",
+          "default": "#FFF4EC"
+        },
+        {
+          "type": "color",
+          "id": "accent",
+          "label": "Cinnamon accent",
+          "default": "#A84F1B"
+        },
+        {
+          "type": "header",
+          "content": "REASON 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "reason_1_image",
+          "label": "Reason 1 image"
+        },
+        {
+          "type": "text",
+          "id": "reason_1_title",
+          "label": "Reason 1 headline",
+          "default": "12:1 Concentrated True Ceylon Cinnamon"
+        },
+        {
+          "type": "textarea",
+          "id": "reason_1_body",
+          "label": "Reason 1 description",
+          "default": "Avonent uses Cinnamomum verum sourced from Sri Lanka—not common Cassia. A concentrated 12:1 extract provides the equivalent of 14,400 mg of raw cinnamon in a single daily softgel."
+        },
+        {
+          "type": "header",
+          "content": "REASON 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "reason_2_image",
+          "label": "Reason 2 image"
+        },
+        {
+          "type": "text",
+          "id": "reason_2_title",
+          "label": "Reason 2 headline",
+          "default": "Berberine HCl Included"
+        },
+        {
+          "type": "textarea",
+          "id": "reason_2_body",
+          "label": "Reason 2 description",
+          "default": "Instead of making you buy a separate bottle, Avonent combines Berberine HCl with Ceylon cinnamon in the same daily formula for a simpler metabolic-support routine.*"
+        },
+        {
+          "type": "header",
+          "content": "REASON 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "reason_3_image",
+          "label": "Reason 3 image"
+        },
+        {
+          "type": "text",
+          "id": "reason_3_title",
+          "label": "Reason 3 headline",
+          "default": "MCT Oil Softgel Delivery"
+        },
+        {
+          "type": "textarea",
+          "id": "reason_3_body",
+          "label": "Reason 3 description",
+          "default": "The concentrated cinnamon extract is suspended in MCT oil inside a smooth softgel—no loose powder, gritty drinks, or extra mixing."
+        },
+        {
+          "type": "header",
+          "content": "REASON 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "reason_4_image",
+          "label": "Reason 4 image"
+        },
+        {
+          "type": "text",
+          "id": "reason_4_title",
+          "label": "Reason 4 headline",
+          "default": "One Softgel Per Day"
+        },
+        {
+          "type": "textarea",
+          "id": "reason_4_body",
+          "label": "Reason 4 description",
+          "default": "A simple one-softgel daily serving makes it easier to stay consistent without carrying around multiple bottles or taking a handful of capsules."
+        },
+        {
+          "type": "header",
+          "content": "REASON 5"
+        },
+        {
+          "type": "image_picker",
+          "id": "reason_5_image",
+          "label": "Reason 5 image"
+        },
+        {
+          "type": "text",
+          "id": "reason_5_title",
+          "label": "Reason 5 headline",
+          "default": "Clear Formula. 90-Day Guarantee."
+        },
+        {
+          "type": "textarea",
+          "id": "reason_5_body",
+          "label": "Reason 5 description",
+          "default": "You can see what is in the formula, how much you are taking, and try it with the protection of Avonent’s 90-Day Money-Back Guarantee."
+        }
+      ]
+    },
+    {
+      "type": "risk_free",
+      "name": "90-Day Risk-Free Trial",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Bottom image — EDIT HERE"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "FEEL THE DIFFERENCE"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "90-Day Risk-Free Trial"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body text",
+          "default": "Try Avonent for 90 days. If it is not right for you, contact us within 90 days and we will help with the next steps under our refund policy."
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Try Risk-Free Today"
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Background",
+          "default": "#FFF4EC"
+        },
+        {
+          "type": "color",
+          "id": "accent",
+          "label": "Accent",
+          "default": "#A84F1B"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Faq content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "faq_heading",
+          "label": "Faq heading"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_1_q",
+          "label": "Faq 1 q"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_1_a",
+          "label": "Faq 1 a"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_2_q",
+          "label": "Faq 2 q"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_2_a",
+          "label": "Faq 2 a"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_3_q",
+          "label": "Faq 3 q"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_3_a",
+          "label": "Faq 3 a"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_4_q",
+          "label": "Faq 4 q"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_4_a",
+          "label": "Faq 4 a"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_5_q",
+          "label": "Faq 5 q"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_5_a",
+          "label": "Faq 5 a"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_6_q",
+          "label": "Faq 6 q"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_6_a",
+          "label": "Faq 6 a"
+        }
+      ]
+    },
+    {
+      "type": "details",
+      "name": "Details content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "guarantee_image",
+          "label": "Guarantee image"
+        },
+        {
+          "type": "textarea",
+          "id": "guarantee_highlight",
+          "label": "Guarantee highlight"
+        },
+        {
+          "type": "color",
+          "id": "guarantee_color",
+          "label": "Guarantee color"
+        },
+        {
+          "type": "textarea",
+          "id": "stock_title",
+          "label": "Stock title"
+        },
+        {
+          "type": "textarea",
+          "id": "stock_text",
+          "label": "Stock text"
+        },
+        {
+          "type": "textarea",
+          "id": "low_stock_line",
+          "label": "Low stock line"
+        },
+        {
+          "type": "textarea",
+          "id": "guarantee_heading",
+          "label": "Guarantee heading"
+        },
+        {
+          "type": "textarea",
+          "id": "guarantee_body",
+          "label": "Guarantee body"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_1_title",
+          "label": "Acc 1 title"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_1_body",
+          "label": "Acc 1 body"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_2_title",
+          "label": "Acc 2 title"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_2_body",
+          "label": "Acc 2 body"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_3_title",
+          "label": "Acc 3 title"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_3_body",
+          "label": "Acc 3 body"
+        },
+        {
+          "type": "image_picker",
+          "id": "trust_image",
+          "label": "Trust image"
+        },
+        {
+          "type": "textarea",
+          "id": "trust_image_alt",
+          "label": "Trust image alt"
+        }
+      ]
+    },
+    {
+      "type": "trust",
+      "name": "Why Trust Avonent image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Why Trust Avonent image"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Image alt text",
+          "default": "Why Trust Avonent"
+        }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Customer photo and review",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "photo",
+          "label": "Customer photo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Customer name"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Review title"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Customer review"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "rating_display",
+          "label": "Displayed rating",
+          "default": "5.0"
+        },
+        {
+          "type": "text",
+          "id": "tag_1",
+          "label": "Review tag 1"
+        },
+        {
+          "type": "text",
+          "id": "tag_2",
+          "label": "Review tag 2"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verified purchase",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cinnamon page editor"
+    }
+  ]
+}
+{% endschema %}

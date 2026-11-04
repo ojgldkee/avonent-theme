@@ -1,0 +1,301 @@
+{% liquid
+  # Desktop timeline restored to the original vertical layout; animation revision 2.
+  assign section_id = 'AvonentJourney-' | append: section.id
+  assign is_moringa = false
+  if product.template_suffix == 'moringa' or product.handle contains 'moringa' or product.title contains 'Moringa'
+    assign is_moringa = true
+  endif
+%}
+
+<section
+  id="{{ section_id }}"
+  class="avonent-journey"
+  data-moringa="{{ is_moringa }}"
+  style="
+    --avj-bg: {{ section.settings.background_color }};
+    --avj-card: {{ section.settings.card_color }};
+    --avj-soft: {{ section.settings.soft_color }};
+    --avj-text: {{ section.settings.text_color }};
+    --avj-muted: {{ section.settings.muted_text_color }};
+    --avj-accent: {{ section.settings.accent_color }};
+    --avj-border: {{ section.settings.border_color }};
+    --avj-width: {{ section.settings.content_width }}px;
+    --avj-top: {{ section.settings.padding_top }}px;
+    --avj-bottom: {{ section.settings.padding_bottom }}px;
+    --avj-image-radius: {{ section.settings.image_radius }}px;
+    --avj-image-height-desktop: {{ section.settings.image_height_desktop }}px;
+    --avj-image-height-mobile: {{ section.settings.image_height_mobile }}px;
+  "
+>
+  <div class="avonent-journey__left">
+    {% if section.settings.journey_image != blank %}
+      <div class="avonent-journey__media-wrap">
+        <div class="avonent-journey__media">
+          {{ section.settings.journey_image | image_url: width: 1800 | image_tag: loading: 'lazy', class: 'avonent-journey__media-image', alt: section.settings.image_alt }}
+          {% if section.settings.image_overlay_strength > 0 %}<span class="avonent-journey__media-overlay" aria-hidden="true"></span>{% endif %}
+          {% if section.settings.image_caption != blank %}
+            <div class="avonent-journey__media-caption">{{ section.settings.image_caption }}</div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+    <header class="avonent-journey__header">
+      {% if is_moringa %}
+        {% if section.settings.moringa_eyebrow != blank %}<div class="avonent-journey__eyebrow">{{ section.settings.moringa_eyebrow }}</div>{% endif %}
+        {% if section.settings.moringa_heading != blank %}<h2 class="avonent-journey__heading">{{ section.settings.moringa_heading }}</h2>{% endif %}
+        {% if section.settings.moringa_description != blank %}<div class="avonent-journey__description rte">{{ section.settings.moringa_description }}</div>{% endif %}
+      {% else %}
+        {% if section.settings.eyebrow != blank %}<div class="avonent-journey__eyebrow">{{ section.settings.eyebrow }}</div>{% endif %}
+        {% if section.settings.heading != blank %}<h2 class="avonent-journey__heading">{{ section.settings.heading }}</h2>{% endif %}
+        {% if section.settings.description != blank %}<div class="avonent-journey__description rte">{{ section.settings.description }}</div>{% endif %}
+      {% endif %}
+    </header>
+  </div>
+
+  <div class="avonent-journey__inner{% if section.settings.journey_image != blank %} has-journey-image{% endif %}">
+    <div class="avonent-journey__timeline">
+      {% for block in section.blocks %}
+        {% liquid
+          assign display_title = block.settings.title
+          assign display_benefit_1 = block.settings.benefit_1
+          assign display_benefit_2 = block.settings.benefit_2
+          assign display_benefit_3 = block.settings.benefit_3
+          assign display_benefit_4 = block.settings.benefit_4
+
+          if is_moringa
+            case forloop.index
+              when 1
+                assign display_title = section.settings.moringa_week1_title
+                assign display_benefit_1 = section.settings.moringa_week1_benefit_1
+                assign display_benefit_2 = section.settings.moringa_week1_benefit_2
+                assign display_benefit_3 = section.settings.moringa_week1_benefit_3
+                assign display_benefit_4 = ''
+              when 2
+                assign display_title = section.settings.moringa_week2_title
+                assign display_benefit_1 = section.settings.moringa_week2_benefit_1
+                assign display_benefit_2 = section.settings.moringa_week2_benefit_2
+                assign display_benefit_3 = section.settings.moringa_week2_benefit_3
+                assign display_benefit_4 = ''
+              when 3
+                assign display_title = section.settings.moringa_week3_title
+                assign display_benefit_1 = section.settings.moringa_week3_benefit_1
+                assign display_benefit_2 = section.settings.moringa_week3_benefit_2
+                assign display_benefit_3 = section.settings.moringa_week3_benefit_3
+                assign display_benefit_4 = ''
+              when 4
+                assign display_title = section.settings.moringa_week4_title
+                assign display_benefit_1 = section.settings.moringa_week4_benefit_1
+                assign display_benefit_2 = section.settings.moringa_week4_benefit_2
+                assign display_benefit_3 = section.settings.moringa_week4_benefit_3
+                assign display_benefit_4 = ''
+            endcase
+          endif
+        %}
+
+        <article class="avonent-journey__step{% if forloop.last %} avonent-journey__step--last{% endif %}" {{ block.shopify_attributes }}>
+          <div class="avonent-journey__rail" aria-hidden="true"><span class="avonent-journey__dot"><span class="avonent-journey__dot-icon">✓</span></span></div>
+          <div class="avonent-journey__card">
+            <div class="avonent-journey__card-heading">
+              {% if block.settings.week != blank %}<span class="avonent-journey__week">{{ block.settings.week }}</span>{% endif %}
+              {% if display_title != blank %}<h3 class="avonent-journey__title">{{ display_title }}</h3>{% endif %}
+            </div>
+            <ul class="avonent-journey__benefits" role="list">
+              {% if display_benefit_1 != blank %}<li class="avonent-journey__benefit"><span class="avonent-journey__check" aria-hidden="true">✓</span><span>{{ display_benefit_1 }}</span></li>{% endif %}
+              {% if display_benefit_2 != blank %}<li class="avonent-journey__benefit"><span class="avonent-journey__check" aria-hidden="true">✓</span><span>{{ display_benefit_2 }}</span></li>{% endif %}
+              {% if display_benefit_3 != blank %}<li class="avonent-journey__benefit"><span class="avonent-journey__check" aria-hidden="true">✓</span><span>{{ display_benefit_3 }}</span></li>{% endif %}
+              {% if display_benefit_4 != blank %}<li class="avonent-journey__benefit"><span class="avonent-journey__check" aria-hidden="true">✓</span><span>{{ display_benefit_4 }}</span></li>{% endif %}
+            </ul>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    {% unless is_moringa %}
+      {% if section.settings.disclaimer != blank %}
+        <div class="avonent-journey__disclaimer rte">{{ section.settings.disclaimer }}</div>
+      {% endif %}
+    {% endunless %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .avonent-journey{position:relative;overflow:hidden;padding:var(--avj-top) 0 var(--avj-bottom);background:radial-gradient(circle at 8% 8%,rgb(2 198 234/.10),transparent 25rem),radial-gradient(circle at 96% 92%,rgb(2 198 234/.08),transparent 24rem),var(--avj-bg);color:var(--avj-text)}
+  .avonent-journey__left{display:contents}
+  .avonent-journey__inner{width:min(calc(100% - 40px),var(--avj-width));margin:0 auto}
+  .avonent-journey__inner.has-journey-image{padding-top:12px}
+  .avonent-journey__header{width:min(100%,720px);margin:0 auto clamp(28px,4vw,48px);text-align:center}
+  .avonent-journey__eyebrow{margin-bottom:8px;color:var(--avj-accent);font-size:12px;font-weight:850;letter-spacing:.15em;line-height:1.2;text-transform:uppercase}
+  .avonent-journey__heading{margin:0;color:var(--avj-text);font-size:clamp(32px,5vw,54px);font-weight:850;letter-spacing:-.05em;line-height:1}
+  .avonent-journey__description{margin:14px auto 0;color:var(--avj-muted);font-size:clamp(15px,2vw,18px);line-height:1.52}
+  .avonent-journey__description p,.avonent-journey__disclaimer p{margin:0}
+
+  .avonent-journey__media-wrap{position:relative;left:50%;transform:translateX(-50%);display:flex;justify-content:center;align-items:center;width:min(calc(100vw - 56px),{{ section.settings.image_width }}px);margin:{{ section.settings.image_spacing_top }}px 0 40px!important}
+  .avonent-journey__media{position:relative;width:100%;height:var(--avj-image-height-desktop);overflow:hidden;border-radius:var(--avj-image-radius);background:var(--avj-soft)}
+  .avonent-journey__media-image{display:block;width:100%;height:100%;margin:0 auto;object-fit:cover;object-position:center center}
+  .avonent-journey__media-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,42,52,0) 28%,rgba(4,42,52,{{ section.settings.image_overlay_strength | divided_by: 100.0 }}) 100%);pointer-events:none}
+  .avonent-journey__media-caption{position:absolute;z-index:2;left:clamp(18px,4vw,42px);right:clamp(18px,4vw,42px);bottom:clamp(18px,4vw,36px);color:{{ section.settings.image_caption_color }};font-family:var(--font-heading--family);font-size:clamp(26px,4vw,48px);font-weight:750;line-height:1.02;letter-spacing:-.035em;text-shadow:0 2px 18px rgb(0 0 0/.22)}
+
+  .avonent-journey__timeline{width:min(100%,880px);margin:0 auto}
+  .avonent-journey__step{position:relative;display:grid;grid-template-columns:54px minmax(0,1fr);gap:18px;padding-bottom:20px}
+  .avonent-journey__rail{position:relative;display:flex;justify-content:center}
+  .avonent-journey__rail::after,.avonent-journey__rail::before{content:'';position:absolute;top:46px;bottom:-22px;left:50%;width:3px;border-radius:999px;transform:translateX(-50%)}
+  .avonent-journey__rail::after{background:color-mix(in srgb,var(--avj-border) 78%,white)}
+  .avonent-journey__rail::before{z-index:1;background:var(--avj-accent);transform:translateX(-50%) scaleY(0);transform-origin:top;transition:transform 520ms cubic-bezier(.2,.7,.2,1)}
+  .avonent-journey__step.is-complete .avonent-journey__rail::before{transform:translateX(-50%) scaleY(1)}
+  .avonent-journey__step--last .avonent-journey__rail::after,.avonent-journey__step--last .avonent-journey__rail::before{display:none}
+  .avonent-journey__dot{position:relative;z-index:2;display:grid;width:46px;height:46px;place-items:center;flex:0 0 46px;background:white;border:1px solid color-mix(in srgb,var(--avj-accent) 22%,var(--avj-border));border-radius:50%;box-shadow:0 0 0 7px color-mix(in srgb,var(--avj-accent) 5%,transparent);transition:.3s}
+  .avonent-journey__dot-icon{display:grid;width:30px;height:30px;place-items:center;color:color-mix(in srgb,var(--avj-accent) 28%,white);background:white;border:1px solid color-mix(in srgb,var(--avj-accent) 18%,var(--avj-border));border-radius:50%;font-size:16px;font-weight:800}
+  .avonent-journey__step.is-active .avonent-journey__dot{border-color:color-mix(in srgb,var(--avj-accent) 55%,white);box-shadow:0 0 0 7px color-mix(in srgb,var(--avj-accent) 12%,transparent),0 8px 24px color-mix(in srgb,var(--avj-accent) 24%,transparent);transform:scale(1.03)}
+  .avonent-journey__step.is-active .avonent-journey__dot-icon{color:white;background:var(--avj-accent);border-color:var(--avj-accent)}
+  .avonent-journey__card{padding:clamp(20px,3vw,30px);background:linear-gradient(145deg,var(--avj-card),color-mix(in srgb,var(--avj-soft) 35%,white));border:1px solid color-mix(in srgb,var(--avj-accent) 22%,var(--avj-border));border-radius:22px;box-shadow:0 18px 50px rgb(17 24 39/.07)}
+  .avonent-journey__card-heading{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid color-mix(in srgb,var(--avj-accent) 17%,var(--avj-border))}
+  .avonent-journey__week{display:inline-flex;align-items:center;min-height:30px;padding:6px 11px;color:#006d82;background:color-mix(in srgb,var(--avj-accent) 14%,white);border:1px solid color-mix(in srgb,var(--avj-accent) 25%,white);border-radius:999px;font-size:12px;font-weight:850;letter-spacing:.04em;line-height:1;text-transform:uppercase;white-space:nowrap}
+  .avonent-journey__title{margin:0;color:var(--avj-text);font-size:clamp(20px,2.6vw,27px);font-weight:850;letter-spacing:-.035em;line-height:1.1}
+  .avonent-journey__benefits{display:grid;gap:12px;margin:18px 0 0;padding:0;list-style:none}
+  .avonent-journey__benefit{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;align-items:center;color:var(--avj-muted);font-size:clamp(15px,2vw,17px);line-height:1.4}
+  .avonent-journey__check{display:grid;width:30px;height:30px;place-items:center;color:white;background:linear-gradient(145deg,#00d7f5,var(--avj-accent));border:1px solid rgb(255 255 255/.65);border-radius:50%;box-shadow:0 6px 16px rgb(2 198 234/.24);font-size:16px;font-weight:800}
+  .avonent-journey__disclaimer{width:min(100%,760px);margin:10px auto 0;color:var(--avj-muted);font-size:11px;line-height:1.5;text-align:center}
+
+  @media screen and (max-width:749px){
+    .avonent-journey__inner{width:min(calc(100% - 28px),var(--avj-width))}
+    .avonent-journey__inner.has-journey-image{padding-top:0}
+    .avonent-journey__header{margin-top:14px;margin-bottom:26px}
+    .avonent-journey__media-wrap{position:relative;left:50%;transform:translateX(-50%);display:flex;justify-content:center;width:min(calc(100vw - 40px),640px);max-width:none;margin:{{ section.settings.image_spacing_top_mobile }}px 0 44px!important}
+    .avonent-journey__media{width:100%;height:var(--avj-image-height-mobile)}
+    .avonent-journey__media-image{object-position:center center}
+    .avonent-journey__step{grid-template-columns:34px minmax(0,1fr);gap:10px;padding-bottom:14px}
+    .avonent-journey__dot{width:34px;height:34px;flex-basis:34px;box-shadow:0 0 0 5px color-mix(in srgb,var(--avj-accent) 8%,transparent)}
+    .avonent-journey__dot-icon{width:24px;height:24px;font-size:13px}
+    .avonent-journey__rail::after,.avonent-journey__rail::before{top:34px;bottom:-16px;width:2px}
+    .avonent-journey__card{padding:17px 15px;border-radius:18px}
+    .avonent-journey__card-heading{display:block;padding-bottom:13px}
+    .avonent-journey__week{margin-bottom:8px}
+    .avonent-journey__benefits{gap:11px;margin-top:15px}
+    .avonent-journey__benefit{grid-template-columns:27px minmax(0,1fr);gap:9px;align-items:start}
+    .avonent-journey__check{width:27px;height:27px;font-size:14px}
+  }
+  @media (prefers-reduced-motion:reduce){.avonent-journey__rail::before{transition:none}}
+{% endstylesheet %}
+
+<script>
+  (()=>{
+    const journey=document.getElementById('{{ section_id }}');
+    if(!journey || journey.dataset.scrollChecksReady==='true')return;
+    journey.dataset.scrollChecksReady='true';
+    const steps=Array.from(journey.querySelectorAll('.avonent-journey__step'));
+    if(!steps.length)return;
+    let ticking=false;
+    const update=()=>{const line=window.innerHeight*.58;let current=-1;steps.forEach((step,index)=>{const dot=step.querySelector('.avonent-journey__dot');if(dot&&dot.getBoundingClientRect().top<=line)current=index});current=Math.max(0,current);steps.forEach((step,index)=>{step.classList.toggle('is-active',index<=current);step.classList.toggle('is-complete',index<current);step.classList.toggle('is-current',index===current)});ticking=false};
+    const request=()=>{if(ticking)return;ticking=true;requestAnimationFrame(update)};
+    steps[0].classList.add('is-active','is-current');
+
+    window.addEventListener('scroll',request,{passive:true});
+    document.addEventListener('scroll',request,{passive:true,capture:true});
+    window.addEventListener('resize',request);
+    window.addEventListener('load',request,{once:true});
+    window.visualViewport?.addEventListener('scroll',request,{passive:true});
+    window.visualViewport?.addEventListener('resize',request);
+    document.fonts?.ready?.then(request);
+
+    if('IntersectionObserver' in window){
+      const observer=new IntersectionObserver(request,{root:null,threshold:[0,.01,.25,.5,.75,1]});
+      steps.forEach(step=>observer.observe(step.querySelector('.avonent-journey__dot')||step));
+    }
+
+    update();
+    requestAnimationFrame(request);
+    window.setTimeout(request,150);
+    window.setTimeout(request,600);
+  })();
+</script>
+
+{% schema %}
+{
+  "name":"Avonent wellness journey",
+  "tag":"section",
+  "class":"section-avonent-journey",
+  "settings":[
+    {"type":"header","content":"Journey image"},
+    {"type":"image_picker","id":"journey_image","label":"Journey image"},
+    {"type":"text","id":"image_alt","label":"Image alt text","default":"Avonent wellness lifestyle"},
+    {"type":"text","id":"image_caption","label":"Image overlay text"},
+    {"type":"color","id":"image_caption_color","label":"Overlay text color","default":"#FFFFFF"},
+    {"type":"range","id":"image_overlay_strength","label":"Bottom overlay darkness","min":0,"max":80,"step":5,"unit":"%","default":0},
+    {"type":"select","id":"image_position","label":"Image position","default":"center center","options":[{"value":"center center","label":"Center"},{"value":"center top","label":"Top"},{"value":"center bottom","label":"Bottom"},{"value":"left center","label":"Left"},{"value":"right center","label":"Right"}]},
+    {"type":"range","id":"image_width","label":"Image max width","min":600,"max":1400,"step":20,"unit":"px","default":1180},
+    {"type":"range","id":"image_height_desktop","label":"Desktop image height","min":220,"max":700,"step":20,"unit":"px","default":420},
+    {"type":"range","id":"image_height_mobile","label":"Mobile image height","min":160,"max":500,"step":20,"unit":"px","default":220},
+    {"type":"range","id":"image_radius","label":"Image corner radius","min":0,"max":40,"step":2,"unit":"px","default":0},
+    {"type":"range","id":"image_spacing_top","label":"Desktop spacing above image","min":0,"max":80,"step":4,"unit":"px","default":20},
+    {"type":"range","id":"image_spacing_bottom","label":"Desktop spacing below image","min":0,"max":80,"step":4,"unit":"px","default":40},
+    {"type":"range","id":"image_spacing_top_mobile","label":"Mobile spacing above image","min":0,"max":60,"step":2,"unit":"px","default":16},
+    {"type":"range","id":"image_spacing_bottom_mobile","label":"Mobile spacing below image","min":0,"max":60,"step":2,"unit":"px","default":44},
+
+    {"type":"header","content":"Moringa journey copy"},
+    {"type":"text","id":"moringa_eyebrow","label":"Moringa eyebrow","default":"BUILD YOUR ROUTINE"},
+    {"type":"text","id":"moringa_heading","label":"Moringa heading","default":"Your first month with Pure Moringa"},
+    {"type":"richtext","id":"moringa_description","label":"Moringa intro text","default":"<p>Most people don’t need 12 supplements. They need one green habit they actually keep. Here’s what that month is for.</p>"},
+
+    {"type":"header","content":"Week 1"},
+    {"type":"text","id":"moringa_week1_title","label":"Week 1 title","default":"Start the fuel"},
+    {"type":"textarea","id":"moringa_week1_benefit_1","label":"Week 1 bullet 1","default":"Take 2 capsules with breakfast. Same time every day."},
+    {"type":"textarea","id":"moringa_week1_benefit_2","label":"Week 1 bullet 2","default":"This week is about getting minerals and antioxidants in, not chasing a miracle morning."},
+    {"type":"textarea","id":"moringa_week1_benefit_3","label":"Week 1 bullet 3","default":"Notice the small stuff: less “empty” by late morning, an easier time sticking to the bottle."},
+
+    {"type":"header","content":"Week 2"},
+    {"type":"text","id":"moringa_week2_title","label":"Week 2 title","default":"Energy + recovery show up"},
+    {"type":"textarea","id":"moringa_week2_benefit_1","label":"Week 2 bullet 1","default":"Steady energy is the first thing people watch for — not a caffeine spike, just less of a crash."},
+    {"type":"textarea","id":"moringa_week2_benefit_2","label":"Week 2 bullet 2","default":"Joints and training days start to feel more supported."},
+    {"type":"textarea","id":"moringa_week2_benefit_3","label":"Week 2 bullet 3","default":"You stop forgetting it because it already has a slot in the day."},
+
+    {"type":"header","content":"Week 3"},
+    {"type":"text","id":"moringa_week3_title","label":"Week 3 title","default":"The body-wide stuff"},
+    {"type":"textarea","id":"moringa_week3_benefit_1","label":"Week 3 bullet 1","default":"Skin, immunity, and “I feel less inflamed” are slower — this is when that support has had time to stack."},
+    {"type":"textarea","id":"moringa_week3_benefit_2","label":"Week 3 bullet 2","default":"Meals sit better. You feel less wrecked after average food and average sleep."},
+    {"type":"textarea","id":"moringa_week3_benefit_3","label":"Week 3 bullet 3","default":"This is the week it stops feeling like a new supplement and starts feeling like baseline."},
+
+    {"type":"header","content":"Week 4"},
+    {"type":"text","id":"moringa_week4_title","label":"Week 4 title","default":"Make it the one you don’t drop"},
+    {"type":"textarea","id":"moringa_week4_benefit_1","label":"Week 4 bullet 1","default":"One bottle, two capsules, the greens habit you didn’t have before."},
+    {"type":"textarea","id":"moringa_week4_benefit_2","label":"Week 4 bullet 2","default":"Keep it next to whatever you already do: coffee, keys, vitamins."},
+    {"type":"textarea","id":"moringa_week4_benefit_3","label":"Week 4 bullet 3","default":"Pair it with sleep, water, and walking. The leaf works better when the rest of the day isn’t chaos."},
+
+    {"type":"header","content":"Default journey copy"},
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"YOUR DAILY JOURNEY"},
+    {"type":"text","id":"heading","label":"Heading","default":"Journey with Avonent"},
+    {"type":"richtext","id":"description","label":"Description","default":"<p>Built for daily use. Here’s how things may shift with consistent use. Individual experiences vary.</p>"},
+    {"type":"richtext","id":"disclaimer","label":"Disclaimer"},
+
+    {"type":"header","content":"Colors"},
+    {"type":"color","id":"background_color","label":"Background","default":"#F7FCFD"},
+    {"type":"color","id":"card_color","label":"Cards","default":"#FFFFFF"},
+    {"type":"color","id":"soft_color","label":"Soft card tint","default":"#EAF9FC"},
+    {"type":"color","id":"text_color","label":"Heading text","default":"#111111"},
+    {"type":"color","id":"muted_text_color","label":"Body text","default":"#596269"},
+    {"type":"color","id":"accent_color","label":"Avonent accent","default":"#02C6EA"},
+    {"type":"color","id":"border_color","label":"Borders","default":"#D9E5E8"},
+
+    {"type":"header","content":"Layout"},
+    {"type":"range","id":"content_width","label":"Content width","min":600,"max":1200,"step":20,"unit":"px","default":960},
+    {"type":"range","id":"padding_top","label":"Top spacing","min":0,"max":160,"step":4,"unit":"px","default":20},
+    {"type":"range","id":"padding_bottom","label":"Bottom spacing","min":0,"max":160,"step":4,"unit":"px","default":64}
+  ],
+  "blocks":[
+    {
+      "type":"journey_step",
+      "name":"Journey step",
+      "limit":6,
+      "settings":[
+        {"type":"text","id":"week","label":"Week label","default":"Week 1"},
+        {"type":"text","id":"title","label":"Step title","default":"Start the Ritual"},
+        {"type":"text","id":"benefit_1","label":"Benefit 1"},
+        {"type":"text","id":"benefit_2","label":"Benefit 2"},
+        {"type":"text","id":"benefit_3","label":"Benefit 3"},
+        {"type":"text","id":"benefit_4","label":"Benefit 4"}
+      ]
+    }
+  ],
+  "presets":[{"name":"Avonent wellness journey","blocks":[{"type":"journey_step"},{"type":"journey_step"},{"type":"journey_step"},{"type":"journey_step"}]}]
+}
+{% endschema %}

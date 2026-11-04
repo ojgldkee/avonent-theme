@@ -1,0 +1,459 @@
+<section
+  id="AGBenefits-{{ section.id }}"
+  class="ag-benefits"
+  style="--bg:{{ section.settings.background }};--t:{{ section.settings.text }};--m:{{ section.settings.muted }};--a:{{ section.settings.accent }};--card:{{ section.settings.card }};"
+>
+  <div class="ag-benefits__in">
+    <h2>{{ section.settings.heading_before }} <span>{{ section.settings.heading_accent }}</span></h2>
+
+    <div class="ag-benefits__slider" data-ag-benefits-slider>
+      <div class="ag-benefits__track" data-ag-benefits-track>
+        {% for block in section.blocks %}
+          <article class="ag-benefits__slide{% if forloop.first %} is-active{% endif %}" data-ag-benefit-slide {{ block.shopify_attributes }}>
+            <div class="ag-benefits__media">
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 1200 | image_tag: widths: '480,720,960,1200', loading: 'lazy', class: 'ag-benefits__img', alt: block.settings.heading }}
+              {% elsif forloop.index == 1 and product.featured_image != blank %}
+                {{ product.featured_image | image_url: width: 1200 | image_tag: widths: '480,720,960,1200', loading: 'lazy', class: 'ag-benefits__img ag-benefits__img--contain', alt: product.title }}
+              {% elsif forloop.index == 2 %}
+                <img class="ag-benefits__img ag-benefits__img--contain" src="https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-aged-garlic-softgel-realistic.png?v=1792648420" alt="Golden aged garlic softgels" loading="lazy">
+              {% else %}
+                <div class="ag-benefits__placeholder">
+                  <span>ADD IMAGE</span>
+                  <small>Choose a benefit image in Shopify</small>
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="ag-benefits__copy">
+              <h3>{{ block.settings.heading }}</h3>
+              <div class="rte">{{ block.settings.text }}</div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      <div class="ag-benefits__controls">
+        <button type="button" class="ag-benefits__arrow" data-ag-benefits-prev aria-label="Previous benefit">‹</button>
+        <div class="ag-benefits__dots">
+          {% for block in section.blocks %}
+            <button type="button" class="ag-benefits__dot{% if forloop.first %} is-active{% endif %}" data-ag-benefits-dot data-index="{{ forloop.index0 }}" aria-label="Show benefit {{ forloop.index }}"></button>
+          {% endfor %}
+        </div>
+        <button type="button" class="ag-benefits__arrow" data-ag-benefits-next aria-label="Next benefit">›</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ag-benefits__extra-cta"><a class="ag-benefits__stage-button" href="#avonent-garlic-buy" data-garlic-bottom-offer>{{ section.settings.extra_button_text }} <span aria-hidden="true">↓</span></a></div>
+  <div class="ag-benefits__post">
+    <div class="ag-benefits__choose" style="--choose-bg:{{ section.settings.choose_background }};--choose-overlay:{{ section.settings.choose_overlay }};">
+      {% if section.settings.choose_background_image != blank %}
+        {{ section.settings.choose_background_image | image_url: width: 1800 | image_tag: widths: '600,900,1200,1600,1800', sizes: '100vw', loading: 'lazy', class: 'ag-benefits__choose-bg', alt: section.settings.choose_heading }}
+      {% endif %}
+      <div class="ag-benefits__choose-wash"></div>
+      <div class="ag-benefits__choose-in">
+        <h2>{{ section.settings.choose_heading }}</h2>
+        <div class="ag-benefits__choose-intro rte">{{ section.settings.choose_intro }}</div>
+
+        <div class="ag-benefits__choose-rows">
+          <div class="ag-benefits__choose-row">
+            <h3>{{ section.settings.reason_1_heading }}</h3>
+            <div class="rte">{{ section.settings.reason_1_text }}</div>
+          </div>
+          <div class="ag-benefits__choose-row">
+            <h3>{{ section.settings.reason_2_heading }}</h3>
+            <div class="rte">{{ section.settings.reason_2_text }}</div>
+          </div>
+          <div class="ag-benefits__choose-row">
+            <h3>{{ section.settings.reason_3_heading }}</h3>
+            <div class="rte">{{ section.settings.reason_3_text }}</div>
+          </div>
+          <div class="ag-benefits__choose-row">
+            <h3>{{ section.settings.reason_4_heading }}</h3>
+            <div class="rte">{{ section.settings.reason_4_text }}</div>
+          </div>
+        </div>
+
+        {% if section.settings.choose_button_text != blank %}
+          <a class="ag-benefits__choose-btn" href="#avonent-garlic-buy" data-garlic-bottom-offer>{{ section.settings.choose_button_text }}</a>
+        {% endif %}
+        <div class="ag-benefits__choose-guarantee">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 27 7v8c0 7-4.5 11.8-11 14-6.5-2.2-11-7-11-14V7z"></path><path d="m11 16 3 3 7-8"></path></svg>
+          <span>{{ section.settings.choose_guarantee }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ag-benefits__daily">
+      <div class="ag-benefits__daily-card">
+        <h2>{{ section.settings.daily_heading }}</h2>
+        <div class="ag-benefits__daily-intro rte">{{ section.settings.daily_intro }}</div>
+        <div class="ag-benefits__daily-grid">
+          <div class="ag-benefits__daily-points">
+            <div class="ag-benefits__daily-point">
+              <i></i>
+              <h3>{{ section.settings.daily_point_1_heading }}</h3>
+              <div class="rte">{{ section.settings.daily_point_1_text }}</div>
+            </div>
+            <div class="ag-benefits__daily-point">
+              <i></i>
+              <h3>{{ section.settings.daily_point_2_heading }}</h3>
+              <div class="rte">{{ section.settings.daily_point_2_text }}</div>
+            </div>
+          </div>
+          <div class="ag-benefits__daily-visual">
+            {% if section.settings.daily_visual != blank %}
+              {{ section.settings.daily_visual | image_url: width: 900 | image_tag: widths: '320,480,640,900', loading: 'lazy', class: 'ag-benefits__daily-img', alt: section.settings.daily_visual_alt }}
+            {% else %}
+              <div class="ag-benefits__daily-capsule" aria-hidden="true"></div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ag-benefits__image-break" style="--break-bg:{{ section.settings.break_background }};--break-accent:{{ section.settings.break_accent }};">
+      <div class="ag-benefits__break-stage">
+        <span class="ag-benefits__marble ag-benefits__marble--a" aria-hidden="true"></span>
+        <span class="ag-benefits__marble ag-benefits__marble--b" aria-hidden="true"></span>
+        <span class="ag-benefits__marble ag-benefits__marble--c" aria-hidden="true"></span>
+        <span class="ag-benefits__marble ag-benefits__marble--d" aria-hidden="true"></span>
+        <span class="ag-benefits__marble ag-benefits__marble--e" aria-hidden="true"></span>
+        {% if section.settings.break_image != blank %}
+          {{ section.settings.break_image | image_url: width: 1200 | image_tag: widths: '360,540,720,900,1200', sizes: '(min-width:1000px) 480px,62vw', loading: 'lazy', class: 'ag-benefits__break-img', alt: section.settings.break_alt }}
+        {% else %}
+          <div class="ag-benefits__break-placeholder">
+            <strong>Add your product image in the theme editor</strong>
+            <span>Use a transparent PNG for the cleanest result.</span>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="ag-benefits__wellness" style="--wellness-bg:{{ section.settings.wellness_background }};--wellness-ring:{{ section.settings.wellness_ring }};">
+      <div class="ag-benefits__wellness-in">
+        <h2>{{ section.settings.wellness_heading }}</h2>
+        <div class="ag-benefits__wellness-sub rte">{{ section.settings.wellness_subheading }}</div>
+
+        <div class="ag-benefits__wellness-grid">
+          <div class="ag-benefits__wellness-item">
+            <span class="ag-benefits__wellness-icon">
+              <svg viewBox="0 0 48 48" aria-hidden="true">
+                <path d="M24 42S6 32.2 6 18.5C6 10.9 15.1 7.1 20.7 13c1.4 1.5 2.5 3.2 3.3 4.9.8-1.7 1.9-3.4 3.3-4.9C32.9 7.1 42 10.9 42 18.5 42 32.2 24 42 24 42z"></path>
+                <path d="M10 25h8l3-7 5.2 14 3.8-8H39"></path>
+              </svg>
+            </span>
+            <strong>{{ section.settings.wellness_1 }}</strong>
+          </div>
+          <div class="ag-benefits__wellness-item">
+            <span class="ag-benefits__wellness-icon ag-benefits__wellness-icon--shield">
+              <svg viewBox="0 0 48 48"><path d="M24 4 40 10v12c0 11-7 18-16 22C15 40 8 33 8 22V10z"></path><path d="M18 24h12M24 18v12"></path></svg>
+            </span>
+            <strong>{{ section.settings.wellness_2 }}</strong>
+          </div>
+          <div class="ag-benefits__wellness-item">
+            <span class="ag-benefits__wellness-icon">
+              <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="17"></circle><path d="M24 14v11l8 5"></path></svg>
+            </span>
+            <strong>{{ section.settings.wellness_3 }}</strong>
+          </div>
+          <div class="ag-benefits__wellness-item">
+            <span class="ag-benefits__wellness-icon">
+              <svg viewBox="0 0 48 48"><path d="M13 15c6 0 8 4 11 9 3-5 5-9 11-9"></path><path d="M10 9c8 2 11 8 14 15C27 17 30 11 38 9"></path><path d="M24 24v16"></path></svg>
+            </span>
+            <strong>{{ section.settings.wellness_4 }}</strong>
+          </div>
+        </div>
+
+        <div class="ag-benefits__wellness-product">
+          <span class="ag-benefits__ring ag-benefits__ring--1"></span>
+          <span class="ag-benefits__ring ag-benefits__ring--2"></span>
+          <span class="ag-benefits__ring ag-benefits__ring--3"></span>
+          {% if section.settings.wellness_product_image != blank %}
+            {{ section.settings.wellness_product_image | image_url: width: 1000 | image_tag: widths: '360,540,720,1000', loading: 'lazy', class: 'ag-benefits__wellness-img', alt: product.title }}
+          {% elsif product.featured_image != blank %}
+            {{ product.featured_image | image_url: width: 1000 | image_tag: widths: '360,540,720,1000', loading: 'lazy', class: 'ag-benefits__wellness-img', alt: product.title }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div id="aged-garlic-details" class="ag-benefits__crafted">
+      <div class="ag-benefits__crafted-in">
+        <h2>{{ section.settings.crafted_heading }}</h2>
+        <div class="ag-benefits__crafted-intro rte">{{ section.settings.crafted_intro }}</div>
+
+        <div class="ag-benefits__crafted-list">
+          {% for i in (1..4) %}
+            {% assign image_key = 'crafted_' | append: i | append: '_image' %}
+            {% assign title_key = 'crafted_' | append: i | append: '_title' %}
+            {% assign subtitle_key = 'crafted_' | append: i | append: '_subtitle' %}
+            {% assign body_key = 'crafted_' | append: i | append: '_body' %}
+            {% assign card_image = section.settings[image_key] %}
+            {% assign card_title = section.settings[title_key] %}
+            {% assign card_subtitle = section.settings[subtitle_key] %}
+            {% assign card_body = section.settings[body_key] %}
+
+            <button type="button" class="ag-benefits__flipcard" data-crafted-card aria-pressed="false">
+              <span class="ag-benefits__flipcard-inner">
+                <span class="ag-benefits__flipface ag-benefits__flipface--front">
+                  {% if card_image != blank %}
+                    {{ card_image | image_url: width: 360 | image_tag: widths: '140,200,280,360', loading: 'lazy', class: 'ag-benefits__crafted-thumb', alt: card_title }}
+                  {% else %}
+                    <span class="ag-benefits__crafted-thumb ag-benefits__crafted-thumb--empty">
+                      <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 39 18 28l7 7 6-8 9 12"></path><circle cx="17" cy="16" r="4"></circle><rect x="5" y="7" width="38" height="34" rx="4"></rect></svg>
+                    </span>
+                  {% endif %}
+                  <span class="ag-benefits__crafted-copy">
+                    <strong>{{ card_title }}</strong>
+                    {% if card_subtitle != blank %}<small>{{ card_subtitle }}</small>{% endif %}
+                  </span>
+                  <span class="ag-benefits__crafted-toggle" aria-hidden="true"></span>
+                </span>
+
+                <span class="ag-benefits__flipface ag-benefits__flipface--back">
+                  <span class="ag-benefits__flipback-title">{{ card_title }}</span>
+                  <span class="ag-benefits__flipback-body rte">{{ card_body }}</span>
+                  <span class="ag-benefits__crafted-toggle ag-benefits__crafted-toggle--back" aria-hidden="true"></span>
+                </span>
+              </span>
+            </button>
+          {% endfor %}
+        </div>
+
+        {% if section.settings.crafted_footer != blank %}
+          <div class="ag-benefits__marquee" data-garlic-marquee>
+            <div class="ag-benefits__marquee-window">
+              <div class="ag-benefits__marquee-track">
+                {% assign marquee_items = section.settings.crafted_footer | split: '·' %}
+                {% for repeat in (1..2) %}
+                  <div class="ag-benefits__marquee-group"{% if repeat == 2 %} aria-hidden="true"{% endif %}>
+                    {% for item in marquee_items %}<span><b aria-hidden="true">✓</b>{{ item | strip | escape }}</span>{% endfor %}
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="ag-benefits__stages" data-stage-timeline style="--stage-progress:0%;">
+      <div class="ag-benefits__stages-in">
+        {% if section.settings.stage_eyebrow != blank %}<div class="ag-benefits__stage-eyebrow">{{ section.settings.stage_eyebrow }}</div>{% endif %}
+        <h2>{{ section.settings.stage_heading }}</h2>
+        {% if section.settings.stage_intro != blank %}<div class="ag-benefits__stage-intro rte">{{ section.settings.stage_intro }}</div>{% endif %}
+
+        <div class="ag-benefits__timeline">
+          <span class="ag-benefits__timeline-rail" aria-hidden="true"><i></i></span>
+          {% for i in (1..4) %}
+            {% assign stage_title_key = 'stage_' | append: i | append: '_title' %}
+            {% assign stage_text_key = 'stage_' | append: i | append: '_text' %}
+            <article class="ag-benefits__stage{% if forloop.first %} is-active{% endif %}" data-stage-item data-stage-index="{{ forloop.index0 }}">
+              <span class="ag-benefits__stage-dot" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13"></circle><path d="m10.5 16.5 3.4 3.4 7.8-8"></path></svg>
+              </span>
+              <div class="ag-benefits__stage-copy">
+                <small>Stage {{ i }}</small>
+                <h3>{{ section.settings[stage_title_key] }}</h3>
+                <div class="rte">{{ section.settings[stage_text_key] }}</div>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+
+        {% if section.settings.stage_button_text != blank %}
+          <a class="ag-benefits__stage-button" href="#avonent-garlic-buy" data-garlic-bottom-offer>{{ section.settings.stage_button_text }} <span>↓</span></a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(() => {
+  const root = document.getElementById('AGBenefits-{{ section.id }}');
+  if (!root || root.dataset.ready === 'true') return;
+  root.dataset.ready = 'true';
+
+  const slides = [...root.querySelectorAll('[data-ag-benefit-slide]')];
+  const dots = [...root.querySelectorAll('[data-ag-benefits-dot]')];
+  const prev = root.querySelector('[data-ag-benefits-prev]');
+  const next = root.querySelector('[data-ag-benefits-next]');
+  let index = 0;
+
+  const show = (nextIndex) => {
+    if (!slides.length) return;
+    index = (nextIndex + slides.length) % slides.length;
+    slides.forEach((slide, i) => slide.classList.toggle('is-active', i === index));
+    dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
+  };
+
+  prev?.addEventListener('click', () => show(index - 1));
+  next?.addEventListener('click', () => show(index + 1));
+  dots.forEach((dot) => dot.addEventListener('click', () => show(Number(dot.dataset.index || 0))));
+
+  let startX = 0;
+  root.addEventListener('touchstart', (e) => { startX = e.touches[0]?.clientX || 0; }, { passive: true });
+  root.addEventListener('touchend', (e) => {
+    const endX = e.changedTouches[0]?.clientX || startX;
+    const delta = endX - startX;
+    if (Math.abs(delta) > 45) show(index + (delta < 0 ? 1 : -1));
+  }, { passive: true });
+
+  root.querySelectorAll('[data-crafted-card]').forEach((card) => {
+    const flip = () => {
+      const active = card.classList.toggle('is-flipped');
+      card.setAttribute('aria-pressed', active ? 'true' : 'false');
+    };
+    card.addEventListener('click', flip);
+  });
+
+  const timeline = root.querySelector('[data-stage-timeline]');
+  const stageItems = timeline ? [...timeline.querySelectorAll('[data-stage-item]')] : [];
+  if (timeline && stageItems.length) {
+    const activate = (index) => {
+      const max = stageItems.length - 1;
+      const clamped = Math.max(0, Math.min(index, max));
+      stageItems.forEach((item, i) => item.classList.toggle('is-active', i <= clamped));
+      timeline.style.setProperty('--stage-progress', max > 0 ? ((clamped / max) * 100) + '%' : '100%');
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const idx = Number(entry.target.dataset.stageIndex || 0);
+        activate(idx);
+      });
+    }, { rootMargin: '-28% 0px -48% 0px', threshold: 0.15 });
+
+    stageItems.forEach((item) => observer.observe(item));
+    activate(0);
+  }
+})();
+</script>
+{% stylesheet %}
+/* Garlic legacy purge: these blocks were removed from product.garlic, but this also hides any stale rendered copy. */
+.aged-garlic-story__why,
+.aged-garlic-story__education,
+.aged-garlic-story__formula,
+.aged-garlic-story__routine,
+.aged-garlic-story__comparison,
+.aged-garlic-story__offer,
+.aged-garlic-story__disclaimer,
+.ag-softgel{display:none!important}
+.ag-benefits{background:var(--bg);color:var(--t);padding:44px 0 50px}.ag-benefits *{box-sizing:border-box}.ag-benefits__in{width:min(calc(100% - 28px),940px);margin:auto}.ag-benefits h2{margin:0 0 28px;text-align:center;color:var(--t);font-size:clamp(34px,4.4vw,48px);font-weight:820;line-height:1.05;letter-spacing:-.035em}.ag-benefits h2 span{color:var(--a)}.ag-benefits__slider{position:relative}.ag-benefits__track{position:relative}.ag-benefits__slide{display:none;overflow:hidden;border-radius:18px;background:var(--card);box-shadow:0 10px 32px rgb(0 65 120 / 5%)}.ag-benefits__slide.is-active{display:block}.ag-benefits__media{height:560px;padding:14px 14px 0}.ag-benefits__img,.ag-benefits__placeholder{display:block;width:100%;height:100%;border-radius:14px;object-fit:cover;background:#eef8fd}.ag-benefits__img--contain{object-fit:contain;padding:28px;background:linear-gradient(145deg,#fff,#eef9ff)}.ag-benefits__placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#7a889a}.ag-benefits__placeholder span{font-size:13px;font-weight:900;letter-spacing:.12em}.ag-benefits__placeholder small{margin-top:7px;font-size:11px}.ag-benefits__copy{padding:23px 26px 28px;text-align:center}.ag-benefits__copy h3{margin:0;color:var(--t);font-size:24px;font-weight:820;line-height:1.15}.ag-benefits__copy .rte{max-width:720px;margin:14px auto 0;color:var(--m);font-size:15px;line-height:1.65}.ag-benefits__copy .rte p{margin:0}.ag-benefits__controls{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:14px;max-width:300px;margin:20px auto 0}.ag-benefits__arrow{display:grid;place-items:center;width:44px;height:44px;border:0;background:transparent;color:#69727c;font-size:42px;line-height:1;cursor:pointer}.ag-benefits__dots{display:flex;justify-content:center;align-items:center;gap:10px}.ag-benefits__dot{width:9px;height:9px;padding:0;border:0;border-radius:50%;background:color-mix(in srgb,var(--a) 35%,#d9e4eb);cursor:pointer}.ag-benefits__dot.is-active{width:12px;height:12px;background:var(--a)}.ag-benefits__post{margin-top:46px}.ag-benefits__choose{position:relative;overflow:hidden;background:var(--choose-bg);color:#fff;isolation:isolate}.ag-benefits__choose-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3}.ag-benefits__choose-wash{position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,color-mix(in srgb,var(--choose-overlay) 87%,transparent),color-mix(in srgb,var(--choose-overlay) 94%,transparent))}.ag-benefits__choose-in{width:min(calc(100% - 34px),940px);margin:auto;padding:62px 0}.ag-benefits__choose h2{margin:0;max-width:760px;color:#fff;text-align:left;font-size:clamp(40px,5vw,60px)}.ag-benefits__choose-intro{max-width:800px;margin-top:20px;font-size:17px;line-height:1.6}.ag-benefits__choose-intro p,.ag-benefits__choose-row .rte p{margin:0}.ag-benefits__choose-rows{margin-top:32px;border-top:1px solid rgb(255 255 255 / 38%)}.ag-benefits__choose-row{padding:22px 0;border-bottom:1px solid rgb(255 255 255 / 38%)}.ag-benefits__choose-row h3{margin:0;color:#fff;font-size:20px}.ag-benefits__choose-row .rte{margin-top:6px;font-size:15px;line-height:1.5}.ag-benefits__choose-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:58px;margin-top:32px;border-radius:10px;background:#fff;color:#071A52;font-size:17px;font-weight:850;text-decoration:none}.ag-benefits__choose-guarantee{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:18px;font-size:14px}.ag-benefits__choose-guarantee svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.ag-benefits__daily{background:#F7FCFF;padding:50px 14px}.ag-benefits__daily-card{width:min(100%,940px);margin:auto;padding:34px;border-radius:24px;background:#fff;box-shadow:0 12px 38px rgb(0 75 130 / 5%)}.ag-benefits__daily-card>h2{margin:0;text-align:left;color:#071A52;font-size:clamp(34px,4.6vw,52px)}.ag-benefits__daily-intro{max-width:760px;margin-top:14px;color:#5F6878;font-size:16px;line-height:1.6}.ag-benefits__daily-intro p,.ag-benefits__daily-point .rte p{margin:0}.ag-benefits__daily-grid{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:28px;margin-top:34px}.ag-benefits__daily-points{display:grid;gap:30px}.ag-benefits__daily-point{position:relative;padding-top:18px}.ag-benefits__daily-point>i{position:absolute;left:0;top:0;width:100%;height:1px;background:#9EDFEA}.ag-benefits__daily-point>i::after{content:"";position:absolute;right:0;top:50%;width:7px;height:7px;border-radius:50%;background:#02C6EA;transform:translateY(-50%)}.ag-benefits__daily-point h3{margin:0;color:#071A52;font-size:18px}.ag-benefits__daily-point .rte{margin-top:6px;color:#5F6878;font-size:14px;line-height:1.55}.ag-benefits__daily-visual{display:grid;place-items:center;align-self:center;min-height:300px;transform:translateY(-38px)}.ag-benefits__daily-img{display:block;max-width:100%;max-height:300px;width:auto;height:auto;object-fit:contain;animation:ag-softgel-float 4.8s ease-in-out infinite;will-change:transform}.ag-benefits__daily-capsule{position:relative;width:100px;height:230px;border-radius:55px;background:linear-gradient(90deg,#b8640e,#f6b31f 20%,#ffd45f 52%,#de840e 82%,#9e4d03);box-shadow:inset 12px 0 18px rgb(255 255 255 / 24%),0 18px 24px rgb(110 65 11 / 16%);animation:ag-softgel-float 4.8s ease-in-out infinite;will-change:transform}@keyframes ag-softgel-float{0%,100%{transform:translateY(-5px)}50%{transform:translateY(7px)}}.ag-benefits__image-break{background:#fff;padding:22px 14px 28px}.ag-benefits__break-stage{position:relative;display:grid;place-items:end center;width:min(100%,940px);min-height:560px;margin:auto;overflow:hidden;border-radius:30px;background:linear-gradient(180deg,#dff6ff 0%,#cceeff 52%,#bde6fb 100%);isolation:isolate;box-shadow:0 18px 48px rgb(0 85 160 / 12%)}.ag-benefits__break-stage::before{content:"";position:absolute;inset:-12%;z-index:-5;background:radial-gradient(ellipse at 15% 14%,rgb(0 104 232 / 34%) 0 10%,transparent 24%),radial-gradient(ellipse at 30% 8%,rgb(2 198 234 / 28%) 0 12%,transparent 27%),radial-gradient(ellipse at 80% 12%,rgb(0 104 232 / 32%) 0 12%,transparent 28%),radial-gradient(ellipse at 92% 28%,rgb(2 198 234 / 28%) 0 11%,transparent 26%),radial-gradient(ellipse at 10% 74%,rgb(0 104 232 / 31%) 0 14%,transparent 29%),radial-gradient(ellipse at 24% 92%,rgb(2 198 234 / 29%) 0 13%,transparent 27%),radial-gradient(ellipse at 82% 82%,rgb(0 104 232 / 30%) 0 14%,transparent 30%),radial-gradient(ellipse at 98% 94%,rgb(2 198 234 / 26%) 0 13%,transparent 29%);filter:blur(18px) saturate(118%)}.ag-benefits__break-stage::after{content:"";position:absolute;inset:0;z-index:-4;background:linear-gradient(115deg,rgb(255 255 255 / 35%),transparent 28%,rgb(255 255 255 / 12%) 48%,transparent 70%),radial-gradient(circle at 50% 82%,rgb(255 255 255 / 48%),transparent 30%);mix-blend-mode:screen}.ag-benefits__marble{position:absolute;z-index:-3;border-radius:47% 53% 58% 42% / 43% 52% 48% 57%;filter:blur(3px);opacity:.76;mix-blend-mode:multiply}.ag-benefits__marble--a{width:310px;height:250px;left:-85px;top:35px;background:radial-gradient(circle at 62% 46%,rgb(0 105 220 / 48%),rgb(0 105 220 / 8%) 55%,transparent 72%);transform:rotate(18deg)}.ag-benefits__marble--b{width:255px;height:210px;right:-45px;top:-10px;background:radial-gradient(circle at 42% 58%,rgb(2 198 234 / 52%),rgb(2 198 234 / 8%) 58%,transparent 74%);transform:rotate(-22deg)}.ag-benefits__marble--c{width:340px;height:220px;left:-95px;bottom:-28px;background:radial-gradient(circle at 66% 38%,rgb(2 198 234 / 45%),rgb(0 104 232 / 10%) 58%,transparent 76%);transform:rotate(-14deg)}.ag-benefits__marble--d{width:290px;height:250px;right:-72px;bottom:-38px;background:radial-gradient(circle at 34% 30%,rgb(0 104 232 / 46%),rgb(0 104 232 / 9%) 58%,transparent 76%);transform:rotate(22deg)}.ag-benefits__marble--e{width:360px;height:180px;left:50%;top:44%;background:radial-gradient(ellipse at center,rgb(255 255 255 / 32%),transparent 70%);transform:translate(-50%,-50%) rotate(-8deg);mix-blend-mode:screen;opacity:.92}.ag-benefits__break-img{position:relative;z-index:3;display:block;width:auto;max-width:min(49%,430px);max-height:480px;margin:0 auto 18px;object-fit:contain;filter:drop-shadow(0 26px 24px rgb(0 55 120 / 24%))}.ag-benefits__break-placeholder{position:relative;z-index:3;display:grid;place-items:center;align-self:center;width:min(76%,520px);min-height:260px;padding:40px;border:1px dashed rgb(255 255 255 / 72%);border-radius:18px;background:rgb(255 255 255 / 20%);color:#fff;text-align:center;backdrop-filter:blur(4px)}.ag-benefits__break-placeholder strong{font-size:20px}.ag-benefits__break-placeholder span{margin-top:8px;font-size:13px}.ag-benefits__wellness{overflow:hidden;background:var(--wellness-bg);color:#fff}.ag-benefits__wellness-in{width:min(calc(100% - 30px),940px);margin:auto;padding:56px 0 0}.ag-benefits__wellness h2{margin:0;color:#fff;font-size:clamp(38px,5vw,56px)}.ag-benefits__wellness-sub{max-width:720px;margin:14px auto 0;color:#E8FBFF;text-align:center;font-size:16px;line-height:1.55}.ag-benefits__wellness-sub p{margin:0}.ag-benefits__wellness-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px 30px;max-width:720px;margin:40px auto 6px}.ag-benefits__wellness-item{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}.ag-benefits__wellness-icon{display:grid;place-items:center;width:62px;height:62px;color:#fff}.ag-benefits__wellness-icon svg{width:54px;height:54px;fill:none;stroke:currentColor;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}.ag-benefits__wellness-item strong{max-width:250px;font-size:18px;line-height:1.25}.ag-benefits__wellness-product{position:relative;display:grid;place-items:end center;min-height:390px;margin-top:-8px}.ag-benefits__wellness-img{position:relative;z-index:3;display:block;max-width:min(62%,430px);max-height:390px;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 24px 24px rgb(0 60 130 / 18%))}.ag-benefits__ring{position:absolute;left:50%;bottom:0;transform:translateX(-50%);border:1.5px dashed var(--wellness-ring);border-radius:50% 50% 0 0}.ag-benefits__ring--1{width:76%;height:300px}.ag-benefits__ring--2{width:59%;height:235px}.ag-benefits__ring--3{width:43%;height:170px}.ag-benefits__crafted{background:#fbfaf8;color:#252525;padding:56px 0 64px;scroll-margin-top:110px}.ag-benefits__crafted-in{width:min(calc(100% - 30px),940px);margin:auto}.ag-benefits__crafted h2{margin:0;text-align:center;color:#252525;font-size:clamp(38px,5vw,58px);font-weight:800;line-height:1.05;letter-spacing:-.035em}.ag-benefits__crafted h2 span{color:#02C6EA}.ag-benefits__crafted-intro{max-width:760px;margin:22px auto 38px;color:#444;text-align:center;font-size:17px;line-height:1.6}.ag-benefits__crafted-intro p{margin:0}.ag-benefits__crafted-list{display:grid;gap:18px}.ag-benefits__crafted-item{overflow:hidden;border:1.5px solid #c9c9c9;border-radius:16px;background:#fff}.ag-benefits__crafted-item summary{list-style:none;cursor:pointer}.ag-benefits__crafted-item summary::-webkit-details-marker{display:none}.ag-benefits__crafted-summary{display:grid;grid-template-columns:150px 1fr 54px;align-items:center;gap:22px;min-height:158px;padding:18px 22px}.ag-benefits__crafted-thumb{display:block;width:150px;height:118px;border-radius:12px;object-fit:cover;background:#eef8fd}.ag-benefits__crafted-thumb--empty{display:grid;place-items:center;color:#8bb6c9}.ag-benefits__crafted-thumb--empty svg{width:42px;height:42px;fill:none;stroke:currentColor;stroke-width:1.8}.ag-benefits__crafted-copy h3{margin:0;color:#222;font-size:24px;font-weight:500;line-height:1.15}.ag-benefits__crafted-copy p{margin:8px 0 0;color:#444;font-size:15px;line-height:1.45}.ag-benefits__crafted-toggle{position:relative;display:block;width:48px;height:48px;border:1.5px solid #b8b8b8;border-radius:50%}.ag-benefits__crafted-toggle::before,.ag-benefits__crafted-toggle::after{content:"";position:absolute;left:50%;top:50%;width:16px;height:1.7px;border-radius:99px;background:#333;transform:translate(-50%,-50%)}.ag-benefits__crafted-toggle::after{transform:translate(-50%,-50%) rotate(90deg)}.ag-benefits__crafted-item[open] .ag-benefits__crafted-toggle::after{transform:translate(-50%,-50%) rotate(0deg)}.ag-benefits__crafted-body{padding:0 22px 24px 194px;color:#333;font-size:15px;line-height:1.65}.ag-benefits__crafted-body p:first-child{margin-top:0}.ag-benefits__crafted-body p:last-child{margin-bottom:0}.ag-benefits__crafted-footer{margin-top:34px;padding:15px 18px;border-radius:10px;background:#02C6EA;color:#fff;text-align:center;font-size:14px;font-weight:700}.ag-benefits__crafted-list{gap:16px}.ag-benefits__flipcard{display:block;width:100%;min-height:170px;padding:0;border:0;background:transparent;perspective:1200px;text-align:left;cursor:pointer}.ag-benefits__flipcard-inner{position:relative;display:block;min-height:170px;transform-style:preserve-3d;transition:transform .58s cubic-bezier(.2,.7,.2,1)}.ag-benefits__flipcard.is-flipped .ag-benefits__flipcard-inner{transform:rotateY(180deg)}.ag-benefits__flipface{position:absolute;inset:0;display:grid;align-items:center;border:1.5px solid #c9c9c9;border-radius:16px;background:#fff;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 10px 28px rgb(0 65 120 / 4%)}.ag-benefits__flipface--front{grid-template-columns:150px 1fr 54px;gap:22px;padding:18px 22px}.ag-benefits__flipface--back{grid-template-columns:1fr 54px;gap:18px;padding:24px 24px 24px 30px;transform:rotateY(180deg);background:linear-gradient(145deg,#ffffff,#f4fbfd)}.ag-benefits__crafted-copy{display:block}.ag-benefits__crafted-copy strong{display:block;color:#222;font-size:24px;font-weight:600;line-height:1.15}.ag-benefits__crafted-copy small{display:block;margin-top:8px;color:#444;font-size:15px;line-height:1.45}.ag-benefits__flipback-title{align-self:end;color:#071A52;font-size:20px;font-weight:800}.ag-benefits__flipback-body{grid-column:1;align-self:start;color:#333;font-size:15px;line-height:1.6}.ag-benefits__flipback-body p{margin:7px 0 0}.ag-benefits__crafted-toggle--back{grid-column:2;grid-row:1 / span 2;align-self:center}.ag-benefits__crafted-toggle--back::after{transform:translate(-50%,-50%) rotate(0deg)!important}.ag-benefits__stages{background:#fbfaf8;color:#252525;padding:58px 0 66px}.ag-benefits__stages-in{width:min(calc(100% - 34px),820px);margin:auto}.ag-benefits__stage-eyebrow{text-align:center;color:#02C6EA;font-size:12px;font-weight:900;letter-spacing:.18em}.ag-benefits__stages h2{margin:8px 0 0;color:#071A52;font-size:clamp(36px,4.8vw,52px)}.ag-benefits__stage-intro{max-width:690px;margin:14px auto 36px;color:#5F6878;text-align:center;font-size:15px;line-height:1.55}.ag-benefits__stage-intro p{margin:0}.ag-benefits__timeline{position:relative;display:grid;gap:10px;padding-left:48px}.ag-benefits__timeline-rail{position:absolute;left:16px;top:16px;bottom:18px;width:2px;background:#dcecf5}.ag-benefits__timeline-rail i{position:absolute;left:0;top:0;width:100%;height:var(--stage-progress);background:#02C6EA;transition:height .48s cubic-bezier(.2,.7,.2,1)}.ag-benefits__stage{position:relative;min-height:150px;padding:6px 0 18px;opacity:.46;transform:translateY(12px);transition:opacity .36s ease,transform .36s ease}.ag-benefits__stage.is-active{opacity:1;transform:translateY(0)}.ag-benefits__stage-dot{position:absolute;left:-47px;top:0;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#fff;color:#a9bbc5;transition:color .3s ease,transform .3s ease}.ag-benefits__stage-dot svg{width:34px;height:34px;fill:#fff;stroke:currentColor;stroke-width:1.8}.ag-benefits__stage-dot path{fill:none;stroke-width:2.2;opacity:0;transition:opacity .25s ease}.ag-benefits__stage.is-active .ag-benefits__stage-dot{color:#02C6EA;transform:scale(1.04)}.ag-benefits__stage.is-active .ag-benefits__stage-dot path{opacity:1}.ag-benefits__stage-copy small{display:block;color:#6D7A86;font-size:11px}.ag-benefits__stage-copy h3{margin:3px 0 8px;color:#071A52;font-size:25px;font-weight:800}.ag-benefits__stage-copy .rte{color:#455665;font-size:14px;line-height:1.55}.ag-benefits__stage-copy .rte ul{margin:0;padding-left:18px}.ag-benefits__stage-copy .rte li+li{margin-top:4px}.ag-benefits__stage-button{display:flex;align-items:center;justify-content:center;gap:8px;min-height:56px;margin-top:20px;border-radius:12px;background:#02C6EA;color:#fff;font-size:15px;font-weight:850;text-decoration:none}.ag-benefits__stage-button span{font-size:18px}@media(max-width:749px){.ag-benefits{padding:34px 0 38px}.ag-benefits h2{margin-bottom:22px;font-size:35px}.ag-benefits__media{height:420px;padding:12px 12px 0}.ag-benefits__copy{padding:20px 18px 22px}.ag-benefits__copy h3{font-size:21px}.ag-benefits__copy .rte{font-size:13.5px}.ag-benefits__controls{margin-top:14px}.ag-benefits__post{margin-top:34px}.ag-benefits__choose-in{padding:46px 0}.ag-benefits__choose h2{font-size:40px}.ag-benefits__choose-intro{font-size:15px}.ag-benefits__choose-row{padding:19px 0}.ag-benefits__daily{padding:34px 14px}.ag-benefits__daily-card{padding:24px 18px}.ag-benefits__daily-card>h2{font-size:35px}.ag-benefits__daily-intro{font-size:14px}.ag-benefits__daily-grid{grid-template-columns:1fr .46fr;gap:13px;margin-top:28px}.ag-benefits__daily-point h3{font-size:16px}.ag-benefits__daily-point .rte{font-size:12.5px}.ag-benefits__daily-visual{min-height:230px;align-self:center;place-items:center;transform:translateY(-48px)}.ag-benefits__daily-img{max-height:230px}.ag-benefits__daily-capsule{width:72px;height:175px}.ag-benefits__break-stage{min-height:410px;border-radius:24px}.ag-benefits__break-img{max-width:min(54%,300px);max-height:345px;margin-bottom:12px}.ag-benefits__marble--a{width:220px;height:180px;left:-72px;top:18px}.ag-benefits__marble--b{width:190px;height:160px;right:-55px}.ag-benefits__marble--c{width:230px;height:160px;left:-80px}.ag-benefits__marble--d{width:210px;height:170px;right:-70px}.ag-benefits__break-placeholder{min-height:240px}.ag-benefits__wellness-in{padding-top:46px}.ag-benefits__wellness h2{font-size:37px}.ag-benefits__wellness-sub{font-size:14px}.ag-benefits__wellness-grid{gap:32px 16px;margin-top:36px}.ag-benefits__wellness-icon{width:54px;height:54px}.ag-benefits__wellness-icon svg{width:48px;height:48px}.ag-benefits__wellness-item strong{font-size:15px}.ag-benefits__wellness-product{min-height:300px;margin-top:-14px}.ag-benefits__wellness-img{max-width:min(72%,320px);max-height:300px}.ag-benefits__ring--1{width:92%;height:220px}.ag-benefits__ring--2{width:72%;height:195px}.ag-benefits__ring--3{width:52%;height:125px}.ag-benefits__crafted{padding:44px 0 50px}.ag-benefits__crafted h2{font-size:39px}.ag-benefits__crafted-intro{margin:18px auto 28px;font-size:14px}.ag-benefits__crafted-list{gap:14px}.ag-benefits__crafted-summary{grid-template-columns:92px 1fr 42px;gap:14px;min-height:128px;padding:14px}.ag-benefits__crafted-thumb{width:92px;height:92px;border-radius:10px}.ag-benefits__crafted-copy h3{font-size:18px}.ag-benefits__crafted-copy p{margin-top:5px;font-size:12.5px}.ag-benefits__crafted-toggle{width:42px;height:42px}.ag-benefits__crafted-body{padding:0 16px 20px 120px;font-size:13.5px}.ag-benefits__flipcard,.ag-benefits__flipcard-inner{min-height:142px}.ag-benefits__flipface--front{grid-template-columns:88px 1fr 42px;gap:13px;padding:14px}.ag-benefits__flipface--back{grid-template-columns:1fr 42px;gap:10px;padding:18px}.ag-benefits__crafted-copy strong{font-size:18px}.ag-benefits__crafted-copy small{font-size:12.5px}.ag-benefits__flipback-title{font-size:17px}.ag-benefits__flipback-body{font-size:13px}.ag-benefits__stages{padding:46px 0 54px}.ag-benefits__stages h2{font-size:37px}.ag-benefits__stage-intro{margin-bottom:28px;font-size:13.5px}.ag-benefits__timeline{padding-left:42px}.ag-benefits__timeline-rail{left:15px}.ag-benefits__stage{min-height:138px}.ag-benefits__stage-dot{left:-41px;width:31px;height:31px}.ag-benefits__stage-dot svg{width:31px;height:31px}.ag-benefits__stage-copy h3{font-size:22px}.ag-benefits__stage-copy .rte{font-size:13px}}
+.ag-benefits__extra-cta{max-width:560px;margin:24px auto 0;padding:0 14px}.ag-benefits__extra-cta .ag-benefits__stage-button{margin-top:0}.ag-benefits__wellness-product{margin-top:28px}.ag-benefits__crafted{padding-bottom:0}.ag-benefits__stages{padding-top:26px}.ag-benefits__marquee{display:flex;align-items:center;background:linear-gradient(100deg,#0068e8,#02c6ea);color:#fff;margin-top:26px;width:100vw;position:relative;left:50%;transform:translateX(-50%);overflow:hidden}.ag-benefits__marquee-window{flex:1;min-width:0;overflow:hidden}.ag-benefits__marquee-track{display:flex;width:max-content;animation:ag-garlic-scroll 24s linear infinite}.ag-benefits__marquee-group{display:flex;align-items:center;justify-content:space-around;flex-shrink:0;min-width:100vw;gap:36px;padding:15px 24px}.ag-benefits__marquee-group>span{display:flex;align-items:center;gap:10px;white-space:nowrap;font-size:15px;font-weight:750}.ag-benefits__marquee-group b{display:grid;place-items:center;width:25px;height:25px;border:1px solid #fff8;border-radius:50%}@keyframes ag-garlic-scroll{to{transform:translateX(-50%)}}@media(max-width:749px){.ag-benefits__wellness-product{margin-top:24px}.ag-benefits__crafted{padding-bottom:0}.ag-benefits__stages{padding-top:24px}.ag-benefits__marquee-group{gap:28px;padding:13px 18px}.ag-benefits__marquee-group>span{font-size:14px}}@media(prefers-reduced-motion:reduce){.ag-benefits__daily-img,.ag-benefits__daily-capsule{animation:none;transform:none}.ag-benefits__marquee-track{animation:none;width:100%}.ag-benefits__marquee-group{min-width:0;flex-wrap:wrap;justify-content:center;gap:12px 22px;width:100%}.ag-benefits__marquee-group[aria-hidden]}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name":"4 Benefits of Aged Garlic",
+  "tag":"section",
+  "enabled_on":{"templates":["product"]},
+  "settings":[
+    {"type":"text","id":"extra_button_text","label":"Extra purchase button","default":"Try Risk-Free Today"},
+    {"type":"text","id":"heading_before","label":"Heading beginning","default":"4 Benefits of"},
+    {"type":"text","id":"heading_accent","label":"Highlighted heading text","default":"Aged Garlic"},
+    {"type":"header","content":"Why Customers Choose Avonent"},
+    {"type":"image_picker","id":"choose_background_image","label":"Choose section background image"},
+    {"type":"text","id":"choose_heading","label":"Choose section heading","default":"Why Customers Choose Avonent"},
+    {"type":"richtext","id":"choose_intro","label":"Choose section intro","default":"<p>Avonent Odorless Aged Garlic is designed to make a consistent daily wellness routine simple, convenient, and easy to stick with.</p>"},
+    {"type":"text","id":"reason_1_heading","label":"Reason 1 title","default":"Two Daily Softgels"},
+    {"type":"richtext","id":"reason_1_text","label":"Reason 1 text","default":"<p>No complicated schedule—just two easy-to-take softgels that fit naturally into your day.</p>"},
+    {"type":"text","id":"reason_2_heading","label":"Reason 2 title","default":"Odorless Experience"},
+    {"type":"richtext","id":"reason_2_text","label":"Reason 2 text","default":"<p>Enjoy aged garlic without the strong smell or lingering aftertaste associated with traditional garlic.</p>"},
+    {"type":"text","id":"reason_3_heading","label":"Reason 3 title","default":"Fits Your Routine"},
+    {"type":"richtext","id":"reason_3_text","label":"Reason 3 text","default":"<p>Simple to take at home, at work, or on the go—wherever your day takes you.</p>"},
+    {"type":"text","id":"reason_4_heading","label":"Reason 4 title","default":"Built for the Long Run"},
+    {"type":"richtext","id":"reason_4_text","label":"Reason 4 text","default":"<p>Made for people who prefer simple, steady wellness habits over complicated routines.</p>"},
+    {"type":"text","id":"choose_button_text","label":"Choose section button","default":"Try Risk-Free Today"},
+    {"type":"url","id":"choose_button_link","label":"Choose section button link"},
+    {"type":"text","id":"choose_guarantee","label":"Guarantee text","default":"30-day money-back guarantee"},
+    {"type":"color","id":"choose_background","label":"Choose fallback background","default":"#02C6EA"},
+    {"type":"color","id":"choose_overlay","label":"Choose image overlay","default":"#0068E8"},
+
+    {"type":"header","content":"Daily Use Section"},
+    {"type":"text","id":"daily_heading","label":"Daily-use heading","default":"Made for Everyday Use"},
+    {"type":"richtext","id":"daily_intro","label":"Daily-use intro","default":"<p>The 24-month aging process creates a refined, odorless aged garlic formula designed to make consistency easier.</p>"},
+    {"type":"text","id":"daily_point_1_heading","label":"Daily point 1 title","default":"Simple Daily Serving"},
+    {"type":"richtext","id":"daily_point_1_text","label":"Daily point 1 text","default":"<p>Two softgels daily—easy to add to a routine you already follow.</p>"},
+    {"type":"text","id":"daily_point_2_heading","label":"Daily point 2 title","default":"No Strong Garlic Aftertaste"},
+    {"type":"richtext","id":"daily_point_2_text","label":"Daily point 2 text","default":"<p>An odorless format designed without the strong garlic experience of traditional garlic supplements.</p>"},
+    {"type":"image_picker","id":"daily_visual","label":"Daily-use softgel/image"},
+    {"type":"text","id":"daily_visual_alt","label":"Daily visual alt text","default":"Avonent aged garlic softgel"},
+
+    {"type":"header","content":"Image Below Daily Use"},
+    {"type":"image_picker","id":"break_image","label":"Full-width image"},
+    {"type":"text","id":"break_alt","label":"Image alt text","default":"Avonent Aged Garlic"},
+    {"type":"color","id":"break_background","label":"Product image background","default":"#DFF6FF"},
+    {"type":"color","id":"break_accent","label":"Product image accent","default":"#0068E8"},
+
+    {"type":"header","content":"Designed for Everyday Wellness"},
+    {"type":"text","id":"wellness_heading","label":"Wellness heading","default":"Designed for Everyday Wellness"},
+    {"type":"richtext","id":"wellness_subheading","label":"Wellness subheading","default":"<p>From a simple softgel format to an easy daily routine, here’s what makes Avonent Aged Garlic different.</p>"},
+    {"type":"text","id":"wellness_1","label":"Wellness feature 1","default":"Daily Wellness Routine"},
+    {"type":"text","id":"wellness_2","label":"Wellness feature 2","default":"CoQ10 + Ubiquinol Formula"},
+    {"type":"text","id":"wellness_3","label":"Wellness feature 3","default":"Two-Softgel Daily Routine"},
+    {"type":"text","id":"wellness_4","label":"Wellness feature 4","default":"Odorless Aged Garlic"},
+    {"type":"image_picker","id":"wellness_product_image","label":"Wellness product image"},
+    {"type":"color","id":"wellness_background","label":"Wellness background","default":"#02C6EA"},
+    {"type":"color","id":"wellness_ring","label":"Decorative rings","default":"#B9F4FF"},
+
+    {"type":"header","content":"Carefully Crafted Accordion"},
+    {"type":"text","id":"crafted_heading","label":"Accordion heading","default":"Carefully Crafted. Thoughtfully Aged."},
+    {"type":"richtext","id":"crafted_intro","label":"Accordion intro","default":"<p>Avonent Aged Garlic Extract is built around a simple daily formula designed for consistent everyday use.</p>"},
+    {"type":"image_picker","id":"crafted_1_image","label":"Card 1 image"},
+    {"type":"text","id":"crafted_1_title","label":"Card 1 title","default":"Heart-Conscious Living"},
+    {"type":"text","id":"crafted_1_subtitle","label":"Card 1 subtitle","default":"A simple addition to a wellness-focused lifestyle."},
+    {"type":"richtext","id":"crafted_1_body","label":"Card 1 expanded text","default":"<p>A thoughtful addition for people who want to be more intentional about their everyday wellness routine.</p>"},
+    {"type":"image_picker","id":"crafted_2_image","label":"Card 2 image"},
+    {"type":"text","id":"crafted_2_title","label":"Card 2 title","default":"Daily Resilience"},
+    {"type":"text","id":"crafted_2_subtitle","label":"Card 2 subtitle","default":"Small habits can make a big difference."},
+    {"type":"richtext","id":"crafted_2_body","label":"Card 2 expanded text","default":"<p>Designed to make daily wellness feel simple, steady, and easier to maintain over time.</p>"},
+    {"type":"image_picker","id":"crafted_3_image","label":"Card 3 image"},
+    {"type":"text","id":"crafted_3_title","label":"Card 3 title","default":"Comfortable Every Day"},
+    {"type":"text","id":"crafted_3_subtitle","label":"Card 3 subtitle","default":"Odorless and easy to enjoy."},
+    {"type":"richtext","id":"crafted_3_body","label":"Card 3 expanded text","default":"<p>Aged garlic made without the strong smell or lingering aftertaste commonly associated with traditional garlic.</p>"},
+    {"type":"image_picker","id":"crafted_4_image","label":"Card 4 image"},
+    {"type":"text","id":"crafted_4_title","label":"Card 4 title","default":"Wellness for the Long Run"},
+    {"type":"text","id":"crafted_4_subtitle","label":"Card 4 subtitle","default":"Consistency, not complexity."},
+    {"type":"richtext","id":"crafted_4_body","label":"Card 4 expanded text","default":"<p>Made for people who prefer simple, practical routines they can continue as part of everyday life.</p>"},
+    {"type":"text","id":"crafted_footer","label":"Accordion footer text","default":"Non-GMO · Gluten-Free · No unnecessary additives"},
+
+    {"type":"header","content":"Stage 1–4 Timeline"},
+    {"type":"text","id":"stage_eyebrow","label":"Stage eyebrow","default":"YOUR DAILY ROUTINE"},
+    {"type":"text","id":"stage_heading","label":"Stage heading","default":"Build the Habit. Keep It Simple."},
+    {"type":"richtext","id":"stage_intro","label":"Stage intro","default":"<p>A simple four-stage routine designed to make consistency feel natural.</p>"},
+    {"type":"text","id":"stage_1_title","label":"Stage 1 title","default":"Start Simple"},
+    {"type":"richtext","id":"stage_1_text","label":"Stage 1 text","default":"<ul><li>Take two softgels daily</li><li>Add it to an existing routine</li><li>Keep the schedule uncomplicated</li></ul>"},
+    {"type":"text","id":"stage_2_title","label":"Stage 2 title","default":"Build the Habit"},
+    {"type":"richtext","id":"stage_2_text","label":"Stage 2 text","default":"<ul><li>Keep your routine consistent</li><li>Use it around the same time each day</li><li>Make it easy to remember</li></ul>"},
+    {"type":"text","id":"stage_3_title","label":"Stage 3 title","default":"Stay Consistent"},
+    {"type":"richtext","id":"stage_3_text","label":"Stage 3 text","default":"<ul><li>Continue your daily routine</li><li>Keep wellness habits simple</li><li>Focus on long-term consistency</li></ul>"},
+    {"type":"text","id":"stage_4_title","label":"Stage 4 title","default":"Make It Last"},
+    {"type":"richtext","id":"stage_4_text","label":"Stage 4 text","default":"<ul><li>Build around daily consistency</li><li>Keep the routine practical</li><li>Make it part of everyday life</li></ul>"},
+    {"type":"text","id":"stage_button_text","label":"Stage button text","default":"CHOOSE YOUR SUPPLY"},
+
+    {"type":"color","id":"background","label":"Section background","default":"#F7FCFF"},
+    {"type":"color","id":"card","label":"Card background","default":"#FFFFFF"},
+    {"type":"color","id":"text","label":"Text","default":"#071A52"},
+    {"type":"color","id":"muted","label":"Body text","default":"#526078"},
+    {"type":"color","id":"accent","label":"Avonent blue","default":"#02C6EA"}
+  ],
+  "blocks":[
+    {
+      "type":"benefit",
+      "name":"Benefit slide",
+      "settings":[
+        {"type":"image_picker","id":"image","label":"Benefit image"},
+        {"type":"text","id":"heading","label":"Benefit title","default":"Aged Garlic Extract"},
+        {"type":"richtext","id":"text","label":"Benefit description","default":"<p>Edit this benefit description in the Shopify theme editor.</p>"}
+      ]
+    }
+  ],
+  "max_blocks":6,
+  "presets":[{"name":"4 Benefits of Aged Garlic","blocks":[{"type":"benefit"},{"type":"benefit"},{"type":"benefit"},{"type":"benefit"}]}]
+}
+{% endschema %}

@@ -1,0 +1,48 @@
+<section class="ag-media2" style="--bg:{{ section.settings.background }};--card:{{ section.settings.card }};--t:{{ section.settings.text }};--m:{{ section.settings.muted }};--a:{{ section.settings.accent }};--l:{{ section.settings.line }};">
+  <div class="ag-media2__in">
+    <header><h2>{{ section.settings.heading }}</h2>{% if section.settings.subheading != blank %}<p>{{ section.settings.subheading }}</p>{% endif %}</header>
+    <div class="ag-media2__grid">
+      {% for block in section.blocks %}
+        <article class="ag-media2__card" {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            {{ block.settings.image | image_url: width: 900 | image_tag: widths: '320,480,640,900', sizes: '(min-width:900px) 33vw,50vw', loading: 'lazy', class: 'ag-media2__img', alt: block.settings.title }}
+          {% else %}
+            <div class="ag-media2__ph">{{ section.settings.placeholder }}</div>
+          {% endif %}
+          {% if block.settings.link != blank %}<a href="{{ block.settings.link }}" class="ag-media2__play" aria-label="{{ section.settings.play_label }} {{ block.settings.title }}">▶</a>{% endif %}
+          <div class="ag-media2__copy">{% if block.settings.title != blank %}<strong>{{ block.settings.title }}</strong>{% endif %}{% if block.settings.caption != blank %}<p>{{ block.settings.caption }}</p>{% endif %}</div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.ag-media2{background:var(--bg);color:var(--t);padding:36px 0 56px}.ag-media2__in{width:min(calc(100% - 30px),1120px);margin:auto}.ag-media2 header{text-align:center;max-width:720px;margin:0 auto 24px}.ag-media2 h2{margin:0;font-size:clamp(30px,3.6vw,44px);letter-spacing:-.035em}.ag-media2 header p{margin:8px 0 0;color:var(--m);font-size:14px}.ag-media2__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.ag-media2__card{position:relative;overflow:hidden;border:1px solid var(--l);border-radius:16px;background:var(--card);box-shadow:0 14px 32px rgb(48 26 32 / 5%)}.ag-media2__img,.ag-media2__ph{width:100%;aspect-ratio:.82;object-fit:cover;background:#f1ece8;display:grid;place-items:center;color:#887b7f;text-align:center;padding:18px}.ag-media2__play{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);display:grid;place-items:center;width:50px;height:50px;border-radius:50%;background:var(--a);color:#fff;text-decoration:none;font-size:18px;box-shadow:0 12px 22px rgb(74 20 33 / 22%)}.ag-media2__copy{padding:13px}.ag-media2__copy strong{font-size:13px}.ag-media2__copy p{margin:4px 0 0;color:var(--m);font-size:11px;line-height:1.4}@media(max-width:749px){.ag-media2__grid{grid-template-columns:1fr 1fr;gap:9px}.ag-media2__copy{padding:10px}.ag-media2__play{width:43px;height:43px;font-size:15px}}
+{% endstylesheet %}
+{% schema %}
+{
+  "name":"Garlic Customer Media",
+  "tag":"section",
+  "enabled_on":{"templates":["product"]},
+  "settings":[
+    {"type":"text","id":"heading","label":"Heading","default":"What customers are saying"},
+    {"type":"text","id":"subheading","label":"Subheading","default":"Upload real customer photos, UGC thumbnails, or product lifestyle images here."},
+    {"type":"text","id":"placeholder","label":"Empty card text","default":"Add customer or product media"},
+    {"type":"text","id":"play_label","label":"Play button label","default":"Open media for"},
+    {"type":"color","id":"background","label":"Background","default":"#FFFFFF"},
+    {"type":"color","id":"card","label":"Card background","default":"#FFFFFF"},
+    {"type":"color","id":"text","label":"Text","default":"#1F1B1D"},
+    {"type":"color","id":"muted","label":"Muted text","default":"#665E61"},
+    {"type":"color","id":"accent","label":"Burgundy","default":"#8B2635"},
+    {"type":"color","id":"line","label":"Border","default":"#E8DDDF"}
+  ],
+  "blocks":[{"type":"media","name":"Customer media","settings":[
+    {"type":"image_picker","id":"image","label":"Image or video thumbnail"},
+    {"type":"url","id":"link","label":"Optional video or media link"},
+    {"type":"text","id":"title","label":"Title","default":"Customer story"},
+    {"type":"text","id":"caption","label":"Caption","default":"Add verified customer context here."}
+  ]}],
+  "max_blocks":6,
+  "presets":[{"name":"Garlic Customer Media","blocks":[{"type":"media"},{"type":"media"},{"type":"media"}]}]
+}
+{% endschema %}

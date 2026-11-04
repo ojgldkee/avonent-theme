@@ -1,0 +1,680 @@
+{% liquid
+  assign section_id = 'AvonentGuarantee-' | append: section.id
+  assign guarantee_product = closest.product | default: product
+%}
+
+<section
+  id="{{ section_id }}"
+  class="avonent-guarantee avonent-guarantee--{{ section.settings.desktop_layout }}{% if section.settings.hero_image == blank %} avonent-guarantee--no-image{% else %} avonent-guarantee--has-image avonent-guarantee--image-{{ section.settings.image_fit }}{% endif %}"
+  style="
+    --avg-bg: {{ section.settings.background_color }};
+    --avg-strip: {{ section.settings.strip_background }};
+    --avg-strip-text: {{ section.settings.strip_text_color }};
+    --avg-text: {{ section.settings.text_color }};
+    --avg-muted: {{ section.settings.muted_text_color }};
+    --avg-accent: {{ section.settings.accent_color }};
+    --avg-accent-dark: {{ section.settings.accent_dark_color }};
+    --avg-button: {{ section.settings.button_color }};
+    --avg-button-text: {{ section.settings.button_text_color }};
+    --avg-radius: {{ section.settings.corner_radius }}px;
+    --avg-width: {{ section.settings.content_width }}px;
+    --avg-image-width: {{ section.settings.image_width }}px;
+    --avg-image-height: {{ section.settings.image_height }}px;
+    --avg-top: {{ section.settings.padding_top }}px;
+    --avg-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  {% if section.settings.show_top_strip and section.settings.strip_text != blank %}
+    <div class="avonent-guarantee__strip">
+      <span class="avonent-guarantee__strip-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2 4.5 5v5.5c0 5.2 3 9.9 7.5 11.5 4.5-1.6 7.5-6.3 7.5-11.5V5L12 2Zm0 2.2 5.5 2.2v4.1c0 4.1-2.2 7.9-5.5 9.4-3.3-1.5-5.5-5.3-5.5-9.4V6.4L12 4.2Zm-1 10.1-2.3-2.3 1.4-1.4.9.9 2.9-2.9 1.4 1.4-4.3 4.3Z"/>
+        </svg>
+      </span>
+      <span>{{ section.settings.strip_text }}</span>
+    </div>
+  {% endif %}
+
+  <div class="avonent-guarantee__inner">
+    <div class="avonent-guarantee__layout{% if section.settings.hero_image == blank %} avonent-guarantee__layout--no-image{% endif %}">
+      <div class="avonent-guarantee__content">
+        {% if section.settings.show_seal %}
+          <div class="avonent-guarantee__seal" aria-label="{{ section.settings.days }} day guarantee">
+            <span class="avonent-guarantee__seal-shape" aria-hidden="true"></span>
+            <span class="avonent-guarantee__seal-copy">
+              <strong>{{ section.settings.days }}</strong>
+              <small>DAYS</small>
+            </span>
+          </div>
+        {% endif %}
+
+        {% if section.settings.eyebrow != blank %}
+          <p class="avonent-guarantee__eyebrow">{{ section.settings.eyebrow }}</p>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <h2 class="avonent-guarantee__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <div class="avonent-guarantee__description rte">{{ section.settings.description }}</div>
+        {% endif %}
+
+        {% if section.settings.button_text != blank %}
+          <a
+            class="avonent-guarantee__button"
+            href="{{ section.settings.button_link | default: '#avonent-bottom-offer' }}"
+          >
+            <span>{{ section.settings.button_text }}</span>
+            <span class="avonent-guarantee__button-arrow" aria-hidden="true">→</span>
+          </a>
+        {% endif %}
+
+        {% if section.settings.policy_text != blank %}
+          {% if section.settings.policy_link != blank %}
+            <a class="avonent-guarantee__policy" href="{{ section.settings.policy_link }}">
+              {{ section.settings.policy_text }}
+            </a>
+          {% else %}
+            <span class="avonent-guarantee__policy">{{ section.settings.policy_text }}</span>
+          {% endif %}
+        {% endif %}
+
+        {% if section.settings.trust_1 != blank or section.settings.trust_2 != blank or section.settings.trust_3 != blank %}
+          <div class="avonent-guarantee__trust" aria-label="Purchase protections">
+            {% for index in (1..3) %}
+              {% assign trust_key = 'trust_' | append: index %}
+              {% assign trust_text = section.settings[trust_key] %}
+              {% if trust_text != blank %}
+                <span class="avonent-guarantee__trust-item">
+                  <span aria-hidden="true">✓</span>
+                  {{ trust_text }}
+                </span>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      {% if section.settings.hero_image != blank %}
+        <div class="avonent-guarantee__media">
+          {{
+            section.settings.hero_image
+            | image_url: width: 1800
+            | image_tag:
+              loading: 'lazy',
+              widths: '480, 720, 960, 1200, 1500, 1800',
+              sizes: '(min-width: 990px) 760px, 100vw',
+              class: 'avonent-guarantee__image',
+              alt: section.settings.hero_image.alt
+          }}
+
+          {% if section.settings.show_image_badge %}
+            <div class="avonent-guarantee__image-badge" aria-label="{{ section.settings.days }} day money back guarantee">
+              <span>MONEY BACK</span>
+              <strong>{{ section.settings.days }}</strong>
+              <small>DAYS</small>
+              <span>GUARANTEE</span>
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .avonent-guarantee,
+  .avonent-guarantee *,
+  .avonent-guarantee *::before,
+  .avonent-guarantee *::after {
+    box-sizing: border-box;
+  }
+
+  .avonent-guarantee {
+    overflow: hidden;
+    color: var(--avg-text);
+    background: var(--avg-bg);
+  }
+
+  .avonent-guarantee__strip {
+    display: flex;
+    min-height: 72px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 20px;
+    color: var(--avg-strip-text);
+    background:
+      radial-gradient(circle at 50% -120%, color-mix(in srgb, var(--avg-accent) 25%, transparent), transparent 65%),
+      var(--avg-strip);
+    font-size: 16px;
+    font-weight: 650;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  .avonent-guarantee__strip-icon {
+    display: flex;
+    width: 22px;
+    height: 22px;
+    flex: 0 0 auto;
+    color: var(--avg-accent);
+  }
+
+  .avonent-guarantee__strip-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+
+  .avonent-guarantee__inner {
+    width: min(100%, var(--avg-width));
+    margin: 0 auto;
+    padding: var(--avg-top) 20px var(--avg-bottom);
+  }
+
+  .avonent-guarantee__layout {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: clamp(34px, 5vw, 64px);
+  }
+
+  .avonent-guarantee__content {
+    width: min(100%, 820px);
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .avonent-guarantee__seal {
+    position: relative;
+    display: grid;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 30px;
+    place-items: center;
+    color: white;
+  }
+
+  .avonent-guarantee__seal-shape,
+  .avonent-guarantee__seal-shape::before,
+  .avonent-guarantee__seal-shape::after {
+    position: absolute;
+    inset: 8px;
+    content: '';
+    background: linear-gradient(145deg, var(--avg-accent), var(--avg-accent-dark));
+    border-radius: 28%;
+  }
+
+  .avonent-guarantee__seal-shape {
+    box-shadow: 0 18px 38px color-mix(in srgb, var(--avg-accent-dark) 28%, transparent);
+    transform: rotate(15deg);
+  }
+
+  .avonent-guarantee__seal-shape::before {
+    inset: 0;
+    transform: rotate(30deg);
+  }
+
+  .avonent-guarantee__seal-shape::after {
+    inset: 0;
+    transform: rotate(60deg);
+  }
+
+  .avonent-guarantee__seal-copy {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .avonent-guarantee__seal-copy strong {
+    font-size: 58px;
+    font-weight: 650;
+    letter-spacing: -0.05em;
+  }
+
+  .avonent-guarantee__seal-copy small {
+    margin-top: 4px;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  .avonent-guarantee__eyebrow {
+    margin: 0 0 12px;
+    color: var(--avg-accent-dark);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .avonent-guarantee__heading {
+    margin: 0;
+    color: var(--avg-text);
+    font-size: clamp(34px, 5vw, 60px);
+    font-weight: 820;
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  .avonent-guarantee__description {
+    width: min(100%, 760px);
+    margin: 22px auto 0;
+    color: var(--avg-muted);
+    font-size: clamp(16px, 1.7vw, 20px);
+    line-height: 1.55;
+  }
+
+  .avonent-guarantee__description p {
+    margin: 0;
+  }
+
+  .avonent-guarantee__button {
+    display: flex;
+    width: min(100%, 600px);
+    min-height: 62px;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 30px auto 0;
+    padding: 16px 28px;
+    color: var(--avg-button-text);
+    background: linear-gradient(135deg, var(--avg-button), var(--avg-accent-dark));
+    border-radius: 12px;
+    box-shadow: 0 16px 34px color-mix(in srgb, var(--avg-button) 24%, transparent);
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  @media (hover: hover) {
+    .avonent-guarantee__button:hover {
+      box-shadow: 0 20px 42px color-mix(in srgb, var(--avg-button) 32%, transparent);
+      transform: translateY(-2px);
+    }
+  }
+
+  .avonent-guarantee__button-arrow {
+    font-size: 22px;
+    font-weight: 400;
+  }
+
+  .avonent-guarantee__policy {
+    display: inline-block;
+    margin-top: 13px;
+    color: var(--avg-muted);
+    font-size: 11px;
+    line-height: 1.4;
+    text-underline-offset: 3px;
+  }
+
+  .avonent-guarantee__trust {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 22px;
+    margin-top: 23px;
+  }
+
+  .avonent-guarantee__trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--avg-muted);
+    font-size: 12px;
+    font-weight: 650;
+  }
+
+  .avonent-guarantee__trust-item > span {
+    display: grid;
+    width: 18px;
+    height: 18px;
+    place-items: center;
+    color: white;
+    background: var(--avg-accent);
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 900;
+  }
+
+  .avonent-guarantee--no-image .avonent-guarantee__layout {
+    position: relative;
+    width: min(100%, 920px);
+    margin: 0 auto;
+    padding: clamp(38px, 6vw, 74px);
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 50% -15%, color-mix(in srgb, var(--avg-accent) 16%, transparent), transparent 48%),
+      linear-gradient(145deg, white, color-mix(in srgb, var(--avg-bg) 82%, white));
+    border: 1px solid color-mix(in srgb, var(--avg-accent) 24%, transparent);
+    border-radius: calc(var(--avg-radius) + 8px);
+    box-shadow: 0 24px 70px rgb(18 76 91 / 0.11);
+  }
+
+  .avonent-guarantee--no-image .avonent-guarantee__layout::before,
+  .avonent-guarantee--no-image .avonent-guarantee__layout::after {
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    content: '';
+    border: 1px solid color-mix(in srgb, var(--avg-accent) 18%, transparent);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .avonent-guarantee--no-image .avonent-guarantee__layout::before {
+    top: -130px;
+    left: -95px;
+  }
+
+  .avonent-guarantee--no-image .avonent-guarantee__layout::after {
+    right: -105px;
+    bottom: -145px;
+  }
+
+  .avonent-guarantee--no-image .avonent-guarantee__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .avonent-guarantee--no-image .avonent-guarantee__trust {
+    width: fit-content;
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 12px 18px;
+    background: color-mix(in srgb, var(--avg-accent) 7%, white);
+    border: 1px solid color-mix(in srgb, var(--avg-accent) 16%, transparent);
+    border-radius: 999px;
+  }
+
+  .avonent-guarantee__media {
+    position: relative;
+    width: min(100%, var(--avg-image-width));
+    height: var(--avg-image-height);
+    margin: 0 auto;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--avg-accent) 8%, white);
+    border-radius: var(--avg-radius);
+    box-shadow: 0 24px 70px rgb(18 76 91 / 0.12);
+  }
+
+  .avonent-guarantee__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .avonent-guarantee--image-contain .avonent-guarantee__media {
+    height: auto;
+    background: var(--avg-accent-dark);
+  }
+
+  .avonent-guarantee--image-contain .avonent-guarantee__image {
+    height: auto;
+    object-fit: contain;
+  }
+
+  .avonent-guarantee__image-badge {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    display: flex;
+    width: 126px;
+    height: 146px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 14px 9px;
+    color: white;
+    background: linear-gradient(145deg, var(--avg-accent), var(--avg-accent-dark));
+    border: 3px solid white;
+    border-radius: 28px;
+    box-shadow: 0 15px 35px rgb(0 47 59 / 0.2);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .avonent-guarantee__image-badge strong {
+    margin: 6px 0 2px;
+    font-size: 44px;
+    font-weight: 800;
+  }
+
+  .avonent-guarantee__image-badge small {
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  .avonent-guarantee__image-badge span {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  .avonent-guarantee__media--placeholder {
+    display: grid;
+    place-items: center;
+    color: var(--avg-muted);
+    border: 1px dashed color-mix(in srgb, var(--avg-accent) 45%, transparent);
+  }
+
+  @media screen and (min-width: 990px) {
+    .avonent-guarantee--split .avonent-guarantee__layout {
+      display: grid;
+      grid-template-columns: minmax(360px, 0.9fr) minmax(0, 1.1fr);
+      gap: clamp(42px, 6vw, 90px);
+    }
+
+    .avonent-guarantee--split .avonent-guarantee__content {
+      text-align: left;
+    }
+
+    .avonent-guarantee--split .avonent-guarantee__seal,
+    .avonent-guarantee--split .avonent-guarantee__description,
+    .avonent-guarantee--split .avonent-guarantee__button {
+      margin-left: 0;
+    }
+
+    .avonent-guarantee--split .avonent-guarantee__trust {
+      justify-content: flex-start;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-guarantee__strip {
+      min-height: 62px;
+      padding: 13px 16px;
+      font-size: 14px;
+    }
+
+    .avonent-guarantee__inner {
+      padding-right: 14px;
+      padding-left: 14px;
+    }
+
+    .avonent-guarantee__seal {
+      width: 122px;
+      height: 122px;
+      margin-bottom: 25px;
+    }
+
+    .avonent-guarantee__seal-copy strong {
+      font-size: 46px;
+    }
+
+    .avonent-guarantee__seal-copy small {
+      font-size: 15px;
+    }
+
+    .avonent-guarantee__eyebrow {
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+
+    .avonent-guarantee__heading {
+      font-size: 34px;
+    }
+
+    .avonent-guarantee__description {
+      margin-top: 17px;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .avonent-guarantee__button {
+      min-height: 56px;
+      margin-top: 23px;
+      padding: 14px 20px;
+      font-size: 15px;
+    }
+
+    .avonent-guarantee__trust {
+      gap: 8px 14px;
+      margin-top: 18px;
+    }
+
+    .avonent-guarantee__media {
+      width: 100%;
+      height: min(var(--avg-image-height), 500px);
+      margin: 0;
+      border-radius: var(--avg-radius);
+    }
+
+    .avonent-guarantee--image-contain .avonent-guarantee__media {
+      height: auto;
+    }
+
+    .avonent-guarantee--no-image .avonent-guarantee__layout {
+      padding: 34px 18px 30px;
+      border-radius: calc(var(--avg-radius) + 2px);
+    }
+
+    .avonent-guarantee--no-image .avonent-guarantee__seal {
+      margin-bottom: 22px;
+    }
+
+    .avonent-guarantee--no-image .avonent-guarantee__trust {
+      display: grid;
+      width: 100%;
+      gap: 8px;
+      padding: 13px 15px;
+      border-radius: 16px;
+      text-align: left;
+    }
+
+    .avonent-guarantee__image-badge {
+      top: 17px;
+      left: 17px;
+      width: 100px;
+      height: 116px;
+      border-radius: 22px;
+    }
+
+    .avonent-guarantee__image-badge strong {
+      font-size: 34px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .avonent-guarantee__button {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "00 Avonent Guarantee",
+  "tag": "section",
+  "class": "avonent-guarantee-section",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    { "type": "header", "content": "Guarantee bar" },
+    { "type": "checkbox", "id": "show_top_strip", "label": "Show guarantee bar", "default": false },
+    { "type": "text", "id": "strip_text", "label": "Guarantee bar text", "default": "30-Day Money-Back Guarantee" },
+
+    { "type": "header", "content": "Main content" },
+    { "type": "range", "id": "days", "label": "Number of days", "min": 7, "max": 90, "step": 1, "default": 30 },
+    { "type": "checkbox", "id": "show_seal", "label": "Show large day seal", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Small heading", "default": "FEEL THE DIFFERENCE" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "30-Day Risk-Free Trial" },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Try Avonent for 30 days. If you are not satisfied, contact us within 30 days for help with a return under our refund policy.</p>"
+    },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "Try Risk-Free Today" },
+    { "type": "url", "id": "button_link", "label": "Button link", "info": "Leave blank to use the product purchase section." },
+    { "type": "text", "id": "policy_text", "label": "Policy link text", "default": "See refund policy for complete terms" },
+    { "type": "url", "id": "policy_link", "label": "Refund policy link" },
+
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "hero_image", "label": "Lifestyle or customer image" },
+    { "type": "checkbox", "id": "show_image_badge", "label": "Show guarantee badge over image", "default": false },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image display",
+      "options": [
+        { "value": "contain", "label": "Show full image — recommended for designed banners" },
+        { "value": "cover", "label": "Crop image to fill" }
+      ],
+      "default": "contain"
+    },
+    {
+      "type": "select",
+      "id": "desktop_layout",
+      "label": "Desktop layout",
+      "options": [
+        { "value": "stacked", "label": "Stacked like reference" },
+        { "value": "split", "label": "Text beside image" }
+      ],
+      "default": "stacked"
+    },
+    { "type": "range", "id": "image_width", "label": "Maximum image width", "min": 500, "max": 1200, "step": 20, "unit": "px", "default": 900 },
+    { "type": "range", "id": "image_height", "label": "Image height", "min": 300, "max": 800, "step": 20, "unit": "px", "default": 560 },
+
+    { "type": "header", "content": "Trust points" },
+    { "type": "text", "id": "trust_1", "label": "Trust point 1", "default": "Secure checkout" },
+    { "type": "text", "id": "trust_2", "label": "Trust point 2", "default": "Simple support" },
+    { "type": "text", "id": "trust_3", "label": "Trust point 3", "default": "30-day guarantee" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background_color", "label": "Section background", "default": "#F2FAFC" },
+    { "type": "color", "id": "strip_background", "label": "Guarantee bar", "default": "#087E9D" },
+    { "type": "color", "id": "strip_text_color", "label": "Guarantee bar text", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Heading text", "default": "#111111" },
+    { "type": "color", "id": "muted_text_color", "label": "Body text", "default": "#465B62" },
+    { "type": "color", "id": "accent_color", "label": "Avonent blue", "default": "#02C6EA" },
+    { "type": "color", "id": "accent_dark_color", "label": "Dark Avonent blue", "default": "#1996B5" },
+    { "type": "color", "id": "button_color", "label": "Button", "default": "#02C6EA" },
+    { "type": "color", "id": "button_text_color", "label": "Button text", "default": "#FFFFFF" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "content_width", "label": "Content width", "min": 900, "max": 1600, "step": 20, "unit": "px", "default": 1240 },
+    { "type": "range", "id": "corner_radius", "label": "Image roundness", "min": 0, "max": 36, "step": 1, "unit": "px", "default": 18 },
+    { "type": "range", "id": "padding_top", "label": "Top spacing", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom spacing", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 0 }
+  ],
+  "presets": [
+    {
+      "name": "00 Avonent Guarantee",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}

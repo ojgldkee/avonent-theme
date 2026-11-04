@@ -1,0 +1,156 @@
+{% liquid
+  assign section_id = 'AvonentRealStories-' | append: section.id
+%}
+
+<section
+  id="{{ section_id }}"
+  class="avrs"
+  data-avrs
+  style="--avrs-accent: {{ section.settings.accent_color }}; --avrs-bg: {{ section.settings.background_color }}; --avrs-card: {{ section.settings.card_color }}; --avrs-text: {{ section.settings.text_color }}; --avrs-muted: {{ section.settings.muted_color }}; --avrs-border: {{ section.settings.border_color }}; --avrs-speed: {{ section.settings.marquee_speed }}s;"
+>
+  <div class="avrs__inner">
+    <header class="avrs__header">
+      <div class="avrs__hero-stars" aria-label="Five star reviews">★★★★★</div>
+      <h2 class="avrs__heading">{{ section.settings.heading }}</h2>
+      {% if section.settings.subheading != blank %}<p class="avrs__subheading">{{ section.settings.subheading }}</p>{% endif %}
+    </header>
+
+    <div class="avrs__marquee" aria-label="Customer photos">
+      <div class="avrs__marquee-track">
+        {% for duplicate in (1..2) %}
+          <div class="avrs__marquee-group" {% if duplicate == 2 %}aria-hidden="true"{% endif %}>
+            {% for i in (1..6) %}
+              {% assign image_key = 'story_image_' | append: i %}
+              <div class="avrs__story-tile">
+                {% if section.settings[image_key] != blank %}
+                  {{ section.settings[image_key] | image_url: width: 520 | image_tag: loading: 'lazy', widths: '220,320,420,520', sizes: '(max-width: 749px) 42vw, 220px', class: 'avrs__story-image', alt: 'Avonent customer story' }}
+                {% else %}
+                  <div class="avrs__story-placeholder"><span>AVONENT</span><small>Customer Story</small></div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="avrs__slider" data-avrs-slider>
+      <div class="avrs__viewport" data-avrs-viewport tabindex="0" aria-label="Customer reviews carousel">
+        <div class="avrs__track">
+          {% for i in (1..3) %}
+            {% assign name_key = 'review_' | append: i | append: '_name' %}
+            {% assign avatar_key = 'review_' | append: i | append: '_avatar' %}
+            {% assign title_key = 'review_' | append: i | append: '_title' %}
+            {% assign body_key = 'review_' | append: i | append: '_body' %}
+            {% assign tag1_key = 'review_' | append: i | append: '_tag_1' %}
+            {% assign tag2_key = 'review_' | append: i | append: '_tag_2' %}
+            {% assign verified_key = 'review_' | append: i | append: '_verified' %}
+            {% assign rating_key = 'review_' | append: i | append: '_rating' %}
+            {% assign customer_name = section.settings[name_key] %}
+            {% assign rating = section.settings[rating_key] %}
+
+            <article class="avrs__card" data-avrs-card data-review-index="{{ forloop.index0 }}">
+              <div class="avrs__rating-row">
+                <span class="avrs__rating-number">{{ rating }}.0</span>
+                <span class="avrs__card-stars" aria-label="Rated {{ rating }} out of 5">
+                  {% for star in (1..5) %}<span class="{% if star > rating %}is-empty{% endif %}" aria-hidden="true">★</span>{% endfor %}
+                </span>
+              </div>
+
+              <h3 class="avrs__review-title">{{ section.settings[title_key] }}</h3>
+              <blockquote class="avrs__review-copy">{{ section.settings[body_key] }}</blockquote>
+
+              <div class="avrs__customer-row">
+                <div class="avrs__customer">
+                  {% if section.settings[avatar_key] != blank %}
+                    {{ section.settings[avatar_key] | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80,120,160', sizes: '48px', class: 'avrs__avatar', alt: customer_name }}
+                  {% else %}
+                    <div class="avrs__avatar avrs__avatar--initial" aria-hidden="true">{{ customer_name | default: 'A' | slice: 0 | upcase }}</div>
+                  {% endif %}
+                  <span class="avrs__customer-name">{{ customer_name }}</span>
+                </div>
+
+                {% if section.settings[verified_key] %}
+                  <div class="avrs__verified">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2 1.6 2.55-.2.9 2.4 2.25 1.2-.55 2.5 1.35 2.1-1.75 1.85.05 2.55-2.4.85-1.25 2.2-2.5-.6-1.85 1.7-1.85-1.7-2.55.05-.85-2.4-2.2-1.25.55-2.5-1.35-2.1 1.75-1.85-.05-2.55 2.4-.85 1.25-2.25 2.5.6L12 2.8Z" fill="currentColor"/><path d="m8.1 12.2 2.4 2.35 5.35-5.4" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>Verified Customer</span>
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="avrs__tags">
+                {% if section.settings[tag1_key] != blank %}<span>{{ section.settings[tag1_key] }}</span>{% endif %}
+                {% if section.settings[tag2_key] != blank %}<span>{{ section.settings[tag2_key] }}</span>{% endif %}
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="avrs__dots" aria-label="Review pagination">
+        {% for i in (1..3) %}<button type="button" class="avrs__dot{% if forloop.first %} is-active{% endif %}" data-avrs-dot data-index="{{ forloop.index0 }}" aria-label="Go to review {{ i }}"></button>{% endfor %}
+      </div>
+
+      <div class="avrs__controls">
+        <button type="button" class="avrs__arrow" data-avrs-prev aria-label="Previous review"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button type="button" class="avrs__arrow" data-avrs-next aria-label="Next review"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.avrs{overflow:hidden;padding:64px 0 62px;background:var(--avrs-bg);color:var(--avrs-text)}.avrs__inner{width:min(calc(100% - 32px),1180px);margin:0 auto}.avrs__header{text-align:center;margin:0 auto 30px;max-width:820px}.avrs__hero-stars,.avrs__card-stars{color:var(--avrs-accent);letter-spacing:2px}.avrs__hero-stars{font-size:34px;line-height:1;margin-bottom:18px}.avrs__heading{font-size:clamp(32px,4.6vw,54px);line-height:1.02;letter-spacing:-.045em;margin:0;font-weight:850}.avrs__subheading{font-size:17px;color:var(--avrs-muted);margin:16px 0 0}.avrs__marquee{width:100vw;margin-left:calc(50% - 50vw);overflow:hidden;margin-bottom:44px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}.avrs__marquee-track{display:flex;width:max-content;animation:avrs-scroll var(--avrs-speed) linear infinite}.avrs__marquee-group{display:flex;gap:10px;padding-right:10px}.avrs__story-tile{width:210px;height:188px;border-radius:12px;overflow:hidden;flex:0 0 auto;border:1px solid var(--avrs-border);background:#fff}.avrs__story-image{width:100%;height:100%;display:block;object-fit:cover}.avrs__story-placeholder{height:100%;display:grid;place-content:center;text-align:center;gap:7px;background:linear-gradient(145deg,#edfafd,#fff);color:var(--avrs-accent);font-weight:850;letter-spacing:.08em}.avrs__story-placeholder small{font-size:11px;color:var(--avrs-muted);letter-spacing:.03em;font-weight:650}@keyframes avrs-scroll{to{transform:translateX(-50%)}}.avrs__slider{width:min(100%,930px);margin:0 auto}.avrs__viewport{overflow:hidden;touch-action:pan-y}.avrs__track{display:flex;transition:transform .42s cubic-bezier(.22,.61,.36,1)}.avrs__card{box-sizing:border-box;flex:0 0 100%;padding:34px 40px 30px;background:var(--avrs-card);border:1px solid var(--avrs-border);border-radius:10px;min-height:410px;box-shadow:0 15px 44px rgba(22,67,79,.07)}.avrs__rating-row{display:flex;align-items:center;gap:10px}.avrs__rating-number{font-size:19px}.avrs__card-stars{font-size:20px;letter-spacing:1px}.avrs__card-stars .is-empty{opacity:.18}.avrs__review-title{font-size:24px;line-height:1.2;margin:28px 0 14px;font-weight:850;letter-spacing:-.025em}.avrs__review-copy{font-size:19px;line-height:1.52;margin:0;color:var(--avrs-text);font-style:normal}.avrs__customer-row{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:30px}.avrs__customer{display:flex;align-items:center;gap:10px;min-width:0}.avrs__avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:1px solid var(--avrs-border);flex:0 0 auto}.avrs__avatar--initial{display:grid;place-items:center;background:color-mix(in srgb,var(--avrs-accent) 10%,white);color:var(--avrs-accent);font-size:18px;font-weight:850}.avrs__customer-name{font-size:16px;color:var(--avrs-muted);font-weight:650}.avrs__verified{display:flex;align-items:center;gap:6px;color:var(--avrs-accent);font-size:14px;font-weight:700;white-space:nowrap}.avrs__verified svg{width:20px;height:20px}.avrs__tags{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:26px}.avrs__tags span{text-align:center;padding:10px 14px;border-radius:999px;border:1px solid color-mix(in srgb,var(--avrs-accent) 35%,var(--avrs-border));background:color-mix(in srgb,var(--avrs-accent) 9%,white);color:var(--avrs-accent);font-size:14px}.avrs__dots{display:flex;justify-content:center;gap:10px;margin-top:18px}.avrs__dot{width:10px;height:10px;border:0;border-radius:999px;padding:0;background:#c8cdd0}.avrs__dot.is-active{width:38px;background:var(--avrs-accent)}.avrs__controls{display:flex;justify-content:center;gap:10px;margin-top:12px}.avrs__arrow{width:46px;height:46px;border:0;border-radius:50%;display:grid;place-items:center;background:#edf0f1;color:#111;cursor:pointer}.avrs__arrow svg{width:23px;height:23px}@media(hover:hover){.avrs__marquee:hover .avrs__marquee-track{animation-play-state:paused}.avrs__arrow:hover{background:color-mix(in srgb,var(--avrs-accent) 13%,#edf0f1)}}@media(max-width:749px){.avrs{padding:48px 0 50px}.avrs__inner{width:min(calc(100% - 28px),1180px)}.avrs__header{margin-bottom:25px}.avrs__hero-stars{font-size:29px;margin-bottom:15px}.avrs__subheading{font-size:15px}.avrs__story-tile{width:43vw;max-width:182px;height:170px}.avrs__marquee{margin-bottom:36px}.avrs__card{padding:28px 22px 26px;min-height:440px}.avrs__review-title{font-size:21px;margin-top:24px}.avrs__review-copy{font-size:17px}.avrs__customer-row{align-items:flex-start}.avrs__verified{font-size:12px}.avrs__tags{gap:9px}.avrs__tags span{font-size:12px;padding:9px 8px}}@media(prefers-reduced-motion:reduce){.avrs__marquee-track{animation:none}.avrs__track{transition:none}}
+{% endstylesheet %}
+
+<script>
+(function(){
+  function init(root){
+    if(!root || root.dataset.avrsReady==='true') return;
+    root.dataset.avrsReady='true';
+    var track=root.querySelector('.avrs__track');
+    var viewport=root.querySelector('[data-avrs-viewport]');
+    var cards=Array.from(root.querySelectorAll('[data-avrs-card]'));
+    var dots=Array.from(root.querySelectorAll('[data-avrs-dot]'));
+    var prev=root.querySelector('[data-avrs-prev]');
+    var next=root.querySelector('[data-avrs-next]');
+    if(!track||!viewport||!cards.length) return;
+    var index=0,startX=0,deltaX=0,dragging=false;
+    function go(n){index=(n+cards.length)%cards.length;track.style.transform='translateX(-'+(index*100)+'%)';dots.forEach(function(dot,i){dot.classList.toggle('is-active',i===index);dot.setAttribute('aria-current',i===index?'true':'false');});}
+    if(prev) prev.addEventListener('click',function(){go(index-1)});
+    if(next) next.addEventListener('click',function(){go(index+1)});
+    dots.forEach(function(dot,i){dot.addEventListener('click',function(){go(i)})});
+    viewport.addEventListener('pointerdown',function(e){dragging=true;startX=e.clientX;deltaX=0;viewport.setPointerCapture(e.pointerId)});
+    viewport.addEventListener('pointermove',function(e){if(!dragging)return;deltaX=e.clientX-startX});
+    viewport.addEventListener('pointerup',function(){if(!dragging)return;dragging=false;if(Math.abs(deltaX)>45)go(index+(deltaX<0?1:-1));});
+    viewport.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')go(index-1);if(e.key==='ArrowRight')go(index+1)});
+    go(0);
+  }
+  function initAll(){document.querySelectorAll('[data-avrs]').forEach(init)}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initAll);else initAll();
+  document.addEventListener('shopify:section:load',initAll);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Avonent Real Stories",
+  "settings": [
+    {"type":"text","id":"heading","label":"Heading","default":"Real Stories, Real Results"},
+    {"type":"text","id":"subheading","label":"Subheading","default":"See what Avonent customers are saying."},
+    {"type":"color","id":"accent_color","label":"Accent / stars","default":"#02c6ea"},
+    {"type":"color","id":"background_color","label":"Background","default":"#f7fbfc"},
+    {"type":"color","id":"card_color","label":"Card","default":"#ffffff"},
+    {"type":"color","id":"text_color","label":"Text","default":"#111111"},
+    {"type":"color","id":"muted_color","label":"Muted text","default":"#6f777b"},
+    {"type":"color","id":"border_color","label":"Border","default":"#d8e2e5"},
+    {"type":"range","id":"marquee_speed","label":"Image movement speed","min":15,"max":60,"step":1,"unit":"s","default":28},
+    {"type":"header","content":"Moving customer images"},
+    {"type":"image_picker","id":"story_image_1","label":"Moving image 1"},{"type":"image_picker","id":"story_image_2","label":"Moving image 2"},{"type":"image_picker","id":"story_image_3","label":"Moving image 3"},{"type":"image_picker","id":"story_image_4","label":"Moving image 4"},{"type":"image_picker","id":"story_image_5","label":"Moving image 5"},{"type":"image_picker","id":"story_image_6","label":"Moving image 6"},
+    {"type":"header","content":"Review 1"},{"type":"text","id":"review_1_name","label":"Name","default":"Hailey A."},{"type":"image_picker","id":"review_1_avatar","label":"Customer image"},{"type":"range","id":"review_1_rating","label":"Rating","min":1,"max":5,"step":1,"default":5},{"type":"text","id":"review_1_title","label":"Headline","default":"Finally found a routine I actually stick with"},{"type":"textarea","id":"review_1_body","label":"Review","default":"I wanted something simple I could take every day without turning my routine into a whole project. Avonent has been easy to stay consistent with and that is what I like most."},{"type":"checkbox","id":"review_1_verified","label":"Verified customer","default":true},{"type":"text","id":"review_1_tag_1","label":"Tag 1","default":"Daily Routine"},{"type":"text","id":"review_1_tag_2","label":"Tag 2","default":"Easy to Take"},
+    {"type":"header","content":"Review 2"},{"type":"text","id":"review_2_name","label":"Name","default":"Marcus T."},{"type":"image_picker","id":"review_2_avatar","label":"Customer image"},{"type":"range","id":"review_2_rating","label":"Rating","min":1,"max":5,"step":1,"default":5},{"type":"text","id":"review_2_title","label":"Headline","default":"This fits my mornings perfectly"},{"type":"textarea","id":"review_2_body","label":"Review","default":"Two capsules, water, and I am done. No powder and no mixing anything. It has been one of the easiest wellness habits for me to keep consistent."},{"type":"checkbox","id":"review_2_verified","label":"Verified customer","default":true},{"type":"text","id":"review_2_tag_1","label":"Tag 1","default":"Simple Habit"},{"type":"text","id":"review_2_tag_2","label":"Tag 2","default":"Morning Routine"},
+    {"type":"header","content":"Review 3"},{"type":"text","id":"review_3_name","label":"Name","default":"Lauren M."},{"type":"image_picker","id":"review_3_avatar","label":"Customer image"},{"type":"range","id":"review_3_rating","label":"Rating","min":1,"max":5,"step":1,"default":5},{"type":"text","id":"review_3_title","label":"Headline","default":"Exactly the kind of supplement I wanted"},{"type":"textarea","id":"review_3_body","label":"Review","default":"I like that it feels straightforward. The bottle looks clean, the routine is simple, and it is easy for me to remember every day."},{"type":"checkbox","id":"review_3_verified","label":"Verified customer","default":true},{"type":"text","id":"review_3_tag_1","label":"Tag 1","default":"Clean Routine"},{"type":"text","id":"review_3_tag_2","label":"Tag 2","default":"Consistent Use"}
+  ],
+  "presets": [{"name":"Avonent Real Stories"}]
+}
+{% endschema %}

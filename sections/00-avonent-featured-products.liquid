@@ -1,0 +1,521 @@
+{% liquid
+  assign section_id = 'avonent-featured-products-' | append: section.id
+%}
+
+<section
+  id="{{ section_id }}"
+  class="avonent-featured-products"
+  style="
+    --av-featured-bg: {{ section.settings.background_color }};
+    --av-featured-accent: {{ section.settings.accent_color }};
+    --av-featured-card-bg: {{ section.settings.card_background }};
+    --av-featured-card-text: {{ section.settings.card_text_color }};
+    --av-featured-muted: {{ section.settings.muted_text_color }};
+    --av-featured-radius: {{ section.settings.card_radius }}px;
+    --av-featured-overlay: {{ section.settings.background_overlay | divided_by: 100.0 }};
+    {% if section.settings.background_image != blank %}
+      --av-featured-bg-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');
+    {% else %}
+      --av-featured-bg-image: none;
+    {% endif %}
+  "
+>
+  <div class="avonent-featured-products__container">
+    <div class="avonent-featured-products__grid">
+      {% for block in section.blocks %}
+        {% assign product = block.settings.product %}
+        {% if product != blank %}
+          {% assign selected_variant = product.selected_or_first_available_variant %}
+
+          {% if product.handle == 'aged-garlic-capsules' %}
+            {% assign av_card_title = 'Avonent Aged Garlic' %}
+            {% assign av_card_subtitle = 'Odorless aged garlic made for simple daily heart and circulation support.' %}
+            {% assign av_card_button = 'Shop Aged Garlic' %}
+            {% assign av_card_benefit_1 = 'Heart & circulation support' %}
+            {% assign av_card_benefit_2 = 'Aged for 24 months' %}
+            {% assign av_card_benefit_3 = 'Odorless daily softgel' %}
+          {% elsif product.handle == 'ceylon-cinnamon-berberine-capsules' %}
+            {% assign av_card_title = 'Avonent Ceylon Cinnamon + Berberine' %}
+            {% assign av_card_subtitle = 'True Ceylon cinnamon with Berberine HCl for everyday metabolic support.' %}
+            {% assign av_card_button = 'Shop Ceylon Cinnamon' %}
+            {% assign av_card_benefit_1 = 'True Ceylon cinnamon from Sri Lanka' %}
+            {% assign av_card_benefit_2 = '14,400 mg equivalent' %}
+            {% assign av_card_benefit_3 = 'Berberine HCl + MCT oil' %}
+          {% else %}
+            {% assign av_card_title = product.title %}
+            {% assign av_card_subtitle = block.settings.subtitle %}
+            {% assign av_card_button = block.settings.button_text | default: 'Shop Now' %}
+            {% assign av_card_benefit_1 = av_card_benefit_1 %}
+            {% assign av_card_benefit_2 = av_card_benefit_2 %}
+            {% assign av_card_benefit_3 = av_card_benefit_3 %}
+          {% endif %}
+
+          <article class="avonent-featured-card" {{ block.shopify_attributes }}>
+            <h2 class="avonent-featured-card__name">{{ av_card_title }}</h2>
+
+            <a
+              href="{{ product.url }}"
+              class="avonent-featured-card__image-link"
+              aria-label="Shop {{ product.title | escape }}"
+            >
+              {% if product.featured_image != blank %}
+                {{
+                  product.featured_image
+                  | image_url: width: 1200
+                  | image_tag:
+                    class: 'avonent-featured-card__image',
+                    loading: 'lazy',
+                    widths: '360,540,720,900,1200',
+                    sizes: '(max-width: 749px) calc(100vw - 56px), 520px',
+                    alt: product.title
+                }}
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag: 'avonent-featured-card__placeholder' }}
+              {% endif %}
+            </a>
+
+            {% if av_card_subtitle != blank %}
+              <div class="avonent-featured-card__subtitle">{{ av_card_subtitle }}</div>
+            {% endif %}
+
+            <a href="{{ product.url }}" class="avonent-featured-card__button">
+              <span>{{ av_card_button }}</span>
+            </a>
+
+            <div class="avonent-featured-card__price-row">
+              <div class="avonent-featured-card__price">
+                {% if block.settings.price_prefix != blank %}
+                  <span class="avonent-featured-card__price-prefix">{{ block.settings.price_prefix }}</span>
+                {% endif %}
+                <strong>{{ product.price | money }}</strong>
+              </div>
+
+              {% if block.settings.show_sale_badge and product.compare_at_price_max > product.price %}
+                {% assign savings_amount = product.compare_at_price_max | minus: product.price %}
+                {% assign savings_percent = savings_amount | times: 100.0 | divided_by: product.compare_at_price_max | round %}
+                <span class="avonent-featured-card__sale">{{ savings_percent }}% Off</span>
+              {% endif %}
+            </div>
+
+            <div class="avonent-featured-card__benefits">
+              {% if av_card_benefit_1 != blank %}
+                <div class="avonent-featured-card__benefit">
+                  <span class="avonent-featured-card__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.2 4.1L19 7" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>{{ av_card_benefit_1 }}</span>
+                </div>
+              {% endif %}
+
+              {% if av_card_benefit_2 != blank %}
+                <div class="avonent-featured-card__benefit">
+                  <span class="avonent-featured-card__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.2 4.1L19 7" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>{{ av_card_benefit_2 }}</span>
+                </div>
+              {% endif %}
+
+              {% if av_card_benefit_3 != blank %}
+                <div class="avonent-featured-card__benefit">
+                  <span class="avonent-featured-card__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.2 4.1L19 7" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>{{ av_card_benefit_3 }}</span>
+                </div>
+              {% endif %}
+            </div>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .avonent-featured-products{
+    position:relative;
+    width:100%;
+    padding:52px 0 70px;
+    background-color:#052F3B;
+    background-image:
+      linear-gradient(rgba(3,40,51,var(--av-featured-overlay)),rgba(3,40,51,var(--av-featured-overlay))),
+      var(--av-featured-bg-image);
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+  }
+
+  .avonent-featured-products *{box-sizing:border-box}
+
+  .avonent-featured-products__container{
+    width:min(calc(100% - 36px),1180px);
+    margin:0 auto;
+  }
+
+  .avonent-featured-products__grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:28px;
+  }
+
+  .avonent-featured-card{
+    position:relative;
+    overflow:hidden;
+    min-width:0;
+    padding:34px 28px 30px;
+    border:1px solid rgba(255,255,255,.13);
+    border-radius:var(--av-featured-radius);
+    background:rgba(4,45,56,.92);
+    color:var(--av-featured-card-text);
+    box-shadow:0 20px 46px rgba(0,20,28,.22);
+    backdrop-filter:blur(3px);
+  }
+
+  .avonent-featured-card__name{
+    max-width:420px;
+    margin:0 auto 22px;
+    color:#fff;
+    font-family:var(--font-heading--family,var(--font-body--family));
+    font-size:clamp(25px,2.8vw,34px);
+    font-weight:550;
+    line-height:1.08;
+    letter-spacing:-.03em;
+    text-align:center;
+  }
+
+  .avonent-featured-card__image-link{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    min-height:360px;
+    text-decoration:none;
+  }
+
+  .avonent-featured-card__image{
+    display:block;
+    width:min(100%,440px);
+    max-height:420px;
+    object-fit:contain;
+    object-position:center;
+    border-radius:12px;
+  }
+
+  .avonent-featured-card__placeholder{
+    width:100%;
+    max-width:420px;
+    height:360px;
+  }
+
+  .avonent-featured-card__subtitle{
+    max-width:470px;
+    margin:22px auto 0;
+    color:rgba(255,255,255,.88);
+    font-family:var(--font-body--family);
+    font-size:17px;
+    line-height:1.42;
+    text-align:center;
+  }
+
+  .avonent-featured-card__button{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    min-height:60px;
+    margin-top:24px;
+    padding:14px 22px;
+    border-radius:10px;
+    background:var(--av-featured-accent);
+    color:#fff;
+    font-family:var(--font-body--family);
+    font-size:18px;
+    font-weight:800;
+    line-height:1;
+    text-align:center;
+    text-decoration:none;
+    box-shadow:0 10px 24px rgba(2,198,234,.18);
+    transition:transform .18s ease,filter .18s ease;
+  }
+
+  .avonent-featured-card__button:hover{
+    transform:translateY(-1px);
+    filter:brightness(.94);
+  }
+
+  .avonent-featured-card__price-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    margin-top:23px;
+  }
+
+  .avonent-featured-card__price{
+    display:flex;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:6px;
+    color:#fff;
+    font-family:var(--font-body--family);
+  }
+
+  .avonent-featured-card__price-prefix{
+    color:rgba(255,255,255,.78);
+    font-size:15px;
+    font-weight:450;
+  }
+
+  .avonent-featured-card__price strong{
+    color:#fff;
+    font-size:19px;
+    font-weight:700;
+  }
+
+  .avonent-featured-card__sale{
+    flex:0 0 auto;
+    padding:8px 12px;
+    border:1px solid rgba(255,255,255,.75);
+    border-radius:6px;
+    color:#fff;
+    font-family:var(--font-body--family);
+    font-size:14px;
+    font-weight:650;
+  }
+
+  .avonent-featured-card__benefits{
+    display:grid;
+    gap:16px;
+    margin-top:26px;
+  }
+
+  .avonent-featured-card__benefit{
+    display:flex;
+    align-items:flex-start;
+    gap:11px;
+    color:#fff;
+    font-family:var(--font-body--family);
+    font-size:16px;
+    font-weight:650;
+    line-height:1.35;
+  }
+
+  .avonent-featured-card__check{
+    display:grid;
+    place-items:center;
+    flex:0 0 26px;
+    width:26px;
+    height:26px;
+    color:#fff;
+  }
+
+  .avonent-featured-card__check svg{
+    width:25px;
+    height:25px;
+  }
+
+  @media(max-width:749px){
+    .avonent-featured-products{
+      padding:34px 0 52px;
+    }
+
+    .avonent-featured-products__container{
+      width:calc(100% - 28px);
+    }
+
+    .avonent-featured-products__grid{
+      grid-template-columns:1fr;
+      gap:22px;
+    }
+
+    .avonent-featured-card{
+      padding:28px 20px 25px;
+      border-radius:min(var(--av-featured-radius),24px);
+    }
+
+    .avonent-featured-card__name{
+      max-width:300px;
+      margin-bottom:18px;
+      font-size:27px;
+    }
+
+    .avonent-featured-card__image-link{
+      min-height:310px;
+    }
+
+    .avonent-featured-card__image{
+      max-height:350px;
+    }
+
+    .avonent-featured-card__subtitle{
+      margin-top:18px;
+      font-size:15px;
+    }
+
+    .avonent-featured-card__button{
+      min-height:56px;
+      margin-top:20px;
+      font-size:17px;
+    }
+
+    .avonent-featured-card__price-row{
+      margin-top:20px;
+    }
+
+    .avonent-featured-card__price-prefix{
+      font-size:14px;
+    }
+
+    .avonent-featured-card__price strong{
+      font-size:18px;
+    }
+
+    .avonent-featured-card__sale{
+      padding:7px 10px;
+      font-size:13px;
+    }
+
+    .avonent-featured-card__benefits{
+      gap:14px;
+      margin-top:22px;
+    }
+
+    .avonent-featured-card__benefit{
+      font-size:15px;
+    }
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .avonent-featured-card__button{transition:none}
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "00 Avonent Featured",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Section background image"
+    },
+    {
+      "type": "range",
+      "id": "background_overlay",
+      "label": "Background dark overlay",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "default": 55
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#052F3B"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Button blue",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#063B47"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Muted text",
+      "default": "#D4EDF2"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card roundness",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Featured product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "title_override",
+          "label": "Card title",
+          "default": "Avonent Daily Formula"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Short benefit line",
+          "default": "Focused daily support made simple."
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Shop Product"
+        },
+        {
+          "type": "text",
+          "id": "price_prefix",
+          "label": "Price prefix",
+          "default": "Starting from"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sale_badge",
+          "label": "Show automatic savings badge",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "benefit_1",
+          "label": "Benefit 1",
+          "default": "Focused everyday support"
+        },
+        {
+          "type": "text",
+          "id": "benefit_2",
+          "label": "Benefit 2",
+          "default": "Simple daily routine"
+        },
+        {
+          "type": "text",
+          "id": "benefit_3",
+          "label": "Benefit 3",
+          "default": "90-Day Money-Back Guarantee"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "00 Avonent Featured"
+    }
+  ]
+}
+{% endschema %}

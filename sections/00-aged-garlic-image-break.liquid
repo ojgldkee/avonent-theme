@@ -1,0 +1,32 @@
+<section class="ag-image-break" style="--bg:{{ section.settings.background }};--radius:{{ section.settings.radius }}px;--pad:{{ section.settings.padding }}px;">
+  <div class="ag-image-break__in">
+    {% if section.settings.image != blank %}
+      {{ section.settings.image | image_url: width: 1800 | image_tag: widths: '600,900,1200,1600,1800', sizes: '(min-width:1000px) 960px,calc(100vw - 28px)', loading: 'lazy', class: 'ag-image-break__img', alt: section.settings.alt_text }}
+    {% else %}
+      <div class="ag-image-break__placeholder">
+        <strong>Add your image in Shopify</strong>
+        <span>This section is intentionally image-first.</span>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+.ag-image-break{background:var(--bg);padding:var(--pad) 0}.ag-image-break *{box-sizing:border-box}.ag-image-break__in{width:min(calc(100% - 28px),980px);margin:auto}.ag-image-break__img,.ag-image-break__placeholder{display:block;width:100%;border-radius:var(--radius);overflow:hidden}.ag-image-break__img{height:auto;max-height:860px;object-fit:cover}.ag-image-break__placeholder{display:grid;place-items:center;min-height:420px;padding:40px;border:1px dashed #b9d9e8;background:linear-gradient(145deg,#f8fdff,#edf9fe);color:#5e7484;text-align:center}.ag-image-break__placeholder strong{font-size:20px}.ag-image-break__placeholder span{margin-top:8px;font-size:13px}@media(max-width:749px){.ag-image-break__placeholder{min-height:300px}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name":"Garlic Image Break",
+  "tag":"section",
+  "enabled_on":{"templates":["product"]},
+  "settings":[
+    {"type":"image_picker","id":"image","label":"Image"},
+    {"type":"text","id":"alt_text","label":"Alt text","default":"Avonent Aged Garlic"},
+    {"type":"color","id":"background","label":"Background","default":"#FFFFFF"},
+    {"type":"range","id":"radius","label":"Corner radius","min":0,"max":32,"step":2,"unit":"px","default":18},
+    {"type":"range","id":"padding","label":"Vertical spacing","min":0,"max":64,"step":4,"unit":"px","default":16}
+  ],
+  "presets":[{"name":"Garlic Image Break"}]
+}
+{% endschema %}

@@ -1,0 +1,1464 @@
+{% liquid
+  assign p = product
+  assign v = p.selected_or_first_available_variant
+  if p.variants.size > 1
+    assign v = p.variants[1]
+  endif
+
+  assign selected_allocation = v.selling_plan_allocations.first
+  assign selected_plan_id = blank
+  assign selected_subscription_price = v.price
+  if selected_allocation != blank
+    assign selected_plan_id = selected_allocation.selling_plan.id
+    assign selected_subscription_price = selected_allocation.price
+  elsif section.settings.subscription_plan_id != blank
+    assign selected_plan_id = section.settings.subscription_plan_id | strip
+  endif
+
+  assign ebook_product = section.settings.gift_ebook_product
+  assign ebook_variant = ebook_product.selected_or_first_available_variant
+  assign gift_variant_id = 0
+  if ebook_variant != blank and ebook_variant.price == 0 and ebook_variant.available
+    assign gift_variant_id = ebook_variant.id
+  endif
+
+  assign form_id = 'AGForm-' | append: section.id
+  assign hero = section.settings.image_1
+  if hero == blank
+    assign hero = p.featured_image
+  endif
+%}
+
+<section id="AGOffer-{{ section.id }}" data-ag2-garlic-id="{{ v.id }}" data-ag2-gift-id="{{ gift_variant_id }}" data-ag2-shipping-active="{{ section.settings.shipping_reward_active }}" class="ag2{% if section.settings.bottom_purchase %} ag2--bottom{% endif %}" style="--a:{{ section.settings.accent }};--ad:{{ section.settings.accent_dark }};--g:{{ section.settings.gold }};--t:{{ section.settings.text }};--m:{{ section.settings.muted }};--l:{{ section.settings.line }};--bg:{{ section.settings.background }};">
+  <span id="{% if section.settings.bottom_purchase %}avonent-garlic-buy{% else %}avonent-garlic-top{% endif %}" class="ag2__anchor" aria-hidden="true"></span>
+  {% if section.settings.bottom_purchase %}
+    {% if section.settings.purchase_banner_image != blank %}
+      <div class="ag2__purchase-banner">
+        {{ section.settings.purchase_banner_image | image_url: width: 1600 | image_tag: widths: '480,720,960,1200,1600', sizes: '(min-width:900px) 760px,calc(100vw - 28px)', loading: 'lazy', alt: section.settings.purchase_banner_alt }}
+      </div>
+    {% endif %}
+    <header class="ag2__bottom-heading"><p>{{ section.settings.purchase_eyebrow }}</p><h2>{{ section.settings.purchase_heading }}</h2><div>{{ section.settings.purchase_intro }}</div></header>
+  {% endif %}
+  <div class="ag2__wrap">
+    {% unless section.settings.bottom_purchase %}
+    <div class="ag2__media">
+      <div class="ag2__hero" data-ag2-hero>
+        {% if hero != blank %}
+          <div class="ag2__gallery-track" data-ag2-track>
+            {% assign gallery_index = 0 %}
+            {% for i in (1..4) %}
+              {% assign k = 'image_' | append: i %}
+              {% assign im = section.settings[k] %}
+              {% if im == blank %}
+                {% assign product_image_index = i | minus: 1 %}
+                {% assign im = p.images[product_image_index] %}
+              {% endif %}
+              {% if im != blank %}
+                <div class="ag2__gallery-slide" data-ag2-slide>
+                  {% if gallery_index == 0 %}
+                    {{ im | image_url: width: 1400 | image_tag: widths: '480,720,960,1200,1400', sizes: '(min-width:900px) 50vw,100vw', loading: 'eager', fetchpriority: 'high', class: 'ag2__heroimg', alt: p.title }}
+                  {% else %}
+                    {{ im | image_url: width: 1400 | image_tag: widths: '480,720,960,1200,1400', sizes: '(min-width:900px) 50vw,100vw', loading: 'lazy', class: 'ag2__heroimg', alt: p.title }}
+                  {% endif %}
+                </div>
+                {% assign gallery_index = gallery_index | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="ag2__mock">
+            <span>AVONENT HEALTH</span>
+            <em>ODORLESS DAILY GARLIC SUPPORT</em>
+            <strong>AGED GARLIC</strong>
+            <b>+ CoQ10</b>
+            <small>with ubiquinol</small>
+            <i>PREMIUM SOFTGEL FORMULA</i>
+          </div>
+        {% endif %}
+      </div>
+      <div class="ag2__gallery-nav">
+        <button type="button" class="ag2__gallery-arrow" data-ag2-prev aria-label="Previous product image">‹</button>
+        <div class="ag2__thumbs">
+          {% assign thumb_index = 0 %}
+          {% for i in (1..4) %}
+            {% assign k = 'image_' | append: i %}
+            {% assign im = section.settings[k] %}
+            {% if im == blank %}
+              {% assign product_image_index = i | minus: 1 %}
+              {% assign im = p.images[product_image_index] %}
+            {% endif %}
+            {% if im != blank %}
+              <button type="button" class="ag2__thumb{% if thumb_index == 0 %} is-on{% endif %}" data-ag2-thumb aria-label="Show product image {{ thumb_index | plus: 1 }}">
+                {{ im | image_url: width: 180 | image_tag: loading: 'lazy', alt: p.title }}
+              </button>
+              {% assign thumb_index = thumb_index | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        </div>
+        <button type="button" class="ag2__gallery-arrow" data-ag2-next aria-label="Next product image">›</button>
+      </div>
+    </div>
+
+    {% endunless %}
+    <div class="ag2__info">
+      {% if section.settings.show_rating %}
+        <div class="ag2__rating">
+          <span aria-label="5 stars">★★★★★</span>
+          <b>{{ section.settings.rating_text }}</b>
+          {% if section.settings.proof_text != blank %}<em>| {{ section.settings.proof_text }}</em>{% endif %}
+        </div>
+      {% endif %}
+
+      {% unless section.settings.bottom_purchase %}<h1>{{ section.settings.heading | default: p.title }}</h1>{% endunless %}
+      {% if section.settings.subheading != blank %}
+        <div class="ag2__subheading rte">{{ section.settings.subheading }}</div>
+      {% endif %}
+
+      <div class="ag2__benefits">
+        {% for block in section.blocks %}
+          {% if block.type == 'benefit' %}
+            <div class="ag2__benefit" {{ block.shopify_attributes }}><i>✓</i><span>{{ block.settings.text }}</span></div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      
+      {% unless section.settings.bottom_purchase %}<div class="ag2__rule"><span></span><b>{{ section.settings.stock_text }}</b><span></span></div>{% endunless %}
+      {% if section.settings.bottom_purchase and section.settings.show_sold_bar %}
+        <div class="ag2__sold"><progress max="100" value="{{ section.settings.sold_percent }}" aria-label="{{ section.settings.sold_label | escape }}"></progress><strong>{{ section.settings.sold_percent }}% {{ section.settings.sold_label | escape }}</strong></div>
+      {% endif %}
+
+      {% form 'product', p, id: form_id %}
+        <input type="hidden" name="id" value="{{ v.id }}" data-ag2-input>
+        <input type="hidden" name="quantity" value="2" data-ag2-quantity-input>
+        <input
+          type="hidden"
+          name="selling_plan"
+          value="{{ selected_plan_id }}"
+          data-ag2-selling-plan
+          {% if selected_plan_id == blank %}disabled{% endif %}
+        >
+
+        <div class="ag2__purchase-mode ag2__purchase-mode--offer" data-ag2-purchase-mode>
+          <button type="button" class="ag2__purchase-option is-on" data-ag2-subscribe aria-pressed="true" aria-label="Subscription offer price">
+            <span class="ag2__purchase-price">
+              <strong data-ag2-mode-price>{{ selected_subscription_price | money }}</strong>
+              <s data-ag2-mode-compare{% unless v.price > selected_subscription_price %} hidden{% endunless %}>{{ v.price | money }}</s>
+            </span>
+            {% if section.settings.sale_badge != blank %}<span class="ag2__sale">{{ section.settings.sale_badge }}</span>{% endif %}
+          </button>
+
+          <em class="ag2__visually-hidden" data-ag2-mode-save{% unless v.price > selected_subscription_price %} hidden{% endunless %}>
+            {% if v.price > selected_subscription_price %}Save {{ v.price | minus: selected_subscription_price | times: 100.0 | divided_by: v.price | round }}%{% endif %}
+          </em>
+        </div>
+
+        <div class="ag2__bundles">
+          {% for n in (1..3) %}
+            {% liquid
+              assign tk = 'bundle_' | append: n | append: '_title'
+              assign sk = 'bundle_' | append: n | append: '_subtitle'
+              assign bk = 'bundle_' | append: n | append: '_badge'
+              assign title = section.settings[tk]
+              assign sub = section.settings[sk]
+              assign badge = section.settings[bk]
+
+              assign allocation = v.selling_plan_allocations.first
+              assign plan_id = blank
+              assign unit_subscription_price = v.price
+              if allocation != blank
+                assign plan_id = allocation.selling_plan.id
+                assign unit_subscription_price = allocation.price
+              elsif section.settings.subscription_plan_id != blank
+                assign plan_id = section.settings.subscription_plan_id | strip
+              endif
+
+              assign subscription_total = unit_subscription_price | times: n
+              assign one_time_total = v.price | times: n
+              assign compare_total = 0
+              if v.compare_at_price > v.price
+                assign compare_total = v.compare_at_price | times: n
+              endif
+
+              assign on = false
+              if n == 2
+                assign on = true
+              endif
+            %}
+            <button
+              type="button"
+              class="ag2__bundle{% if on %} is-on{% endif %}"
+              data-ag2-bundle
+              data-id="{{ v.id }}"
+              data-plan-id="{{ plan_id }}"
+              data-sub-price="{{ subscription_total }}"
+              data-one-time-price="{{ one_time_total }}"
+              data-compare-price="{{ compare_total }}"
+              data-quantity="{{ n }}"
+            >
+              {% if badge != blank %}<small class="ag2__badge">{{ badge }}</small>{% endif %}
+              <span class="ag2__radio"><i></i></span>
+              {% if section.settings.bottom_purchase and hero != blank %}
+                <span class="ag2__bundle-thumb">{{ hero | image_url: width: 180 | image_tag: widths: '60,90,120,180', sizes: '64px', loading: 'lazy', alt: '' }}{% if n > 1 %}<b>×{{ n }}</b>{% endif %}</span>
+              {% endif %}
+              <span class="ag2__copy">
+                <strong>{{ title }}</strong>
+                {% if sub != blank %}<small>{{ sub }}</small>{% endif %}
+                {% if section.settings.bottom_purchase %}{% assign benefit_key = 'bundle_' | append: n | append: '_benefit' %}<em>{{ section.settings[benefit_key] }}</em>{% endif %}
+              </span>
+              <span class="ag2__price">
+                <strong data-ag2-bundle-price>{{ subscription_total | money }}</strong>
+                <small data-ag2-bundle-each>{% if n > 1 %}{{ unit_subscription_price | money }} {{ section.settings.per_bag_label }}{% endif %}</small>
+                <s data-ag2-bundle-compare{% unless one_time_total > subscription_total %} hidden{% endunless %}>{{ one_time_total | money }}</s>
+              </span>
+              {% if n > 1 and section.settings.show_gifts %}
+                <span class="ag2__bundle-perks">
+                  {% if section.settings.shipping_reward_active %}
+                    <span class="ag2__bundle-perk">
+                      <b class="ag2__bundle-check">✓</b>
+                      <span>{{ section.settings.gift_shipping_title }}</span>
+                    </span>
+                  {% elsif n == 2 %}
+                    <span class="ag2__bundle-perk ag2__bundle-perk--pending">
+                      <span class="ag2__bundle-perk-clock">○</span>
+                      <span>Free shipping unlocks once checkout setup is finished</span>
+                    </span>
+                  {% endif %}
+                  {% if n == 3 %}
+                    <span class="ag2__bundle-perk">
+                      <b class="ag2__bundle-check">✓</b>
+                      <span><strong>FREE eBook ($24.99 Value)</strong><small>Explore the aging process, the history of garlic, and how aged garlic fits into everyday wellness.</small></span>
+                    </span>
+                  {% endif %}
+                </span>
+              {% endif %}
+            </button>
+          {% endfor %}
+        </div>
+
+        {% if section.settings.show_gifts %}
+          <div class="ag2__rewards" data-ag2-rewards aria-label="Rewards with your garlic order">
+            <div class="ag2__rewards-heading">
+              <strong>{{ section.settings.gifts_heading }}</strong>
+            </div>
+            <div class="ag2__rewards-progress" aria-live="polite" data-ag2-gifts-progress>{% if section.settings.shipping_reward_active %}Buy 2 unlocks free shipping{% else %}Buy 3 unlocks a free digital ebook{% endif %}</div>
+            <div class="ag2__rewards-grid">
+              <div class="ag2__reward{% if section.settings.shipping_reward_active %} is-unlocked{% endif %}" data-ag2-shipping-reward>
+                <div class="ag2__reward-art">
+                  {% if section.settings.gift_shipping_image != blank %}
+                    {{ section.settings.gift_shipping_image | image_url: width: 320 | image_tag: widths: '120,200,320', loading: 'lazy', alt: 'Free shipping gift', class: 'ag2__reward-img' }}
+                  {% else %}
+                    <svg class="ag2__reward-icon" viewBox="0 0 80 72" aria-hidden="true" fill="none"><rect x="9" y="17" width="45" height="31" rx="5" fill="#0068E8"/><path d="M54 28h11l10 11v9H54V28Z" fill="#188FF0"/><circle cx="24" cy="51" r="7" fill="#DFFAFF" stroke="#0068E8" stroke-width="4"/><circle cx="62" cy="51" r="7" fill="#DFFAFF" stroke="#0068E8" stroke-width="4"/><path d="M18 24h27M18 31h20" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>
+                  {% endif %}
+                  
+                </div>
+                <span class="ag2__reward-value">{{ section.settings.gift_shipping_value }}</span>
+                <strong class="ag2__shipping-title">{{ section.settings.gift_shipping_title }}</strong>
+                <small class="ag2__reward-state" data-ag2-shipping-state><svg class="ag2__state-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span data-ag2-shipping-state-text>{% if section.settings.shipping_reward_active %}UNLOCKED{% else %}LOCKED{% endif %}</span></small>
+              </div>
+              <div class="ag2__reward" data-ag2-ebook-reward>
+                <div class="ag2__reward-art">
+                  {% if section.settings.gift_ebook_image != blank %}
+                    {{ section.settings.gift_ebook_image | image_url: width: 320 | image_tag: widths: '120,200,320', loading: 'lazy', alt: 'Free ebook gift', class: 'ag2__reward-img' }}
+                  {% elsif ebook_product.featured_image != blank %}
+                    {{ ebook_product.featured_image | image_url: width: 320 | image_tag: widths: '120,200,320', loading: 'lazy', alt: ebook_product.title, class: 'ag2__reward-img' }}
+                  {% else %}
+                    <div class="ag2__ebook-mock" aria-label="Avonent wellness ebook cover"><span>AVONENT</span><b>YOUR DAILY<br>WELLNESS GUIDE</b><i>DIGITAL EBOOK</i></div>
+                  {% endif %}
+                  
+                </div>
+                <span class="ag2__reward-value">{{ section.settings.gift_ebook_value }}</span>
+                <strong>{{ section.settings.gift_ebook_title }}</strong>
+                <small class="ag2__reward-state" data-ag2-ebook-state><svg class="ag2__state-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span data-ag2-ebook-state-text>LOCKED</span></small>
+              </div>
+            </div>
+            <p class="ag2__rewards-note">{% if section.settings.shipping_reward_active %}{{ section.settings.gifts_note }}{% else %}Buy 3 adds a free digital ebook to your cart. The shipping perk is not active at checkout yet.{% endif %}</p>
+          </div>
+        {% endif %}
+
+        {% if section.settings.show_refill %}
+          <a class="ag2__refill" {% if section.settings.refill_link != blank %}href="{{ section.settings.refill_link }}"{% endif %}><span>↻</span><div><strong>{{ section.settings.refill_heading }}</strong><small>{{ section.settings.refill_text }}</small></div></a>
+        {% endif %}
+
+        <div class="ag2__ship">
+          <i aria-hidden="true"></i>
+          <span>
+            {{ section.settings.shipping_prefix }}
+            <b data-ag2-ship-date data-business-days="{{ section.settings.shipping_business_days }}"></b>
+            {{ section.settings.shipping_suffix }}
+          </span>
+        </div>
+        <button type="submit" name="add" class="ag2__atc"><span>{{ section.settings.button_text }}</span><b>→</b><em data-ag2-price>{{ selected_subscription_price | money }}</em></button>
+
+        <div class="ag2__purchase-meta" data-ag2-purchase-meta>
+          <div class="ag2__recurring" data-ag2-recurring>
+            <span class="ag2__recurring-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.34 5.66"></path><path d="M20 4v7h-7"></path></svg>
+              <span>{{ section.settings.refill_every_text }}</span>
+            </span>
+            <i aria-hidden="true"></i>
+            <span class="ag2__recurring-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+              <span>{{ section.settings.cancel_text }}</span>
+            </span>
+          </div>
+
+          <button type="button" class="ag2__one-time-toggle" data-ag2-one-time aria-pressed="false">
+            {{ section.settings.one_time_label }}
+            <strong data-ag2-one-time-price>{{ v.price | money }}</strong>
+            {% if section.settings.one_time_suffix != blank %}<span>{{ section.settings.one_time_suffix }}</span>{% endif %}
+          </button>
+
+          <button type="button" class="ag2__subscription-return" data-ag2-return-sub hidden>
+            {{ section.settings.subscription_return_label }}
+            <strong data-ag2-return-sub-price>{{ selected_subscription_price | money }}</strong>
+          </button>
+        </div>
+      {% endform %}
+
+      {% if section.settings.show_payments %}
+        <div class="ag2__payments">{% for type in shop.enabled_payment_types %}{{ type | payment_type_svg_tag }}{% endfor %}</div>
+      {% endif %}
+
+      {% if section.settings.bottom_purchase %}<p class="ag2__assurance"><span aria-hidden="true">✓</span> {{ section.settings.purchase_guarantee }}</p>{% endif %}
+      {% if section.settings.show_trusted %}
+      <div class="ag2__trusted">
+        <div class="ag2__avatars">
+          {% assign has_avatar = false %}
+          {% for i in (1..3) %}
+            {% assign ak = 'avatar_' | append: i %}
+            {% assign av = section.settings[ak] %}
+            {% if av != blank %}
+              {% assign has_avatar = true %}
+              {{ av | image_url: width: 100 | image_tag: width: 42, height: 42, loading: 'lazy', alt: section.settings.trusted_heading }}
+            {% endif %}
+          {% endfor %}
+          {% unless has_avatar %}
+            <span class="ag2__avatar-fallback"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="11" r="6"></circle><path d="M5 29c1-8 5-12 11-12s10 4 11 12"></path></svg></span>
+            <span class="ag2__avatar-fallback ag2__avatar-fallback--two"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="11" r="6"></circle><path d="M5 29c1-8 5-12 11-12s10 4 11 12"></path></svg></span>
+            <span class="ag2__avatar-fallback ag2__avatar-fallback--three"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="11" r="6"></circle><path d="M5 29c1-8 5-12 11-12s10 4 11 12"></path></svg></span>
+            <span class="ag2__avatar-verified" aria-hidden="true">✓</span>
+          {% endunless %}
+        </div>
+        <div><strong>{{ section.settings.trusted_heading }}</strong><p>{{ section.settings.trusted_text }}</p></div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if section.settings.show_sticky %}
+    <div class="ag2__sticky" data-ag2-sticky hidden>{% if hero != blank %}{{ hero | image_url: width: 100 | image_tag: class: 'ag2__sticky-image', width: 44, height: 44, loading: 'lazy', alt: '' }}{% endif %}<div><small>{{ section.settings.sticky_label }}</small><strong data-ag2-sticky-price>{{ v.price | money }}</strong></div><a href="#avonent-garlic-buy" data-garlic-bottom-offer>{{ section.settings.sticky_button }} <b>→</b></a></div>
+  {% endif %}
+</section>
+
+<script>
+(() => {
+  const root = document.getElementById('AGOffer-{{ section.id }}');
+  if (!root || root.dataset.ready === '1') return;
+  root.dataset.ready = '1';
+
+  // All garlic CTAs below the primary offer should land on the lower purchase section.
+  if (!window.__avonentGarlicBottomOfferJump) {
+    window.__avonentGarlicBottomOfferJump = true;
+    document.addEventListener('click', (event) => {
+      const trigger = event.target.closest('[data-garlic-bottom-offer], a[href="#avonent-garlic-buy"]');
+      if (!trigger) return;
+
+      const anchor = document.getElementById('avonent-garlic-buy');
+      const target = anchor?.closest('.ag2--bottom') || anchor;
+      if (!target) return;
+
+      event.preventDefault();
+
+      const cssHeader = parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue('--header-group-height')
+      ) || 0;
+      const offset = Math.max(cssHeader + 14, 82);
+      const top = target.getBoundingClientRect().top + window.scrollY - offset + 72;
+
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      if (history.replaceState) history.replaceState(null, '', '#avonent-garlic-buy');
+    });
+  }
+
+  const form = root.querySelector('form[action*="/cart/add"]');
+  const bundles = [...root.querySelectorAll('[data-ag2-bundle]')];
+  const variantInput = root.querySelector('[data-ag2-input]');
+  const quantityInput = root.querySelector('[data-ag2-quantity-input]');
+  const planInput = root.querySelector('[data-ag2-selling-plan]');
+  const atcPrice = root.querySelector('[data-ag2-price]');
+  const stickyPrice = root.querySelector('[data-ag2-sticky-price]');
+  const subscribeButton = root.querySelector('[data-ag2-subscribe]');
+  const oneTimeButton = root.querySelector('[data-ag2-one-time]');
+  const returnSubButton = root.querySelector('[data-ag2-return-sub]');
+  const recurring = root.querySelector('[data-ag2-recurring]');
+  const modePrice = root.querySelector('[data-ag2-mode-price]');
+  const modeCompare = root.querySelector('[data-ag2-mode-compare]');
+  const modeSave = root.querySelector('[data-ag2-mode-save]');
+  const oneTimePrice = root.querySelector('[data-ag2-one-time-price]');
+  const returnSubPrice = root.querySelector('[data-ag2-return-sub-price]');
+  const currency = {{ cart.currency.iso_code | default: shop.currency | json }};
+  const garlicVariantId = Number(root.dataset.ag2GarlicId || 0);
+  const ebookGiftId = Number(root.dataset.ag2GiftId || 0);
+  const rewards = root.querySelector('[data-ag2-rewards]');
+
+  let mode = 'subscription';
+
+  const money = (cents) => {
+    const amount = Number(cents || 0) / 100;
+    try {
+      return new Intl.NumberFormat(undefined, {
+        style: 'currency',
+        currency,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(amount);
+    } catch (e) {
+      return '$' + amount.toFixed(2);
+    }
+  };
+
+  const selectedBundle = () => root.querySelector('[data-ag2-bundle].is-on') || bundles[0];
+
+  const selectedValues = () => {
+    const button = selectedBundle();
+    if (!button) return null;
+    return {
+      button,
+      variantId: String(button.dataset.id || ''),
+      planId: String(button.dataset.planId || ''),
+      subscriptionPrice: Number(button.dataset.subPrice || 0),
+      oneTimePrice: Number(button.dataset.oneTimePrice || 0),
+      comparePrice: Number(button.dataset.comparePrice || 0),
+      quantity: Math.max(1, Number(button.dataset.quantity || 1))
+    };
+  };
+
+  const setPlanInput = () => {
+    if (!planInput) return;
+    const values = selectedValues();
+    const useSubscription = mode === 'subscription' && values?.planId;
+
+    form?.querySelectorAll('[name="selling_plan"]').forEach((control) => {
+      if (control === planInput) return;
+      control.disabled = true;
+      if (control.matches('[type="radio"], [type="checkbox"]')) control.checked = false;
+    });
+
+    if (useSubscription) {
+      planInput.disabled = false;
+      planInput.name = 'selling_plan';
+      planInput.value = values.planId;
+      planInput.setAttribute('value', values.planId);
+    } else {
+      planInput.disabled = true;
+      planInput.value = '';
+      planInput.removeAttribute('value');
+    }
+  };
+
+  const renderBundlePrices = () => {
+    bundles.forEach((button) => {
+      const n = Math.max(1, Number(button.dataset.quantity || 1));
+      const sub = Number(button.dataset.subPrice || 0);
+      const one = Number(button.dataset.oneTimePrice || 0);
+      const shown = mode === 'subscription' ? sub : one;
+      const compare = mode === 'subscription' ? one : Number(button.dataset.comparePrice || 0);
+      const each = shown / n;
+
+      const priceEl = button.querySelector('[data-ag2-bundle-price]');
+      const eachEl = button.querySelector('[data-ag2-bundle-each]');
+      const compareEl = button.querySelector('[data-ag2-bundle-compare]');
+
+      if (priceEl) priceEl.textContent = money(shown);
+      if (eachEl) eachEl.textContent = n > 1 ? money(each) + ' {{ section.settings.per_bag_label | escape }}' : '';
+      if (compareEl) {
+        const show = compare > shown;
+        compareEl.hidden = !show;
+        compareEl.textContent = show ? money(compare) : '';
+      }
+    });
+  };
+
+  const render = () => {
+    const values = selectedValues();
+    if (!values) return;
+
+    if (variantInput) variantInput.value = values.variantId;
+    if (quantityInput) quantityInput.value = String(values.quantity);
+
+    const activePrice = mode === 'subscription'
+      ? values.subscriptionPrice
+      : values.oneTimePrice;
+
+    if (atcPrice) atcPrice.textContent = money(activePrice);
+    if (stickyPrice) stickyPrice.textContent = money(activePrice);
+    if (oneTimePrice) oneTimePrice.textContent = money(values.oneTimePrice);
+    if (returnSubPrice) returnSubPrice.textContent = money(values.subscriptionPrice);
+
+    if (modePrice) modePrice.textContent = money(values.subscriptionPrice);
+    if (modeCompare) {
+      const show = values.oneTimePrice > values.subscriptionPrice;
+      modeCompare.hidden = !show;
+      modeCompare.textContent = show ? money(values.oneTimePrice) : '';
+    }
+    if (modeSave) {
+      const save = values.oneTimePrice > values.subscriptionPrice
+        ? Math.round(((values.oneTimePrice - values.subscriptionPrice) / values.oneTimePrice) * 100)
+        : 0;
+      modeSave.hidden = save <= 0;
+      modeSave.textContent = save > 0 ? 'Save ' + save + '%' : '';
+    }
+
+    subscribeButton?.classList.toggle('is-on', mode === 'subscription');
+    subscribeButton?.setAttribute('aria-pressed', mode === 'subscription' ? 'true' : 'false');
+    oneTimeButton?.classList.toggle('is-on', mode === 'one_time');
+    oneTimeButton?.setAttribute('aria-pressed', mode === 'one_time' ? 'true' : 'false');
+    if (recurring) recurring.hidden = mode !== 'subscription';
+    if (rewards) {
+      const n = values.quantity;
+      const shippingReward = rewards.querySelector('[data-ag2-shipping-reward]');
+      const ebookReward = rewards.querySelector('[data-ag2-ebook-reward]');
+      const shippingOfferActive = root.dataset.ag2ShippingActive === 'true';
+      const shippingUnlocked = shippingOfferActive && n >= 2;
+      const ebookUnlocked = n >= 3;
+      shippingReward?.classList.toggle('is-unlocked', shippingUnlocked);
+      ebookReward?.classList.toggle('is-unlocked', ebookUnlocked);
+      const shipState = rewards.querySelector('[data-ag2-shipping-state-text]');
+      const ebookState = rewards.querySelector('[data-ag2-ebook-state-text]');
+      const progress = rewards.querySelector('[data-ag2-gifts-progress]');
+      if (shipState) shipState.textContent = shippingUnlocked ? 'UNLOCKED' : 'LOCKED';
+      if (ebookState) ebookState.textContent = ebookUnlocked ? 'UNLOCKED' : 'LOCKED';
+      if (progress) progress.textContent = !shippingOfferActive
+        ? (n >= 3 ? 'Free digital ebook unlocked' : n === 2 ? 'Buy 3 adds a free digital ebook' : 'Buy 3 unlocks a free digital ebook')
+        : n === 1
+          ? 'Add one more bag to unlock free shipping'
+          : n === 2 ? 'Free shipping unlocked • Buy 3 adds a free ebook'
+          : 'Free shipping + free ebook unlocked';
+    }
+    if (returnSubButton) returnSubButton.hidden = mode !== 'one_time';
+    if (oneTimeButton) oneTimeButton.hidden = mode === 'one_time';
+
+    root.classList.toggle('ag2--one-time', mode === 'one_time');
+
+    setPlanInput();
+    renderBundlePrices();
+  };
+
+  const setMode = (nextMode) => {
+    mode = nextMode === 'one_time' ? 'one_time' : 'subscription';
+    render();
+
+    document.dispatchEvent(new Event('selling-plan:change'));
+    document.dispatchEvent(new CustomEvent('avonent:purchase-mode-change', {
+      detail: {
+        mode,
+        sellingPlanId: mode === 'subscription' ? selectedValues()?.planId || null : null
+      }
+    }));
+  };
+
+  root.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-ag2-bundle]');
+    if (!button || !root.contains(button)) return;
+    event.preventDefault();
+    bundles.forEach((b) => b.classList.toggle('is-on', b === button));
+    render();
+  });
+
+  subscribeButton?.addEventListener('click', () => setMode('subscription'));
+  oneTimeButton?.addEventListener('click', () => setMode('one_time'));
+  returnSubButton?.addEventListener('click', () => setMode('subscription'));
+
+  const submitButton = form?.querySelector('button[type="submit"][name="add"]');
+  const submitLabel = submitButton?.querySelector('span');
+  const originalLabel = submitLabel?.textContent || 'ADD TO CART';
+  let adding = false;
+  const resetAddButton = () => {
+    adding = false;
+    if (submitButton) {
+      submitButton.disabled = false;
+      submitButton.removeAttribute('aria-busy');
+    }
+    if (submitLabel) submitLabel.textContent = originalLabel;
+  };
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) resetAddButton();
+  });
+
+  if (form) {
+    form.addEventListener('click', (event) => {
+      const submit = event.target.closest('button[type="submit"][name="add"]');
+      if (submit) setPlanInput();
+    }, true);
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (adding) return;
+
+      const values = selectedValues();
+      if (!values?.variantId) return;
+
+      adding = true;
+      let added = false;
+      const previousError = root.querySelector('[data-ag2-cart-error]');
+      if (previousError) previousError.hidden = true;
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.setAttribute('aria-busy', 'true');
+      }
+      if (submitLabel) submitLabel.textContent = 'ADDING...';
+
+      try {
+        const rootPath = window.Shopify?.routes?.root || '/';
+
+        const { CartLinesUpdateEvent } = await import('@shopify/events');
+        setPlanInput();
+        if (variantInput) variantInput.value = String(values.variantId);
+        if (quantityInput) quantityInput.value = String(values.quantity);
+
+        const delays = [0, 700, 1500, 3000, 5000];
+        let payload = null;
+        let response = null;
+        let lastRequestId = '';
+        const sectionIds = [...new Set([...document.querySelectorAll('cart-items-component')]
+          .map((component) => component.dataset.sectionId).filter(Boolean))].slice(0, 5);
+
+        for (let attempt = 0; attempt < delays.length; attempt += 1) {
+          if (delays[attempt]) {
+            await new Promise((resolve) => setTimeout(resolve, delays[attempt]));
+          }
+
+          const formData = new FormData(form);
+          if (sectionIds.length) formData.set('sections', sectionIds.join(','));
+          formData.set('sections_url', window.location.pathname);
+
+          response = await fetch(rootPath + 'cart/add.js', {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            credentials: 'same-origin',
+            signal: AbortSignal.timeout(20000),
+            body: formData
+          });
+
+          lastRequestId =
+            response.headers.get('x-request-id') ||
+            response.headers.get('x-shopify-request-id') ||
+            lastRequestId;
+
+          payload = await response.json().catch(() => ({}));
+
+          if (response.ok && !payload?.status) break;
+
+          const description = String(
+            payload?.description ||
+            payload?.message ||
+            payload?.errors ||
+            ''
+          ).toLowerCase();
+
+          const isFalseSoldOut =
+            response.status === 422 &&
+            description.includes('sold out');
+
+          if (!isFalseSoldOut || attempt === delays.length - 1) break;
+        }
+
+        if (!response?.ok || payload?.status) {
+          const message =
+            payload?.description ||
+            payload?.message ||
+            payload?.errors ||
+            'Unable to add this item to the cart.';
+          const requestSuffix = lastRequestId ? ' (Shopify request ' + lastRequestId + ')' : '';
+          throw new Error((typeof message === 'string' ? message : JSON.stringify(message)) + requestSuffix);
+        }
+
+        added = true;
+        // Add a separate, one-time $0 digital product line for all garlic carts.
+        // This happens after the existing garlic FormData submission, preserving Appstle's selling plan.
+        const cartBeforeGiftResponse = await fetch(rootPath + 'cart.js', {
+          headers: { Accept: 'application/json' },
+          credentials: 'same-origin',
+          signal: AbortSignal.timeout(15000)
+        });
+        if (!cartBeforeGiftResponse.ok) throw new Error('Cart refresh failed');
+        let cart = await cartBeforeGiftResponse.json();
+        const garlicCount = cart.items.reduce((total, item) =>
+          total + (Number(item.variant_id) === garlicVariantId ? Number(item.quantity || 0) : 0), 0);
+        const hasOurGift = cart.items.some((item) =>
+          Number(item.variant_id) === ebookGiftId);
+
+        if (ebookGiftId && garlicCount >= 1 && !hasOurGift) {
+          const giftForm = new FormData();
+          giftForm.set('id', String(ebookGiftId));
+          giftForm.set('quantity', '1');
+          giftForm.set('properties[_avonent_garlic_gift]', 'buy3');
+          giftForm.set('properties[_gift_for]', 'Aged Garlic');
+          if (sectionIds.length) giftForm.set('sections', sectionIds.join(','));
+          giftForm.set('sections_url', window.location.pathname);
+
+          const giftResponse = await fetch(rootPath + 'cart/add.js', {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            credentials: 'same-origin',
+            signal: AbortSignal.timeout(20000),
+            body: giftForm
+          });
+          const giftResult = await giftResponse.json().catch(() => ({}));
+          if (!giftResponse.ok || giftResult.status) {
+            const message = giftResult.description || giftResult.message || 'Unable to add your free ebook.';
+            throw new Error(typeof message === 'string' ? message : 'Unable to add your free ebook.');
+          }
+          if (giftResult.sections) payload.sections = giftResult.sections;
+          const refreshedResponse = await fetch(rootPath + 'cart.js', {
+            headers: { Accept: 'application/json' },
+            credentials: 'same-origin',
+            signal: AbortSignal.timeout(15000)
+          });
+          if (!refreshedResponse.ok) throw new Error('Cart refresh failed after adding the ebook.');
+          cart = await refreshedResponse.json();
+        }
+        root.dispatchEvent(new CartLinesUpdateEvent({
+          action: 'add',
+          context: 'product',
+          lines: [{ merchandiseId: values.variantId, quantity: values.quantity }],
+          promise: Promise.resolve({
+            cart: CartLinesUpdateEvent.createCartFromAjaxResponse(cart),
+            detail: {
+              sections: payload.sections || {},
+              items: cart.items,
+              itemCount: cart.item_count,
+              source: 'avonent-garlic',
+              didError: false
+            }
+          })
+        }));
+      } catch (error) {
+        console.error('[Avonent garlic add to cart]', error);
+
+        let errorBox = root.querySelector('[data-ag2-cart-error]');
+        if (!errorBox) {
+          errorBox = document.createElement('p');
+          errorBox.setAttribute('data-ag2-cart-error', '');
+          errorBox.className = 'ag2__cart-error';
+          submitButton?.insertAdjacentElement('afterend', errorBox);
+        }
+        errorBox.setAttribute('role', 'alert');
+        errorBox.textContent = added
+          ? 'Added to your cart. Please tap the cart icon to view it.'
+          : error?.message || 'Unable to add this item to the cart.';
+        errorBox.hidden = false;
+      } finally {
+        resetAddButton();
+      }
+    });
+  }
+
+  const hero = root.querySelector('[data-ag2-hero]');
+  const track = root.querySelector('[data-ag2-track]');
+  const slides = Array.from(root.querySelectorAll('[data-ag2-slide]'));
+  const thumbs = Array.from(root.querySelectorAll('[data-ag2-thumb]'));
+  const prevButton = root.querySelector('[data-ag2-prev]');
+  const nextButton = root.querySelector('[data-ag2-next]');
+  let galleryIndex = 0;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchDeltaX = 0;
+  let isHorizontalSwipe = false;
+
+  const setTrackPosition = (index, animate = true, dragOffset = 0) => {
+    if (!track) return;
+    track.style.transition = animate ? 'transform .42s cubic-bezier(.22,.75,.22,1)' : 'none';
+    track.style.transform = `translate3d(calc(-${index * 100}% + ${dragOffset}px),0,0)`;
+  };
+
+  const showGalleryImage = (nextIndex, animate = true) => {
+    if (!slides.length || !track) return;
+    galleryIndex = (nextIndex + slides.length) % slides.length;
+    setTrackPosition(galleryIndex, animate);
+    thumbs.forEach((thumb, index) => {
+      const active = index === galleryIndex;
+      thumb.classList.toggle('is-on', active);
+      thumb.setAttribute('aria-current', active ? 'true' : 'false');
+    });
+    thumbs[galleryIndex]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  };
+
+  thumbs.forEach((thumb, index) => {
+    thumb.addEventListener('click', () => showGalleryImage(index));
+  });
+
+  if (slides.length <= 1) {
+    if (prevButton) prevButton.hidden = true;
+    if (nextButton) nextButton.hidden = true;
+  } else {
+    prevButton?.addEventListener('click', () => showGalleryImage(galleryIndex - 1));
+    nextButton?.addEventListener('click', () => showGalleryImage(galleryIndex + 1));
+  }
+
+  if (hero && track && slides.length > 1) {
+    hero.addEventListener('touchstart', (event) => {
+      const touch = event.touches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      touchDeltaX = 0;
+      isHorizontalSwipe = false;
+      track.style.transition = 'none';
+    }, { passive: true });
+
+    hero.addEventListener('touchmove', (event) => {
+      const touch = event.touches[0];
+      touchDeltaX = touch.clientX - touchStartX;
+      const deltaY = touch.clientY - touchStartY;
+      if (!isHorizontalSwipe && Math.abs(touchDeltaX) > 8) {
+        isHorizontalSwipe = Math.abs(touchDeltaX) > Math.abs(deltaY);
+      }
+      if (!isHorizontalSwipe) return;
+      event.preventDefault();
+      setTrackPosition(galleryIndex, false, touchDeltaX);
+    }, { passive: false });
+
+    hero.addEventListener('touchend', () => {
+      if (!isHorizontalSwipe) {
+        setTrackPosition(galleryIndex, true);
+        return;
+      }
+      if (Math.abs(touchDeltaX) >= 48) {
+        showGalleryImage(galleryIndex + (touchDeltaX < 0 ? 1 : -1));
+      } else {
+        setTrackPosition(galleryIndex, true);
+      }
+      touchDeltaX = 0;
+      isHorizontalSwipe = false;
+    }, { passive: true });
+  }
+
+  showGalleryImage(0, false);
+
+  const shipDate = root.querySelector('[data-ag2-ship-date]');
+  if (shipDate) {
+    let date = new Date();
+    let left = Math.max(0, Number(shipDate.dataset.businessDays || 1));
+    while (left > 0) {
+      date.setDate(date.getDate() + 1);
+      const day = date.getDay();
+      if (day !== 0 && day !== 6) left--;
+    }
+    shipDate.textContent = date.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric'
+    });
+  }
+
+  const sticky = root.querySelector('[data-ag2-sticky]');
+  if (sticky) {
+    sticky.style.cssText = root.style.cssText;
+    document.body.appendChild(sticky);
+    root.addEventListener('shopify:section:unload', () => sticky.remove());
+    const updateSticky = () => {
+      const purchase = document.getElementById('avonent-garlic-buy')?.closest('.ag2');
+      const box = purchase?.getBoundingClientRect();
+      const purchaseVisible = box && box.top < innerHeight && box.bottom > 100;
+      sticky.hidden = !(innerWidth < 750 && root.getBoundingClientRect().bottom < 120 && !purchaseVisible);
+      const viewport = window.visualViewport;
+      const inset = viewport ? Math.max(0, innerHeight - viewport.height - viewport.offsetTop) : 0;
+      sticky.style.bottom = inset + 'px';
+      if (purchase && stickyPrice) {
+        const price = purchase.querySelector('[data-ag2-price]');
+        if (price) stickyPrice.textContent = price.textContent;
+      }
+    };
+    addEventListener('scroll', updateSticky, { passive: true });
+    addEventListener('resize', updateSticky, { passive: true });
+    window.visualViewport?.addEventListener('resize', updateSticky, { passive: true });
+    window.visualViewport?.addEventListener('scroll', updateSticky, { passive: true });
+    updateSticky();
+  }
+
+  // Default: Buy 2 + Subscribe & Save.
+  const preferred = bundles[1] || bundles[0];
+  if (preferred) {
+    bundles.forEach((b) => b.classList.toggle('is-on', b === preferred));
+  }
+  setMode('subscription');
+})();
+</script>
+
+{% stylesheet %}
+.ag2__bundle-perks{display:none;grid-column:1/-1;margin-top:1px;padding-top:11px;border-top:1px solid #daeaf3;min-width:0}
+.ag2__bundle.is-on .ag2__bundle-perks{display:flex;flex-direction:column;gap:7px}
+.ag2__bundle-perk{display:flex;gap:8px;align-items:flex-start;color:#086c9f;font-size:12px;font-weight:750;line-height:1.35;min-width:0}
+.ag2__bundle-perk>span:last-child{display:flex;flex-direction:column;gap:3px;min-width:0}
+.ag2__bundle-perk strong{font-size:12px;color:#0a588f}
+.ag2__bundle-perk small{font-size:10px;line-height:1.4;font-weight:450;color:#5b7083}
+.ag2__bundle-check{display:grid;place-items:center;flex:0 0 17px;width:17px;height:17px;border-radius:50%;background:#08a2ca;color:#fff;font-size:11px;line-height:1}
+.ag2__bundle-perk--pending{color:#657c90;font-size:10px;font-weight:550}
+.ag2__bundle-perk-clock{display:grid;place-items:center;flex:0 0 17px;color:#7d91a3;font-weight:750}
+.ag2--bottom .ag2__bundle-perks{grid-column:1/-1}
+@media(max-width:500px){.ag2__bundle-perks{padding-top:9px}.ag2__bundle-perk{font-size:11px}.ag2__bundle-perk small{font-size:10px}}
+
+/* Garlic-only tiered reward shelf. All colors inherit Avonent's editable section palette. */
+.ag2__rewards{position:relative;margin:25px 0 15px;padding:22px 11px 10px;border:1.5px solid color-mix(in srgb,var(--ad) 55%,#fff);border-radius:15px;background:linear-gradient(160deg,#fbfdff,#f2fbff);box-shadow:0 5px 15px rgb(3 83 160 / 4%)}
+.ag2__rewards-heading{position:absolute;left:50%;top:-15px;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;white-space:nowrap;max-width:calc(100% - 25px);padding:6px 20px;border:1.5px solid var(--ad);border-radius:999px;background:#fff;color:var(--t);box-shadow:0 3px 8px rgb(10 92 172 / 8%)}
+.ag2__rewards-heading strong{font-size:12px;letter-spacing:.02em;font-weight:850}
+.ag2__rewards-progress{text-align:center;color:var(--ad);font-size:10px;font-weight:770;line-height:1.35;margin:0 0 8px}
+.ag2__rewards-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.ag2__reward{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0;min-height:103px;padding:8px 5px 7px;text-align:center;border:1px solid #d4e5ef;border-radius:12px;background:#f8fbfe;color:#566c7a;transition:background .2s,border-color .2s,box-shadow .2s}
+.ag2__reward.is-unlocked{border-color:#65cce8;background:#eafaff;color:var(--t);box-shadow:0 2px 9px rgb(2 198 234 / 11%)}
+.ag2__reward-art{width:100%;height:43px;display:grid;place-items:center;position:relative}
+.ag2__reward-img{width:auto;max-width:95%;max-height:43px;object-fit:contain}
+.ag2__reward-icon{width:63px;height:48px}
+.ag2__reward:not(.is-unlocked) .ag2__reward-art>*{filter:blur(3.8px);opacity:.42}
+.ag2__reward:not(.is-unlocked) .ag2__reward-value{filter:blur(1.7px);opacity:.45}
+.ag2__reward:not(.is-unlocked)[data-ag2-ebook-reward]>strong{filter:blur(2.1px);opacity:.43}
+.ag2__reward-value{color:#80919c;font-size:10px;text-decoration:line-through}
+.ag2__reward>strong{color:inherit;font-size:11px;line-height:1.15;font-weight:850}
+.ag2__reward.is-unlocked>strong{color:var(--ad)}
+.ag2__reward[data-ag2-shipping-reward]>.ag2__shipping-title{color:#d82f3e;letter-spacing:.01em}
+.ag2__reward-state{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:16px;font-size:10px;font-weight:850;line-height:1.3;color:#0068e8}
+.ag2__state-lock{width:12px;height:12px;flex:none;color:#0068e8}
+.ag2__reward.is-unlocked .ag2__state-lock{display:none}
+.ag2__ebook-mock{height:43px;width:33px;padding:5px 3px 3px;border-radius:2px 5px 5px 2px;background:linear-gradient(140deg,var(--ad),var(--a));box-shadow:3px 3px 5px #0b47712e;color:#fff;display:flex;flex-direction:column;justify-content:space-between;transform:rotate(-6deg);border-left:3px solid #00478b}
+.ag2__ebook-mock span{font-size:4px;font-weight:850;letter-spacing:.1em}
+.ag2__ebook-mock b{font-size:4.5px;line-height:1.12}
+.ag2__ebook-mock i{font-size:3.6px;font-style:normal;letter-spacing:.02em}
+.ag2__rewards-note{margin:8px 1px 0;text-align:center;color:var(--m);font-size:9px;line-height:1.35}
+@media(max-width:500px){.ag2__rewards{margin-top:24px;padding:21px 8px 9px}.ag2__rewards-grid{gap:7px}.ag2__reward{min-height:99px;padding:6px 3px 6px}.ag2__reward>strong{font-size:10.5px}.ag2__rewards-heading{padding:6px 16px}.ag2__rewards-heading strong{font-size:12px}.ag2__rewards-note{font-size:9px}}
+.ag2{position:relative;background:var(--bg);color:var(--t);padding:18px 0 44px}.ag2__anchor{position:absolute;top:-110px}.ag2 *{box-sizing:border-box}.ag2__wrap{width:min(calc(100% - 28px),1220px);margin:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(430px,.9fr);gap:42px}.ag2__media{position:sticky;top:calc(var(--header-group-height,0px) + 12px)}.ag2__hero{position:relative;min-height:580px;border:1px solid var(--l);border-radius:20px;background:#fff;overflow:hidden;display:block;touch-action:pan-y}.ag2__gallery-track{display:flex;width:100%;min-height:580px;transform:translate3d(0,0,0);transition:transform .42s cubic-bezier(.22,.75,.22,1);will-change:transform}.ag2__gallery-slide{flex:0 0 100%;width:100%;min-height:580px;display:grid;place-items:center}.ag2__heroimg{display:block;width:100%;height:auto;max-height:640px;object-fit:contain}.ag2__gallery-nav{display:grid;grid-template-columns:46px minmax(0,1fr) 46px;align-items:center;gap:9px;margin-top:10px}.ag2__gallery-arrow{display:grid;place-items:center;width:46px;height:46px;padding:0;border:0;border-radius:50%;background:#e5e7e9;color:#222;box-shadow:none;font:inherit;font-size:34px;font-weight:400;line-height:1;cursor:pointer;transition:transform .15s ease,background .15s ease}.ag2__gallery-arrow:active{transform:scale(.94);background:#d8dade}.ag2__mock{width:58%;aspect-ratio:.72;background:linear-gradient(160deg,#fff,#f3e9e3);border-radius:18px;box-shadow:0 30px 55px rgb(86 20 36 / 16%);padding:44px 28px;display:flex;flex-direction:column;justify-content:center}.ag2__mock span{color:var(--a);font-size:12px;font-weight:900;letter-spacing:.18em}.ag2__mock em{margin-top:28px;color:#8b7c80;font-size:9px;font-style:normal;font-weight:800;letter-spacing:.13em}.ag2__mock strong{font-size:39px;line-height:.9;margin-top:12px;color:var(--ad)}.ag2__mock b{font-size:21px;color:var(--g);margin-top:8px}.ag2__mock small{margin-top:2px;color:var(--a);font-size:12px;font-weight:700}.ag2__mock i{margin-top:34px;padding-top:14px;border-top:1px solid #eadbd2;color:#8a7b7f;font-size:8px;font-style:normal;font-weight:800;letter-spacing:.12em}.ag2__thumbs{display:flex;gap:7px;margin:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}.ag2__thumbs::-webkit-scrollbar{display:none}.ag2__thumb{width:70px;height:58px;flex:0 0 70px;border:1px solid var(--l);border-radius:8px;background:#fff;padding:3px}.ag2__thumb.is-on{border-color:var(--a);box-shadow:0 0 0 1px var(--a)}.ag2__thumb img{width:100%;height:100%;object-fit:cover;border-radius:5px}.ag2__info{padding-top:5px}.ag2__rating{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:8px;font-size:13px;line-height:1.3}.ag2__rating span{color:#ffb400;font-size:19px;letter-spacing:.5px}.ag2__rating b{font-weight:800;color:#1b1b1b}.ag2__rating em{font-style:normal;color:#333;font-weight:650}.ag2 h1{margin:13px 0 0;font-size:clamp(39px,4vw,57px);line-height:.98;letter-spacing:-.045em}.ag2__subheading{margin-top:13px;max-width:560px;color:var(--m);font-size:14px;line-height:1.55}.ag2__subheading p{margin:0}.ag2__benefits{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin-top:21px}.ag2__benefit{display:flex;align-items:center;gap:10px;font-size:14px;line-height:1.35}.ag2__benefit i{display:grid;place-items:center;width:21px;height:21px;flex:0 0 21px;border-radius:50%;background:#62a77b;color:#fff;font-style:normal;font-size:12px;font-weight:900}.ag2__purchase-mode--offer{border-top:0;margin-top:14px;margin-bottom:18px}.ag2__purchase-mode--offer .ag2__purchase-option{justify-content:flex-start;gap:14px;flex-wrap:wrap;padding:10px 2px 6px}.ag2__purchase-mode--offer .ag2__purchase-price{justify-content:flex-start;gap:12px}.ag2__purchase-mode--offer .ag2__purchase-price strong{font-size:29px;color:var(--t)}.ag2__purchase-mode--offer .ag2__purchase-price s{font-size:16px}.ag2__purchase-mode--offer .ag2__sale{margin:0;font-size:12px;letter-spacing:0;padding:9px 12px;border-radius:7px}.ag2__offer-disclosure{display:block;color:var(--m);font-size:11px;line-height:1.4;margin:0 2px 9px}.ag2__visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}@media(max-width:480px){.ag2__purchase-mode--offer .ag2__purchase-price strong{font-size:27px}.ag2__purchase-mode--offer .ag2__sale{font-size:11px;padding:8px 10px}}
+.ag2__sale{display:inline-flex;margin-top:22px;background:linear-gradient(90deg,var(--ad),var(--a));color:#fff;border-radius:8px;padding:7px 12px;font-size:11px;font-weight:900;letter-spacing:.08em}.ag2__rule{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin:24px 0 13px;color:var(--ad);font-size:12px;font-weight:800}.ag2__rule span{height:1px;background:color-mix(in srgb,var(--a) 30%,transparent)}.ag2__bundles{display:grid;gap:10px}.ag2__bundle{position:relative;width:100%;min-height:82px;display:grid;grid-template-columns:20px 1fr auto;align-items:center;gap:12px;padding:14px;border:1px solid color-mix(in srgb,var(--a) 22%,var(--l));border-radius:13px;background:#fff;color:var(--t);text-align:left;font:inherit;box-shadow:0 3px 12px rgb(4 62 118 / 3%)}.ag2__bundle.is-on{border:2px solid var(--a);background:linear-gradient(90deg,color-mix(in srgb,var(--a) 9%,#fff),#fff);box-shadow:0 8px 22px rgb(0 144 255 / 9%)}.ag2__badge{position:absolute;right:12px;top:-10px;background:var(--a);color:#fff;padding:5px 10px;border-radius:999px;font-size:9px;font-weight:900}.ag2__radio{width:20px;height:20px;border:2px solid #d9cdcf;border-radius:50%;display:grid;place-items:center}.ag2__radio i{width:10px;height:10px;border-radius:50%}.ag2__bundle.is-on .ag2__radio{border-color:var(--a)}.ag2__bundle.is-on .ag2__radio i{background:var(--a)}.ag2__copy,.ag2__price{display:flex;flex-direction:column}.ag2__copy strong{font-size:18px}.ag2__copy small{margin-top:3px;color:var(--a);font-size:12px}.ag2__price{align-items:flex-end}.ag2__price strong{color:var(--ad);font-size:17px}.ag2__price small,.ag2__price s{margin-top:3px;color:#777;font-size:10px}.ag2__refill{display:flex;gap:11px;align-items:center;margin-top:12px;padding:13px;border:2px dashed var(--a);border-radius:12px;text-decoration:none;color:var(--t)}.ag2__refill>span{display:grid;place-items:center;width:32px;height:32px;border:2px solid var(--a);border-radius:7px;color:var(--a);font-size:18px}.ag2__refill div{display:flex;flex-direction:column}.ag2__refill strong{color:var(--a);font-size:13px}.ag2__refill small{margin-top:3px;color:var(--m);font-size:10px}.ag2__ship{display:flex;align-items:center;gap:10px;margin:18px 4px 0;color:var(--t);font-size:13px}.ag2__ship i{width:13px;height:13px;flex:0 0 13px;border-radius:50%;background:#21c76a;box-shadow:0 0 0 3px #d9f8e5}.ag2__ship b{font-weight:800}.ag2__atc{width:100%;min-height:62px;margin-top:17px;border:0;border-radius:12px;background:linear-gradient(90deg,var(--ad),var(--a));color:#fff;display:flex;align-items:center;justify-content:center;gap:13px;font:inherit;font-size:15px;font-weight:900}.ag2__atc b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#fff;color:var(--a);font-size:18px}.ag2__atc em{font-style:normal;padding-left:11px;border-left:1px solid rgb(255 255 255 / 28%)}.ag2__purchase-mode{margin:0 0 12px;border-top:1px solid var(--l);border-bottom:1px solid var(--l)}.ag2__purchase-option{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;padding:13px 2px;border:0;background:transparent;color:var(--t);font:inherit;text-align:left;cursor:pointer}.ag2__purchase-copy{display:flex;flex-direction:column;gap:3px}.ag2__purchase-copy strong{color:var(--a);font-size:16px;font-weight:850}.ag2__purchase-copy small{color:var(--m);font-size:10px;line-height:1.25}.ag2__purchase-price{display:flex;align-items:baseline;justify-content:flex-end;gap:8px;white-space:nowrap}.ag2__purchase-price strong{color:#111;font-size:19px;font-weight:900}.ag2__purchase-price s{color:#7a858a;font-size:11px}.ag2__purchase-price em{padding:4px 7px;border-radius:6px;background:var(--a);color:#fff;font-size:9px;font-style:normal;font-weight:850}.ag2__cart-error{margin:9px 0 0;padding:10px 12px;border:1px solid #efb2b2;border-radius:9px;background:#fff5f5;color:#9a1d1d;font-size:12px;font-weight:750;line-height:1.35;text-align:center}.ag2__purchase-meta{display:grid;justify-items:center;gap:8px;width:100%;margin-top:10px}.ag2__recurring{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;width:100%;color:#111;font-size:11px;font-weight:700}.ag2__recurring-item{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}.ag2__recurring-item svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.ag2__recurring>i{width:1px;height:16px;background:#cfdadd}.ag2__one-time-toggle,.ag2__subscription-return{appearance:none;margin:0;padding:0 0 2px;border:0;border-bottom:1px solid currentColor;background:transparent;color:#02C6EA;font:inherit;font-size:11px;font-weight:750;line-height:1.35;text-align:center;cursor:pointer}.ag2__one-time-toggle strong,.ag2__subscription-return strong{font-weight:900}.ag2__one-time-toggle span{font-weight:650}.ag2__one-time-toggle.is-on{color:var(--t);border-bottom-color:transparent}.ag2--one-time .ag2__purchase-option{opacity:.68}.ag2--one-time .ag2__purchase-copy strong{color:var(--m)}.ag2--one-time .ag2__bundle.is-on{background:#fff;border-color:var(--ad)}.ag2--one-time .ag2__bundle.is-on .ag2__radio{border-color:var(--ad)}.ag2--one-time .ag2__bundle.is-on .ag2__radio i{background:var(--ad)}.ag2--one-time .ag2__atc{background:linear-gradient(90deg,var(--ad),#157da8)}.ag2__payments{display:flex;justify-content:center;align-items:center;gap:4px;flex-wrap:nowrap;margin-top:15px;overflow:hidden}.ag2__payments svg{height:24px;width:auto;max-width:40px;flex:0 1 auto}.ag2__trusted{display:flex;align-items:center;gap:14px;margin-top:18px;padding:10px 16px;border:0;border-radius:999px;background:#f3f5f7}.ag2__avatars{position:relative;display:flex;flex:0 0 auto;padding-right:9px}.ag2__avatars img,.ag2__avatar-fallback{display:grid;place-items:center;width:44px;height:44px;object-fit:cover;border-radius:50%;border:2px solid #fff;margin-left:-10px;overflow:hidden}.ag2__avatars img:first-child,.ag2__avatar-fallback:first-child{margin-left:0}.ag2__avatar-fallback{background:linear-gradient(145deg,#8ddff0,#02c6ea);color:#fff}.ag2__avatar-fallback--two{background:linear-gradient(145deg,#4ba8ff,#0068e8)}.ag2__avatar-fallback--three{background:linear-gradient(145deg,#91caa4,#55a575)}.ag2__avatar-fallback svg{width:27px;height:27px;fill:currentColor}.ag2__avatar-verified{position:absolute;right:0;top:-5px;display:grid;place-items:center;width:23px;height:23px;border:2px solid #fff;border-radius:50%;background:#47b876;color:#fff;font-size:13px;font-weight:900}.ag2__trusted strong{display:block;color:#111;font-size:15px;font-weight:850;line-height:1.15}.ag2__trusted p{margin:3px 0 0;color:#242424;font-size:11px;line-height:1.28}.ag2__sticky{display:none}@media(max-width:899px){.ag2{padding-bottom:8px}.ag2__wrap{grid-template-columns:1fr;gap:20px;width:min(calc(100% - 22px),680px)}.ag2__media{position:static}.ag2__hero{min-height:420px}}@media(max-width:749px){.ag2__gallery-nav{grid-template-columns:42px minmax(0,1fr) 42px;gap:8px}.ag2__gallery-arrow{width:42px;height:42px;font-size:32px}.ag2__gallery-track,.ag2__gallery-slide{min-height:370px}.ag2__purchase-option{gap:8px;padding:11px 0}.ag2__purchase-copy strong{font-size:14px}.ag2__purchase-price{gap:5px}.ag2__purchase-price strong{font-size:16px}.ag2__purchase-price s{font-size:10px}.ag2__purchase-price em{font-size:8px}.ag2__recurring{gap:8px;font-size:10.5px}.ag2__one-time-toggle,.ag2__subscription-return{font-size:10.5px}.ag2 h1{font-size:35px}.ag2__benefits{grid-template-columns:1fr;gap:9px}.ag2__hero{min-height:370px;border-radius:14px}.ag2__bundle{min-height:78px;padding:12px 11px}.ag2__copy strong{font-size:16px}.ag2__price strong{font-size:15px}.ag2__trusted{border-radius:999px;padding:10px 12px}.ag2__trusted strong{font-size:14px}.ag2__trusted p{font-size:10.5px}.ag2__avatars img,.ag2__avatar-fallback{width:42px;height:42px}.ag2__sticky{position:fixed;z-index:60;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;gap:9px;padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--l);box-shadow:0 -8px 28px rgb(30 15 20 / 10%)}.ag2__sticky[hidden]{display:none}.ag2__sticky div{display:flex;flex-direction:column}.ag2__sticky small{font-size:8px;color:var(--m)}.ag2__sticky a{padding:13px 16px;min-width:165px;border-radius:9px;background:var(--a);color:#fff;text-decoration:none;text-align:center;font-size:12px;font-weight:900}}
+.ag2 [hidden]{display:none!important}.ag2--bottom{padding:38px 0;background:linear-gradient(150deg,#dff8fc,#f6fcff)}.ag2__purchase-banner{width:min(calc(100% - 28px),760px);margin:0 auto 28px;overflow:hidden;border-radius:20px;background:transparent;box-shadow:none}.ag2__purchase-banner img{display:block;width:100%;height:auto;object-fit:cover}.ag2__bottom-heading{max-width:760px;margin:0 auto 28px;padding:0 18px;text-align:center}.ag2__bottom-heading>p{color:#02C6EA;font-size:12px;font-weight:850;letter-spacing:.14em;margin:0 0 10px}.ag2__bottom-heading h2{color:#071a52;font-size:clamp(32px,5vw,48px);line-height:1.08;letter-spacing:-.035em;margin:0 0 12px}.ag2__bottom-heading>div{color:#526078;font-size:15px;line-height:1.5}.ag2__bottom-heading>div p{margin:0}.ag2__product-title{font-size:26px;line-height:1.15;margin:0 0 12px;color:var(--t)}.ag2--bottom .ag2__media{align-self:start}.ag2--bottom .ag2__hero{min-height:0;padding:16px}.ag2--bottom .ag2__heroimg{max-height:440px}.ag2--bottom .ag2__thumbs{display:none}@media(max-width:749px){.ag2--bottom .ag2__hero{max-width:300px;margin:auto}.ag2--bottom .ag2__heroimg{max-height:280px}.ag2--bottom .ag2__wrap{gap:24px}.ag2__product-title{text-align:center;font-size:23px}}@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+.ag2--bottom .ag2__wrap{display:block;max-width:760px;width:calc(100% - 28px)}.ag2--bottom .ag2__info{padding:0}.ag2--bottom .ag2__benefits:empty{display:none}.ag2--bottom .ag2__bundles{gap:18px}.ag2--bottom .ag2__bundle{grid-template-columns:22px 64px minmax(0,1fr) auto;gap:14px;min-height:110px;padding:20px 18px;border-width:2px;border-radius:16px}.ag2--bottom .ag2__bundle:not(.is-on){border-color:#d5e6ec}.ag2__bundle-thumb{position:relative;width:64px;height:72px;display:grid;place-items:center}.ag2__bundle-thumb img{width:100%;height:100%;object-fit:contain;border-radius:7px}.ag2__bundle-thumb b{position:absolute;right:-5px;bottom:-5px;background:#02C6EA;color:white;border:2px solid white;border-radius:50%;font-size:11px;display:grid;place-items:center;width:26px;height:26px}.ag2--bottom .ag2__copy strong{font-size:20px}.ag2--bottom .ag2__copy small{font-size:13px;color:#5f6878}.ag2__copy em{font-style:normal;color:#02C6EA;font-weight:750;font-size:12px;margin-top:5px;line-height:1.3}.ag2--bottom .ag2__price strong{font-size:21px;color:#071a52}.ag2--bottom .ag2__badge{background:#02C6EA;font-size:11px;top:-13px;padding:5px 12px}.ag2--bottom .ag2__purchase-mode{margin-bottom:26px}.ag2--bottom .ag2__purchase-option{padding:20px 0}.ag2--bottom .ag2__purchase-copy strong{font-size:22px;color:#02C6EA}.ag2--bottom .ag2__purchase-price{flex-wrap:wrap;max-width:48%}.ag2--bottom .ag2__purchase-price strong{font-size:28px;color:#02C6EA}.ag2--bottom .ag2__purchase-price em{background:#02C6EA}.ag2--bottom .ag2__ship{padding:17px 0;margin:22px 0 0;border-block:1px dashed #ccdee6;justify-content:center}.ag2--bottom .ag2__atc{min-height:66px;font-size:18px}.ag2__assurance{text-align:center;color:#526078;font-size:13px;font-weight:700;margin:20px 0 0}.ag2__assurance span{color:#02C6EA}.ag2__sold{display:flex;align-items:center;gap:18px;padding:22px;background:white;border-radius:16px;margin:0 0 12px}.ag2__sold progress{appearance:none;flex:1;min-width:0;height:9px;border:0;border-radius:9px;overflow:hidden;background:#e1edf2}.ag2__sold progress::-webkit-progress-bar{background:#e1edf2}.ag2__sold progress::-webkit-progress-value{background:#ed5353;border-radius:9px}.ag2__sold progress::-moz-progress-bar{background:#ed5353}.ag2__sold strong{font-size:17px;color:#de4040;white-space:nowrap}.ag2--bottom button:focus-visible{outline:3px solid #071a52;outline-offset:4px}
+@media(max-width:480px){.ag2--bottom .ag2__bundle{grid-template-columns:18px 45px minmax(0,1fr) auto;gap:9px;padding:16px 10px;min-height:98px}.ag2__bundle-thumb{width:45px;height:55px}.ag2--bottom .ag2__radio{width:18px;height:18px}.ag2--bottom .ag2__copy strong{font-size:16px}.ag2--bottom .ag2__copy small{font-size:11px}.ag2__copy em{font-size:10px}.ag2--bottom .ag2__price strong{font-size:17px}.ag2--bottom .ag2__purchase-copy strong{font-size:17px}.ag2--bottom .ag2__purchase-price strong{font-size:23px}.ag2--bottom .ag2__atc{font-size:16px}.ag2--bottom .ag2__payments{gap:4px;flex-wrap:nowrap}.ag2--bottom .ag2__payments svg{height:24px;max-width:40px}}
+
+.ag2__sticky[hidden]{display:none!important}.ag2__sticky{box-sizing:border-box}.ag2__sticky-image{width:44px;height:44px;object-fit:contain;border-radius:8px;background:#f5fbfd;flex-shrink:0}
+@media(max-width:749px){body:has(>.ag2__sticky){padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))}body>.ag2__sticky{position:fixed;inset:auto 0 0;z-index:80;box-sizing:border-box;width:100%;max-width:100vw;display:flex;align-items:center;gap:10px;padding:12px 14px calc(16px + env(safe-area-inset-bottom,0px));background:#fff;border-top:1px solid #dcecf5;box-shadow:0 -5px 25px #071a5214;color:var(--t);transform:none}body>.ag2__sticky div{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}body>.ag2__sticky small{font-size:9px;line-height:1.25;letter-spacing:.03em;color:#5f6878}body>.ag2__sticky strong{font-size:20px;line-height:1.15;color:#071a52}body>.ag2__sticky a{display:flex;align-items:center;justify-content:center;gap:10px;flex:0 0 46%;min-width:0;min-height:50px;padding:12px 10px;border-radius:12px;background:linear-gradient(100deg,#0068e8,#02c6ea);color:#fff;text-decoration:none;text-align:center;font-size:13px;font-weight:850;line-height:1.2;box-shadow:0 3px 10px #0068e824}body>.ag2__sticky a b{display:grid;place-items:center;border-radius:50%;width:24px;height:24px;background:#fff;color:#0068e8;font-size:17px}body:has(dialog[open])>.ag2__sticky{visibility:hidden;pointer-events:none}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Aged Garlic Offer V2",
+  "tag": "section",
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "bottom_purchase",
+      "label": "Lower purchase section",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "purchase_banner_image",
+      "label": "Image above Choose Your Routine"
+    },
+    {
+      "type": "text",
+      "id": "purchase_banner_alt",
+      "label": "Purchase image alt text",
+      "default": "Avonent Aged Garlic"
+    },
+    {
+      "type": "text",
+      "id": "purchase_eyebrow",
+      "label": "Purchase eyebrow",
+      "default": "CHOOSE YOUR ROUTINE"
+    },
+    {
+      "type": "text",
+      "id": "purchase_heading",
+      "label": "Purchase heading",
+      "default": "Stay consistent. Stock up. Save more."
+    },
+    {
+      "type": "richtext",
+      "id": "purchase_intro",
+      "label": "Purchase introduction",
+      "default": "<p>Choose your supply of Avonent Aged Garlic and make it part of your daily routine.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Product image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Product image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Product image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_4",
+      "label": "Product image 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show rating row",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating text",
+      "default": "Rated Excellent"
+    },
+    {
+      "type": "text",
+      "id": "proof_text",
+      "label": "Rating proof text",
+      "default": "Over 100,000 Orders"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Aged Garlic Extract – 7500mg Odorless Softgels"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Supporting text",
+      "default": "<p>A convenient aged garlic softgel formula with CoQ10 + ubiquinol, built for a simple daily wellness routine.</p>"
+    },
+    {
+      "type": "text",
+      "id": "sale_badge",
+      "label": "Sale badge",
+      "default": "BLACK FRIDAY SALE - SAVE 54%"
+    },
+    {
+      "type": "text",
+      "id": "stock_text",
+      "label": "Divider text",
+      "default": "Low Stock – Selling Fast"
+    },
+    {
+      "type": "text",
+      "id": "bundle_1_title",
+      "label": "Bundle 1 title",
+      "default": "Buy One"
+    },
+    {
+      "type": "text",
+      "id": "bundle_1_subtitle",
+      "label": "Bundle 1 subtitle",
+      "default": "30 Day Supply"
+    },
+    {
+      "type": "text",
+      "id": "bundle_1_badge",
+      "label": "Bundle 1 badge"
+    },
+    {
+      "type": "text",
+      "id": "bundle_2_title",
+      "label": "Bundle 2 title",
+      "default": "Buy Two"
+    },
+    {
+      "type": "text",
+      "id": "bundle_2_subtitle",
+      "label": "Bundle 2 subtitle",
+      "default": "60 Day Supply"
+    },
+    {
+      "type": "text",
+      "id": "bundle_2_badge",
+      "label": "Bundle 2 badge",
+      "default": "Most Popular"
+    },
+    {
+      "type": "text",
+      "id": "bundle_3_title",
+      "label": "Bundle 3 title",
+      "default": "Buy Three"
+    },
+    {
+      "type": "text",
+      "id": "bundle_3_subtitle",
+      "label": "Bundle 3 subtitle",
+      "default": "90 Day Supply"
+    },
+    {
+      "type": "text",
+      "id": "bundle_3_badge",
+      "label": "Bundle 3 badge",
+      "default": "Best Value"
+    },
+    {
+      "type": "text",
+      "id": "per_bag_label",
+      "label": "Per bag label",
+      "default": "/ bag"
+    },
+    {
+      "type": "text",
+      "id": "subscription_label",
+      "label": "Subscription label",
+      "default": "Subscribe & Save"
+    },
+    {
+      "type": "text",
+      "id": "subscription_plan_id",
+      "label": "Subscription plan ID fallback",
+      "default": "3633709222",
+      "info": "Fallback Appstle selling plan ID used only if Shopify Liquid does not expose the allocation."
+    },
+    {
+      "type": "text",
+      "id": "subscription_helper",
+      "label": "Subscription helper",
+      "default": "Automatic refills · cancel anytime"
+    },
+    {
+      "type": "text",
+      "id": "refill_every_text",
+      "label": "Recurring delivery text",
+      "default": "Refills ship every 30 days"
+    },
+    {
+      "type": "text",
+      "id": "cancel_text",
+      "label": "Cancel text",
+      "default": "Skip or cancel anytime"
+    },
+    {
+      "type": "text",
+      "id": "one_time_label",
+      "label": "One-time switch label",
+      "default": "One-Time Purchase"
+    },
+    {
+      "type": "text",
+      "id": "one_time_suffix",
+      "label": "One-time switch suffix",
+      "default": "+ $4.95 Shipping"
+    },
+    {
+      "type": "text",
+      "id": "subscription_return_label",
+      "label": "Return to subscription label",
+      "default": "Switch back to Subscribe & Save —"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_gifts",
+      "label": "Show tiered gift panel",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "shipping_reward_active",
+      "label": "Enable shipping reward (after checkout is configured)",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "gifts_heading",
+      "label": "Gift panel heading",
+      "default": "GIFTS UNLOCKED"
+    },
+    {
+      "type": "image_picker",
+      "id": "gift_shipping_image",
+      "label": "Free shipping graphic"
+    },
+    {
+      "type": "text",
+      "id": "gift_shipping_value",
+      "label": "Shipping crossed-out value",
+      "default": "$4.95"
+    },
+    {
+      "type": "text",
+      "id": "gift_shipping_title",
+      "label": "Shipping gift title",
+      "default": "FREE Shipping"
+    },
+    {
+      "type": "product",
+      "id": "gift_ebook_product",
+      "label": "Free digital ebook product",
+      "info": "Select a $0 published digital product so it can appear in the cart."
+    },
+    {
+      "type": "image_picker",
+      "id": "gift_ebook_image",
+      "label": "Ebook cover graphic"
+    },
+    {
+      "type": "text",
+      "id": "gift_ebook_value",
+      "label": "Ebook gift value",
+      "default": "$24.99 Value"
+    },
+    {
+      "type": "text",
+      "id": "gift_ebook_title",
+      "label": "Ebook gift title",
+      "default": "FREE Aged Garlic eBook"
+    },
+    {
+      "type": "text",
+      "id": "gifts_note",
+      "label": "Gift terms",
+      "default": "Free standard shipping on this first order only. Refill shipping is $4.95. Digital ebook added once with Buy 3."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_refill",
+      "label": "Show refill box",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "refill_heading",
+      "label": "Refill heading",
+      "default": "Save more with automatic refills"
+    },
+    {
+      "type": "text",
+      "id": "refill_text",
+      "label": "Refill text",
+      "default": "Connect this to your subscription option when it is ready."
+    },
+    {
+      "type": "url",
+      "id": "refill_link",
+      "label": "Refill link"
+    },
+    {
+      "type": "text",
+      "id": "shipping_prefix",
+      "label": "Shipping prefix",
+      "default": "Ships by"
+    },
+    {
+      "type": "range",
+      "id": "shipping_business_days",
+      "label": "Business days until ship date",
+      "min": 1,
+      "max": 7,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "text",
+      "id": "shipping_suffix",
+      "label": "Shipping suffix",
+      "default": "from US warehouse"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Add to cart text",
+      "default": "ADD TO CART"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payments",
+      "label": "Show payment icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trusted",
+      "label": "Show customer trust row",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_1",
+      "label": "Trust profile image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_2",
+      "label": "Trust profile image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_3",
+      "label": "Trust profile image 3"
+    },
+    {
+      "type": "text",
+      "id": "trusted_heading",
+      "label": "Trust heading",
+      "default": "Trusted across 100K+ orders"
+    },
+    {
+      "type": "text",
+      "id": "trusted_text",
+      "label": "Trust subtext",
+      "default": "Chosen across more than 100,000 Avonent orders."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sticky",
+      "label": "Show mobile sticky cart",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sticky_label",
+      "label": "Sticky label",
+      "default": "AVONENT AGED GARLIC"
+    },
+    {
+      "type": "text",
+      "id": "sticky_button",
+      "label": "Sticky button",
+      "default": "ADD TO CART"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Avonent blue",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "accent_dark",
+      "label": "Deep blue",
+      "default": "#0068E8"
+    },
+    {
+      "type": "color",
+      "id": "gold",
+      "label": "Gold",
+      "default": "#FFB400"
+    },
+    {
+      "type": "color",
+      "id": "text",
+      "label": "Text",
+      "default": "#071A52"
+    },
+    {
+      "type": "color",
+      "id": "muted",
+      "label": "Muted text",
+      "default": "#5F6878"
+    },
+    {
+      "type": "color",
+      "id": "line",
+      "label": "Borders",
+      "default": "#DCECF5"
+    },
+    {
+      "type": "number",
+      "id": "batch_total",
+      "label": "Units in current batch",
+      "default": 0,
+      "info": "Enter actual batch counts to display the percent sold bar. Zero hides it."
+    },
+    {
+      "type": "number",
+      "id": "batch_sold",
+      "label": "Units sold from current batch",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "sold_label",
+      "label": "Sold label",
+      "default": "Sold from this batch"
+    },
+    {
+      "type": "text",
+      "id": "purchase_guarantee",
+      "label": "Purchase reassurance",
+      "default": "30-day money-back guarantee"
+    },
+    {
+      "type": "text",
+      "id": "bundle_1_benefit",
+      "label": "Bundle 1 benefit",
+      "default": "Perfect for getting started"
+    },
+    {
+      "type": "text",
+      "id": "bundle_2_benefit",
+      "label": "Bundle 2 benefit",
+      "default": "Build a consistent routine"
+    },
+    {
+      "type": "text",
+      "id": "bundle_3_benefit",
+      "label": "Bundle 3 benefit",
+      "default": "Stock up and stay prepared"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sold_bar",
+      "label": "Show confirmed sold percentage",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "sold_percent",
+      "label": "Confirmed percentage sold",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 93
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Odorless aged garlic softgels"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Aged Garlic Offer V2",
+      "blocks": [
+        {
+          "type": "benefit"
+        },
+        {
+          "type": "benefit"
+        },
+        {
+          "type": "benefit"
+        },
+        {
+          "type": "benefit"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+

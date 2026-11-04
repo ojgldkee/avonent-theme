@@ -1,0 +1,700 @@
+{% liquid
+  assign av_product = product
+  assign selected_variant = av_product.selected_or_first_available_variant
+  if av_product.variants.size > 1
+    assign selected_variant = av_product.variants[1]
+  endif
+  assign hero_image = av_product.featured_image
+  assign section_id = 'AgedGarlicMain-' | append: section.id
+%}
+
+<section
+  id="{{ section_id }}"
+  class="aged-garlic-main"
+  style="
+    --agm-ivory: {{ section.settings.ivory }};
+    --agm-cream: {{ section.settings.cream }};
+    --agm-burgundy: {{ section.settings.burgundy }};
+    --agm-burgundy-dark: {{ section.settings.burgundy_dark }};
+    --agm-gold: {{ section.settings.gold }};
+    --agm-ink: {{ section.settings.ink }};
+    --agm-muted: {{ section.settings.muted }};
+    --agm-line: {{ section.settings.line }};
+  "
+>
+  <div class="aged-garlic-main__shell">
+    <div class="aged-garlic-main__media">
+      {% if hero_image != blank %}
+        <div class="aged-garlic-main__image-card">
+          {{ hero_image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '420, 640, 900, 1200, 1400', class: 'aged-garlic-main__image', alt: av_product.title }}
+        </div>
+      {% else %}
+        <div class="aged-garlic-main__mockup" aria-label="Avonent Aged Garlic + CoQ10 product preview">
+          <div class="aged-garlic-main__glow"></div>
+          <div class="aged-garlic-main__garlic aged-garlic-main__garlic--one" aria-hidden="true"></div>
+          <div class="aged-garlic-main__garlic aged-garlic-main__garlic--two" aria-hidden="true"></div>
+          <div class="aged-garlic-main__capsule aged-garlic-main__capsule--one" aria-hidden="true"></div>
+          <div class="aged-garlic-main__capsule aged-garlic-main__capsule--two" aria-hidden="true"></div>
+          <div class="aged-garlic-main__pouch">
+            <div class="aged-garlic-main__brand">AVONENT</div>
+            <div class="aged-garlic-main__pouch-rule"></div>
+            <div class="aged-garlic-main__pouch-title">AGED GARLIC</div>
+            <div class="aged-garlic-main__pouch-plus">+ CoQ10</div>
+            <div class="aged-garlic-main__pouch-copy">ODORLESS SOFTGELS</div>
+            <div class="aged-garlic-main__pouch-mark">AG</div>
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="aged-garlic-main__media-note">
+        <span>ODORLESS</span>
+        <span>AGED GARLIC</span>
+        <span>CoQ10 + UBIQUINOL</span>
+      </div>
+    </div>
+
+    <div class="aged-garlic-main__details">
+      <div class="aged-garlic-main__eyebrow">{{ section.settings.eyebrow }}</div>
+      <h1 class="aged-garlic-main__headline">{{ section.settings.headline }}</h1>
+      <div class="aged-garlic-main__product-name">{{ av_product.title }}</div>
+      <div class="aged-garlic-main__subhead rte">{{ section.settings.subhead }}</div>
+
+      <div class="aged-garlic-main__badges">
+        <span>✓ {{ section.settings.badge_1 }}</span>
+        <span>✓ {{ section.settings.badge_2 }}</span>
+        <span>✓ {{ section.settings.badge_3 }}</span>
+        <span>✓ {{ section.settings.badge_4 }}</span>
+      </div>
+
+      <div class="aged-garlic-main__offer" id="avonent-garlic-buy">
+        <div class="aged-garlic-main__offer-label">{{ section.settings.offer_heading }}</div>
+
+        {% form 'product', av_product, id: 'AgedGarlicProductForm' %}
+          <input type="hidden" name="id" value="{{ selected_variant.id }}" data-aged-garlic-variant-input>
+          <input type="hidden" name="quantity" value="1">
+
+          <div class="aged-garlic-main__variants" role="radiogroup" aria-label="{{ section.settings.offer_heading }}">
+            {% for variant in av_product.variants %}
+              {% liquid
+                assign bag_count = forloop.index
+                assign per_bag = variant.price | divided_by: bag_count
+                assign selected = false
+                if variant.id == selected_variant.id
+                  assign selected = true
+                endif
+              %}
+              <button
+                type="button"
+                class="aged-garlic-main__variant{% if selected %} is-selected{% endif %}"
+                role="radio"
+                aria-checked="{% if selected %}true{% else %}false{% endif %}"
+                data-aged-garlic-variant
+                data-variant-id="{{ variant.id }}"
+                data-variant-price="{{ variant.price }}"
+                data-bag-count="{{ bag_count }}"
+                {% unless variant.available %}disabled{% endunless %}
+              >
+                {% if forloop.index == 2 %}
+                  <span class="aged-garlic-main__variant-badge">{{ section.settings.popular_badge }}</span>
+                {% elsif forloop.index == 3 %}
+                  <span class="aged-garlic-main__variant-badge aged-garlic-main__variant-badge--gold">{{ section.settings.value_badge }}</span>
+                {% endif %}
+
+                <span class="aged-garlic-main__radio" aria-hidden="true"><span></span></span>
+
+                <span class="aged-garlic-main__variant-copy">
+                  <strong>{{ variant.title }}</strong>
+                  {% if forloop.index == 1 %}
+                    <small>{{ section.settings.bundle_1_note }}</small>
+                  {% elsif forloop.index == 2 %}
+                    <small>{{ section.settings.bundle_2_note }}</small>
+                  {% else %}
+                    <small>{{ section.settings.bundle_3_note }}</small>
+                  {% endif %}
+                </span>
+
+                <span class="aged-garlic-main__variant-price">
+                  <strong>{{ variant.price | money }}</strong>
+                  {% if bag_count > 1 %}
+                    <small>{{ per_bag | money }} / bag</small>
+                  {% endif %}
+                </span>
+              </button>
+            {% endfor %}
+          </div>
+
+          <button
+            type="submit"
+            name="add"
+            class="aged-garlic-main__atc"
+            {% unless selected_variant.available %}disabled{% endunless %}
+          >
+            <span>{{ section.settings.button_text }}</span>
+            <span class="aged-garlic-main__atc-price" data-aged-garlic-atc-price>{{ selected_variant.price | money }}</span>
+          </button>
+        {% endform %}
+
+        <div class="aged-garlic-main__trust">
+          <span>✓ {{ section.settings.trust_1 }}</span>
+          <span>✓ {{ section.settings.trust_2 }}</span>
+          <span>✓ {{ section.settings.trust_3 }}</span>
+        </div>
+
+        <div class="aged-garlic-main__shipping">
+          <span class="aged-garlic-main__shipping-dot" aria-hidden="true"></span>
+          <span>{{ section.settings.shipping_text }}</span>
+        </div>
+      </div>
+
+      <div class="aged-garlic-main__microcopy">{{ section.settings.microcopy }}</div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const root = document.getElementById('{{ section_id }}');
+    if (!root || root.dataset.agedGarlicReady === 'true') return;
+    root.dataset.agedGarlicReady = 'true';
+
+    const options = Array.from(root.querySelectorAll('[data-aged-garlic-variant]'));
+    const input = root.querySelector('[data-aged-garlic-variant-input]');
+    const price = root.querySelector('[data-aged-garlic-atc-price]');
+    const currency = {{ cart.currency.iso_code | default: shop.currency | json }};
+
+    function money(cents) {
+      try {
+        return new Intl.NumberFormat(undefined, {
+          style: 'currency',
+          currency,
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }).format(Number(cents || 0) / 100);
+      } catch (error) {
+        return '$' + (Number(cents || 0) / 100).toFixed(2);
+      }
+    }
+
+    function select(option) {
+      if (!option || option.disabled) return;
+
+      options.forEach((item) => {
+        const active = item === option;
+        item.classList.toggle('is-selected', active);
+        item.setAttribute('aria-checked', active ? 'true' : 'false');
+      });
+
+      if (input) {
+        input.value = option.dataset.variantId;
+        input.setAttribute('value', option.dataset.variantId);
+      }
+
+      if (price) price.textContent = money(option.dataset.variantPrice);
+    }
+
+    options.forEach((option) => option.addEventListener('click', () => select(option)));
+  })();
+</script>
+
+{% stylesheet %}
+  .aged-garlic-main {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 12% 18%, rgb(181 138 69 / 10%), transparent 32%),
+      linear-gradient(180deg, #fffdf9 0%, var(--agm-ivory) 100%);
+    color: var(--agm-ink);
+  }
+
+  .aged-garlic-main * { box-sizing: border-box; }
+
+  .aged-garlic-main__shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(420px, .95fr);
+    gap: clamp(36px, 5vw, 72px);
+    width: min(calc(100% - 44px), 1260px);
+    margin: 0 auto;
+    padding: 34px 0 52px;
+    align-items: start;
+  }
+
+  .aged-garlic-main__media {
+    position: sticky;
+    top: calc(var(--header-group-height, 0px) + 18px);
+  }
+
+  .aged-garlic-main__image-card,
+  .aged-garlic-main__mockup {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 620px;
+    overflow: hidden;
+    border: 1px solid var(--agm-line);
+    border-radius: 28px;
+    background: linear-gradient(145deg, #f8eee3 0%, #fffaf4 46%, #ead8c7 100%);
+    box-shadow: 0 24px 70px rgb(53 24 31 / 8%);
+  }
+
+  .aged-garlic-main__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 680px;
+    object-fit: contain;
+  }
+
+  .aged-garlic-main__glow {
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 58%);
+    filter: blur(4px);
+  }
+
+  .aged-garlic-main__pouch {
+    position: relative;
+    z-index: 3;
+    width: min(58%, 340px);
+    aspect-ratio: .7;
+    padding: 42px 30px;
+    border-radius: 18px 18px 28px 28px;
+    background: linear-gradient(165deg, #fffefc 0%, #f4eee9 100%);
+    box-shadow: 0 38px 55px rgb(61 24 33 / 18%), inset 0 0 0 1px rgb(109 23 43 / 8%);
+    transform: perspective(900px) rotateY(-4deg) rotateX(1deg);
+  }
+
+  .aged-garlic-main__pouch::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 22px;
+    right: 22px;
+    height: 2px;
+    background: #d9d0ca;
+  }
+
+  .aged-garlic-main__brand {
+    color: var(--agm-burgundy);
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: .16em;
+  }
+
+  .aged-garlic-main__pouch-rule {
+    width: 38px;
+    height: 3px;
+    margin: 21px 0 36px;
+    border-radius: 999px;
+    background: var(--agm-gold);
+  }
+
+  .aged-garlic-main__pouch-title {
+    max-width: 230px;
+    color: var(--agm-burgundy-dark);
+    font-size: clamp(27px, 3vw, 42px);
+    font-weight: 900;
+    letter-spacing: -.045em;
+    line-height: .92;
+  }
+
+  .aged-garlic-main__pouch-plus {
+    margin-top: 8px;
+    color: var(--agm-gold);
+    font-size: 22px;
+    font-weight: 850;
+  }
+
+  .aged-garlic-main__pouch-copy {
+    margin-top: 19px;
+    color: #786e70;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .14em;
+  }
+
+  .aged-garlic-main__pouch-mark {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--agm-gold);
+    border-radius: 50%;
+    color: var(--agm-burgundy);
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  .aged-garlic-main__garlic {
+    position: absolute;
+    z-index: 1;
+    width: 105px;
+    height: 84px;
+    border-radius: 64% 36% 57% 43% / 63% 54% 46% 37%;
+    background: linear-gradient(145deg, #fffdf1, #e7d8bc);
+    box-shadow: inset -12px -10px 20px rgb(141 107 75 / 15%), 0 18px 30px rgb(91 63 54 / 10%);
+  }
+
+  .aged-garlic-main__garlic::after {
+    content: '';
+    position: absolute;
+    top: -17px;
+    left: 48px;
+    width: 7px;
+    height: 27px;
+    border-radius: 9px;
+    background: #bea67f;
+    transform: rotate(10deg);
+  }
+
+  .aged-garlic-main__garlic--one { left: 10%; bottom: 13%; transform: rotate(-11deg); }
+  .aged-garlic-main__garlic--two { right: 9%; top: 17%; transform: scale(.8) rotate(16deg); opacity: .82; }
+
+  .aged-garlic-main__capsule {
+    position: absolute;
+    z-index: 4;
+    width: 76px;
+    height: 27px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #8e4923 0 50%, #d79a55 50% 100%);
+    box-shadow: inset 0 0 8px rgb(255 255 255 / 22%), 0 13px 18px rgb(70 34 30 / 15%);
+  }
+
+  .aged-garlic-main__capsule--one { right: 12%; bottom: 18%; transform: rotate(-24deg); }
+  .aged-garlic-main__capsule--two { left: 15%; top: 18%; transform: scale(.75) rotate(31deg); }
+
+  .aged-garlic-main__media-note {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 7px 18px;
+    padding: 15px 8px 0;
+  }
+
+  .aged-garlic-main__media-note span {
+    color: var(--agm-muted);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .09em;
+  }
+
+  .aged-garlic-main__details {
+    padding-top: 14px;
+  }
+
+  .aged-garlic-main__eyebrow {
+    margin-bottom: 10px;
+    color: var(--agm-burgundy);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  .aged-garlic-main__headline {
+    max-width: 590px;
+    margin: 0;
+    color: var(--agm-ink);
+    font-family: var(--font-heading--family);
+    font-size: clamp(42px, 4.4vw, 66px);
+    font-weight: 800;
+    letter-spacing: -.05em;
+    line-height: .94;
+  }
+
+  .aged-garlic-main__product-name {
+    margin-top: 12px;
+    color: var(--agm-burgundy);
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .aged-garlic-main__subhead {
+    max-width: 610px;
+    margin-top: 15px;
+    color: var(--agm-muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .aged-garlic-main__subhead p { margin: 0; }
+
+  .aged-garlic-main__badges {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .aged-garlic-main__badges span {
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid #eaded6;
+    border-radius: 11px;
+    background: #fff;
+    color: var(--agm-ink);
+    font-size: 11.5px;
+    font-weight: 680;
+  }
+
+  .aged-garlic-main__badges span::first-letter { color: var(--agm-burgundy); }
+
+  .aged-garlic-main__offer {
+    margin-top: 22px;
+    padding: 19px;
+    border: 1px solid var(--agm-line);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 20px 45px rgb(57 29 35 / 7%);
+  }
+
+  .aged-garlic-main__offer-label {
+    margin-bottom: 12px;
+    color: var(--agm-ink);
+    font-size: 13px;
+    font-weight: 850;
+  }
+
+  .aged-garlic-main__variants {
+    display: grid;
+    gap: 9px;
+  }
+
+  .aged-garlic-main__variant {
+    position: relative;
+    display: grid;
+    grid-template-columns: 19px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 11px;
+    width: 100%;
+    min-height: 72px;
+    padding: 12px 13px;
+    border: 1px solid var(--agm-line);
+    border-radius: 13px;
+    background: #fff;
+    color: var(--agm-ink);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+  }
+
+  .aged-garlic-main__variant:hover:not(:disabled) { transform: translateY(-1px); }
+
+  .aged-garlic-main__variant.is-selected {
+    border-color: var(--agm-burgundy);
+    background: #fff7f1;
+    box-shadow: 0 0 0 1px var(--agm-burgundy);
+  }
+
+  .aged-garlic-main__variant:disabled { opacity: .48; cursor: not-allowed; }
+
+  .aged-garlic-main__radio {
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid #b1a5a7;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .aged-garlic-main__radio span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: transparent;
+  }
+
+  .aged-garlic-main__variant.is-selected .aged-garlic-main__radio { border-color: var(--agm-burgundy); }
+  .aged-garlic-main__variant.is-selected .aged-garlic-main__radio span { background: var(--agm-burgundy); }
+
+  .aged-garlic-main__variant-copy,
+  .aged-garlic-main__variant-price {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .aged-garlic-main__variant-copy strong,
+  .aged-garlic-main__variant-price strong {
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.15;
+  }
+
+  .aged-garlic-main__variant-copy small,
+  .aged-garlic-main__variant-price small {
+    margin-top: 4px;
+    color: var(--agm-muted);
+    font-size: 10.5px;
+    font-weight: 580;
+    line-height: 1.2;
+  }
+
+  .aged-garlic-main__variant-price { align-items: flex-end; }
+
+  .aged-garlic-main__variant-badge {
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    z-index: 2;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--agm-burgundy);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+  }
+
+  .aged-garlic-main__variant-badge--gold { background: var(--agm-gold); }
+
+  .aged-garlic-main__atc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+    width: 100%;
+    min-height: 58px;
+    margin-top: 13px;
+    border: 0;
+    border-radius: 13px;
+    background: var(--agm-burgundy);
+    color: #fff;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: .03em;
+    cursor: pointer;
+    box-shadow: 0 14px 30px rgb(109 23 43 / 19%);
+  }
+
+  .aged-garlic-main__atc:hover { background: var(--agm-burgundy-dark); }
+  .aged-garlic-main__atc:disabled { opacity: .5; cursor: not-allowed; }
+
+  .aged-garlic-main__atc-price {
+    padding-left: 13px;
+    border-left: 1px solid rgb(255 255 255 / 30%);
+  }
+
+  .aged-garlic-main__trust {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 7px 14px;
+    margin-top: 12px;
+    color: #6f6366;
+    font-size: 10px;
+    font-weight: 650;
+  }
+
+  .aged-garlic-main__shipping {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 10px;
+    color: var(--agm-muted);
+    font-size: 11px;
+    font-weight: 650;
+  }
+
+  .aged-garlic-main__shipping-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #39a56a;
+    box-shadow: 0 0 0 4px rgb(57 165 106 / 12%);
+  }
+
+  .aged-garlic-main__microcopy {
+    margin-top: 16px;
+    color: #827579;
+    font-size: 10px;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 899px) {
+    .aged-garlic-main__shell {
+      grid-template-columns: 1fr;
+      width: min(calc(100% - 28px), 700px);
+      gap: 22px;
+      padding-top: 14px;
+    }
+
+    .aged-garlic-main__media { position: static; }
+    .aged-garlic-main__image-card,
+    .aged-garlic-main__mockup { min-height: 500px; }
+    .aged-garlic-main__details { padding-top: 0; }
+  }
+
+  @media screen and (max-width: 749px) {
+    .aged-garlic-main__shell { padding-bottom: 36px; }
+    .aged-garlic-main__image-card,
+    .aged-garlic-main__mockup { min-height: 430px; border-radius: 20px; }
+
+    .aged-garlic-main__pouch {
+      width: 55%;
+      padding: 34px 23px;
+      border-radius: 14px 14px 22px 22px;
+    }
+
+    .aged-garlic-main__pouch-rule { margin: 17px 0 28px; }
+    .aged-garlic-main__pouch-title { font-size: 30px; }
+    .aged-garlic-main__pouch-plus { font-size: 18px; }
+    .aged-garlic-main__garlic { width: 85px; height: 68px; }
+    .aged-garlic-main__capsule { width: 62px; height: 22px; }
+
+    .aged-garlic-main__headline { font-size: 44px; }
+    .aged-garlic-main__subhead { font-size: 14px; }
+    .aged-garlic-main__badges { gap: 7px; }
+    .aged-garlic-main__badges span { min-height: 40px; padding: 9px 10px; font-size: 10.5px; }
+    .aged-garlic-main__offer { padding: 15px; border-radius: 15px; }
+    .aged-garlic-main__variant { min-height: 68px; padding: 11px; }
+    .aged-garlic-main__atc { min-height: 56px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Aged Garlic Product Main",
+  "settings": [
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"ODORLESS DAILY GARLIC SUPPORT"},
+    {"type":"text","id":"headline","label":"Headline","default":"Aged Garlic. Without the Garlic Breath."},
+    {"type":"richtext","id":"subhead","label":"Supporting text","default":"<p>A convenient aged garlic softgel formula with CoQ10 + ubiquinol, made for a simple daily wellness routine.</p>"},
+    {"type":"text","id":"badge_1","label":"Benefit badge 1","default":"Odorless"},
+    {"type":"text","id":"badge_2","label":"Benefit badge 2","default":"Aged Garlic"},
+    {"type":"text","id":"badge_3","label":"Benefit badge 3","default":"CoQ10 + Ubiquinol"},
+    {"type":"text","id":"badge_4","label":"Benefit badge 4","default":"Easy Daily Softgels"},
+    {"type":"text","id":"offer_heading","label":"Offer heading","default":"Choose your quantity"},
+    {"type":"text","id":"bundle_1_note","label":"1 bag note","default":"Try it"},
+    {"type":"text","id":"bundle_2_note","label":"2 bag note","default":"Save more"},
+    {"type":"text","id":"bundle_3_note","label":"3 bag note","default":"Lowest cost per bag"},
+    {"type":"text","id":"popular_badge","label":"Popular badge","default":"Most Popular"},
+    {"type":"text","id":"value_badge","label":"Value badge","default":"Best Value"},
+    {"type":"text","id":"button_text","label":"Add to cart button","default":"ADD TO CART"},
+    {"type":"text","id":"trust_1","label":"Trust item 1","default":"30-Day Guarantee"},
+    {"type":"text","id":"trust_2","label":"Trust item 2","default":"Secure Checkout"},
+    {"type":"text","id":"trust_3","label":"Trust item 3","default":"U.S. Fulfillment"},
+    {"type":"text","id":"shipping_text","label":"Shipping text","default":"Fast U.S. fulfillment · Shipping calculated at checkout"},
+    {"type":"textarea","id":"microcopy","label":"Microcopy","default":"Final ingredient quantities, serving directions, and Supplement Facts should match the verified product label before launch."},
+    {"type":"color","id":"ivory","label":"Ivory","default":"#FFF9F2"},
+    {"type":"color","id":"cream","label":"Cream","default":"#F8EEE5"},
+    {"type":"color","id":"burgundy","label":"Burgundy","default":"#6D172B"},
+    {"type":"color","id":"burgundy_dark","label":"Dark burgundy","default":"#3C0D19"},
+    {"type":"color","id":"gold","label":"Gold","default":"#B58A45"},
+    {"type":"color","id":"ink","label":"Text","default":"#1B1718"},
+    {"type":"color","id":"muted","label":"Muted text","default":"#675D60"},
+    {"type":"color","id":"line","label":"Border","default":"#E7DAD2"}
+  ],
+  "presets": [{"name":"Aged Garlic Product Main"}]
+}
+{% endschema %}

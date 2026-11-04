@@ -1,0 +1,659 @@
+{% liquid
+  assign section_id = 'AvonentFormula-' | append: section.id
+  assign ingredient_count = section.blocks.size
+  assign initial_mobile_count = section.settings.mobile_initial_count
+%}
+
+<section
+  id="{{ section_id }}"
+  class="avonent-formula avonent-formula--mobile-{{ section.settings.mobile_columns }}"
+  data-avf-root
+  style="
+    --avf-bg: {{ section.settings.background_color }};
+    --avf-card: {{ section.settings.card_color }};
+    --avf-soft: {{ section.settings.soft_color }};
+    --avf-text: {{ section.settings.text_color }};
+    --avf-muted: {{ section.settings.muted_text_color }};
+    --avf-accent: {{ section.settings.accent_color }};
+    --avf-border: {{ section.settings.border_color }};
+    --avf-radius: {{ section.settings.corner_radius }}px;
+    --avf-width: {{ section.settings.content_width }}px;
+    --avf-gap: {{ section.settings.card_gap }}px;
+    --avf-top: {{ section.settings.padding_top }}px;
+    --avf-bottom: {{ section.settings.padding_bottom }}px;
+    --avf-image-ratio: {{ section.settings.image_ratio }};
+  "
+>
+  <div class="avonent-formula__inner">
+    <header class="avonent-formula__header">
+      {% if section.settings.eyebrow != blank %}
+        <p class="avonent-formula__eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="avonent-formula__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.description != blank %}
+        <div class="avonent-formula__description rte">{{ section.settings.description }}</div>
+      {% endif %}
+    </header>
+
+    {% if section.settings.content_heading != blank or section.settings.content_intro != blank %}
+      <div class="avonent-formula__intro">
+        {% if section.settings.content_heading != blank %}
+          <h3 class="avonent-formula__intro-heading">{{ section.settings.content_heading }}</h3>
+        {% endif %}
+        {% if section.settings.content_intro != blank %}
+          <div class="avonent-formula__intro-copy rte">{{ section.settings.content_intro }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if ingredient_count > 0 %}
+      <div id="{{ section_id }}-grid" class="avonent-formula__grid">
+        {% for block in section.blocks %}
+          <article
+            class="avonent-formula__card{% if forloop.index > initial_mobile_count %} avonent-formula__card--mobile-extra{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="avonent-formula__media">
+              {% if block.settings.image != blank %}
+                {{
+                  block.settings.image
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '320, 480, 640, 800, 1000, 1200',
+                    sizes: '(min-width: 1100px) 570px, (min-width: 750px) calc(50vw - 40px), calc(100vw - 28px)',
+                    class: 'avonent-formula__image',
+                    alt: block.settings.name
+                }}
+              {% else %}
+                <div class="avonent-formula__placeholder" aria-hidden="true">
+                  <span>{{ forloop.index | prepend: '0' }}</span>
+                </div>
+              {% endif %}
+              {% if block.settings.role != blank %}
+                <span class="avonent-formula__category">{{ block.settings.role }}</span>
+              {% endif %}
+            </div>
+
+            <div class="avonent-formula__card-body">
+              {% if block.settings.amount != blank %}
+                <p class="avonent-formula__amount">{{ block.settings.amount }}</p>
+              {% endif %}
+              {% if block.settings.name != blank %}
+                <h3 class="avonent-formula__name">{{ block.settings.name }}</h3>
+              {% endif %}
+              {% if block.settings.benefit_heading != blank %}
+                <p class="avonent-formula__benefit">{{ block.settings.benefit_heading }}</p>
+              {% endif %}
+              {% if block.settings.explanation != blank %}
+                <div class="avonent-formula__explanation rte">{{ block.settings.explanation }}</div>
+              {% endif %}
+              {% if block.settings.details != blank %}
+                <details class="avonent-formula__details">
+                  <summary>
+                    <span>{{ block.settings.details_label | default: 'Why it is included' }}</span>
+                    <span class="avonent-formula__details-icon" aria-hidden="true"></span>
+                  </summary>
+                  <div class="avonent-formula__details-content rte">{{ block.settings.details }}</div>
+                </details>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      {% if ingredient_count > initial_mobile_count %}
+        <button
+          class="avonent-formula__toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="{{ section_id }}-grid"
+          data-avf-toggle
+          data-more-label="{{ section.settings.show_more_label | escape }}"
+          data-less-label="{{ section.settings.show_less_label | escape }}"
+        >
+          <span data-avf-toggle-label>{{ section.settings.show_more_label }}</span>
+          <svg class="avonent-formula__toggle-icon" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="m5 7.5 5 5 5-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+          </svg>
+        </button>
+      {% endif %}
+    {% else %}
+      <div class="avonent-formula__empty">Add ingredient blocks in the theme editor to build the formula grid.</div>
+    {% endif %}
+
+    {% if section.settings.trust_1 != blank or section.settings.trust_2 != blank or section.settings.trust_3 != blank %}
+      <div class="avonent-formula__trust" aria-label="Formula standards">
+        {% for index in (1..3) %}
+          {% assign trust_key = 'trust_' | append: index %}
+          {% assign trust_text = section.settings[trust_key] %}
+          {% if trust_text != blank %}
+            <div class="avonent-formula__trust-item">
+              <span class="avonent-formula__trust-icon" aria-hidden="true">✓</span>
+              <span>{{ trust_text }}</span>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  (() => {
+    const root = document.getElementById({{ section_id | json }});
+    if (!root || root.dataset.avfReady === 'true') return;
+    root.dataset.avfReady = 'true';
+
+    const toggle = root.querySelector('[data-avf-toggle]');
+    if (!toggle) return;
+
+    toggle.addEventListener('click', () => {
+      const expanded = root.classList.toggle('avonent-formula--expanded');
+      const label = toggle.querySelector('[data-avf-toggle-label]');
+      toggle.setAttribute('aria-expanded', String(expanded));
+      if (label) label.textContent = expanded ? toggle.dataset.lessLabel : toggle.dataset.moreLabel;
+    });
+  })();
+</script>
+
+{% stylesheet %}
+  .avonent-formula {
+    position: relative;
+    overflow: hidden;
+    padding: var(--avf-top) 0 var(--avf-bottom);
+    color: var(--avf-text);
+    background:
+      radial-gradient(circle at 4% 8%, color-mix(in srgb, var(--avf-accent) 10%, transparent), transparent 26rem),
+      radial-gradient(circle at 96% 94%, color-mix(in srgb, var(--avf-accent) 7%, transparent), transparent 24rem),
+      var(--avf-bg);
+  }
+
+  .avonent-formula *,
+  .avonent-formula *::before,
+  .avonent-formula *::after { box-sizing: border-box; }
+
+  .avonent-formula__inner {
+    width: min(calc(100% - 40px), var(--avf-width));
+    margin: 0 auto;
+  }
+
+  .avonent-formula__header {
+    width: min(100%, 820px);
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .avonent-formula__eyebrow {
+    margin: 0 0 9px;
+    color: var(--avf-accent);
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .avonent-formula__heading {
+    margin: 0;
+    color: var(--avf-text);
+    font-size: clamp(32px, 4.5vw, 58px);
+    font-weight: 850;
+    letter-spacing: -0.05em;
+    line-height: 0.98;
+  }
+
+  .avonent-formula__description {
+    width: min(100%, 700px);
+    margin: 17px auto 0;
+    color: var(--avf-muted);
+    font-size: 16px;
+    line-height: 1.62;
+  }
+
+  .avonent-formula__description p,
+  .avonent-formula__intro-copy p,
+  .avonent-formula__explanation p,
+  .avonent-formula__details-content p,
+  .avonent-formula__note p { margin: 0; }
+
+  .avonent-formula__intro {
+    display: grid;
+    grid-template-columns: minmax(220px, .8fr) minmax(0, 1.2fr);
+    gap: 32px;
+    align-items: end;
+    margin-top: 44px;
+    padding-top: 25px;
+    border-top: 1px solid var(--avf-border);
+  }
+
+  .avonent-formula__intro-heading {
+    margin: 0;
+    font-size: clamp(22px, 2.7vw, 34px);
+    font-weight: 820;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+  }
+
+  .avonent-formula__intro-copy {
+    color: var(--avf-muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .avonent-formula__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--avf-gap);
+    margin-top: 28px;
+  }
+
+  .avonent-formula__card {
+    display: flex;
+    min-width: 0;
+    overflow: hidden;
+    flex-direction: column;
+    background: var(--avf-card);
+    border: 1px solid var(--avf-border);
+    border-radius: var(--avf-radius);
+    box-shadow: 0 14px 42px rgb(22 67 78 / .07);
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  }
+
+  @media (hover: hover) {
+    .avonent-formula__card:hover {
+      border-color: color-mix(in srgb, var(--avf-accent) 45%, var(--avf-border));
+      box-shadow: 0 20px 50px rgb(2 198 234 / .13);
+      transform: translateY(-4px);
+    }
+  }
+
+  .avonent-formula__media {
+    position: relative;
+    aspect-ratio: var(--avf-image-ratio);
+    overflow: hidden;
+    background: var(--avf-soft);
+  }
+
+  .avonent-formula__image,
+  .avonent-formula__placeholder {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .avonent-formula__image {
+    object-fit: cover;
+    transition: transform 450ms cubic-bezier(.2,.7,.2,1);
+  }
+
+  @media (hover: hover) {
+    .avonent-formula__card:hover .avonent-formula__image { transform: scale(1.025); }
+  }
+
+  .avonent-formula__placeholder {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(145deg, color-mix(in srgb, var(--avf-accent) 12%, white), var(--avf-soft));
+  }
+
+  .avonent-formula__placeholder span {
+    display: grid;
+    width: 74px;
+    height: 74px;
+    place-items: center;
+    color: var(--avf-accent);
+    background: rgb(255 255 255 / .75);
+    border: 1px solid rgb(255 255 255 / .95);
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: 850;
+  }
+
+  .avonent-formula__category {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    max-width: calc(100% - 32px);
+    padding: 7px 11px;
+    overflow: hidden;
+    color: var(--avf-text);
+    background: rgb(255 255 255 / .91);
+    border: 1px solid rgb(255 255 255 / .95);
+    border-radius: 999px;
+    box-shadow: 0 6px 20px rgb(13 43 50 / .08);
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: .075em;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+    backdrop-filter: blur(8px);
+  }
+
+  .avonent-formula__card-body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: center;
+    padding: clamp(22px, 3vw, 34px);
+    text-align: center;
+  }
+
+  .avonent-formula__amount {
+    margin: 0 0 7px;
+    color: var(--avf-accent);
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: .08em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .avonent-formula__name {
+    margin: 0;
+    font-size: clamp(23px, 2.6vw, 32px);
+    font-weight: 820;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+  }
+
+  .avonent-formula__benefit {
+    margin: 13px 0 0;
+    font-size: 15px;
+    font-weight: 780;
+    line-height: 1.35;
+  }
+
+  .avonent-formula__explanation {
+    width: min(100%, 490px);
+    margin-top: 13px;
+    color: var(--avf-muted);
+    font-size: 14px;
+    line-height: 1.62;
+  }
+
+  .avonent-formula__details {
+    width: 100%;
+    margin-top: auto;
+    padding-top: 20px;
+  }
+
+  .avonent-formula__details summary {
+    display: flex;
+    min-height: 45px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 14px;
+    color: var(--avf-text);
+    background: var(--avf-soft);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.25;
+    list-style: none;
+    text-align: left;
+  }
+
+  .avonent-formula__details summary::-webkit-details-marker { display: none; }
+  .avonent-formula__details-icon { position: relative; width: 16px; height: 16px; flex: 0 0 auto; }
+
+  .avonent-formula__details-icon::before,
+  .avonent-formula__details-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 99px;
+    transform: translate(-50%, -50%);
+  }
+
+  .avonent-formula__details-icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+    transition: transform 160ms ease;
+  }
+
+  .avonent-formula__details[open] .avonent-formula__details-icon::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  .avonent-formula__details-content {
+    padding: 13px 4px 0;
+    color: var(--avf-muted);
+    font-size: 12px;
+    line-height: 1.55;
+    text-align: left;
+  }
+
+  .avonent-formula__toggle {
+    display: none;
+    min-height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    width: min(100%, 420px);
+    margin: 20px auto 0;
+    padding: 12px 22px;
+    color: color-mix(in srgb, var(--avf-accent) 72%, var(--avf-text));
+    background: transparent;
+    border: 1.5px solid color-mix(in srgb, var(--avf-accent) 60%, var(--avf-border));
+    border-radius: 999px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 820;
+  }
+
+  .avonent-formula__toggle-icon { width: 18px; height: 18px; transition: transform 180ms ease; }
+  .avonent-formula--expanded .avonent-formula__toggle-icon { transform: rotate(180deg); }
+
+  .avonent-formula__trust {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: 22px;
+    overflow: hidden;
+    background: var(--avf-border);
+    border: 1px solid var(--avf-border);
+    border-radius: var(--avf-radius);
+  }
+
+  .avonent-formula__trust-item {
+    display: flex;
+    min-height: 68px;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 13px 16px;
+    background: var(--avf-card);
+    font-size: 12px;
+    font-weight: 760;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  .avonent-formula__trust-icon {
+    display: grid;
+    width: 19px;
+    height: 19px;
+    flex: 0 0 auto;
+    place-items: center;
+    color: white;
+    background: var(--avf-accent);
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 900;
+  }
+
+  .avonent-formula__empty {
+    margin-top: 28px;
+    padding: 28px;
+    color: var(--avf-muted);
+    background: var(--avf-card);
+    border: 1px dashed var(--avf-border);
+    border-radius: var(--avf-radius);
+    text-align: center;
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-formula__inner { width: min(calc(100% - 28px), var(--avf-width)); }
+    .avonent-formula__heading { font-size: 34px; line-height: 1.01; }
+    .avonent-formula__description { margin-top: 12px; font-size: 14px; line-height: 1.52; }
+
+    .avonent-formula__intro {
+      grid-template-columns: 1fr;
+      gap: 9px;
+      margin-top: 29px;
+      padding-top: 19px;
+      text-align: center;
+    }
+
+    .avonent-formula__intro-heading { font-size: 23px; }
+    .avonent-formula__intro-copy { font-size: 13px; line-height: 1.52; }
+
+    .avonent-formula__grid {
+      grid-template-columns: 1fr;
+      gap: max(12px, var(--avf-gap));
+      margin-top: 19px;
+    }
+
+    .avonent-formula--mobile-2 .avonent-formula__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .avonent-formula__card--mobile-extra { display: none; }
+    .avonent-formula--expanded .avonent-formula__card--mobile-extra { display: flex; }
+    .avonent-formula__toggle { display: flex; }
+    .avonent-formula__card-body { padding: 20px 17px 21px; }
+    .avonent-formula__category { top: 11px; left: 11px; max-width: calc(100% - 22px); padding: 6px 9px; font-size: 9px; }
+    .avonent-formula__amount { margin-bottom: 6px; font-size: 10px; }
+    .avonent-formula__name { font-size: 24px; }
+    .avonent-formula__benefit { margin-top: 10px; font-size: 14px; }
+    .avonent-formula__explanation { margin-top: 10px; font-size: 13px; line-height: 1.54; }
+
+    .avonent-formula--mobile-2 .avonent-formula__card-body {
+      align-items: flex-start;
+      padding: 14px 11px 15px;
+      text-align: left;
+    }
+
+    .avonent-formula--mobile-2 .avonent-formula__media { aspect-ratio: 1 / 1; }
+    .avonent-formula--mobile-2 .avonent-formula__name { font-size: 17px; }
+    .avonent-formula--mobile-2 .avonent-formula__benefit,
+    .avonent-formula--mobile-2 .avonent-formula__explanation { font-size: 11px; line-height: 1.43; }
+    .avonent-formula--mobile-2 .avonent-formula__details summary { padding: 9px; font-size: 10px; }
+
+    .avonent-formula__trust { grid-template-columns: 1fr; margin-top: 16px; }
+    .avonent-formula__trust-item { min-height: 54px; justify-content: flex-start; padding: 11px 14px; text-align: left; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .avonent-formula__card,
+    .avonent-formula__image,
+    .avonent-formula__toggle-icon { transition: none; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "00 Avonent Formula",
+  "tag": "section",
+  "class": "avonent-formula-section",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "header", "content": "Heading" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "INSIDE THE FORMULA" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "10 ingredients. Different jobs. One complete formula." },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>A targeted combination of digestive enzymes, bile support, and carefully selected botanicals—explained ingredient by ingredient.</p>" },
+
+    { "type": "header", "content": "Ingredient introduction" },
+    { "type": "text", "id": "content_heading", "label": "Ingredient heading", "default": "Explore every ingredient" },
+    { "type": "richtext", "id": "content_intro", "label": "Ingredient introduction", "default": "<p>Each ingredient has a specific purpose in the formula. Add the exact amount and label-supported explanation to every card below.</p>" },
+
+    { "type": "header", "content": "Mobile display" },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Cards per row on mobile",
+      "options": [
+        { "value": "1", "label": "1 — best for detailed text" },
+        { "value": "2", "label": "2 — more compact" }
+      ],
+      "default": "1"
+    },
+    { "type": "range", "id": "mobile_initial_count", "label": "Ingredients shown before View all", "min": 2, "max": 12, "step": 1, "default": 4 },
+    { "type": "text", "id": "show_more_label", "label": "Show more label", "default": "View all ingredients" },
+    { "type": "text", "id": "show_less_label", "label": "Show less label", "default": "Show fewer ingredients" },
+
+    { "type": "header", "content": "Trust points" },
+    { "type": "text", "id": "trust_1", "label": "Trust point 1", "default": "Third-party lab tested" },
+    { "type": "text", "id": "trust_2", "label": "Trust point 2", "default": "Made in the USA" },
+    { "type": "text", "id": "trust_3", "label": "Trust point 3", "default": "Quality-focused formula" },
+
+    { "type": "header", "content": "Style" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#F5FBFD" },
+    { "type": "color", "id": "card_color", "label": "Cards", "default": "#FFFFFF" },
+    { "type": "color", "id": "soft_color", "label": "Soft accent", "default": "#E8F9FC" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#111111" },
+    { "type": "color", "id": "muted_text_color", "label": "Muted text", "default": "#59676C" },
+    { "type": "color", "id": "accent_color", "label": "Avonent blue", "default": "#02C6EA" },
+    { "type": "color", "id": "border_color", "label": "Borders", "default": "#D7E8EC" },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Ingredient image ratio",
+      "options": [
+        { "value": "4 / 3", "label": "Landscape" },
+        { "value": "1 / 1", "label": "Square" },
+        { "value": "3 / 2", "label": "Wide" }
+      ],
+      "default": "4 / 3"
+    },
+    { "type": "range", "id": "corner_radius", "label": "Corner radius", "min": 0, "max": 32, "step": 1, "unit": "px", "default": 20 },
+    { "type": "range", "id": "card_gap", "label": "Space between cards", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 20 },
+    { "type": "range", "id": "content_width", "label": "Content width", "min": 900, "max": 1500, "step": 20, "unit": "px", "default": 1180 },
+    { "type": "range", "id": "padding_top", "label": "Top spacing", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom spacing", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 64 }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Detailed ingredient image" },
+        { "type": "text", "id": "role", "label": "Category badge", "default": "Digestive support" },
+        { "type": "text", "id": "name", "label": "Ingredient name", "default": "Ingredient name" },
+        { "type": "text", "id": "amount", "label": "Amount or label detail", "info": "Optional. Leave blank to hide this line." },
+        { "type": "text", "id": "benefit_heading", "label": "Short benefit heading", "default": "Its role in the formula" },
+        { "type": "richtext", "id": "explanation", "label": "Main explanation", "default": "<p>Explain in two or three clear sentences what this ingredient contributes to the formula.</p>" },
+        { "type": "text", "id": "details_label", "label": "Expandable label", "default": "Why it is included" },
+        { "type": "richtext", "id": "details", "label": "Expandable details" }
+      ]
+    }
+  ],
+  "max_blocks": 16,
+  "presets": [
+    {
+      "name": "00 Avonent Formula",
+      "category": "Product",
+      "blocks": [
+        { "type": "ingredient" },
+        { "type": "ingredient" },
+        { "type": "ingredient" },
+        { "type": "ingredient" },
+        { "type": "ingredient" },
+        { "type": "ingredient" }
+      ]
+    }
+  ]
+}
+{% endschema %}

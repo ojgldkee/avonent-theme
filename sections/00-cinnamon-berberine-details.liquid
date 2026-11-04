@@ -1,0 +1,130 @@
+{% liquid
+  assign av_cb_product = product
+%}
+{% if template.suffix == 'cinnamon-berberine' or av_cb_product.handle == 'cinnamon-berberine-example' %}
+<section class="av-cb-detail" data-av-cb-detail>
+  <style>
+    .av-cb-detail{--blue:#02c6ea;--ink:#111;--muted:#59676c;--line:#d9e6ea;background:#fff;color:var(--ink);font-family:inherit;padding:28px 0 8px}
+    .av-cb-detail *{box-sizing:border-box}.av-cb-detail__wrap{width:min(1200px,calc(100% - 32px));margin:0 auto;display:grid;gap:16px}
+    .av-cb-detail__guarantee{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;background:{{ section.settings.guarantee_bg }};border:1.5px dashed {{ section.settings.guarantee_border }};border-radius:22px;padding:24px;color:{{ section.settings.guarantee_text_color }}}
+    .av-cb-detail__image{width:{{ section.settings.image_size }}px;height:{{ section.settings.image_size }}px;display:grid;place-items:center}
+    .av-cb-detail__image img{max-width:100%;max-height:100%;object-fit:contain}
+    .av-cb-detail__seal{width:100%;height:100%;border-radius:50%;border:8px double {{ section.settings.accent_color }};display:grid;place-items:center;text-align:center;color:#087e9d;font-weight:900;line-height:1}
+    .av-cb-detail__seal strong{font-size:28px}.av-cb-detail__seal small{font-size:10px;letter-spacing:.08em}
+    .av-cb-detail__guarantee h3{font-size:24px;line-height:1.15;margin:0 0 8px}.av-cb-detail__guarantee p{font-size:15px;line-height:1.5;margin:0;color:{{ section.settings.guarantee_text_color }}}
+    .av-cb-detail__highlight{color:{{ section.settings.highlight_color }};font-weight:850}
+    .av-cb-detail__stock{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:flex-start;border:1.5px dashed {{ section.settings.stock_color }};background:{{ section.settings.stock_bg }};border-radius:22px;padding:22px;color:{{ section.settings.stock_color }}}
+    .av-cb-detail__stock-icon{width:34px;height:34px;border-radius:50%;background:{{ section.settings.stock_color }};color:#fff;display:grid;place-items:center;line-height:1}
+    .av-cb-detail__stock-icon svg{width:19px;height:19px}
+    .av-cb-detail__stock h3{font-size:20px;margin:0 0 7px;color:inherit}.av-cb-detail__stock p{font-size:14px;line-height:1.55;margin:0;color:inherit}
+    .av-cb-detail__accordions{display:grid;gap:12px}.av-cb-detail__accordion{border:1.5px solid #d7dde0;border-radius:18px;background:#fff;overflow:hidden}
+    .av-cb-detail__accordion summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 22px;font-size:18px;font-weight:850}.av-cb-detail__accordion summary::-webkit-details-marker{display:none}
+    .av-cb-detail__icon{width:26px;height:26px;position:relative;flex:0 0 26px;transition:transform .2s ease}.av-cb-detail__icon:before,.av-cb-detail__icon:after{content:"";position:absolute;left:50%;top:50%;background:#151515;transform:translate(-50%,-50%);border-radius:2px}.av-cb-detail__icon:before{width:20px;height:2px}.av-cb-detail__icon:after{width:2px;height:20px}.av-cb-detail__accordion[open] .av-cb-detail__icon{transform:rotate(45deg)}
+    .av-cb-detail__body{padding:0 22px 22px;color:var(--muted);font-size:14px;line-height:1.65}.av-cb-detail__body p:first-child{margin-top:0}.av-cb-detail__body ul{padding-left:20px}.av-cb-detail__body li{margin:7px 0}
+    @media(max-width:600px){.av-cb-detail{padding-top:18px}.av-cb-detail__wrap{width:min(100% - 22px,1200px);gap:12px}.av-cb-detail__guarantee{grid-template-columns:72px 1fr;gap:14px;padding:18px}.av-cb-detail__image{width:72px;height:72px}.av-cb-detail__seal{border-width:6px}.av-cb-detail__seal strong{font-size:23px}.av-cb-detail__guarantee h3{font-size:19px}.av-cb-detail__guarantee p{font-size:13px}.av-cb-detail__stock{padding:18px}.av-cb-detail__accordion summary{padding:18px;font-size:17px}.av-cb-detail__body{padding:0 18px 18px}}
+  </style>
+
+  <div class="av-cb-detail__wrap">
+    <div class="av-cb-detail__guarantee">
+      <div class="av-cb-detail__image">
+        {% if section.settings.guarantee_image != blank %}
+          {{ section.settings.guarantee_image | image_url: width: 300 | image_tag: loading: 'lazy', widths: '100,160,220,300', alt: section.settings.guarantee_heading }}
+        {% else %}
+          <div class="av-cb-detail__seal" aria-label="90 day money-back guarantee"><span><strong>90</strong><br><small>DAYS</small></span></div>
+        {% endif %}
+      </div>
+      <div>
+        <h3>{{ section.settings.guarantee_heading }}</h3>
+        <p>{{ section.settings.guarantee_prefix }}<span class="av-cb-detail__highlight">{{ section.settings.guarantee_highlight }}</span>{{ section.settings.guarantee_suffix }}</p>
+      </div>
+    </div>
+
+    {% if section.settings.show_stock %}
+      <div class="av-cb-detail__stock">
+        <div class="av-cb-detail__stock-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="currentColor"/><path d="M12 7.5v6" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17" r="1.1" fill="#fff"/></svg>
+        </div>
+        <div>
+          <h3>{{ section.settings.stock_title }}</h3>
+          <p>{{ section.settings.stock_text }}</p>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="av-cb-detail__accordions">
+      <details class="av-cb-detail__accordion">
+        <summary><span>{{ section.settings.acc_1_title }}</span><span class="av-cb-detail__icon" aria-hidden="true"></span></summary>
+        <div class="av-cb-detail__body rte">{{ section.settings.acc_1_body }}</div>
+      </details>
+      <details class="av-cb-detail__accordion">
+        <summary><span>{{ section.settings.acc_2_title }}</span><span class="av-cb-detail__icon" aria-hidden="true"></span></summary>
+        <div class="av-cb-detail__body rte">{{ section.settings.acc_2_body }}</div>
+      </details>
+      <details class="av-cb-detail__accordion">
+        <summary><span>{{ section.settings.acc_3_title }}</span><span class="av-cb-detail__icon" aria-hidden="true"></span></summary>
+        <div class="av-cb-detail__body rte">{{ section.settings.acc_3_body }}</div>
+      </details>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const root = document.currentScript.closest('[data-av-cb-detail]');
+      if (!root) return;
+      const accordions = root.querySelectorAll('.av-cb-detail__accordion');
+      accordions.forEach(item => {
+        item.addEventListener('toggle', () => {
+          if (!item.open) return;
+          accordions.forEach(other => {
+            if (other !== item) other.open = false;
+          });
+        });
+      });
+    })();
+  </script>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Cinnamon Details",
+  "tag": "section",
+  "class": "section-cinnamon-details",
+  "settings": [
+    {"type":"header","content":"90-Day Guarantee"},
+    {"type":"image_picker","id":"guarantee_image","label":"Image / badge on left"},
+    {"type":"range","id":"image_size","label":"Desktop image size","min":70,"max":140,"step":2,"unit":"px","default":92},
+    {"type":"text","id":"guarantee_heading","label":"Heading","default":"90-Day Money-Back Guarantee"},
+    {"type":"text","id":"guarantee_prefix","label":"Text before highlight","default":"Try Avonent for "},
+    {"type":"text","id":"guarantee_highlight","label":"Highlighted text","default":"90 days","info":"If you change this to a statistic such as 'Less than 1%', only use a figure you can substantiate."},
+    {"type":"text","id":"guarantee_suffix","label":"Text after highlight","default":" with the confidence of our money-back guarantee."},
+    {"type":"color","id":"highlight_color","label":"Highlighted text color","default":"#02C6EA"},
+    {"type":"color","id":"guarantee_text_color","label":"Text color","default":"#171717"},
+    {"type":"color","id":"guarantee_bg","label":"Card background","default":"#FFFFFF"},
+    {"type":"color","id":"guarantee_border","label":"Card border","default":"#B8DFE7"},
+    {"type":"color","id":"accent_color","label":"Badge accent","default":"#02C6EA"},
+
+    {"type":"header","content":"Low Stock Notice"},
+    {"type":"checkbox","id":"show_stock","label":"Show notice","default":true},
+    {"type":"text","id":"stock_title","label":"Heading","default":"WARNING: Low Stock Notice"},
+    {"type":"textarea","id":"stock_text","label":"Text","default":"Inventory can move quickly during promotions. If Avonent fits your routine, ordering while stock is available can help avoid interruptions."},
+    {"type":"color","id":"stock_color","label":"Notice red","default":"#D62828"},
+    {"type":"color","id":"stock_bg","label":"Notice background","default":"#FFF5F5"},
+
+    {"type":"header","content":"Accordion 1"},
+    {"type":"text","id":"acc_1_title","label":"Title","default":"Clinically Supported Benefits"},
+    {"type":"richtext","id":"acc_1_body","label":"Content","default":"<p><strong>Supported by ingredient research on true Ceylon cinnamon and berberine.</strong></p><ul><li>Supports healthy glucose metabolism and blood sugar already within a normal range.*</li><li>Supports normal insulin sensitivity and efficient glucose use.*</li><li>Supports healthy circulation and everyday metabolic function.*</li><li>Provides antioxidant compounds that help protect cells from oxidative stress.*</li><li>Uses true Ceylon cinnamon, which is naturally much lower in coumarin than common cassia cinnamon.</li></ul><p>Research on individual ingredients does not mean the finished Avonent product itself was clinically tested. Individual results vary.</p>"},
+
+    {"type":"header","content":"Accordion 2"},
+    {"type":"text","id":"acc_2_title","label":"Title","default":"Key Ingredients"},
+    {"type":"richtext","id":"acc_2_body","label":"Content","default":"<p><strong>True Ceylon Cinnamon (Cinnamomum verum) — 1,200 mg per daily serving</strong></p><p>A clearly identified true-cinnamon source for metabolic-wellness support.*</p><p><strong>Berberine HCl — 400 mg per daily serving</strong></p><p>A researched botanical compound commonly used to support normal glucose and lipid metabolism.*</p><p><strong>MCT Oil — 200 mg per daily serving</strong></p><p>An oil-based carrier used in the softgel format.</p><p><strong>Softgel Delivery</strong></p><p>Four softgels per daily serving, with 30 daily servings per bottle.</p>"},
+
+    {"type":"header","content":"Accordion 3"},
+    {"type":"text","id":"acc_3_title","label":"Title","default":"How It Works"},
+    {"type":"richtext","id":"acc_3_body","label":"Content","default":"<p>Avonent combines true Ceylon cinnamon and Berberine HCl in one daily formula so you do not need separate bottles for each ingredient.</p><p>Ceylon cinnamon and berberine are researched for complementary roles in healthy glucose metabolism and broader metabolic wellness.* MCT oil provides the oil base for the softgel format.</p><p>Take the labeled four-softgel serving consistently as part of a routine that also includes balanced nutrition, movement, hydration, and sleep.</p>"}
+  ],
+  "presets": [
+    {"name":"Cinnamon Details"}
+  ]
+}
+{% endschema %}

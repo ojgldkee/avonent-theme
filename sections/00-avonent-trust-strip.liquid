@@ -1,0 +1,348 @@
+<section
+  class="avonent-trust-strip"
+  style="
+    --av-trust-bg: {{ section.settings.background_color }};
+    --av-trust-text: {{ section.settings.text_color }};
+    --av-trust-accent: {{ section.settings.accent_color }};
+    --av-trust-padding-top: {{ section.settings.padding_top }}px;
+    --av-trust-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --av-trust-speed: {{ section.settings.speed | default: 18 }}s;
+  "
+>
+  <div class="avonent-trust-strip__viewport" aria-label="Avonent store benefits">
+    <div class="avonent-trust-strip__track">
+      {% for repeat_i in (1..2) %}
+        <div class="avonent-trust-strip__group"{% if repeat_i == 2 %} aria-hidden="true"{% endif %}>
+          {% for block in section.blocks %}
+            <div
+              class="avonent-trust-strip__item"
+              {% if repeat_i == 1 %}{{ block.shopify_attributes }}{% endif %}
+            >
+              <div class="avonent-trust-strip__icon">
+                {% case block.settings.icon %}
+                  {% when 'check' %}
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="9"></circle>
+                      <path d="M8.3 12.1 10.7 14.5 15.8 9.5"></path>
+                    </svg>
+                  {% when 'shield' %}
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 3 19 6v5c0 4.8-2.8 8.2-7 10-4.2-1.8-7-5.2-7-10V6z"></path>
+                      <path d="M9 12.1 11.1 14.2 15.3 10"></path>
+                    </svg>
+                  {% when 'lab' %}
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M9 3h6"></path>
+                      <path d="M10 3v6l-5 8.2A2.4 2.4 0 0 0 7 21h10a2.4 2.4 0 0 0 2-3.8L14 9V3"></path>
+                      <path d="M8.5 14h7"></path>
+                    </svg>
+                  {% when 'flag' %}
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3v18"></path>
+                      <path d="M6 4h10l-2 3 2 3H6"></path>
+                    </svg>
+                  {% when 'truck' %}
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M3 6h11v9H3z"></path>
+                      <path d="M14 10h3.5L21 13v2h-7z"></path>
+                      <circle cx="8" cy="17" r="1.7"></circle>
+                      <circle cx="18" cy="17" r="1.7"></circle>
+                    </svg>
+                  {% when 'star' %}
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m12 3 2.7 5.5 6 .9-4.4 4.2 1 6-5.3-2.8-5.3 2.8 1-6-4.4-4.2 6-.9z"></path>
+                    </svg>
+                  {% else %}
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="9"></circle>
+                      <path d="M8.3 12.1 10.7 14.5 15.8 9.5"></path>
+                    </svg>
+                {% endcase %}
+              </div>
+
+              <div class="avonent-trust-strip__text">
+                {{ block.settings.text }}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .avonent-trust-strip {
+    width: 100%;
+    overflow: hidden;
+    padding-top: var(--av-trust-padding-top);
+    padding-bottom: var(--av-trust-padding-bottom);
+    background: var(--av-trust-bg);
+    color: var(--av-trust-text);
+  }
+
+  .avonent-trust-strip__viewport {
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg,transparent 0,#000 4%,#000 96%,transparent 100%);
+    mask-image: linear-gradient(90deg,transparent 0,#000 4%,#000 96%,transparent 100%);
+  }
+
+  .avonent-trust-strip__track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    animation: avonent-trust-strip-marquee var(--av-trust-speed) linear infinite;
+  }
+
+  .avonent-trust-strip__group {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: 28px;
+    padding-right: 28px;
+  }
+
+  .avonent-trust-strip__item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex: 0 0 auto;
+    min-width: 0;
+    color: var(--av-trust-text);
+    white-space: nowrap;
+    text-align:left;
+    justify-content:flex-start;
+  }
+
+  .avonent-trust-strip__icon {
+    flex: 0 0 23px;
+    width: 23px;
+    height: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--av-trust-accent);
+  }
+
+  .avonent-trust-strip__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .avonent-trust-strip__text {
+    font-family: var(--font-body--family);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: inherit;
+  }
+
+  .avonent-trust-strip:hover .avonent-trust-strip__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes avonent-trust-strip-marquee {
+    from { transform: translate3d(0,0,0); }
+    to { transform: translate3d(-50%,0,0); }
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-trust-strip__viewport {
+      -webkit-mask-image: linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);
+      mask-image: linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);
+    }
+
+    .avonent-trust-strip__group {
+      gap: 20px;
+      padding-right: 20px;
+    }
+
+    .avonent-trust-strip__item {
+      min-width: 0;
+      gap: 8px;
+    }
+
+    .avonent-trust-strip__icon {
+      flex-basis: 21px;
+      width: 21px;
+      height: 21px;
+    }
+
+    .avonent-trust-strip__text {
+      font-size: 13px;
+      font-weight: 600;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .avonent-trust-strip__viewport {
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    .avonent-trust-strip__viewport::-webkit-scrollbar {
+      display: none;
+    }
+
+    .avonent-trust-strip__track {
+      animation: none;
+    }
+
+    .avonent-trust-strip__group[aria-hidden="true"] {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "00 Avonent Trust Strip",
+  "tag": "section",
+  "class": "avonent-trust-strip-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Icons",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "header",
+      "content": "Carousel"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll speed",
+      "min": 8,
+      "max": 40,
+      "step": 1,
+      "unit": "s",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 22
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "check",
+              "label": "Check circle"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "lab",
+              "label": "Lab flask"
+            },
+            {
+              "value": "flag",
+              "label": "Flag"
+            },
+            {
+              "value": "truck",
+              "label": "Shipping truck"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "30-Day Risk-Free Trial"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "00 Avonent Trust Strip",
+      "blocks": [
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "shield",
+            "text": "30-Day Risk-Free Trial"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "lab",
+            "text": "Third-Party Lab Tested"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "flag",
+            "text": "Ships from USA"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

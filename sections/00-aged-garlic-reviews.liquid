@@ -1,0 +1,175 @@
+<section class="agr" id="GarlicReviews-{{ section.id }}">
+  <div class="agr__wrap">
+    <header class="agr__heading"><p>{{ section.settings.eyebrow }}</p><h2>{{ section.settings.heading }}</h2>{% if section.settings.source_note != blank %}<div class="agr__source">{{ section.settings.source_note }}</div>{% endif %}</header>
+    {% assign review_count = 0 %}
+    {% for block in section.blocks %}{% if block.settings.body != blank and block.settings.author != blank %}{% assign review_count = review_count | plus: 1 %}{% endif %}{% endfor %}
+    {% if review_count > 0 %}
+      <div class="agr__grid">
+        {% for block in section.blocks %}
+          {% if block.settings.body != blank and block.settings.author != blank %}
+          <article class="agr__card" {{ block.shopify_attributes }}>
+            <div class="agr__stars" aria-label="{{ block.settings.rating }} {{ section.settings.rating_label }}">{% for n in (1..5) %}<span{% if n > block.settings.rating %} class="agr__star-empty"{% endif %} aria-hidden="true">★</span>{% endfor %}</div>
+            <header class="agr__author"><span class="agr__avatar" aria-hidden="true">{{ block.settings.author | slice: 0 | upcase | escape }}</span><strong>{{ block.settings.author | escape }}</strong>{% if block.settings.country != blank %}<span class="agr__country">{{ block.settings.country | escape }}</span>{% endif %}</header>
+            {% if block.settings.verified %}<p class="agr__verified"><span aria-hidden="true">✓</span> {{ section.settings.verified_label }}</p>{% endif %}
+            {% if block.settings.excerpt %}<p class="agr__excerpt-label">{{ section.settings.excerpt_label }}</p>{% endif %}
+            {% if block.settings.title != blank %}<h3>{{ block.settings.title | escape }}</h3>{% endif %}
+            {% assign plain_review = block.settings.body | strip_html %}
+            {% if plain_review.size > 320 %}<details class="agr__expand"><summary><span class="agr__excerpt">{{ plain_review | truncate: 260 | escape }}</span><span class="agr__read">{{ section.settings.read_more }}</span><span class="agr__less">{{ section.settings.read_less }}</span></summary><div class="agr__body">{{ block.settings.body }}</div></details>{% else %}<div class="agr__body">{{ block.settings.body }}</div>{% endif %}
+            {% if block.settings.date != blank %}<p class="agr__date">{{ block.settings.date | escape }}</p>{% endif %}
+          </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="agr__empty"><p>{{ section.settings.empty_text }}</p>{% if shop.email != blank %}<a href="mailto:{{ shop.email | escape }}?subject=Aged%20Garlic%20review">{{ section.settings.share_label }}</a>{% endif %}</div>
+    {% endif %}
+    {% if review_count > 0 %}<a class="agr__cta" href="#avonent-garlic-buy" data-garlic-bottom-offer>{{ section.settings.cta }}</a>{% endif %}
+  </div>
+</section>
+{% stylesheet %}
+.agr{background:linear-gradient(180deg,#fff,#f6fcff);padding:52px 0;color:#071a52}.agr *{box-sizing:border-box}.agr__wrap{max-width:1120px;width:calc(100% - 32px);margin:auto}.agr__heading{text-align:center;max-width:700px;margin:0 auto 48px}.agr__heading>p{font-size:12px;font-weight:850;letter-spacing:.14em;color:#087e9d;margin:0 0 12px}.agr__heading h2{font-size:clamp(30px,4vw,46px);line-height:1.08;letter-spacing:-.035em;margin:0}.agr__grid{columns:3;column-gap:22px}.agr__card{position:relative;break-inside:avoid;display:inline-block;width:100%;margin:16px 0 24px;padding:34px 22px 22px;border:1px solid #edf1f5;border-radius:18px;background:white;box-shadow:0 7px 24px #071a5210}.agr__stars{position:absolute;top:-15px;left:50%;transform:translateX(-50%);display:flex;gap:2px;padding:5px 17px;border-radius:40px;background:white;color:#ffbb00;box-shadow:0 4px 18px #071a5212;font-size:21px;line-height:1}.agr__star-empty{color:#e9edf1}.agr__author{display:flex;align-items:center;gap:10px;margin:2px 0 20px;font-size:15px;min-width:0}.agr__author strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.agr__avatar{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:#eef8fc;color:#087e9d;font-size:20px}.agr__country{margin-left:auto;font-size:12px;color:#647080}.agr__card h3{font-size:17px;line-height:1.35;margin:0 0 12px}.agr__body,.agr__excerpt{font-size:15px;line-height:1.65;color:#3e4755;overflow-wrap:anywhere}.agr__body p{margin:0 0 14px}.agr__body p:last-child{margin:0}.agr__date{font-size:12px;color:#7f8994;margin:22px 0 0}.agr__expand summary{cursor:pointer;list-style:none}.agr__expand summary::-webkit-details-marker{display:none}.agr__read,.agr__less{display:block;color:#0068e8;font-size:13px;font-weight:700;margin-top:8px}.agr__less{display:none}.agr__expand[open] .agr__less{display:block;margin:0 0 12px}.agr__expand[open] .agr__excerpt,.agr__expand[open] .agr__read{display:none}.agr__cta{display:block;max-width:440px;margin:18px auto 0;padding:19px;border-radius:12px;background:linear-gradient(90deg,#0068e8,#02c6ea);color:white;text-align:center;text-decoration:none;font-weight:800}.agr__empty{text-align:center;max-width:600px;margin:auto;padding:25px;background:white;border:1px solid #dcecf5;border-radius:18px;color:#526078;line-height:1.6}.agr__empty p{margin:0 0 12px}.agr__empty a{color:#087e9d;font-weight:750}.agr summary:focus-visible,.agr a:focus-visible{outline:3px solid #0068e8;outline-offset:4px}@media(max-width:749px){.agr{padding:40px 0}.agr__grid{columns:2;column-gap:14px}.agr__wrap{width:calc(100% - 26px)}.agr__card{padding:28px 13px 18px;border-radius:14px;margin-bottom:19px}.agr__author{gap:6px;font-size:12px}.agr__avatar{flex-basis:26px;width:26px;height:26px;font-size:16px}.agr__country{font-size:10px}.agr__body,.agr__excerpt{font-size:13px;line-height:1.6}.agr__stars{font-size:17px;padding:6px 12px}.agr__card h3{font-size:14px}.agr__date{font-size:11px}.agr__heading{margin-bottom:34px}}@media(max-width:359px){.agr__grid{columns:1}}
+.agr__source{font-size:13px;color:#687483;line-height:1.5;margin-top:15px}.agr__verified{display:flex;gap:5px;align-items:center;font-size:11px;color:#087e9d;font-weight:750;margin:-10px 0 16px}.agr__verified span{display:grid;place-items:center;background:#087e9d;color:white;border-radius:50%;width:14px;height:14px;font-size:10px}.agr__excerpt-label{font-size:11px;color:#687483;margin:0 0 8px}
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "Aged Garlic Reviews",
+  "tag": "section",
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "CUSTOMER REVIEWS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your routine. Your experience."
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Before reviews are added",
+      "default": "Have you tried Avonent Aged Garlic? Share your experience with our community."
+    },
+    {
+      "type": "text",
+      "id": "share_label",
+      "label": "Share review label",
+      "default": "Share your review"
+    },
+    {
+      "type": "text",
+      "id": "rating_label",
+      "label": "Rating accessibility label",
+      "default": "out of 5 stars"
+    },
+    {
+      "type": "text",
+      "id": "read_more",
+      "label": "Expand label",
+      "default": "Read more"
+    },
+    {
+      "type": "text",
+      "id": "read_less",
+      "label": "Collapse label",
+      "default": "Read less"
+    },
+    {
+      "type": "text",
+      "id": "cta",
+      "label": "Purchase button",
+      "default": "Choose Your Supply \u2192"
+    },
+    {
+      "type": "text",
+      "id": "source_note",
+      "label": "Review source note"
+    },
+    {
+      "type": "text",
+      "id": "verified_label",
+      "label": "Verified label",
+      "default": "Verified customer"
+    },
+    {
+      "type": "text",
+      "id": "excerpt_label",
+      "label": "Excerpt label",
+      "default": "Review excerpt"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Customer review",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Add genuine reviews for this product. Do not repurpose another product's testimonials. Leave blank until the review is available."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Customer display name"
+        },
+        {
+          "type": "text",
+          "id": "country",
+          "label": "Country (if supplied)"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Customer rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Review title"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Review text"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Review date"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Customer verified",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "excerpt",
+          "label": "Review is an excerpt",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "max_blocks": 24,
+  "presets": [
+    {
+      "name": "Aged Garlic Reviews"
+    }
+  ]
+}
+{% endschema %}
+

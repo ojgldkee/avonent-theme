@@ -1,0 +1,329 @@
+{% liquid
+  assign section_id = 'AvonentReviews-' | append: section.id
+  assign review_count = 0
+  for block in section.blocks
+    if block.settings.title != blank or block.settings.review != blank or block.settings.customer_name != blank
+      assign review_count = review_count | plus: 1
+    endif
+  endfor
+  assign has_reviews = false
+  if review_count > 0
+    assign has_reviews = true
+  endif
+%}
+
+{% if has_reviews or request.design_mode %}
+  <section
+    id="{{ section_id }}"
+    class="avonent-reviews"
+    data-avonent-reviews
+    data-expanded="false"
+    style="
+      --avr-bg: {{ section.settings.background_color }};
+      --avr-card: {{ section.settings.card_color }};
+      --avr-text: {{ section.settings.text_color }};
+      --avr-muted: {{ section.settings.muted_text_color }};
+      --avr-accent: {{ section.settings.accent_color }};
+      --avr-accent-dark: {{ section.settings.accent_dark_color }};
+      --avr-border: {{ section.settings.border_color }};
+      --avr-radius: {{ section.settings.corner_radius }}px;
+      --avr-width: {{ section.settings.content_width }}px;
+      --avr-top: {{ section.settings.padding_top }}px;
+      --avr-bottom: {{ section.settings.padding_bottom }}px;
+    "
+  >
+    <div class="avonent-reviews__glow avonent-reviews__glow--one" aria-hidden="true"></div>
+    <div class="avonent-reviews__glow avonent-reviews__glow--two" aria-hidden="true"></div>
+
+    <div class="avonent-reviews__inner">
+      <header class="avonent-reviews__header">
+        {% if section.settings.show_trust_line %}
+          <div class="avonent-reviews__trust-line" aria-label="{{ section.settings.rating_text }}. {{ section.settings.trusted_text }}">
+            <span class="avonent-reviews__trust-stars" aria-hidden="true">
+              {% if section.settings.stars_image != blank %}
+                {{
+                  section.settings.stars_image
+                  | image_url: width: 240
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '120, 180, 240',
+                    sizes: '100px',
+                    class: 'avonent-reviews__trust-stars-image',
+                    alt: ''
+                }}
+              {% elsif section.settings.stars_image_url != blank %}
+                <img class="avonent-reviews__trust-stars-image" src="{{ section.settings.stars_image_url | escape }}" alt="" width="100" height="20" loading="lazy">
+              {% else %}
+                <span class="avonent-reviews__trust-stars-fallback">★★★★★</span>
+              {% endif %}
+            </span>
+            {% if section.settings.rating_text != blank %}<strong>{{ section.settings.rating_text }}</strong>{% endif %}
+            {% if section.settings.rating_text != blank and section.settings.trusted_text != blank %}<span class="avonent-reviews__trust-divider" aria-hidden="true">|</span>{% endif %}
+            {% if section.settings.trusted_text != blank %}<span>{{ section.settings.trusted_text }}</span>{% endif %}
+          </div>
+        {% endif %}
+
+        {% if section.settings.eyebrow != blank %}<div class="avonent-reviews__eyebrow">{{ section.settings.eyebrow }}</div>{% endif %}
+        {% if section.settings.heading != blank %}<h2 class="avonent-reviews__heading">{{ section.settings.heading }}</h2>{% endif %}
+        {% if section.settings.description != blank %}<div class="avonent-reviews__description rte">{{ section.settings.description }}</div>{% endif %}
+      </header>
+
+      {% if has_reviews %}
+        <div class="avonent-reviews__grid" data-avr-grid>
+          {% assign rendered_reviews = 0 %}
+          {% for block in section.blocks %}
+            {% if block.settings.title != blank or block.settings.review != blank or block.settings.customer_name != blank %}
+              {% assign rendered_reviews = rendered_reviews | plus: 1 %}
+              <article class="avonent-reviews__card" {% if rendered_reviews > 2 %}data-review-overflow="true"{% endif %} {{ block.shopify_attributes }}>
+                <div class="avonent-reviews__card-top">
+                  <div class="avonent-reviews__card-rating">
+                    <div class="avonent-reviews__card-stars" aria-label="Rated {{ block.settings.rating }} out of 5">
+                      {% for star in (1..5) %}<span class="{% if star > block.settings.rating %}is-empty{% endif %}" aria-hidden="true">★</span>{% endfor %}
+                    </div>
+                    <span>{{ block.settings.rating }}.0</span>
+                  </div>
+                  <div class="avonent-reviews__quote" aria-hidden="true">“</div>
+                </div>
+
+                {% if block.settings.title != blank %}<h3 class="avonent-reviews__card-title">{{ block.settings.title }}</h3>{% endif %}
+                {% if block.settings.review != blank %}<blockquote class="avonent-reviews__card-copy">{{ block.settings.review | newline_to_br }}</blockquote>{% endif %}
+
+                {% if block.settings.tag_1 != blank or block.settings.tag_2 != blank %}
+                  <div class="avonent-reviews__tags">
+                    {% if block.settings.tag_1 != blank %}<span>{{ block.settings.tag_1 }}</span>{% endif %}
+                    {% if block.settings.tag_2 != blank %}<span>{{ block.settings.tag_2 }}</span>{% endif %}
+                  </div>
+                {% endif %}
+
+                {% if block.settings.customer_name != blank or block.settings.customer_image != blank or block.settings.date != blank %}
+                  <footer class="avonent-reviews__customer">
+                    {% if block.settings.customer_image != blank %}
+                      {{
+                        block.settings.customer_image
+                        | image_url: width: 144
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '72, 108, 144',
+                          sizes: '46px',
+                          class: 'avonent-reviews__avatar',
+                          alt: block.settings.customer_name
+                      }}
+                    {% elsif block.settings.customer_name != blank %}
+                      <div class="avonent-reviews__avatar avonent-reviews__avatar--initial" aria-hidden="true">{{ block.settings.customer_name | slice: 0 | upcase }}</div>
+                    {% endif %}
+
+                    <div class="avonent-reviews__customer-info">
+                      {% if block.settings.customer_name != blank %}<div class="avonent-reviews__customer-name">{{ block.settings.customer_name }}</div>{% endif %}
+                      <div class="avonent-reviews__verified">
+                        {% if block.settings.verified %}
+                          <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="m6 10.1 2.4 2.35L14.2 7" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/></svg>
+                          <span>Verified Customer</span>
+                        {% else %}
+                          <span>Customer Review</span>
+                        {% endif %}
+                        {% if block.settings.date != blank %}<span class="avonent-reviews__date">· {{ block.settings.date }}</span>{% endif %}
+                      </div>
+                    </div>
+                  </footer>
+                {% endif %}
+              </article>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% if review_count > 2 %}
+          <button type="button" class="avonent-reviews__more" data-avr-show-more aria-expanded="false">
+            <span>{{ section.settings.mobile_more_text }}</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5.5 7.5 4.5 4.5 4.5-4.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/></svg>
+          </button>
+        {% endif %}
+
+        {% if section.settings.button_text != blank %}
+          <div class="avonent-reviews__cta-wrap">
+            <a class="avonent-reviews__cta" {% if section.settings.button_link != blank %}href="{{ section.settings.button_link }}"{% else %}role="link" aria-disabled="true"{% endif %}>
+              {{ section.settings.button_text }} <span aria-hidden="true">→</span>
+            </a>
+            {% if section.settings.cta_note != blank %}<div class="avonent-reviews__cta-note"><span aria-hidden="true">✓</span>{{ section.settings.cta_note }}</div>{% endif %}
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="avonent-reviews__empty">
+          <div class="avonent-reviews__empty-icon" aria-hidden="true">★</div>
+          <strong>Add your real customer reviews</strong>
+          <p>This setup preview is only visible in the theme editor. Add Review blocks to publish the section.</p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% endif %}
+
+{% stylesheet %}
+  .avonent-reviews {
+    position: relative;
+    overflow: hidden;
+    padding: var(--avr-top) 0 var(--avr-bottom);
+    color: var(--avr-text);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--avr-accent) 6%, var(--avr-bg)), var(--avr-bg) 38%), var(--avr-bg);
+    border-top: 5px solid var(--avr-accent);
+  }
+  .avonent-reviews__glow { position: absolute; width: 420px; height: 420px; background: var(--avr-accent); border-radius: 50%; filter: blur(140px); opacity: .09; pointer-events: none; }
+  .avonent-reviews__glow--one { top: -280px; left: -170px; }
+  .avonent-reviews__glow--two { right: -210px; bottom: -320px; }
+  .avonent-reviews__inner { position: relative; z-index: 1; width: min(calc(100% - 40px), var(--avr-width)); margin: 0 auto; }
+  .avonent-reviews__header { width: min(100%, 800px); margin: 0 auto 34px; text-align: center; }
+
+  .avonent-reviews__trust-line { display: flex; width: fit-content; max-width: 100%; align-items: center; justify-content: center; gap: 8px; margin: 0 auto 20px; color: var(--avr-text); font-size: 14px; line-height: 1.25; }
+  .avonent-reviews__trust-line strong { font-weight: 850; }
+  .avonent-reviews__trust-divider { color: var(--avr-border); }
+  .avonent-reviews__trust-stars { display: inline-flex; flex: 0 0 auto; align-items: center; }
+  .avonent-reviews__trust-stars-image { display: block; width: auto; max-width: 104px; height: 19px; object-fit: contain; }
+  .avonent-reviews__trust-stars-fallback { color: var(--avr-accent); font-size: 18px; letter-spacing: 1px; line-height: 1; }
+
+  .avonent-reviews__eyebrow { margin-bottom: 8px; color: var(--avr-accent-dark); font-size: 12px; font-weight: 850; letter-spacing: .13em; line-height: 1.2; text-transform: uppercase; }
+  .avonent-reviews__heading { margin: 0; color: var(--avr-text); font-size: clamp(30px, 4vw, 52px); font-weight: 850; letter-spacing: -.045em; line-height: 1.02; }
+  .avonent-reviews__description { margin: 14px auto 0; color: var(--avr-muted); font-size: 15px; line-height: 1.55; }
+  .avonent-reviews__description p { margin: 0; }
+
+  .avonent-reviews__grid { display: grid; width: min(100%, 920px); grid-template-columns: minmax(0, 1fr); gap: 14px; margin: 0 auto; }
+
+  .avonent-reviews__card { position: relative; display: flex; min-width: 0; min-height: 0; align-items: center; flex-direction: column; padding: 26px; overflow: hidden; background: var(--avr-card); border: 1px solid var(--avr-border); border-radius: var(--avr-radius); box-shadow: 0 14px 42px rgb(18 63 76 / .07); text-align: center; transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+  .avonent-reviews__card[data-review-overflow='true'] { display: none; }
+  .avonent-reviews[data-expanded='true'] .avonent-reviews__card[data-review-overflow='true'] { display: flex; }
+  .avonent-reviews__card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--avr-accent), color-mix(in srgb, var(--avr-accent) 30%, white)); }
+  @media (hover: hover) { .avonent-reviews__card:hover { border-color: color-mix(in srgb, var(--avr-accent) 48%, var(--avr-border)); box-shadow: 0 20px 50px rgb(2 198 234 / .13); transform: translateY(-4px); } }
+
+  .avonent-reviews__card-top { position: relative; display: flex; width: 100%; min-height: 31px; align-items: flex-start; justify-content: center; gap: 12px; }
+  .avonent-reviews__card-rating { display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--avr-muted); font-size: 11px; font-weight: 750; }
+  .avonent-reviews__card-stars { display: flex; gap: 1px; color: var(--avr-accent); font-size: 15px; letter-spacing: -.04em; line-height: 1; }
+  .avonent-reviews__card-stars .is-empty { color: color-mix(in srgb, var(--avr-muted) 20%, transparent); }
+  .avonent-reviews__quote { position: absolute; top: 0; right: 0; height: 31px; color: color-mix(in srgb, var(--avr-accent) 28%, white); font-family: Georgia, serif; font-size: 48px; font-weight: 900; line-height: .8; }
+  .avonent-reviews__card-title { margin: 20px 0 0; color: var(--avr-text); font-size: 19px; font-weight: 850; letter-spacing: -.025em; line-height: 1.22; }
+  .avonent-reviews__card-copy { margin: 12px 0 0; color: var(--avr-muted); font-size: 14px; font-style: normal; line-height: 1.58; }
+  .avonent-reviews__tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px; margin-top: 17px; }
+  .avonent-reviews__tags span { display: inline-flex; padding: 6px 9px; color: var(--avr-accent-dark); background: color-mix(in srgb, var(--avr-accent) 9%, white); border: 1px solid color-mix(in srgb, var(--avr-accent) 22%, transparent); border-radius: 999px; font-size: 10px; font-weight: 750; line-height: 1.2; }
+
+  .avonent-reviews__customer { display: flex; align-items: center; justify-content: center; gap: 11px; margin-top: auto; padding-top: 21px; text-align: left; }
+  .avonent-reviews__avatar { width: 46px; height: 46px; flex: 0 0 auto; object-fit: cover; background: color-mix(in srgb, var(--avr-accent) 11%, white); border: 2px solid white; border-radius: 50%; box-shadow: 0 0 0 1px color-mix(in srgb, var(--avr-accent) 28%, var(--avr-border)); }
+  .avonent-reviews__avatar--initial { display: grid; place-items: center; color: var(--avr-accent-dark); font-size: 16px; font-weight: 900; }
+  .avonent-reviews__customer-info { min-width: 0; }
+  .avonent-reviews__customer-name { color: var(--avr-text); font-size: 13px; font-weight: 850; line-height: 1.2; }
+  .avonent-reviews__verified { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; margin-top: 4px; color: var(--avr-accent-dark); font-size: 10px; font-weight: 750; line-height: 1.2; }
+  .avonent-reviews__verified svg { width: 15px; height: 15px; flex: 0 0 auto; }
+  .avonent-reviews__date { color: var(--avr-muted); font-weight: 600; }
+  .avonent-reviews__more { display: flex; width: min(100%, 920px); min-height: 52px; align-items: center; justify-content: center; gap: 8px; margin: 18px auto 0; padding: 12px 20px; color: var(--avr-accent-dark); background: color-mix(in srgb, var(--avr-accent) 10%, white); border: 1px solid color-mix(in srgb, var(--avr-accent) 42%, var(--avr-border)); border-radius: 999px; cursor: pointer; font: inherit; font-size: 13px; font-weight: 850; letter-spacing: .01em; transition: background 160ms ease, border-color 160ms ease, transform 160ms ease; }
+  .avonent-reviews__more:hover { background: color-mix(in srgb, var(--avr-accent) 16%, white); border-color: var(--avr-accent); transform: translateY(-1px); }
+  .avonent-reviews__more svg { width: 18px; height: 18px; }
+  .avonent-reviews[data-expanded='true'] .avonent-reviews__more { display: none; }
+
+  .avonent-reviews__cta-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 34px; }
+  .avonent-reviews__cta { display: inline-flex; min-height: 52px; align-items: center; justify-content: center; gap: 12px; padding: 13px 24px; color: white; background: var(--avr-text); border-radius: 13px; box-shadow: 0 10px 26px rgb(17 17 17 / .14); font-size: 13px; font-weight: 850; line-height: 1.2; text-decoration: none; transition: transform 160ms ease, background 160ms ease; }
+  .avonent-reviews__cta[href]:hover { color: white; background: color-mix(in srgb, var(--avr-text) 84%, var(--avr-accent)); transform: translateY(-2px); }
+  .avonent-reviews__cta[aria-disabled='true'] { cursor: default; opacity: .55; }
+  .avonent-reviews__cta-note { display: flex; align-items: center; gap: 6px; color: var(--avr-muted); font-size: 11px; font-weight: 700; }
+  .avonent-reviews__cta-note span { display: grid; width: 16px; height: 16px; place-items: center; color: white; background: var(--avr-accent); border-radius: 50%; font-size: 9px; font-weight: 900; }
+
+  .avonent-reviews__empty { display: grid; min-height: 250px; place-items: center; align-content: center; padding: 34px; color: var(--avr-muted); background: rgb(255 255 255 / .72); border: 2px dashed color-mix(in srgb, var(--avr-accent) 35%, var(--avr-border)); border-radius: var(--avr-radius); text-align: center; }
+  .avonent-reviews__empty-icon { display: grid; width: 50px; height: 50px; margin-bottom: 12px; place-items: center; color: white; background: var(--avr-accent); border-radius: 50%; font-size: 22px; }
+  .avonent-reviews__empty strong { color: var(--avr-text); font-size: 18px; }
+  .avonent-reviews__empty p { max-width: 460px; margin: 8px 0 0; font-size: 13px; line-height: 1.5; }
+
+  @media screen and (max-width: 749px) {
+    .avonent-reviews__inner { width: 100%; }
+    .avonent-reviews__header { width: calc(100% - 28px); margin-bottom: 24px; text-align: center; }
+    .avonent-reviews__trust-line { justify-content: center; flex-wrap: wrap; gap: 6px; margin: 0 auto 18px; font-size: 12px; text-align: center; }
+    .avonent-reviews__trust-stars-image { max-width: 82px; height: 16px; }
+    .avonent-reviews__trust-stars-fallback { font-size: 15px; }
+    .avonent-reviews__heading { font-size: 32px; }
+    .avonent-reviews__description { margin-top: 10px; font-size: 14px; }
+
+    .avonent-reviews__grid { width: calc(100% - 28px); margin: 0 auto; gap: 10px; }
+    .avonent-reviews__card { min-height: 0; padding: 20px; border-radius: max(14px, calc(var(--avr-radius) - 2px)); }
+    .avonent-reviews__card-title { margin-top: 17px; font-size: 18px; }
+    .avonent-reviews__card-copy { font-size: 13px; line-height: 1.55; }
+
+    .avonent-reviews__more { width: calc(100% - 28px); min-height: 50px; }
+    .avonent-reviews__cta-wrap, .avonent-reviews__empty { width: calc(100% - 28px); margin-inline: auto; }
+    .avonent-reviews__cta { width: 100%; max-width: 360px; }
+  }
+
+  @media screen and (max-width: 385px) {
+    .avonent-reviews__trust-line { gap: 4px; font-size: 10.5px; }
+    .avonent-reviews__trust-stars-image { max-width: 72px; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  if (!window.__avonentReviewsBound) {
+    window.__avonentReviewsBound = true;
+    document.addEventListener('click', function (event) {
+      var moreButton = event.target.closest('[data-avr-show-more]');
+      if (!moreButton) return;
+      var section = moreButton.closest('[data-avonent-reviews]');
+      if (!section) return;
+      section.setAttribute('data-expanded', 'true');
+      moreButton.setAttribute('aria-expanded', 'true');
+    });
+  }
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "00 Avonent Reviews",
+  "tag": "section",
+  "class": "avonent-reviews-section",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "header", "content": "Trust line" },
+    { "type": "checkbox", "id": "show_trust_line", "label": "Show trust line", "default": true },
+    { "type": "image_picker", "id": "stars_image", "label": "Stars image override" },
+    { "type": "text", "id": "stars_image_url", "label": "Stars image URL fallback", "default": "https://cdn.shopify.com/s/files/1/0779/0673/9384/files/stars-green.svg?v=1761298566" },
+    { "type": "text", "id": "rating_text", "label": "Rating text", "default": "Rated 4.9 / 5" },
+    { "type": "text", "id": "trusted_text", "label": "Trusted text", "default": "Trusted by 75,000+" },
+
+    { "type": "header", "content": "Heading" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "VERIFIED CUSTOMER REVIEWS" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Real routines. Real Avonent customers." },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Read feedback from customers who made Avonent part of their daily wellness routine.</p>" },
+
+    { "type": "header", "content": "Review display" },
+    { "type": "text", "id": "mobile_more_text", "label": "Read-more button text", "default": "Read more reviews" },
+
+    { "type": "header", "content": "Optional button" },
+    { "type": "text", "id": "button_text", "label": "Button text" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "text", "id": "cta_note", "label": "Button note", "default": "30-day customer satisfaction guarantee" },
+
+    { "type": "header", "content": "Style" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#F1FBFD" },
+    { "type": "color", "id": "card_color", "label": "Cards", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#111111" },
+    { "type": "color", "id": "muted_text_color", "label": "Muted text", "default": "#58676C" },
+    { "type": "color", "id": "accent_color", "label": "Avonent blue", "default": "#02C6EA" },
+    { "type": "color", "id": "accent_dark_color", "label": "Dark blue", "default": "#008EAA" },
+    { "type": "color", "id": "border_color", "label": "Borders", "default": "#D6E8EC" },
+    { "type": "range", "id": "corner_radius", "label": "Corner radius", "min": 0, "max": 30, "step": 1, "unit": "px", "default": 18 },
+    { "type": "range", "id": "content_width", "label": "Content width", "min": 900, "max": 1500, "step": 20, "unit": "px", "default": 1240 },
+    { "type": "range", "id": "padding_top", "label": "Top spacing", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom spacing", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 72 }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "title", "label": "Review headline" },
+        { "type": "textarea", "id": "review", "label": "Review" },
+        { "type": "image_picker", "id": "customer_image", "label": "Customer image" },
+        { "type": "text", "id": "customer_name", "label": "Customer name" },
+        { "type": "checkbox", "id": "verified", "label": "Verified customer", "default": true },
+        { "type": "text", "id": "date", "label": "Date" },
+        { "type": "text", "id": "tag_1", "label": "Benefit tag 1" },
+        { "type": "text", "id": "tag_2", "label": "Benefit tag 2" }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [{ "name": "00 Avonent Reviews", "category": "Product" }]
+}
+{% endschema %}

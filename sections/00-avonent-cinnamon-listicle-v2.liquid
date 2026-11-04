@@ -1,0 +1,1312 @@
+{% liquid
+  assign avl_product = section.settings.featured_product | default: all_products['cinnamon-berberine-example']
+  assign avl_product_url = avl_product.url | default: '/products/cinnamon-berberine-example'
+  assign avl_product_image = avl_product.featured_image
+  assign avl_hero_image = section.settings.hero_image | default: avl_product_image
+  assign avl_logo = section.settings.logo_image | default: settings.logo
+  assign avl_review_count = 0
+  for block in section.blocks
+    if block.type == 'review' and block.settings.review_text != blank
+      assign avl_review_count = avl_review_count | plus: 1
+    endif
+  endfor
+%}
+
+<div class="avl" id="AvonentListicle-{{ section.id }}" style="--avl-accent: {{ section.settings.accent_color }}; --avl-ink: {{ section.settings.text_color }}; --avl-cream: {{ section.settings.background_color }};">
+  <div class="avl-announcement">
+    <span class="avl-announcement__dot" aria-hidden="true"></span>
+    {{ section.settings.announcement_text | escape }}
+  </div>
+  <div class="avl-brand">
+    <a class="avl-brand__link" href="{{ routes.root_url }}" aria-label="Avonent home">
+      {% if avl_logo != blank %}
+        {{ avl_logo | image_url: width: 400 | image_tag: loading: 'eager', widths: '180, 260, 400', class: 'avl-brand__image', alt: 'Avonent' }}
+      {% else %}
+        <span class="avl-brand__wordmark">Avonent<span class="avl-brand__period">.</span></span>
+      {% endif %}
+    </a>
+  </div>
+
+  <div class="avl-main">
+    <section class="avl-hero avl-container" aria-labelledby="avl-hero-title">
+      <div class="avl-hero__image-wrap">
+        {% if avl_hero_image != blank %}
+          {{ avl_hero_image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '480, 720, 960, 1200, 1400', sizes: '(min-width: 900px) 48vw, 100vw', class: 'avl-hero__image', alt: section.settings.hero_image_alt }}
+        {% else %}
+          <div class="avl-image-fallback" aria-label="Ceylon cinnamon botanical illustration"><span class="avl-image-fallback__glyph" aria-hidden="true">✦</span><span>CEYLON CINNAMON</span><small>A more thoughtful everyday ritual</small></div>
+        {% endif %}
+        <span class="avl-hero__image-label">{{ section.settings.hero_image_badge | escape }}</span>
+      </div>
+      <div class="avl-hero__content">
+        <div class="avl-eyebrow"><span class="avl-eyebrow__line"></span>{{ section.settings.hero_eyebrow | escape }}</div>
+        <h1 id="avl-hero-title">{{ section.settings.hero_title | escape }}</h1>
+        <p class="avl-hero__subtitle">{{ section.settings.hero_subtitle | escape }}</p>
+        <div class="avl-rich avl-hero__lead">{{ section.settings.hero_intro }}</div>
+        <a class="avl-button" href="{{ avl_product_url }}">{{ section.settings.hero_cta | escape }} <span aria-hidden="true">↗</span></a>
+        {% if section.settings.show_social_proof %}
+          <div class="avl-social-proof"><span class="avl-social-proof__stars" aria-label="Five stars">★★★★★</span><span>{{ section.settings.social_proof_text | escape }}</span></div>
+        {% endif %}
+      </div>
+    </section>
+
+    <section class="avl-benefits avl-container" aria-label="Seven reasons to choose Avonent Ceylon Cinnamon">
+      {% assign avl_number = 0 %}
+      {% for block in section.blocks %}
+        {% if block.type == 'benefit' %}
+          {% assign avl_number = avl_number | plus: 1 %}
+          {% assign avl_number_label = avl_number | prepend: '0' | slice: -2, 2 %}
+          {% assign avl_number_even = avl_number | modulo: 2 %}
+          <article class="avl-benefit{% if avl_number_even == 0 %} avl-benefit--reverse{% endif %}" {{ block.shopify_attributes }}>
+            <div class="avl-benefit__copy">
+              <div class="avl-benefit__meta"><span>{{ block.settings.category | escape }}</span><span>{{ avl_number_label }}</span></div>
+              <h3>{{ block.settings.heading | escape }}</h3>
+            </div>
+            <div class="avl-benefit__visual">
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '360, 540, 720, 960, 1200', sizes: '(min-width: 900px) 45vw, 100vw', class: 'avl-benefit__image', alt: block.settings.image_alt }}
+              {% else %}
+                <div class="avl-benefit__art" aria-hidden="true">
+                  <span class="avl-benefit__art-circle"></span>
+                  <span class="avl-benefit__art-number">{{ avl_number_label }}</span>
+                  <span class="avl-benefit__art-word">Avonent</span>
+                </div>
+                {% if request.design_mode %}<div class="avl-editor-hint">Select this block to add your own image</div>{% endif %}
+              {% endif %}
+              {% if block.settings.image_caption != blank %}<div class="avl-benefit__caption">{{ block.settings.image_caption | escape }}</div>{% endif %}
+            </div>
+            <div class="avl-benefit__body-wrap">
+              <div class="avl-rich avl-benefit__body">{{ block.settings.body }}</div>
+            </div>
+          </article>
+
+          {% if avl_number == 6 and section.settings.show_survey_results %}
+            <aside class="avl-results" aria-labelledby="avl-results-heading">
+              <h2 id="avl-results-heading">{{ section.settings.results_heading | escape }}</h2>
+              <p class="avl-results__lead">{{ section.settings.results_subheading | escape }}</p>
+              <div class="avl-results__grid">
+                <div class="avl-results__item"><strong>{{ section.settings.results_1_percent | escape }}</strong><p>{{ section.settings.results_1_text | escape }}</p></div>
+                <div class="avl-results__item"><strong>{{ section.settings.results_2_percent | escape }}</strong><p>{{ section.settings.results_2_text | escape }}</p></div>
+                <div class="avl-results__item"><strong>{{ section.settings.results_3_percent | escape }}</strong><p>{{ section.settings.results_3_text | escape }}</p></div>
+                <div class="avl-results__item"><strong>{{ section.settings.results_4_percent | escape }}</strong><p>{{ section.settings.results_4_text | escape }}</p></div>
+              </div>
+              <p class="avl-results__note">{{ section.settings.results_note | escape }}</p>
+            </aside>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </section>
+
+    <section class="avl-formula" aria-labelledby="avl-formula-heading">
+      <div class="avl-container avl-formula__inner">
+        <span class="avl-kicker">{{ section.settings.formula_eyebrow | escape }}</span>
+        <h2 id="avl-formula-heading">{{ section.settings.formula_title | escape }}</h2>
+        <p>{{ section.settings.formula_description | escape }}</p>
+      </div>
+    </section>
+
+    {% if section.settings.show_offer %}
+      <section class="avl-offer" aria-labelledby="avl-offer-title">
+        <header class="avl-container avl-offer__intro">
+          <span class="avl-kicker">{{ section.settings.offer_eyebrow | escape }}</span>
+          <h2 id="avl-offer-title">{{ section.settings.offer_title | escape }}</h2>
+          <p class="avl-offer__subtitle">{{ section.settings.offer_subtitle | escape }}</p>
+        </header>
+        <div class="avl-container avl-offer__grid">
+          <div class="avl-offer__visual">
+            {% assign avl_offer_image = section.settings.offer_image | default: avl_product_image %}
+            {% if avl_offer_image != blank %}
+              {{ avl_offer_image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '320, 540, 760, 1000', sizes: '(min-width: 850px) 40vw, 90vw', class: 'avl-offer__image', alt: section.settings.offer_image_alt }}
+            {% else %}
+              <div class="avl-offer__image-placeholder"><span>Avonent</span><strong>CEYLON CINNAMON + BERBERINE</strong></div>
+            {% endif %}
+            {% if section.settings.offer_secondary_image != blank %}
+              {{ section.settings.offer_secondary_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '240, 420, 700', sizes: '(min-width: 850px) 24vw, 52vw', class: 'avl-offer__secondary-image', alt: section.settings.offer_secondary_image_alt }}
+            {% endif %}
+          </div>
+          <div class="avl-offer__details">
+            <p class="avl-offer__cta-heading">Choose Your Bundle &amp; Unlock Up to 70% OFF</p>
+            <a class="avl-button avl-offer__button" href="{{ avl_product_url }}">{{ section.settings.offer_cta | escape }} <span aria-hidden="true">↗</span></a>
+            <div class="avl-offer__timer" data-avl-timer data-duration="{{ section.settings.timer_minutes | times: 60 | plus: section.settings.timer_seconds }}" data-deadline="{{ section.settings.timer_deadline | escape }}" data-repeat="{{ section.settings.timer_repeat }}">
+              <div class="avl-offer__timer-label" data-avl-timer-label>{{ section.settings.timer_label | escape }}</div>
+              <div class="avl-offer__clock" role="timer" aria-label="Deal countdown"><span data-avl-minutes>07</span><span class="avl-offer__colon">:</span><span data-avl-seconds>00</span></div>
+              {% if section.settings.timer_context != blank %}<p class="avl-offer__timer-context">{{ section.settings.timer_context | escape }}</p>{% endif %}
+            </div>
+            <div class="avl-offer__perks">
+              <span class="avl-offer__risk">{{ section.settings.stock_risk_label | escape }} <strong>{{ section.settings.stock_risk_level | escape }}</strong></span>
+              <span class="avl-offer__ebook">{{ section.settings.ebook_text | escape }}</span>
+            </div>
+            <p class="avl-offer__guarantee"><span aria-hidden="true">✓</span> Try it today with a 90-Day Money-Back Guarantee!</p>
+          </div>
+        </div>
+      </section>
+    {% endif %}
+
+    {% if avl_review_count > 0 or section.settings.show_review_previews %}
+      <section class="avl-reviews avl-container" aria-labelledby="avl-reviews-heading">
+        <header class="avl-section-heading avl-reviews__heading">
+          <span class="avl-kicker">THE AVONENT COMMUNITY</span>
+          <h2 id="avl-reviews-heading">{{ section.settings.reviews_title | escape }}</h2>
+          <p>{{ section.settings.reviews_subtitle | escape }}</p>
+        </header>
+        <div class="avl-review-carousel" data-avl-carousel>
+          <button type="button" class="avl-review-carousel__arrow" data-avl-prev aria-label="Previous review">‹</button>
+          <div class="avl-review-carousel__viewport" data-avl-viewport tabindex="0" aria-label="Review cards">
+            <div class="avl-review-carousel__track">
+              {% if avl_review_count > 0 %}
+                {% for block in section.blocks %}
+                  {% if block.type == 'review' and block.settings.review_text != blank %}
+                    <article class="avl-review avl-review--real" {{ block.shopify_attributes }}>
+                      {% if block.settings.image != blank %}
+                        {{ block.settings.image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '320, 540, 700', sizes: '(min-width: 800px) 31vw, 76vw', class: 'avl-review__image', alt: block.settings.image_alt }}
+                      {% endif %}
+                      <div class="avl-review__content">
+                        <div class="avl-review__stars" aria-label="Customer rating: {{ block.settings.rating }} out of five stars">{% for avl_star in (1..5) %}{% if avl_star <= block.settings.rating %}★{% else %}☆{% endif %}{% endfor %}</div>
+                        <h3>{{ block.settings.review_title | escape }}</h3>
+                        <div class="avl-rich avl-review__quote">{{ block.settings.review_text }}</div>
+                        <div class="avl-review__author"><strong>{{ block.settings.author | escape }}</strong>{% if block.settings.verified %}<span><span aria-hidden="true">✓</span> Verified Purchase</span>{% endif %}</div>
+                      </div>
+                    </article>
+                  {% endif %}
+                {% endfor %}
+              {% else %}
+                {% for avl_sample in (1..3) %}
+                  <article class="avl-review avl-review--sample">
+                    <div class="avl-review__sample-art"><span>AVONENT</span><span aria-hidden="true">✦</span></div>
+                    <div class="avl-review__content">
+                      <span class="avl-review__example-label">EXAMPLE CARD {{ avl_sample }}</span>
+                      <div class="avl-review__sample-stars" aria-hidden="true">☆☆☆☆☆</div>
+                      <h3>{% if avl_sample == 1 %}Your customer's review headline{% elsif avl_sample == 2 %}Another genuine story goes here{% else %}A third customer experience{% endif %}</h3>
+                      <p class="avl-review__sample-text">Add an actual customer quote, name, rating and optional photo in the Shopify theme editor. This is a layout preview, not a testimonial.</p>
+                      <div class="avl-review__author"><strong>Review placeholder</strong><span>Waiting for your content</span></div>
+                    </div>
+                  </article>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <button type="button" class="avl-review-carousel__arrow" data-avl-next aria-label="Next review">›</button>
+          <div class="avl-review-carousel__dots" data-avl-dots aria-label="Review navigation"></div>
+        </div>
+        {% if avl_review_count == 0 %}<p class="avl-reviews__placeholder-note">Preview cards are clearly marked as examples. Add your verified customer reviews as editable Review blocks to replace them.</p>{% endif %}
+        {% if section.settings.show_social_proof %}
+          <div class="avl-reviews__social"><span aria-hidden="true">★★★★★</span><strong>{{ section.settings.social_proof_text | escape }}</strong></div>
+        {% endif %}
+      </section>
+    {% endif %}
+
+    <div class="avl-final-cta">
+      <div class="avl-container avl-final-cta__inner">
+        <a class="avl-button avl-final-cta__button" href="{{ avl_product_url }}">{{ section.settings.final_cta | escape }} <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="avl-mini-footer">
+    <div class="avl-mini-footer__brand">Avonent<span>.</span></div>
+    <nav aria-label="Legal links">
+      {% if shop.terms_of_service.url != blank %}<a href="{{ shop.terms_of_service.url }}">Terms &amp; Conditions</a>{% endif %}
+      {% if shop.privacy_policy.url != blank %}<a href="{{ shop.privacy_policy.url }}">Privacy Policy</a>{% endif %}
+      {% if shop.refund_policy.url != blank %}<a href="{{ shop.refund_policy.url }}">Return Policy</a>{% endif %}
+    </nav>
+    <small>© {{ 'now' | date: '%Y' }} Avonent. All rights reserved.</small>
+  </div>
+  <div class="avl-sticky" aria-hidden="true" data-avl-sticky>
+    <div class="avl-sticky__inner">
+      <a href="{{ avl_product_url }}" class="avl-sticky__button">
+        <span class="avl-sticky__button-text">{{ section.settings.sticky_cta | escape }}</span>
+        <span class="avl-sticky__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .avl{--avl-soft:#f5eae1;--avl-line:#e7d8ce;--avl-muted:#6e6661;--avl-paper:#fff;color:var(--avl-ink);background:var(--avl-cream);font-family:var(--font-body--family,Arial,sans-serif);font-size:16px;line-height:1.65;padding-bottom:86px}
+  .avl *{box-sizing:border-box}
+  .avl h1,.avl h2,.avl h3,.avl p{margin:0}
+  .avl h1,.avl h2,.avl h3{font-family:var(--font-heading--family,Georgia,serif);letter-spacing:-.035em;line-height:1.13;font-weight:700}
+  .avl a{color:inherit;text-decoration:none}
+  .avl img{max-width:100%;display:block}
+  .avl-container{width:min(1180px,calc(100% - 48px));margin-inline:auto}
+  .avl-announcement{min-height:42px;background:var(--avl-accent);color:white;display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 20px;text-align:center;font-size:12px;font-weight:750;letter-spacing:.075em;text-transform:uppercase;line-height:1.35}
+  .avl-announcement__dot{width:6px;height:6px;border-radius:50%;background:#ffe6bf;flex:none}
+  .avl-brand{height:88px;display:flex;align-items:center;justify-content:center;background:var(--avl-paper);border-bottom:1px solid #f4ede8}
+  .avl-brand__link{display:inline-flex;align-items:center;justify-content:center}
+  .avl-brand__image{width:auto;max-width:216px;max-height:58px;object-fit:contain}
+  .avl-brand__wordmark,.avl-mini-footer__brand{font-family:Georgia,serif;font-size:40px;line-height:1;font-weight:700;letter-spacing:-.065em}
+  .avl-brand__period,.avl-mini-footer__brand span{color:var(--avl-accent)}
+  .avl-hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:64px;padding-top:66px;padding-bottom:95px}
+  .avl-hero__image-wrap{position:relative;aspect-ratio:1.1/1;min-width:0}
+  .avl-hero__image{width:100%;height:100%;object-fit:cover;border-radius:19px;background:#e9d9cc}
+  .avl-hero__image-label{position:absolute;left:20px;bottom:20px;background:rgba(255,255,255,.92);border-radius:100px;padding:8px 17px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .avl-eyebrow,.avl-kicker{font-size:12px;letter-spacing:.17em;text-transform:uppercase;font-weight:800;color:var(--avl-accent)}
+  .avl-eyebrow{display:flex;align-items:center;gap:12px}
+  .avl-eyebrow__line{width:30px;height:1px;background:var(--avl-accent)}
+  .avl-hero h1{font-size:clamp(38px,4.15vw,62px);margin-top:18px;max-width:600px}
+  .avl-hero__subtitle{font-size:clamp(19px,1.9vw,24px);line-height:1.35;font-weight:650;margin-top:17px}
+  .avl-hero__lead{margin-top:22px;color:var(--avl-muted);font-size:16px;line-height:1.75;max-width:550px}
+  .avl-rich p+p{margin-top:14px}
+  .avl-rich ul,.avl-rich ol{padding-left:24px;margin:10px 0}
+  .avl-button{display:inline-flex;gap:18px;align-items:center;justify-content:center;background:var(--avl-accent);color:white!important;border-radius:100px;padding:16px 26px;font-weight:750;font-size:15px;letter-spacing:.005em;line-height:1.3;transition:transform .18s ease,background .18s ease;min-height:54px;text-align:center}
+  .avl-button:hover{transform:translateY(-2px);filter:brightness(.93)}
+  .avl-button:focus-visible,.avl a:focus-visible,.avl summary:focus-visible{outline:3px solid #02c6ea;outline-offset:4px}
+  .avl-button span{font-size:20px;line-height:1}
+  .avl-hero .avl-button{margin-top:28px;min-width:250px}
+  .avl-hero__micro{font-size:13px;color:var(--avl-muted);margin-top:12px}
+  .avl-hero__micro span{color:var(--avl-accent);font-weight:900}
+  .avl-intro-band{background:#efe5dc;border-top:1px solid var(--avl-line);border-bottom:1px solid var(--avl-line)}
+  .avl-intro-band__inner{display:flex;align-items:center;justify-content:space-between;gap:60px;padding-block:26px}
+  .avl-intro-band__label{flex:none;font-size:11px;font-weight:800;letter-spacing:.15em;color:var(--avl-accent)}
+  .avl-intro-band p{font-family:Georgia,serif;font-size:clamp(17px,1.75vw,22px);line-height:1.5}
+  .avl-section-heading{text-align:center;max-width:790px;margin:0 auto 65px}
+  .avl-section-heading h2{font-size:clamp(32px,3.4vw,49px);margin-top:14px}
+  .avl-section-heading p{color:var(--avl-muted);line-height:1.7;margin-top:17px}
+  .avl-benefits{padding-top:107px;padding-bottom:75px}
+  .avl-benefit{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:75px;padding:45px 0 76px}
+  .avl-benefit+.avl-benefit{padding-top:77px}
+  .avl-benefit--reverse .avl-benefit__visual{order:-1}
+  .avl-benefit__meta{display:flex;align-items:center;justify-content:space-between;gap:15px;color:var(--avl-accent);font-weight:800;letter-spacing:.13em;text-transform:uppercase;font-size:12px;padding-bottom:11px;border-bottom:1px solid var(--avl-line)}
+  .avl-benefit__meta span:last-child{font-family:Georgia,serif;font-size:21px;letter-spacing:0}
+  .avl-benefit h3{font-size:clamp(28px,3vw,42px);margin:22px 0}
+  .avl-benefit__body{color:#534e49;font-size:16px;line-height:1.85}
+  .avl-benefit__highlight{margin-top:26px;display:inline-flex;align-items:center;gap:12px;background:#f0e3d8;border-radius:9px;padding:12px 16px;font-weight:700;font-size:13px;color:#684331}
+  .avl-benefit__highlight span{display:grid;place-items:center;border-radius:50%;background:var(--avl-accent);color:#fff;width:23px;height:23px;flex:none}
+  .avl-benefit__visual{min-width:0;position:relative}
+  .avl-benefit__image{width:100%;height:auto;aspect-ratio:1.2/1;object-fit:cover;border-radius:17px}
+  .avl-benefit:first-of-type .avl-benefit__image{aspect-ratio:auto;object-fit:contain}
+  .avl-benefit__art{height:auto;aspect-ratio:1.2/1;background:linear-gradient(140deg,#f1e1d3,#d9ae8e);border-radius:17px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .avl-benefit__art-circle{position:absolute;width:70%;aspect-ratio:1;border:1px solid rgba(112,65,38,.22);border-radius:50%;box-shadow:0 0 0 37px rgba(255,255,255,.12),0 0 0 74px rgba(255,255,255,.09)}
+  .avl-benefit__art-number{font-family:Georgia,serif;font-size:clamp(100px,13vw,210px);line-height:1;color:rgba(99,49,29,.23);position:relative}
+  .avl-benefit__art-word{position:absolute;bottom:23px;left:27px;font-family:Georgia,serif;font-size:20px;color:#61402e;font-weight:700}
+  .avl-benefit__caption{text-align:center;color:var(--avl-muted);font-size:12px;margin-top:10px}
+  .avl-editor-hint{position:absolute;bottom:16px;right:16px;background:#fff;border-radius:8px;padding:6px 10px;font-size:12px}
+  .avl-image-fallback{width:100%;height:100%;border-radius:18px;background:radial-gradient(circle at 50% 38%,#e6c4a8,transparent 58%),linear-gradient(130deg,#d8b091,#f6e6d4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#67412e;font-weight:750;letter-spacing:.12em}
+  .avl-image-fallback__glyph{font-size:100px;line-height:1}
+  .avl-image-fallback small{letter-spacing:.02em;font-weight:400}
+  .avl-formula{background:#f0e6dc;padding:100px 0}
+  .avl-formula__inner{display:grid;grid-template-columns:1fr 1fr;gap:85px;align-items:center}
+  .avl-formula h2{font-size:clamp(32px,3.3vw,49px);margin:14px 0 20px}
+  .avl-formula__copy>p{color:var(--avl-muted);line-height:1.8;max-width:550px}
+  .avl-formula__facts{border-top:1px solid #d9c8b9;border-bottom:1px solid #d9c8b9;margin-top:31px;display:grid;grid-template-columns:repeat(3,1fr);padding:23px 0;gap:16px}
+  .avl-formula__facts div{display:flex;flex-direction:column;gap:7px}
+  .avl-formula__facts strong{font-size:22px;font-family:Georgia,serif;color:var(--avl-accent)}
+  .avl-formula__facts span{font-size:12px;line-height:1.3;color:var(--avl-muted)}
+  .avl-text-link{display:inline-flex;align-items:center;gap:12px;color:var(--avl-accent)!important;margin-top:26px;text-decoration:underline!important;text-underline-offset:5px;font-weight:800}
+  .avl-formula__media img{width:100%;aspect-ratio:1.08/1;object-fit:contain;background:#fff9f3;border-radius:20px;padding:20px}
+  .avl-formula__monogram{aspect-ratio:1.08;background:#d6b497;border-radius:20px;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:200px;color:#85563b}
+  .avl-formula__monogram span{font-size:60px}
+  .avl-reviews{padding-bottom:110px}
+  .avl-reviews__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .avl-review{background:#fff;border:1px solid var(--avl-line);border-radius:15px;overflow:hidden;box-shadow:0 4px 16px rgba(62,43,32,.05)}
+  .avl-review__image{width:100%;aspect-ratio:1.7;object-fit:cover}
+  .avl-review__content{padding:25px}
+  .avl-review__stars{color:#cb8745;letter-spacing:3px;font-size:17px;margin-bottom:10px}
+  .avl-review h3{font-size:21px;margin-bottom:12px}
+  .avl-review .avl-rich{color:var(--avl-muted);font-size:14px;line-height:1.7}
+  .avl-review__author{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:21px;font-size:12px;flex-wrap:wrap}
+  .avl-review__author span{color:#267959;font-weight:700}
+  .avl-reviews__empty{background:#fff;border:1px solid var(--avl-line);border-radius:15px;text-align:center;padding:31px 24px}
+  .avl-reviews__empty p{font-size:19px;font-family:Georgia,serif}
+  .avl-reviews__empty a{display:inline-block;margin-top:10px;color:var(--avl-accent);font-weight:800;text-decoration:underline}
+
+  .avl-results{border:1px solid #7c655b;border-radius:9px;background:#fff;max-width:100%;padding:40px 40px 31px;margin:46px 0 80px;text-align:center}
+  .avl-results h2{font-family:var(--font-heading--family,Georgia,serif);font-size:clamp(29px,3vw,39px);letter-spacing:-.03em}
+  .avl-results__lead{font-size:18px;margin:12px 0 27px!important;color:#47403c}
+  .avl-results__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:35px;text-align:left}
+  .avl-results__item{border-top:2px solid #a89d95;padding-top:14px}
+  .avl-results__item strong{display:block;color:var(--avl-accent);font-size:clamp(41px,4vw,60px);font-weight:850;letter-spacing:-.06em;line-height:1.15}
+  .avl-results__item p{font-size:14px;line-height:1.48;margin-top:13px}
+  .avl-results__note{font-size:11px;color:var(--avl-muted);line-height:1.5;margin-top:28px!important;text-align:left}
+  @media(max-width:700px){.avl-results{padding:29px 20px;margin:25px 0 55px}.avl-results h2{font-size:30px}.avl-results__lead{font-size:15px;margin-bottom:22px!important}.avl-results__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 17px}.avl-results__item strong{font-size:43px}.avl-results__item p{font-size:12px}.avl-results__note{text-align:center}}
+  .avl-final-cta{background:#f0e5db;padding:28px 0}
+  .avl-final-cta__inner{display:flex;align-items:center;justify-content:center}
+  .avl-final-cta__button{width:min(540px,100%);font-size:17px;padding-block:19px}
+  .avl-mini-footer{border-top:1px solid var(--avl-line);background:#fff;padding:34px 24px 36px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:19px}
+  .avl-mini-footer__brand{font-size:32px}
+  .avl-mini-footer nav{display:flex;justify-content:center;flex-wrap:wrap;gap:15px 35px;font-size:13px}
+  .avl-mini-footer nav a:hover{text-decoration:underline}
+  .avl-mini-footer small{font-size:11px;color:var(--avl-muted)}
+  .avl-sticky{position:fixed;z-index:55;left:0;bottom:0;width:100%;background:rgba(255,255,255,.98);border-top:1px solid #ebded4;box-shadow:0 -4px 22px rgba(47,31,20,.08);display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 24px;min-height:74px;backdrop-filter:blur(8px)}
+  .avl-sticky__image{width:47px;height:47px;object-fit:contain;border-radius:8px;background:#f8f1eb}
+  .avl-sticky__label{display:flex;flex-direction:column;min-width:0;margin-right:25px;line-height:1.35}
+  .avl-sticky__label strong{font-size:13px}
+  .avl-sticky__label span{font-size:11px;color:var(--avl-muted);margin-top:3px}
+  .avl-sticky__button{min-height:45px;display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--avl-accent);color:white!important;border-radius:100px;padding:10px 29px;font-size:14px;font-weight:800;text-align:center}
+  .avl-sticky__button:hover{filter:brightness(.92)}
+  @media(max-width:899px){
+    .avl-hero{gap:30px;padding:45px 0 68px}
+    .avl-benefit{gap:38px}
+    .avl-formula__inner{gap:40px}
+  }
+  @media(max-width:700px){
+    .avl{padding-bottom:76px}
+    .avl-container{width:min(100% - 34px,570px)}
+    .avl-announcement{font-size:10px;min-height:39px;letter-spacing:.05em}
+    .avl-brand{height:72px}
+    .avl-brand__wordmark{font-size:33px}
+    .avl-brand__image{max-height:45px;max-width:180px}
+    .avl-hero{display:flex;flex-direction:column;align-items:stretch;gap:25px;padding-top:25px;padding-bottom:57px}
+    .avl-hero__image-wrap{aspect-ratio:1.28/1}
+    .avl-hero__image-label{left:12px;bottom:12px;padding:6px 11px;font-size:9px}
+    .avl-hero__content{padding:0 2px}
+    .avl-hero h1{font-size:36px;margin-top:11px}
+    .avl-hero__subtitle{font-size:20px}
+    .avl-hero__lead{font-size:15px;margin-top:13px}
+    .avl-hero .avl-button{width:100%;margin-top:22px}
+    .avl-intro-band__inner{flex-direction:column;align-items:flex-start;gap:8px;padding-block:23px}
+    .avl-intro-band p{font-size:19px}
+    .avl-benefits{padding:67px 0 40px}
+    .avl-section-heading{margin-bottom:33px}
+    .avl-section-heading h2{font-size:32px;margin-top:11px}
+    .avl-benefit,.avl-benefit+.avl-benefit{display:flex;flex-direction:column;align-items:stretch;gap:25px;padding:36px 0 46px}
+    .avl-benefit--reverse .avl-benefit__visual{order:0}
+    .avl-benefit h3{font-size:30px;margin:16px 0}
+    .avl-benefit__body{font-size:15px;line-height:1.8}
+    .avl-benefit__image,.avl-benefit__art{aspect-ratio:1.25/1}
+    .avl-benefit__art-number{font-size:140px}
+    .avl-formula{padding:68px 0}
+    .avl-formula__inner{display:flex;flex-direction:column;align-items:stretch;gap:27px}
+    .avl-formula h2{font-size:33px}
+    .avl-formula__facts{gap:8px}
+    .avl-formula__facts strong{font-size:19px}
+    .avl-formula__facts span{font-size:11px}
+    .avl-reviews{padding-bottom:70px}
+    .avl-reviews__grid{grid-template-columns:1fr}
+    .avl-review__image{aspect-ratio:1.8}
+    .avl-final-cta__inner{flex-direction:column;align-items:stretch;text-align:center}
+    .avl-final-cta .avl-button{width:100%}
+    .avl-mini-footer nav{gap:12px 19px}
+    .avl-sticky{padding:9px 13px;gap:10px;min-height:70px;justify-content:space-between}
+    .avl-sticky__image{width:42px;height:42px}
+    .avl-sticky__label{margin-right:0;flex:1}
+    .avl-sticky__label strong{font-size:11px}
+    .avl-sticky__label span{font-size:9px}
+    .avl-sticky__button{padding:10px 15px;font-size:12px;min-height:42px}
+  }
+  @media(prefers-reduced-motion:reduce){.avl-button{transition:none}.avl-button:hover{transform:none}}
+
+  .avl-hero h1,.avl-benefit h3,.avl-offer h2,.avl-reviews h2{font-family:var(--font-body--family,Arial,sans-serif);font-weight:800;letter-spacing:-.045em}
+  .avl-social-proof{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:15px;font-size:12px;font-weight:650;color:#4b3c32;line-height:1.4}
+  .avl-social-proof__stars{color:#d58d21;letter-spacing:.04em;font-size:16px;white-space:nowrap}
+  .avl-benefit{grid-template-areas:"head visual" "body visual";grid-template-rows:auto 1fr;align-items:stretch;column-gap:75px;row-gap:0}
+  .avl-benefit--reverse{grid-template-areas:"visual head" "visual body"}
+  .avl-benefit__copy{grid-area:head;align-self:end}
+  .avl-benefit__body-wrap{grid-area:body;align-self:start}
+  .avl-benefit__visual{grid-area:visual;align-self:center;order:0}
+  .avl-offer{padding:96px 0;background:#fff;border-block:1px solid #e5d0bd}
+  .avl-offer__grid{display:grid;grid-template-columns:minmax(0, .95fr) minmax(0,1.05fr);gap:80px;align-items:center}
+  .avl-offer__visual{position:relative;align-self:stretch;min-width:0;display:grid;place-items:center}
+  .avl-offer__image{width:100%;max-height:580px;aspect-ratio:1/1.1;object-fit:contain;padding:20px;filter:drop-shadow(0 20px 27px rgba(92,47,22,.13))}
+  .avl-offer__image-placeholder{width:100%;aspect-ratio:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:20px;border-radius:25px;background:#e2b99d;color:#79452e;text-align:center;padding:30px}
+  .avl-offer__image-placeholder span{font-size:clamp(37px,6vw,68px);font-family:Georgia,serif;font-weight:800}
+  .avl-offer__image-placeholder strong{font-size:13px;letter-spacing:.14em}
+  .avl-offer__image-tag{position:absolute;left:10%;bottom:5%;background:rgba(255,255,255,.93);border:1px solid #ead9c8;padding:8px 14px;border-radius:100px;text-transform:uppercase;font-size:10px;letter-spacing:.12em;font-weight:800;color:#865239}
+  .avl-offer__details{min-width:0}
+  .avl-offer h2{font-size:clamp(36px,4vw,56px);line-height:1.07;margin:12px 0 13px}
+  .avl-offer__subtitle{font-size:16px;color:#554943;line-height:1.63;max-width:540px}
+  .avl-offer__save-tag{margin-top:22px;display:inline-flex;align-items:center;gap:9px;color:#925338;font-size:14px;font-weight:850;letter-spacing:.07em;text-transform:uppercase}
+  .avl-offer__save-tag span{font-size:21px}
+  .avl-offer__timer{margin-top:20px;padding:22px 25px;background:rgba(255,255,255,.85);border:1px solid #e0bd9f;border-radius:18px;max-width:460px;box-shadow:0 12px 30px rgba(87,51,29,.08)}
+  .avl-offer__timer-label{font-size:11px;text-align:center;letter-spacing:.16em;font-weight:850;color:#6b4838}
+  .avl-offer__clock{display:flex;justify-content:center;align-items:center;gap:8px;margin:11px 0 4px;font-family:var(--font-body--family,Arial,sans-serif);font-size:clamp(55px,6vw,77px);font-weight:850;line-height:1;letter-spacing:-.06em;font-variant-numeric:tabular-nums;color:#382720}
+  .avl-offer__clock [data-avl-minutes],.avl-offer__clock [data-avl-seconds]{min-width:1.7em;text-align:center}
+  .avl-offer__colon{color:var(--avl-accent);transform:translateY(-4px)}
+  .avl-offer__timer-context{font-size:11px;color:#746154;text-align:center;line-height:1.4}
+  .avl-offer__perks{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:17px 0 24px}
+  .avl-offer__risk,.avl-offer__ebook{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid #ddc7b5;background:rgba(255,255,255,.65);border-radius:100px;font-size:11px;font-weight:800;color:#70452e}
+  .avl-offer__risk{color:#9e392e}
+  .avl-offer__pulse{width:8px;height:8px;border-radius:50%;background:#b73e32;box-shadow:0 0 0 4px rgba(183,62,50,.12)}
+  .avl-offer__ebook span{font-size:18px;line-height:0;color:#ac6034}
+  .avl-offer__button{width:min(460px,100%);font-size:17px;min-height:59px}
+  .avl-offer__guarantee{margin-top:14px;font-size:13px;color:#704e3c;font-weight:700;text-align:center;width:min(460px,100%)}
+  .avl-offer__guarantee span{color:#25805d}
+  .avl-reviews{padding-top:96px;padding-bottom:100px}
+  .avl-reviews__heading{max-width:690px;margin-bottom:37px}
+  .avl-review-carousel{display:grid;grid-template-columns:42px minmax(0,1fr) 42px;align-items:center;gap:16px}
+  .avl-review-carousel__viewport{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;outline-offset:5px}
+  .avl-review-carousel__viewport::-webkit-scrollbar{display:none}
+  .avl-review-carousel__track{display:flex;gap:18px}
+  .avl-review-carousel__track>.avl-review{flex:0 0 calc((100% - 36px)/3);min-width:0;scroll-snap-align:center}
+  .avl-review-carousel__arrow{border:1px solid #decabe;border-radius:50%;width:42px;height:42px;background:#fff;color:#714c36;display:grid;place-items:center;font-size:31px;line-height:1;cursor:pointer;transition:background .2s ease}
+  .avl-review-carousel__arrow:hover{background:#faeade}
+  .avl-review-carousel__dots{grid-column:1/-1;display:flex;justify-content:center;gap:9px;margin-top:6px}
+  .avl-review-carousel__dot{height:9px;width:9px;border-radius:50%;border:0;background:#d8ccc1;cursor:pointer;padding:0;transition:width .2s ease,background .2s ease}
+  .avl-review-carousel__dot[aria-current="true"]{width:26px;border-radius:12px;background:var(--avl-accent)}
+  .avl-review{display:flex;flex-direction:column;min-height:400px;border-radius:17px;border:1px solid #d8bfae;box-shadow:0 10px 32px rgba(70,40,21,.06)}
+  .avl-review__content{display:flex;flex-direction:column;flex:1;padding:25px}
+  .avl-review__content h3{font-family:var(--font-body--family,Arial,sans-serif);font-size:20px;font-weight:800;line-height:1.25}
+  .avl-review__quote{font-size:14px;color:#4d443f;line-height:1.7}
+  .avl-review__author{margin-top:auto;padding-top:20px;align-items:flex-end}
+  .avl-review__author span{display:inline-flex;align-items:center;gap:6px;color:#268a5e}
+  .avl-review__author span span{display:grid;place-items:center;width:18px;height:18px;background:#2e9c70;color:#fff;border-radius:50%;font-size:12px}
+  .avl-review__sample-art{height:135px;background:linear-gradient(130deg,#f1e6db,#dcbca5);display:flex;align-items:center;justify-content:space-around;color:#956749}
+  .avl-review__sample-art span:first-child{font-size:19px;letter-spacing:.24em;font-weight:800}
+  .avl-review__sample-art span:last-child{font-size:70px;opacity:.55}
+  .avl-review__example-label{display:inline-block;background:#f3ede7;color:#8d6750;border-radius:100px;padding:4px 10px;font-size:10px;font-weight:800;letter-spacing:.1em;align-self:flex-start}
+  .avl-review__sample-stars{font-size:22px;letter-spacing:.12em;color:#c4a68f;margin:14px 0 10px}
+  .avl-review__sample-text{font-size:14px;line-height:1.7;color:#665b54}
+  .avl-review--sample .avl-review__author span{color:#998579}
+  .avl-reviews__placeholder-note{text-align:center;color:#8c7c70;font-size:11px;margin-top:18px!important}
+  .avl-reviews__social{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;padding:28px 15px 0;font-size:13px;color:#665141}
+  .avl-reviews__social span{font-size:18px;letter-spacing:2px;color:#c98524}
+  .avl-sticky__mobile-note{display:none}
+  @media(max-width:900px){
+    .avl-offer__grid{gap:35px}
+    .avl-review-carousel__track>.avl-review{flex-basis:calc((100% - 18px)/2)}
+  }
+  @media(max-width:700px){
+    .avl{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+    .avl-hero h1{font-size:clamp(32px,8.4vw,40px);line-height:1.13}
+    .avl-hero__subtitle{font-size:18px;line-height:1.45}
+    .avl-social-proof{justify-content:center;gap:5px;font-size:11px;text-align:center;white-space:normal}
+    .avl-social-proof__stars{font-size:15px;letter-spacing:0}
+    .avl-hero__micro{text-align:center}
+    .avl-benefit,.avl-benefit+.avl-benefit,.avl-benefit--reverse{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "visual" "body";gap:18px;padding:33px 0 45px;align-items:start}
+    .avl-benefit__copy{align-self:auto}
+    .avl-benefit__body-wrap{align-self:auto}
+    .avl-benefit__visual{width:100%;order:0}
+    .avl-benefit h3{font-size:clamp(27px,7vw,32px);line-height:1.22;margin:15px 0 4px}
+    .avl-benefit__image,.avl-benefit__art{aspect-ratio:1.34/1}
+    .avl-benefit__body{font-size:15px;line-height:1.7}
+    .avl-benefit__highlight{margin-top:17px;width:100%;font-size:12px}
+    .avl-offer{padding:48px 0 58px}
+    .avl-offer__grid{display:flex;flex-direction:column;align-items:stretch;gap:19px}
+    .avl-offer__visual{height:auto;min-height:0}
+    .avl-offer__image{aspect-ratio:1.6/1;max-height:260px;padding:0}
+    .avl-offer__image-placeholder{aspect-ratio:1.6/1}
+    .avl-offer__image-tag{left:10px;bottom:8px;font-size:9px;padding:5px 9px}
+    .avl-offer__details{text-align:center}
+    .avl-offer h2{font-size:clamp(32px,8.4vw,41px);margin:10px 0}
+    .avl-offer__subtitle{font-size:14px}
+    .avl-offer__save-tag{margin-top:14px;font-size:13px}
+    .avl-offer__timer{padding:20px 15px;margin:14px auto 0;border-radius:16px}
+    .avl-offer__clock{font-size:59px;margin-top:8px}
+    .avl-offer__perks{justify-content:center;gap:7px;margin:14px 0 20px}
+    .avl-offer__risk,.avl-offer__ebook{font-size:10px;padding:8px 10px}
+    .avl-offer__button{width:100%;font-size:15px}
+    .avl-offer__guarantee{width:100%;font-size:12px}
+    .avl-reviews{padding-top:66px;padding-bottom:70px}
+    .avl-reviews__heading h2{font-size:clamp(29px,7.8vw,38px)}
+    .avl-review-carousel{grid-template-columns:26px minmax(0,1fr) 26px;gap:4px}
+    .avl-review-carousel__arrow{width:26px;height:40px;border:none;background:transparent;font-size:33px}
+    .avl-review-carousel__track>.avl-review{flex-basis:100%}
+    .avl-review{min-height:390px;border:1px solid #ad8a73;border-radius:13px}
+    .avl-review__content{padding:21px}
+    .avl-review__content h3{font-size:19px}
+    .avl-review__sample-art{height:105px}
+    .avl-review__sample-art span:first-child{font-size:13px}
+    .avl-review__sample-art span:last-child{font-size:50px}
+    .avl-review-carousel__dots{margin-top:14px}
+    .avl-reviews__social{font-size:11px;gap:6px}
+    .avl-sticky{display:flex;flex-direction:column;gap:2px;padding:9px 13px calc(7px + env(safe-area-inset-bottom));min-height:0}
+    .avl-sticky__image,.avl-sticky__label{display:none}
+    .avl-sticky__button{width:100%;min-height:43px;font-size:14px;border-radius:100px;padding:10px 14px}
+    .avl-sticky__mobile-note{display:block;font-size:10px;line-height:1.25;text-align:center;color:#786b62}
+  }
+  @media(prefers-reduced-motion:reduce){.avl-review-carousel__viewport{scroll-behavior:auto}.avl-review-carousel__dot{transition:none}}
+
+  @media(min-width:901px){.avl-review-carousel{grid-template-columns:minmax(0,1fr)}.avl-review-carousel__viewport{grid-column:1}.avl-review-carousel__arrow,.avl-review-carousel__dots{display:none}}
+
+  .avl-benefits{padding-top:30px}
+  .avl-formula{background:#fff9f4;padding:70px 0 55px}
+  .avl-formula__inner{display:block;max-width:820px;text-align:center}
+  .avl-formula h2{font-family:var(--font-body--family,Arial,sans-serif);font-size:clamp(31px,3.2vw,45px);line-height:1.14;font-weight:800;letter-spacing:-.04em;margin:13px auto 20px}
+  .avl-formula__inner>p{font-size:17px;line-height:1.75;color:#554b46;max-width:770px;margin-inline:auto}
+  .avl-offer{padding:65px 0 84px}
+  .avl-offer__intro{text-align:center;max-width:800px;margin-bottom:16px}
+  .avl-offer__intro h2{font-size:clamp(32px,4.1vw,54px);line-height:1.12;margin:12px 0}
+  .avl-offer__intro .avl-offer__subtitle{margin:auto;max-width:690px}
+  .avl-offer__grid{gap:34px}
+  .avl-offer__secondary-image{display:none;position:absolute;right:-12px;bottom:12px;width:39%;height:auto;max-height:260px;object-fit:contain;filter:drop-shadow(0 10px 14px rgba(81,42,26,.18))}
+  .avl-offer__timer{border:2px solid #d1ad96;background:#fff;box-shadow:0 10px 30px rgba(114,45,24,.09)}
+  .avl-offer__timer-label{color:#292522;font-size:12px;letter-spacing:.07em}
+  .avl-offer__clock{color:#b52c24;font-weight:900}
+  .avl-offer__colon{color:#b52c24}
+  .avl-offer__timer[data-expired="true"]{border-color:#b8aea6}
+  .avl-offer__timer[data-expired="true"] .avl-offer__clock{color:#898078}
+  .avl-offer__risk{font-size:12px;font-weight:700;color:#685248}
+  .avl-offer__risk strong{color:#b52325;font-weight:950;letter-spacing:.02em}
+  .avl-offer__ebook{font-size:12px}
+  .avl-sticky{position:fixed;z-index:2147483000;left:50%;bottom:calc(10px + env(safe-area-inset-bottom));width:min(620px,calc(100% - 20px));min-height:0;padding:8px;background:rgba(255,255,255,.97);border:1px solid rgba(108,72,51,.12);border-radius:22px;box-shadow:0 12px 34px rgba(63,35,22,.18);backdrop-filter:blur(10px);opacity:0;visibility:hidden;pointer-events:none;transform:translate(-50%,calc(100% + 30px));transition:opacity .22s ease,transform .22s ease,visibility .22s}
+  .avl-offer__cta-heading{text-align:center;font-size:16px;font-weight:850;color:#5d3528;line-height:1.35;margin:0 0 12px!important}
+  .avl-sticky__inner{width:100%;display:flex;flex-direction:column;align-items:center;gap:5px}
+  .avl-sticky__microcopy{color:#6d5b50;font-size:11px;line-height:1.25;font-weight:700;text-align:center;letter-spacing:.01em;padding:0 8px 1px}
+  .avl-sticky.avl-sticky--visible{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%)}
+  .avl-sticky__button{width:100%;min-height:58px;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--avl-accent);color:white!important;border-radius:999px;padding:13px 18px 13px 24px;font-size:16px;font-weight:850;line-height:1.2;text-align:center;box-shadow:0 8px 20px rgba(81,40,21,.22);transition:transform .16s ease,filter .16s ease}
+  .avl-sticky__button:hover{filter:brightness(.94);transform:translateY(-1px)}
+  .avl-sticky__button-text{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .avl-sticky__arrow{width:30px;height:30px;display:grid;place-items:center;flex:none;border-radius:9px;background:rgba(255,255,255,.17);font-size:19px;line-height:1}
+  @media(max-width:480px){
+    .avl-sticky{width:calc(100% - 16px);bottom:calc(8px + env(safe-area-inset-bottom));padding:7px;border-radius:19px}
+    .avl-sticky__button{min-height:56px;font-size:15.5px;padding-left:18px;padding-right:14px}
+    .avl-sticky__microcopy{font-size:10.5px}
+  }
+  @media(max-width:700px){
+    .avl-announcement{display:none!important}
+    .avl-brand{height:66px;box-shadow:0 1px 0 rgba(99,64,41,.07)}
+    .avl-brand__image{max-height:43px}
+    .avl{padding-bottom:100px}
+    .avl-hero{padding-top:17px;padding-bottom:12px;gap:13px}
+    .avl-hero__image-wrap{aspect-ratio:1.24/1}
+    .avl-hero__content{text-align:center;padding:0 2px}
+    .avl-eyebrow{display:none}
+    .avl-hero h1{font-size:clamp(28px,7.4vw,36px);line-height:1.16;letter-spacing:-.035em;margin:2px 0 0;font-weight:850}
+    .avl-hero__subtitle{font-size:clamp(17px,4.65vw,21px);line-height:1.27;font-weight:750;margin:12px 0 0}
+    .avl-hero__lead{font-size:15px;line-height:1.58;margin-top:14px;color:#2f2925}
+    .avl-hero .avl-button{margin-top:21px;min-height:55px;font-size:16px}
+    .avl-social-proof{margin-top:12px;font-size:11px;gap:5px 7px;line-height:1.35}
+    .avl-benefits{padding-top:7px;padding-bottom:15px}
+    .avl-benefit,.avl-benefit+.avl-benefit{padding-top:31px}
+    .avl-formula{padding:58px 0 40px}
+    .avl-formula h2{font-size:clamp(29px,7.6vw,37px);margin:11px auto}
+    .avl-formula__inner>p{font-size:15px;line-height:1.72}
+    .avl-offer{padding:45px 0 58px}
+    .avl-offer__intro{margin-bottom:13px}
+    .avl-offer__intro h2{font-size:clamp(28px,7.5vw,37px)}
+    .avl-offer__intro .avl-offer__subtitle{font-size:14px;line-height:1.5}
+    .avl-offer__grid{gap:17px}
+    .avl-offer__visual{margin:0 auto;width:100%}
+    .avl-offer__image{aspect-ratio:1.4/1;max-height:295px}
+    .avl-offer__secondary-image{width:30%;right:0;bottom:0}
+    .avl-offer__save-tag{margin-top:6px}
+    .avl-offer__timer{margin-top:12px}
+    .avl-offer__clock{font-size:68px}
+    .avl-offer__perks{gap:8px}
+    .avl-offer__risk,.avl-offer__ebook{font-size:11px}
+    .avl-sticky{left:50%;bottom:calc(10px + env(safe-area-inset-bottom));width:calc(100% - 30px);min-height:0;display:flex;flex-direction:row;align-items:stretch;justify-content:center;gap:0;padding:0;transform:translate(-50%,calc(100% + 30px));background:transparent;border:0;box-shadow:none}
+    .avl-sticky.avl-sticky--visible{transform:translateX(-50%)}
+    .avl-sticky__button{min-height:53px;width:100%;font-size:15px;padding:12px 16px;box-shadow:0 7px 23px rgba(81,40,21,.3)}
+    .avl-sticky__mobile-note{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){.avl-sticky{transition:none}}
+
+  .avl-offer__details{text-align:center}
+  .avl-offer__button{display:flex;width:min(480px,100%);margin:12px auto 0;justify-content:center}
+  .avl-offer__timer{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;width:100%;max-width:none;margin:15px auto 0!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+  .avl-offer__timer-label{font-size:15px;color:#24201d!important;letter-spacing:.045em;line-height:1.3;font-weight:850}
+  .avl-offer__clock{font-size:28px!important;letter-spacing:0!important;gap:4px!important;line-height:1.2;margin:0!important;color:#bf2d25!important;font-weight:900}
+  .avl-offer__clock [data-avl-minutes],.avl-offer__clock [data-avl-seconds]{min-width:1.35em}
+  .avl-offer__colon{transform:none;color:#bf2d25}
+  .avl-offer__timer-context{flex-basis:100%}
+  .avl-offer__perks{justify-content:center;margin:18px auto 13px;padding:10px 14px;background:#f8eadf;border:1px solid #e5d0bd;border-radius:12px;width:fit-content;max-width:100%}
+  .avl-offer__risk,.avl-offer__ebook{background:transparent;border:0;border-radius:0}
+  .avl-offer__guarantee{margin:0 auto}
+  @media(max-width:700px){
+    .avl-offer__button{width:100%;margin-top:8px}
+    .avl-offer__timer{gap:7px;margin-top:13px!important}
+    .avl-offer__timer-label{font-size:13px;letter-spacing:.035em}
+    .avl-offer__clock{font-size:25px!important}
+    .avl-offer__perks{margin:15px auto 12px;padding:9px 11px}
+  }
+</style>
+<script>
+(() => {
+  const root = document.getElementById('AvonentListicle-{{ section.id }}');
+  if (!root) return;
+  const intervals = [];
+  const cleaners = [];
+  const sticky = root.querySelector('[data-avl-sticky]');
+  const firstButton = root.querySelector('.avl-hero .avl-button');
+  if (sticky && firstButton) {
+    const updateSticky = () => {
+      const rect = firstButton.getBoundingClientRect();
+      const hasPassed = rect.bottom < 0;
+      sticky.classList.toggle('avl-sticky--visible', hasPassed);
+      sticky.setAttribute('aria-hidden', String(!hasPassed));
+    };
+    window.addEventListener('scroll', updateSticky, { passive: true });
+    document.addEventListener('scroll', updateSticky, { passive: true, capture: true });
+    window.addEventListener('resize', updateSticky, { passive: true });
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(updateSticky, { threshold: [0, 1] });
+      observer.observe(firstButton);
+      cleaners.push(() => observer.disconnect());
+    }
+    cleaners.push(() => window.removeEventListener('scroll', updateSticky));
+    cleaners.push(() => document.removeEventListener('scroll', updateSticky, true));
+    cleaners.push(() => window.removeEventListener('resize', updateSticky));
+    updateSticky();
+    window.requestAnimationFrame(updateSticky);
+  }
+  const timer = root.querySelector('[data-avl-timer]');
+  if (timer) {
+    const duration = Math.max(1, Number(timer.dataset.duration) || 420) * 1000;
+    const configuredDeadline = Date.parse(timer.dataset.deadline || '');
+    const shouldRepeat = timer.dataset.repeat === 'true';
+    const storageKey = 'avonent-listicle-timer-{{ section.id }}';
+    let until = Number.isFinite(configuredDeadline) ? configuredDeadline : 0;
+    if (!until) {
+      try {
+        until = Number(window.sessionStorage.getItem(storageKey)) || 0;
+        if (!until) {
+          until = Date.now() + duration;
+          window.sessionStorage.setItem(storageKey, String(until));
+        }
+      } catch (error) {
+        until = Date.now() + duration;
+      }
+    }
+    const minutes = timer.querySelector('[data-avl-minutes]');
+    const seconds = timer.querySelector('[data-avl-seconds]');
+    const label = timer.querySelector('[data-avl-timer-label]');
+    const activeLabel = label ? label.textContent : '';
+    const saveUntil = () => {
+      try {
+        window.sessionStorage.setItem(storageKey, String(until));
+      } catch (error) {}
+    };
+    const updateTimer = () => {
+      let remaining = Math.max(0, Math.ceil((until - Date.now()) / 1000));
+      if (remaining === 0 && shouldRepeat) {
+        until = Date.now() + duration;
+        saveUntil();
+        remaining = Math.ceil(duration / 1000);
+        timer.removeAttribute('data-expired');
+        if (label) label.textContent = activeLabel;
+      }
+      minutes.textContent = String(Math.floor(remaining / 60)).padStart(2, '0');
+      seconds.textContent = String(remaining % 60).padStart(2, '0');
+      if (remaining === 0) {
+        timer.setAttribute('data-expired', 'true');
+        if (label) label.textContent = 'DEAL WINDOW ENDED';
+      }
+    };
+    updateTimer();
+    intervals.push(window.setInterval(updateTimer, 1000));
+  }
+  const carousel = root.querySelector('[data-avl-carousel]');
+  if (carousel) {
+    const viewport = carousel.querySelector('[data-avl-viewport]');
+    const slides = Array.from(carousel.querySelectorAll('.avl-review'));
+    const dots = carousel.querySelector('[data-avl-dots]');
+    const prev = carousel.querySelector('[data-avl-prev]');
+    const next = carousel.querySelector('[data-avl-next]');
+    const scrollToSlide = (index) => {
+      const target = slides[Math.max(0, Math.min(slides.length - 1, index))];
+      if (target) viewport.scrollTo({ left: target.offsetLeft - slides[0].offsetLeft, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+    };
+    slides.forEach((slide, index) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'avl-review-carousel__dot';
+      dot.setAttribute('aria-label', 'Show review ' + (index + 1));
+      dot.addEventListener('click', () => scrollToSlide(index));
+      dots.appendChild(dot);
+    });
+    let active = 0;
+    const updateDots = () => {
+      const first = slides[0];
+      if (!first) return;
+      const left = viewport.scrollLeft;
+      let best = 0;
+      let distance = Infinity;
+      slides.forEach((slide, index) => {
+        const delta = Math.abs((slide.offsetLeft - first.offsetLeft) - left);
+        if (delta < distance) { distance = delta; best = index; }
+      });
+      active = best;
+      Array.from(dots.children).forEach((dot, index) => dot.setAttribute('aria-current', String(index === active)));
+      prev.disabled = active === 0;
+      next.disabled = active === slides.length - 1;
+    };
+    prev.addEventListener('click', () => scrollToSlide(active - 1));
+    next.addEventListener('click', () => scrollToSlide(active + 1));
+    viewport.addEventListener('scroll', updateDots, { passive: true });
+    window.addEventListener('resize', updateDots, { passive: true });
+    updateDots();
+  }
+  document.addEventListener('shopify:section:unload', (event) => {
+    if (event.detail?.sectionId === '{{ section.id }}') { intervals.forEach(window.clearInterval); cleaners.forEach((fn) => fn()); }
+  });
+})();
+</script>
+
+
+<style>
+  /* Center review ratings and stack purchaser identity on all screen sizes. */
+  .avl-review--real .avl-review__stars{color:#E8A317;text-align:center;font-size:23px;letter-spacing:3px}
+  .avl-review--real .avl-review__author{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:9px;width:100%;margin-top:auto;padding-top:20px}
+  .avl-review--real .avl-review__author strong{display:block;font-size:16px}
+  .avl-review--real .avl-review__author>span{display:inline-flex;align-items:center;justify-content:center;gap:7px;color:#268a5e;font-weight:700}
+</style>
+
+<style>
+  /* Review carousel refinement */
+  .avl-reviews__heading{max-width:760px;margin-bottom:24px}
+  .avl-reviews__heading h2{font-weight:900;color:#111;font-size:clamp(38px,4.6vw,60px);line-height:1.06}
+  .avl-reviews__heading p{color:#111;font-size:17px;line-height:1.45;margin-top:12px}
+  .avl-review--real .avl-review__content{padding:22px}
+  .avl-review--real .avl-review__stars{color:#FFB000;text-align:center;font-size:26px;letter-spacing:3px;margin-bottom:9px}
+  .avl-review--real .avl-review__content h3{color:#111;font-size:23px;font-weight:900;line-height:1.2;margin-bottom:9px}
+  .avl-review--real .avl-review__quote,
+  .avl-review--real .avl-review__quote p{color:#111!important;font-size:15px;font-weight:400;line-height:1.55}
+  .avl-review--real .avl-review__author{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:7px;width:100%;margin-top:16px!important;padding-top:0!important}
+  .avl-review--real .avl-review__author strong{display:block;color:#111;font-size:17px;font-weight:800;line-height:1.2}
+  .avl-review--real .avl-review__author>span{display:inline-flex;align-items:center;justify-content:center;gap:8px;color:#111!important;font-size:14px;font-weight:700}
+  .avl-review--real .avl-review__author>span>span{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#28a866;color:#fff!important;font-size:14px;font-weight:900;line-height:1}
+  @media(max-width:700px){
+    .avl-reviews__heading{margin-bottom:20px}
+    .avl-reviews__heading h2{font-size:clamp(40px,11vw,48px);line-height:1.04}
+    .avl-reviews__heading p{font-size:16px;line-height:1.4;margin-top:10px;color:#111}
+    .avl-review{min-height:0}
+    .avl-review--real .avl-review__content{padding:20px 22px 22px}
+    .avl-review--real .avl-review__stars{font-size:27px;margin-bottom:8px}
+    .avl-review--real .avl-review__content h3{font-size:24px;line-height:1.18;margin-bottom:8px}
+    .avl-review--real .avl-review__quote,
+    .avl-review--real .avl-review__quote p{font-size:16px;line-height:1.5}
+    .avl-review--real .avl-review__author{margin-top:17px!important;gap:7px}
+    .avl-review--real .avl-review__author strong{font-size:18px}
+    .avl-review--real .avl-review__author>span{font-size:14px}
+  }
+</style>
+
+<style>
+  .avl-review--real .avl-review__content h3{text-align:center}
+  .avl-review--real .avl-review__quote,.avl-review--real .avl-review__quote p{text-align:center}
+
+  /* Offer section refinements */
+  .avl-offer{background:#fff!important}
+  .avl-offer__timer-label{font-size:15px!important}
+  .avl-offer__clock{font-size:28px!important}
+  .avl-offer__perks{width:fit-content;max-width:100%;margin:18px auto 13px!important;padding:12px 16px!important;background:#f8eadf!important;border:1px solid #ead6c5!important;border-radius:14px!important;gap:0!important;flex-wrap:nowrap!important}
+  .avl-offer__risk,.avl-offer__ebook{background:transparent!important;border:0!important;border-radius:0!important;padding:2px 14px!important;font-size:12px!important}
+  .avl-offer__risk{border-right:1px solid #d2b9a5!important}
+  @media(max-width:700px){
+    .avl-offer__timer-label{font-size:14px!important}
+    .avl-offer__clock{font-size:25px!important}
+    .avl-offer__perks{padding:11px 10px!important;margin:16px auto 12px!important}
+    .avl-offer__risk,.avl-offer__ebook{font-size:11px!important;padding:2px 10px!important}
+  }
+</style>
+{% schema %}
+{
+  "name": "Avonent listicle live",
+  "tag": "section",
+  "class": "avonent-listicle-section",
+  "settings": [
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Product to link"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo (optional; uses theme logo)"
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement bar",
+      "default": "MEET YOUR NEW DAILY WELLNESS RITUAL · 30-DAY GUARANTEE"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Cinnamon accent",
+      "default": "#B96A46"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#292522"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Page background",
+      "default": "#FFFBF7"
+    },
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero photo"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_alt",
+      "label": "Hero image description",
+      "default": "Avonent Ceylon cinnamon daily supplement"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_badge",
+      "label": "Photo label",
+      "default": "A wellness ritual worth keeping"
+    },
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "Eyebrow",
+      "default": "The Avonent guide"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Main headline",
+      "default": "7 Reasons to Choose Avonent Ceylon Cinnamon"
+    },
+    {
+      "type": "text",
+      "id": "hero_subtitle",
+      "label": "Headline subtext",
+      "default": "A thoughtful approach to everyday metabolic wellness"
+    },
+    {
+      "type": "richtext",
+      "id": "hero_intro",
+      "label": "Intro copy",
+      "default": "<p>There’s a difference between another supplement on your shelf and a formula designed around your everyday routine. Here’s what makes Avonent Ceylon Cinnamon with Berberine HCl worth a closer look.</p>"
+    },
+    {
+      "type": "text",
+      "id": "hero_cta",
+      "label": "Top button",
+      "default": "See Today’s Offer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_proof",
+      "label": "Show stars and customer counts",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "social_proof_text",
+      "label": "Verified review and customer counts",
+      "default": "10,000+ Reviews | 100,000+ Happy Customers"
+    },
+    {
+      "type": "text",
+      "id": "hero_microcopy",
+      "label": "Top button note",
+      "default": "30-day money-back guarantee"
+    },
+    {
+      "type": "header",
+      "content": "Seven reasons"
+    },
+    {
+      "type": "text",
+      "id": "intro_band_text",
+      "label": "Intro band",
+      "default": "True Ceylon cinnamon, complementary ingredients, and a simple routine — without the dramatic promises."
+    },
+    {
+      "type": "text",
+      "id": "benefits_heading",
+      "label": "Section headline",
+      "default": "What makes Avonent different?"
+    },
+    {
+      "type": "text",
+      "id": "benefits_subheading",
+      "label": "Section subtext",
+      "default": "Seven thoughtful details behind a formula created to complement a balanced daily wellness routine."
+    },
+    {
+      "type": "header",
+      "content": "Customer survey results"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_survey_results",
+      "label": "Show customer outcome statistics",
+      "default": false,
+      "info": "Only enable after independent clinical substantiation of each health claim."
+    },
+    {
+      "type": "text",
+      "id": "results_heading",
+      "label": "Results heading",
+      "default": "Real Customers. Real Results."
+    },
+    {
+      "type": "text",
+      "id": "results_subheading",
+      "label": "Results intro",
+      "default": "People who switched to Avonent report after 12 weeks:"
+    },
+    {
+      "type": "text",
+      "id": "results_1_percent",
+      "label": "Statistic 1",
+      "default": "84%"
+    },
+    {
+      "type": "textarea",
+      "id": "results_1_text",
+      "label": "Statistic 1 description",
+      "default": "said their fasting blood-sugar readings had fallen after a long stretch of little change."
+    },
+    {
+      "type": "text",
+      "id": "results_2_percent",
+      "label": "Statistic 2",
+      "default": "79%"
+    },
+    {
+      "type": "textarea",
+      "id": "results_2_text",
+      "label": "Statistic 2 description",
+      "default": "said they were sleeping through the night without their usual early-morning bathroom trips."
+    },
+    {
+      "type": "text",
+      "id": "results_3_percent",
+      "label": "Statistic 3",
+      "default": "76%"
+    },
+    {
+      "type": "textarea",
+      "id": "results_3_text",
+      "label": "Statistic 3 description",
+      "default": "described clearer thinking during the day, with fewer afternoon foggy spells."
+    },
+    {
+      "type": "text",
+      "id": "results_4_percent",
+      "label": "Statistic 4",
+      "default": "71%"
+    },
+    {
+      "type": "textarea",
+      "id": "results_4_text",
+      "label": "Statistic 4 description",
+      "default": "reported improvement in energy levels and kidney-health indicators they tracked."
+    },
+    {
+      "type": "textarea",
+      "id": "results_note",
+      "label": "Research context",
+      "default": "Customer-reported survey observations after 12 weeks; not a controlled clinical trial. Individual results vary and these responses do not establish that Avonent caused the changes."
+    },
+    {
+      "type": "header",
+      "content": "Formula"
+    },
+    {
+      "type": "image_picker",
+      "id": "formula_image",
+      "label": "Formula product image"
+    },
+    {
+      "type": "text",
+      "id": "formula_title",
+      "label": "Formula headline",
+      "default": "Three key ingredients. One intentional formula."
+    },
+    {
+      "type": "text",
+      "id": "formula_eyebrow",
+      "label": "Formula section label",
+      "default": "THE FORMULA EXPLAINED"
+    },
+    {
+      "type": "textarea",
+      "id": "formula_description",
+      "label": "Formula body",
+      "default": "Avonent pairs Ceylon cinnamon with Berberine HCl and MCT oil. Explore the full ingredient panel, directions, and current options on the product page."
+    },
+    {
+      "type": "text",
+      "id": "formula_cta",
+      "label": "Formula link",
+      "default": "See the complete formula"
+    },
+    {
+      "type": "header",
+      "content": "Offer panel"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_offer",
+      "label": "Show promotional offer panel",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "offer_image",
+      "label": "Offer product image"
+    },
+    {
+      "type": "image_picker",
+      "id": "offer_secondary_image",
+      "label": "Second offer product image"
+    },
+    {
+      "type": "text",
+      "id": "offer_secondary_image_alt",
+      "label": "Second offer image description",
+      "default": "Additional Avonent Ceylon cinnamon product photo"
+    },
+    {
+      "type": "text",
+      "id": "offer_image_alt",
+      "label": "Offer image description",
+      "default": "Avonent Ceylon cinnamon supplement"
+    },
+    {
+      "type": "text",
+      "id": "offer_image_label",
+      "label": "Offer image tag",
+      "default": "AVONENT CEYLON CINNAMON"
+    },
+    {
+      "type": "text",
+      "id": "offer_eyebrow",
+      "label": "Offer kicker",
+      "default": "YOUR LIMITED-TIME OFFER"
+    },
+    {
+      "type": "text",
+      "id": "offer_title",
+      "label": "Offer headline",
+      "default": "Unlock Up to 70% OFF"
+    },
+    {
+      "type": "textarea",
+      "id": "offer_subtitle",
+      "label": "Offer description",
+      "default": "Explore the best available bundle savings on Avonent Ceylon Cinnamon."
+    },
+    {
+      "type": "text",
+      "id": "offer_savings_text",
+      "label": "Savings highlight",
+      "default": "SAVE UP TO 70% ON SELECT BUNDLES"
+    },
+    {
+      "type": "header",
+      "content": "Countdown Timer"
+    },
+    {
+      "type": "text",
+      "id": "timer_label",
+      "label": "Countdown headline",
+      "default": "OFFER WINDOW REFRESHES IN:"
+    },
+    {
+      "type": "text",
+      "id": "timer_deadline",
+      "label": "Actual deal deadline (ISO date/time)",
+      "info": "Optional. Enter a real deadline such as 2026-11-25T23:59:00-08:00. When blank, countdown is personal to the browser session."
+    },
+    {
+      "type": "range",
+      "id": "timer_minutes",
+      "label": "Countdown minutes",
+      "min": 1,
+      "max": 59,
+      "step": 1,
+      "unit": "min",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "timer_seconds",
+      "label": "Countdown seconds",
+      "min": 0,
+      "max": 59,
+      "step": 1,
+      "unit": "sec",
+      "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "timer_repeat",
+      "label": "Keep countdown repeating continuously",
+      "info": "When enabled, the timer automatically restarts when it reaches 00:00.",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "timer_context",
+      "label": "Countdown transparency note",
+      "default": "The offer window renews automatically. Savings may remain available after the timer resets."
+    },
+    {
+      "type": "text",
+      "id": "stock_risk_text",
+      "label": "Inventory status badge",
+      "default": "Sell-Out Risk: High"
+    },
+    {
+      "type": "text",
+      "id": "stock_risk_label",
+      "label": "Stock risk label",
+      "default": "Sell-Out Risk:"
+    },
+    {
+      "type": "text",
+      "id": "stock_risk_level",
+      "label": "Stock risk status",
+      "default": "High"
+    },
+    {
+      "type": "text",
+      "id": "ebook_text",
+      "label": "Bonus badge",
+      "default": "FREE E-BOOK"
+    },
+    {
+      "type": "text",
+      "id": "offer_cta",
+      "label": "Offer button",
+      "default": "Save Up to 70% OFF"
+    },
+    {
+      "type": "text",
+      "id": "offer_guarantee",
+      "label": "Offer guarantee",
+      "default": "Try it today with a 90-Day Money-Back Guarantee!"
+    },
+    {
+      "type": "header",
+      "content": "Reviews and FAQs"
+    },
+    {
+      "type": "text",
+      "id": "reviews_title",
+      "label": "Review headline",
+      "default": "Everyday experiences, shared honestly."
+    },
+    {
+      "type": "text",
+      "id": "reviews_subtitle",
+      "label": "Review section intro",
+      "default": "Experiences are personal. Explore real customer feedback as you decide what fits your routine."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_review_previews",
+      "label": "Show labeled example review cards",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "final_cta",
+      "label": "Final button",
+      "default": "Shop Avonent Ceylon Cinnamon"
+    },
+    {
+      "type": "text",
+      "id": "sticky_cta",
+      "label": "Sticky button",
+      "default": "See Offers"
+    },
+    {
+      "type": "text",
+      "id": "sticky_subtext",
+      "label": "Sticky bar guarantee line",
+      "default": "30-day money-back guarantee"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Numbered benefit",
+      "limit": 7,
+      "settings": [
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Small category label",
+          "default": "THE AVONENT DIFFERENCE"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Benefit headline",
+          "default": "Built for your daily routine"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Benefit description",
+          "default": "<p>Tell your customers what makes this part of the formula meaningful.</p>"
+        },
+        {
+          "type": "text",
+          "id": "highlight",
+          "label": "Highlighted takeaway"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image for this section"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image description",
+          "default": "Avonent Ceylon cinnamon ingredient photograph"
+        },
+        {
+          "type": "text",
+          "id": "image_caption",
+          "label": "Optional photo caption"
+        }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Real customer review",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Customer image (optional)"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Customer image description"
+        },
+        {
+          "type": "text",
+          "id": "review_title",
+          "label": "Short review headline",
+          "default": "Customer experience"
+        },
+        {
+          "type": "richtext",
+          "id": "review_text",
+          "label": "Actual customer review"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Verified rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Customer display name"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verified purchaser (only if verified)",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Avonent listicle live"
+    }
+  ]
+}
+{% endschema %}

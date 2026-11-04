@@ -1,0 +1,288 @@
+{% comment %}
+  Avonent storefront cleanup
+  Keep the navigation drawer product-free and keep Shipping Protection as a
+  cart-only add-on rather than a shopper-facing product/line item.
+{% endcomment %}
+
+<style>
+  #header-component .menu-drawer__featured-content,
+  #header-component .menu-drawer__featured-content--childlist,
+  #header-component .menu-drawer__featured-content-list,
+  #header-component .menu-drawer__featured-content-list-item {
+    display: none !important;
+  }
+
+  /* Shipping Protection stays in the cart data so totals/checkout remain
+     correct, but shoppers manage it only through the dedicated add-on toggle. */
+  .cart-items__table-row[data-product-handle='shipping-protection'] {
+    display: none !important;
+  }
+</style>
+
+{% if template.suffix == 'moringa' %}
+  <style>
+    /*
+      Moringa desktop Journey lock.
+      Keep the custom image/intro-left + Week 1–4-right layout even if Shopify
+      recompiles or reorders the product section's own base stylesheet.
+      Mobile and tablet below 990px are intentionally untouched.
+    */
+    @media screen and (min-width: 990px) {
+      .avonent-journey {
+        display: grid !important;
+        grid-template-columns: minmax(430px, 560px) minmax(560px, 700px) !important;
+        grid-template-rows: auto auto !important;
+        justify-content: center !important;
+        align-items: start !important;
+        column-gap: clamp(62px, 6vw, 104px) !important;
+        row-gap: 12px !important;
+        padding: 38px 40px 54px !important;
+        overflow: visible !important;
+      }
+
+      .avonent-journey__left {
+        display: contents !important;
+      }
+
+      .avonent-journey__media-wrap {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+        position: sticky !important;
+        top: calc(var(--header-group-height, 72px) + 20px) !important;
+        left: auto !important;
+        transform: none !important;
+        display: flex !important;
+        width: 100% !important;
+        max-width: 560px !important;
+        margin: 0 !important;
+        align-self: start !important;
+        justify-self: center !important;
+        z-index: 2 !important;
+      }
+
+      .avonent-journey__media {
+        width: 100% !important;
+        height: clamp(238px, 17vw, 270px) !important;
+        border-radius: 0 !important;
+        overflow: hidden !important;
+      }
+
+      .avonent-journey__media-image {
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center 56% !important;
+      }
+
+      .avonent-journey__inner,
+      .avonent-journey__inner.has-journey-image {
+        display: contents !important;
+        width: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .avonent-journey__header {
+        grid-column: 1 !important;
+        grid-row: 2 !important;
+        position: sticky !important;
+        top: calc(var(--header-group-height, 72px) + clamp(238px, 17vw, 270px) + 32px) !important;
+        width: 100% !important;
+        max-width: 560px !important;
+        margin: 0 !important;
+        padding: 0 14px !important;
+        text-align: center !important;
+        align-self: start !important;
+        justify-self: center !important;
+        z-index: 2 !important;
+      }
+
+      .avonent-journey__eyebrow {
+        margin-bottom: 6px !important;
+        font-size: 12px !important;
+        letter-spacing: .12em !important;
+      }
+
+      .avonent-journey__heading {
+        max-width: 520px !important;
+        margin-inline: auto !important;
+        font-size: clamp(33px, 2.55vw, 41px) !important;
+        line-height: 1.04 !important;
+        letter-spacing: -.035em !important;
+      }
+
+      .avonent-journey__description {
+        max-width: 500px !important;
+        margin: 11px auto 0 !important;
+        font-size: 16px !important;
+        line-height: 1.46 !important;
+      }
+
+      .avonent-journey__timeline {
+        grid-column: 2 !important;
+        grid-row: 1 / span 2 !important;
+        width: 100% !important;
+        max-width: 700px !important;
+        margin: 0 !important;
+        align-self: start !important;
+      }
+
+      .avonent-journey__step {
+        display: grid !important;
+        grid-template-columns: 24px minmax(0, 1fr) !important;
+        gap: 14px !important;
+        padding-bottom: 24px !important;
+      }
+
+      .avonent-journey__rail {
+        justify-content: center !important;
+      }
+
+      .avonent-journey__rail::after,
+      .avonent-journey__rail::before {
+        top: 17px !important;
+        bottom: -28px !important;
+        width: 2px !important;
+      }
+
+      .avonent-journey__dot {
+        width: 15px !important;
+        height: 15px !important;
+        flex: 0 0 15px !important;
+        margin-top: 7px !important;
+        background: #111 !important;
+        border: 0 !important;
+        box-shadow: none !important;
+      }
+
+      .avonent-journey__step.is-active .avonent-journey__dot,
+      .avonent-journey__step.is-complete .avonent-journey__dot {
+        background: var(--avj-accent) !important;
+      }
+
+      .avonent-journey__dot-icon {
+        display: none !important;
+      }
+
+      .avonent-journey__card {
+        padding: 0 0 16px !important;
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+      }
+
+      .avonent-journey__card-heading {
+        display: flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        min-height: 48px !important;
+        padding: 12px 18px !important;
+        background: #111 !important;
+        border: 0 !important;
+        border-radius: 5px !important;
+        transition: background-color 220ms ease !important;
+      }
+
+      .avonent-journey__step.is-active .avonent-journey__card-heading,
+      .avonent-journey__step.is-complete .avonent-journey__card-heading {
+        background: var(--avj-accent) !important;
+      }
+
+      .avonent-journey__week {
+        min-height: 0 !important;
+        padding: 0 !important;
+        color: #fff !important;
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        font-size: 17px !important;
+        font-weight: 720 !important;
+        letter-spacing: 0 !important;
+        text-transform: none !important;
+      }
+
+      .avonent-journey__week::after {
+        content: ':';
+      }
+
+      .avonent-journey__title {
+        color: #fff !important;
+        font-size: 17px !important;
+        font-weight: 720 !important;
+        letter-spacing: 0 !important;
+        line-height: 1.2 !important;
+      }
+
+      .avonent-journey__benefits {
+        gap: 15px !important;
+        margin: 18px 0 0 !important;
+        padding: 0 6px 0 3px !important;
+      }
+
+      .avonent-journey__benefit {
+        display: grid !important;
+        grid-template-columns: 20px minmax(0, 1fr) !important;
+        gap: 7px !important;
+        align-items: start !important;
+        color: #4f5965 !important;
+        font-size: 16.5px !important;
+        line-height: 1.48 !important;
+      }
+
+      .avonent-journey__check {
+        display: inline !important;
+        width: auto !important;
+        height: auto !important;
+        margin-top: 0 !important;
+        color: #00a98f !important;
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        font-size: 18px !important;
+        line-height: 1.25 !important;
+      }
+
+      .avonent-journey__disclaimer {
+        grid-column: 2 !important;
+        width: 100% !important;
+        max-width: 700px !important;
+      }
+    }
+  </style>
+{% endif %}
+
+<script>
+  (() => {
+    const cleanupAvonentStorefront = () => {
+      document
+        .querySelectorAll('#header-component .menu-drawer__featured-content')
+        .forEach((element) => element.remove());
+
+      document
+        .querySelectorAll(".cart-items__table-row[data-product-handle='shipping-protection']")
+        .forEach((element) => element.setAttribute('aria-hidden', 'true'));
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', cleanupAvonentStorefront, { once: true });
+    } else {
+      cleanupAvonentStorefront();
+    }
+
+    document.addEventListener('shopify:section:load', cleanupAvonentStorefront);
+    document.addEventListener('cart:update', cleanupAvonentStorefront);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Avonent Header Cleanup",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": []
+}
+{% endschema %}

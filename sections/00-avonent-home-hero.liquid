@@ -1,0 +1,468 @@
+{% liquid
+  assign section_id = 'avonent-home-hero-' | append: section.id
+  assign desktop_image = section.settings.desktop_image
+  assign mobile_image = section.settings.mobile_image
+
+  if desktop_image == blank
+    assign desktop_image = mobile_image
+  endif
+  if mobile_image == blank
+    assign mobile_image = desktop_image
+  endif
+%}
+
+<section
+  id="{{ section_id }}"
+  class="avonent-home-hero"
+  style="
+    --av-hero-text: {{ section.settings.text_color }};
+    --av-hero-button-bg: {{ section.settings.button_background }};
+    --av-hero-button-text: {{ section.settings.button_text_color }};
+    --av-hero-stars: {{ section.settings.star_color }};
+  "
+>
+  <div class="avonent-home-hero__media">
+    {% if desktop_image != blank %}
+      {{
+        desktop_image
+        | image_url: width: 2400
+        | image_tag:
+          class: 'avonent-home-hero__image avonent-home-hero__image--desktop',
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '750,1100,1500,2000,2400',
+          sizes: '100vw'
+      }}
+    {% else %}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'avonent-home-hero__placeholder' }}
+    {% endif %}
+
+    {% if mobile_image != blank %}
+      {{
+        mobile_image
+        | image_url: width: 1400
+        | image_tag:
+          class: 'avonent-home-hero__image avonent-home-hero__image--mobile',
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '375,550,750,900,1200,1400',
+          sizes: '100vw'
+      }}
+    {% endif %}
+  </div>
+
+  <div class="avonent-home-hero__content">
+    {% if section.settings.show_social_proof %}
+      <div class="avonent-home-hero__social-proof">
+        <div class="avonent-home-hero__stars" aria-label="{{ section.settings.star_rating }} out of 5 stars">
+          {% for i in (1..5) %}<span aria-hidden="true">★</span>{% endfor %}
+        </div>
+        <div class="avonent-home-hero__customer-copy">
+          Trusted by
+          <strong>{{ section.settings.counter_end | default: 100000 | times: 1 | round | divided_by: 1000 }}{% if section.settings.counter_end >= 1000 %},000{% endif %}{{ section.settings.counter_suffix }}</strong>
+          customers
+        </div>
+      </div>
+    {% endif %}
+
+    {% if section.settings.heading != blank %}
+      <h1 class="avonent-home-hero__heading">{{ section.settings.heading }}</h1>
+    {% endif %}
+
+    {% if section.settings.description != blank %}
+      <div class="avonent-home-hero__description">{{ section.settings.description }}</div>
+    {% endif %}
+
+    {% if section.settings.button_text != blank %}
+      <a
+        class="avonent-home-hero__button"
+        {% if section.settings.button_link != blank %}
+          href="{{ section.settings.button_link }}"
+        {% else %}
+          role="link" aria-disabled="true"
+        {% endif %}
+      >
+        {{ section.settings.button_text }}
+        {% if section.settings.show_button_arrow %}<span aria-hidden="true">→</span>{% endif %}
+      </a>
+    {% endif %}
+
+    <div class="avonent-home-hero__guarantee">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 3 19 6v5c0 4.8-2.8 8.2-7 10-4.2-1.8-7-5.2-7-10V6z" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M8.7 12.1 10.8 14.2 15.3 9.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>{{ section.settings.guarantee_text | default: '90-Day Money-Back Guarantee' }}</span>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .avonent-home-hero{
+    width:100%;
+    background:#F3FBFD;
+    color:var(--av-hero-text);
+  }
+  .avonent-home-hero__media{
+    width:100%;
+    overflow:hidden;
+    background:#EEF8FB;
+  }
+  .avonent-home-hero__image,.avonent-home-hero__placeholder{
+    display:block;
+    width:100%;
+    height:auto;
+    max-height:660px;
+    object-fit:cover;
+    object-position:center;
+  }
+  .avonent-home-hero__image--mobile{display:none}
+  .avonent-home-hero__content{
+    width:min(100% - 40px,920px);
+    margin:0 auto;
+    padding:28px 0 48px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .avonent-home-hero__social-proof{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin:0;
+  }
+  .avonent-home-hero__stars{
+    display:flex;
+    gap:2px;
+    color:var(--av-hero-stars);
+    font-size:21px;
+    line-height:1;
+  }
+  .avonent-home-hero__customer-copy{
+    color:#5B5B5B;
+    font-family:var(--font-body--family);
+    font-size:15px;
+    line-height:1.2;
+  }
+  .avonent-home-hero__customer-copy strong{color:#161616;font-weight:800}
+  .avonent-home-hero__heading{
+    max-width:820px;
+    margin:22px auto 0;
+    color:inherit;
+    font-family:var(--font-heading--family);
+    font-size:clamp(38px,5.2vw,64px);
+    font-weight:650;
+    line-height:1.02;
+    letter-spacing:-.035em;
+  }
+  .avonent-home-hero__description{
+    max-width:720px;
+    margin:18px auto 0;
+    color:#4E5559;
+    font-family:var(--font-body--family);
+    font-size:18px;
+    line-height:1.5;
+  }
+  .avonent-home-hero__description p{margin:0}
+  .avonent-home-hero__button{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:min(100%,560px);
+    min-height:62px;
+    margin-top:28px;
+    padding:15px 28px;
+    border-radius:12px;
+    background:var(--av-hero-button-bg);
+    color:var(--av-hero-button-text);
+    text-decoration:none;
+    font-family:var(--font-body--family);
+    font-size:17px;
+    font-weight:800;
+    line-height:1;
+  }
+  .avonent-home-hero__button span{margin-left:9px}
+  .avonent-home-hero__guarantee{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    margin-top:18px;
+    color:#63696D;
+    font-family:var(--font-body--family);
+    font-size:15px;
+  }
+  .avonent-home-hero__guarantee svg{width:21px;height:21px;color:#02C6EA;flex:0 0 21px}
+  @media(max-width:749px){
+    .avonent-home-hero__image--desktop{display:none}
+    .avonent-home-hero__image--mobile{display:block}
+    .avonent-home-hero__image,.avonent-home-hero__placeholder{
+      height:auto;
+      max-height:none;
+      aspect-ratio:1.18/1;
+      object-fit:cover;
+    }
+    .avonent-home-hero__content{
+      width:calc(100% - 32px);
+      padding:22px 0 38px;
+    }
+    .avonent-home-hero__social-proof{gap:9px}
+    .avonent-home-hero__stars{font-size:18px}
+    .avonent-home-hero__customer-copy{font-size:13.5px}
+    .avonent-home-hero__heading{
+      margin-top:18px;
+      font-size:clamp(34px,9.5vw,46px);
+      line-height:1.03;
+    }
+    .avonent-home-hero__description{
+      margin-top:14px;
+      font-size:15.5px;
+      line-height:1.48;
+    }
+    .avonent-home-hero__button{
+      min-height:58px;
+      margin-top:22px;
+      font-size:16px;
+    }
+    .avonent-home-hero__guarantee{
+      margin-top:15px;
+      font-size:13.5px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "00 Avonent Home Hero",
+  "tag": "section",
+  "class": "avonent-home-hero-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small text above heading",
+      "default": "PREMIUM DAILY WELLNESS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Feel Better. Live Sharper."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Premium formulas made for the routines that matter.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button_arrow",
+      "label": "Show arrow",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Guarantee text",
+      "default": "90-Day Money-Back Guarantee"
+    },
+    {
+      "type": "header",
+      "content": "Customer proof"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_proof",
+      "label": "Show customer proof",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "number",
+      "id": "counter_start",
+      "label": "Counter starting number",
+      "default": 8500
+    },
+    {
+      "type": "number",
+      "id": "counter_end",
+      "label": "Counter ending number",
+      "default": 10000
+    },
+    {
+      "type": "text",
+      "id": "counter_suffix",
+      "label": "Number suffix",
+      "default": "+"
+    },
+    {
+      "type": "text",
+      "id": "customer_text",
+      "label": "Text after number",
+      "default": "Trusted Customers"
+    },
+    {
+      "type": "range",
+      "id": "counter_duration",
+      "label": "Count animation duration",
+      "min": 500,
+      "max": 4000,
+      "step": 100,
+      "unit": "ms",
+      "default": 1600
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Image overlay",
+      "min": 0,
+      "max": 70,
+      "step": 5,
+      "unit": "%",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "vertical_position",
+      "label": "Vertical position",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "top"
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "Desktop height",
+      "min": 450,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 720
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "label": "Mobile height",
+      "min": 500,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 720
+    }
+  ],
+  "presets": [
+    {
+      "name": "00 Avonent Home Hero"
+    }
+  ]
+}
+{% endschema %}

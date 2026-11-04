@@ -1,0 +1,68 @@
+{% liquid
+  assign av_product = product | default: closest.product
+  assign current_variant = av_product.selected_or_first_available_variant
+%}
+
+<section
+  id="AgedGarlicStory-{{ section.id }}"
+  class="aged-garlic-story aged-garlic-story--trimmed"
+  style="
+    --ags-ivory:{{ section.settings.ivory }};
+    --ags-cream:{{ section.settings.cream }};
+    --ags-burgundy:{{ section.settings.burgundy }};
+    --ags-burgundy-dark:{{ section.settings.burgundy_dark }};
+    --ags-gold:{{ section.settings.gold }};
+    --ags-ink:{{ section.settings.ink }};
+    --ags-muted:{{ section.settings.muted }};
+    --ags-line:{{ section.settings.line }};
+    --ags-white:#ffffff;
+    --ags-width:{{ section.settings.content_width }}px;
+  "
+>
+  <div class="aged-garlic-story__faq">
+    <div class="aged-garlic-story__wrap aged-garlic-story__faq-wrap">
+      <header>
+        <span class="aged-garlic-story__eyebrow">QUESTIONS, ANSWERED</span>
+        <h2>Before you add it to your routine.</h2>
+      </header>
+      <div class="aged-garlic-story__faq-list">
+        <details><summary>What is aged garlic?<span>+</span></summary><p>Aged garlic is garlic that has gone through a maturation process before being used in a supplement. The exact Avonent aging process and duration should match the final supplier documentation.</p></details>
+        <details><summary>Does it smell like normal garlic?<span>+</span></summary><p>This product is positioned as an odorless aged-garlic softgel. Individual experience can vary, and the final product label should be the source of truth.</p></details>
+        <details><summary>How many softgels should I take?<span>+</span></summary><p>Follow the serving directions printed on the product label and do not exceed the suggested use.</p></details>
+        <details><summary>How long does one bag last?<span>+</span></summary><p>How long one bag lasts depends on the serving directions shown on the product label.</p></details>
+        <details><summary>Does this contain CoQ10 and ubiquinol?<span>+</span></summary><p>Yes. This formula is positioned around aged garlic with CoQ10 + ubiquinol. Refer to the product label for the exact amounts.</p></details>
+        <details><summary>Where can I see the Supplement Facts?<span>+</span></summary><p>The Supplement Facts panel is shown on this page when available and is also printed on the product packaging.</p></details>
+        <details><summary>Can I take it with medications?<span>+</span></summary><p>If you take medication, have a health condition, are pregnant or nursing, have a procedure planned, or have questions about supplementation, speak with a qualified healthcare professional before use.</p></details>
+        <details><summary>What is the return policy?<span>+</span></summary><p>Avonent offers a 30-day satisfaction guarantee. Returns and refunds are handled according to the refund policy linked on the store.</p></details>
+      </div>
+    </div>
+  </div></section>
+
+
+
+{% stylesheet %}
+.aged-garlic-story{background:var(--ags-ivory);color:var(--ags-ink);overflow:hidden}.aged-garlic-story *{box-sizing:border-box}.aged-garlic-story__wrap{width:min(calc(100% - 36px),var(--ags-width));margin:0 auto}.aged-garlic-story__lower-offer{scroll-margin-top:110px;padding:58px 0 66px;border-top:6px solid #02C6EA;background:#EAF9FC}.aged-garlic-story__lower-eyebrow{text-align:center;color:#087E9D;font-size:12px;font-weight:900;letter-spacing:.18em}.aged-garlic-story__lower-offer h2{margin:8px auto 0;max-width:760px;text-align:center;color:#111;font-size:clamp(42px,5.6vw,64px);font-weight:900;line-height:1;letter-spacing:-.045em}.aged-garlic-story__lower-intro{max-width:720px;margin:18px auto 0;color:#667177;text-align:center;font-size:16px;line-height:1.55}.aged-garlic-story__lower-meter{display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;margin:34px 0 22px;padding:22px 28px;border-radius:18px;background:#fff}.aged-garlic-story__lower-meter>span{height:10px;border-radius:999px;background:#E1EDF2;overflow:hidden}.aged-garlic-story__lower-meter>span i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#02C6EA,#28D7E8)}.aged-garlic-story__lower-meter strong{color:#EF4C4C;font-size:18px}.aged-garlic-story__lower-bundles{display:grid;gap:12px}.aged-garlic-story__lower-bundle{position:relative;display:grid;grid-template-columns:34px 76px minmax(0,1fr) auto;align-items:center;gap:14px;width:100%;min-height:126px;padding:16px 18px;border:2px solid #D4E5EB;border-radius:18px;background:#fff;color:#111;text-align:left;cursor:pointer}.aged-garlic-story__lower-bundle.is-active{border-color:#02C6EA;background:#F1FCFE}.aged-garlic-story__lower-badge{position:absolute;right:18px;top:-15px;padding:6px 14px;border-radius:999px;background:#087E9D;color:#fff;font-size:11px;font-weight:900}.aged-garlic-story__lower-radio{display:grid;place-items:center;width:28px;height:28px;border:2px solid #ADC2CA;border-radius:50%}.aged-garlic-story__lower-radio i{width:14px;height:14px;border-radius:50%}.aged-garlic-story__lower-bundle.is-active .aged-garlic-story__lower-radio{border-color:#02C6EA}.aged-garlic-story__lower-bundle.is-active .aged-garlic-story__lower-radio i{background:#02C6EA}.aged-garlic-story__lower-thumb{position:relative;display:grid;place-items:center;width:72px;height:72px;border-radius:10px;background:#F4FBFD}.aged-garlic-story__lower-thumb img{display:block;max-width:100%;max-height:100%;object-fit:contain}.aged-garlic-story__lower-thumb b{position:absolute;right:-9px;bottom:-7px;display:grid;place-items:center;min-width:30px;height:30px;padding:0 7px;border:2px solid #fff;border-radius:999px;background:#087E9D;color:#fff;font-size:11px}.aged-garlic-story__lower-copy strong{display:block;font-size:18px}.aged-garlic-story__lower-copy small{display:block;margin-top:2px;color:#5E6D74;font-size:14px}.aged-garlic-story__lower-copy em{display:block;margin-top:5px;color:#087E9D;font-size:11px;font-style:normal;font-weight:800}.aged-garlic-story__lower-price{text-align:right}.aged-garlic-story__lower-price strong{display:block;font-size:18px}.aged-garlic-story__lower-price s{display:block;margin-top:5px;color:#6A757A;font-size:12px}.aged-garlic-story__lower-delivery{display:flex;align-items:center;gap:10px;margin:22px 0;padding:17px 0;border-top:1px dashed #D8E8ED;border-bottom:1px dashed #D8E8ED;color:#617078}.aged-garlic-story__lower-delivery>span{width:18px;height:18px;border:4px solid #B9F4FF;border-radius:50%;box-shadow:inset 0 0 0 3px #fff;background:#02C6EA}.aged-garlic-story__lower-delivery p{margin:0;font-size:13px}.aged-garlic-story__lower-delivery b{color:#087E9D}.aged-garlic-story__lower-atc{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:70px;padding:0 24px;border:0;border-radius:16px;background:#02C6EA;color:#fff;cursor:pointer}.aged-garlic-story__lower-atc span{font-size:18px;font-weight:850}.aged-garlic-story__lower-atc strong{font-size:20px}.aged-garlic-story__lower-payments{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-top:18px}.aged-garlic-story__lower-payments svg{width:auto;height:31px}.aged-garlic-story__lower-guarantee{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:20px;color:#5B6870;font-size:13px;font-weight:750}.aged-garlic-story__lower-guarantee svg{width:26px;height:26px;fill:none;stroke:#02C6EA;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.aged-garlic-story__guarantee{padding:72px 0;background:#fff}.aged-garlic-story__guarantee-inner{display:grid;grid-template-columns:130px 1fr;align-items:center;gap:28px;max-width:880px;margin:0 auto}.aged-garlic-story__seal{display:flex;flex-direction:column;align-items:center;justify-content:center;width:120px;height:120px;border:2px solid var(--ags-gold);border-radius:50%;color:var(--ags-burgundy);font-size:34px;font-weight:850;line-height:.85}.aged-garlic-story__seal span{margin-top:8px;color:var(--ags-gold);font-size:10px;letter-spacing:.15em}.aged-garlic-story__eyebrow{display:block;margin-bottom:10px;color:var(--ags-burgundy);font-size:11px;font-weight:850;letter-spacing:.14em;line-height:1.2;text-transform:uppercase}.aged-garlic-story h2{margin:0;color:var(--ags-ink);font-size:clamp(34px,4vw,52px);font-weight:760;letter-spacing:-.035em;line-height:1.02}.aged-garlic-story__guarantee h2{font-size:40px}.aged-garlic-story__guarantee .rte{margin-top:11px;color:var(--ags-muted);font-size:14px;line-height:1.6}.aged-garlic-story__faq{padding:82px 0;background:var(--ags-cream)}.aged-garlic-story__faq-wrap{display:grid;grid-template-columns:.65fr 1.35fr;gap:70px}.aged-garlic-story__faq-wrap header{position:sticky;top:120px;align-self:start}.aged-garlic-story__faq-list{display:grid;gap:9px}.aged-garlic-story__faq-list details{border:1px solid var(--ags-line);border-radius:14px;background:#fff;overflow:hidden}.aged-garlic-story__faq-list summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;cursor:pointer;color:var(--ags-ink);font-size:13px;font-weight:760;list-style:none}.aged-garlic-story__faq-list summary::-webkit-details-marker{display:none}.aged-garlic-story__faq-list summary span{font-size:19px;font-weight:400}.aged-garlic-story__faq-list details[open] summary span{transform:rotate(45deg)}.aged-garlic-story__faq-list details p{margin:0;padding:0 20px 20px;color:var(--ags-muted);font-size:13px;line-height:1.65}@media(max-width:749px){.aged-garlic-story__lower-offer{padding:44px 0 52px}.aged-garlic-story__lower-offer h2{font-size:43px}.aged-garlic-story__lower-intro{font-size:14px}.aged-garlic-story__lower-meter{padding:18px}.aged-garlic-story__lower-bundle{grid-template-columns:28px 70px minmax(0,1fr) auto;gap:10px;min-height:116px;padding:14px 12px}.aged-garlic-story__lower-thumb{width:66px;height:66px}.aged-garlic-story__lower-copy strong{font-size:17px}.aged-garlic-story__lower-copy small{font-size:13px}.aged-garlic-story__lower-copy em{font-size:10px}.aged-garlic-story__lower-price strong{font-size:17px}.aged-garlic-story__lower-atc{min-height:66px;padding:0 18px}.aged-garlic-story__guarantee-inner{grid-template-columns:78px 1fr;gap:16px}.aged-garlic-story__seal{width:72px;height:72px;font-size:23px}.aged-garlic-story__guarantee h2{font-size:30px}.aged-garlic-story__faq-wrap{grid-template-columns:1fr;gap:24px}.aged-garlic-story__faq-wrap header{position:static}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name":"Aged Garlic FAQ",
+  "tag":"section",
+  "enabled_on":{"templates":["product"]},
+  "settings":[
+    {"type":"text","id":"guarantee_eyebrow","label":"Guarantee eyebrow","default":"TRY AVONENT FOR 30 DAYS"},
+    {"type":"text","id":"guarantee_heading","label":"Guarantee heading","default":"A simple guarantee. No fake urgency."},
+    {"type":"richtext","id":"guarantee_text","label":"Guarantee text","default":"<p>If Avonent is not right for you, contact us within 30 days and we will help with the next steps under our refund policy.</p>"},
+    {"type":"color","id":"ivory","label":"Page background","default":"#F7FCFF"},
+    {"type":"color","id":"cream","label":"FAQ background","default":"#EFF9FE"},
+    {"type":"color","id":"burgundy","label":"Accent blue","default":"#02C6EA"},
+    {"type":"color","id":"burgundy_dark","label":"Dark blue","default":"#0068E8"},
+    {"type":"color","id":"gold","label":"Guarantee accent","default":"#FFB400"},
+    {"type":"color","id":"ink","label":"Primary text","default":"#071A52"},
+    {"type":"color","id":"muted","label":"Muted text","default":"#5F6878"},
+    {"type":"color","id":"line","label":"Border","default":"#DCECF5"},
+    {"type":"range","id":"content_width","label":"Content width","min":900,"max":1400,"step":20,"unit":"px","default":1180}
+  ],
+  "presets":[{"name":"Aged Garlic FAQ"}]
+}
+{% endschema %}

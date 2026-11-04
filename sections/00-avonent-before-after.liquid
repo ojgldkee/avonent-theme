@@ -1,0 +1,915 @@
+{% comment %}
+  Avonent Before & After Digestive Support
+  Add this file to: sections/00-avonent-before-after.liquid
+
+  Recommended image uploads:
+  - 1600 x 2000 px (4:5)
+  - WebP, sRGB, ideally under 450 KB each
+  - Use the same composition, crop and lighting for both images
+{% endcomment %}
+
+{% liquid
+  assign section_key = 'AvonentBeforeAfter-' | append: section.id
+  assign button_link = section.settings.button_link | default: '#avonent-bottom-offer'
+%}
+
+<section
+  id="{{ section_key }}"
+  class="av-ba"
+  style="
+    --av-ba-accent: {{ section.settings.accent_color }};
+    --av-ba-bg: {{ section.settings.background_color }};
+    --av-ba-card: {{ section.settings.card_color }};
+    --av-ba-text: {{ section.settings.text_color }};
+    --av-ba-muted: {{ section.settings.muted_color }};
+    --av-ba-before: {{ section.settings.before_color }};
+    --av-ba-border: {{ section.settings.border_color }};
+    --av-ba-width: {{ section.settings.content_width }}px;
+    --av-ba-radius: {{ section.settings.corner_radius }}px;
+    --av-ba-top: {{ section.settings.padding_top }}px;
+    --av-ba-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="av-ba__glow av-ba__glow--one" aria-hidden="true"></div>
+  <div class="av-ba__glow av-ba__glow--two" aria-hidden="true"></div>
+
+  <div class="av-ba__inner">
+    <header class="av-ba__header">
+      {% if section.settings.eyebrow != blank %}
+        <p class="av-ba__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="av-ba__heading">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+
+      {% if section.settings.intro != blank %}
+        <div class="av-ba__intro rte">{{ section.settings.intro }}</div>
+      {% endif %}
+    </header>
+
+    <div class="av-ba__tabs" role="tablist" aria-label="Digestive support comparison">
+      <button
+        class="av-ba__tab is-active"
+        type="button"
+        role="tab"
+        aria-selected="true"
+        aria-controls="{{ section_key }}-before"
+        data-av-ba-tab="before"
+      >
+        {{ section.settings.before_tab | escape }}
+      </button>
+      <button
+        class="av-ba__tab"
+        type="button"
+        role="tab"
+        aria-selected="false"
+        aria-controls="{{ section_key }}-after"
+        data-av-ba-tab="after"
+      >
+        {{ section.settings.after_tab | escape }}
+      </button>
+    </div>
+
+    <div class="av-ba__comparison">
+      <article
+        id="{{ section_key }}-before"
+        class="av-ba__card av-ba__card--before is-active"
+        role="tabpanel"
+        data-av-ba-panel="before"
+      >
+        <div class="av-ba__visual">
+          <span class="av-ba__image-label av-ba__image-label--before">
+            {{ section.settings.before_label | escape }}
+          </span>
+
+          {% if section.settings.before_image != blank %}
+            {{
+              section.settings.before_image
+              | image_url: width: 1600
+              | image_tag:
+                loading: 'lazy',
+                widths: '480, 720, 960, 1200, 1600',
+                sizes: '(min-width: 750px) 46vw, calc(100vw - 36px)',
+                class: 'av-ba__image',
+                alt: section.settings.before_image_alt
+            }}
+          {% else %}
+            <div class="av-ba__placeholder" aria-label="Add the before-support illustration in the Shopify editor">
+              <svg viewBox="0 0 120 120" fill="none" aria-hidden="true">
+                <circle cx="60" cy="60" r="45" stroke="currentColor" stroke-width="3" opacity=".25"/>
+                <path d="M48 28c-9 13-12 25-8 36 3 9 11 15 20 15 12 0 20-9 20-21 0-10-5-19-13-26" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="48" cy="58" r="5" fill="currentColor" opacity=".45"/>
+                <circle cx="65" cy="67" r="7" fill="currentColor" opacity=".3"/>
+              </svg>
+              <span>Add before-support image</span>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="av-ba__card-copy">
+          {% if section.settings.before_heading != blank %}
+            <h3>{{ section.settings.before_heading | escape }}</h3>
+          {% endif %}
+          {% if section.settings.before_text != blank %}
+            <div class="av-ba__body rte">{{ section.settings.before_text }}</div>
+          {% endif %}
+          {% if section.settings.before_points != blank %}
+            <div class="av-ba__points av-ba__points--before rte">{{ section.settings.before_points }}</div>
+          {% endif %}
+        </div>
+      </article>
+
+      <article
+        id="{{ section_key }}-after"
+        class="av-ba__card av-ba__card--after"
+        role="tabpanel"
+        data-av-ba-panel="after"
+      >
+        <div class="av-ba__visual">
+          <span class="av-ba__image-label av-ba__image-label--after">
+            {{ section.settings.after_label | escape }}
+          </span>
+
+          {% if section.settings.after_image != blank %}
+            {{
+              section.settings.after_image
+              | image_url: width: 1600
+              | image_tag:
+                loading: 'lazy',
+                widths: '480, 720, 960, 1200, 1600',
+                sizes: '(min-width: 750px) 46vw, calc(100vw - 36px)',
+                class: 'av-ba__image',
+                alt: section.settings.after_image_alt
+            }}
+          {% else %}
+            <div class="av-ba__placeholder av-ba__placeholder--after" aria-label="Add the Avonent-support illustration in the Shopify editor">
+              <svg viewBox="0 0 120 120" fill="none" aria-hidden="true">
+                <circle cx="60" cy="60" r="45" stroke="currentColor" stroke-width="3" opacity=".25"/>
+                <path d="M48 28c-9 13-12 25-8 36 3 9 11 15 20 15 12 0 20-9 20-21 0-10-5-19-13-26" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <path d="m47 60 8 8 19-21" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Add Avonent-support image</span>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="av-ba__card-copy">
+          {% if section.settings.after_heading != blank %}
+            <h3>{{ section.settings.after_heading | escape }}</h3>
+          {% endif %}
+          {% if section.settings.after_text != blank %}
+            <div class="av-ba__body rte">{{ section.settings.after_text }}</div>
+          {% endif %}
+          {% if section.settings.after_points != blank %}
+            <div class="av-ba__points av-ba__points--after rte">{{ section.settings.after_points }}</div>
+          {% endif %}
+        </div>
+      </article>
+    </div>
+
+    {% if section.blocks.size > 0 %}
+      <div class="av-ba__process-wrap">
+        {% if section.settings.process_heading != blank %}
+          <h3 class="av-ba__process-heading">{{ section.settings.process_heading | escape }}</h3>
+        {% endif %}
+
+        <div class="av-ba__process">
+          {% for block in section.blocks %}
+            <article class="av-ba__step" {{ block.shopify_attributes }}>
+              <span class="av-ba__step-number" aria-hidden="true">{{ forloop.index }}</span>
+              <div>
+                {% if block.settings.heading != blank %}
+                  <h4>{{ block.settings.heading | escape }}</h4>
+                {% endif %}
+                {% if block.settings.text != blank %}
+                  <div class="rte">{{ block.settings.text }}</div>
+                {% endif %}
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="av-ba__closing">
+      {% if section.settings.closing_heading != blank %}
+        <h3>{{ section.settings.closing_heading | escape }}</h3>
+      {% endif %}
+      {% if section.settings.closing_text != blank %}
+        <div class="rte">{{ section.settings.closing_text }}</div>
+      {% endif %}
+      {% if section.settings.button_label != blank %}
+        <a class="av-ba__button" href="{{ button_link }}">
+          {{ section.settings.button_label | escape }}
+          <span aria-hidden="true">→</span>
+        </a>
+      {% endif %}
+    </div>
+
+    {% if section.settings.disclaimer != blank %}
+      <p class="av-ba__disclaimer">{{ section.settings.disclaimer | escape }}</p>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  #{{ section_key }} {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: var(--av-ba-top) 18px var(--av-ba-bottom);
+    background: var(--av-ba-bg);
+    color: var(--av-ba-text);
+  }
+
+  #{{ section_key }} * { box-sizing: border-box; }
+
+  #{{ section_key }} .av-ba__glow {
+    position: absolute;
+    z-index: -1;
+    width: 460px;
+    height: 460px;
+    border-radius: 50%;
+    background: rgba(2, 198, 234, 0.1);
+    filter: blur(4px);
+    pointer-events: none;
+  }
+
+  #{{ section_key }} .av-ba__glow--one { top: -300px; left: -260px; }
+  #{{ section_key }} .av-ba__glow--two { right: -300px; bottom: -300px; }
+
+  #{{ section_key }} .av-ba__inner {
+    width: min(100%, var(--av-ba-width));
+    margin: 0 auto;
+  }
+
+  #{{ section_key }} .av-ba__header {
+    max-width: 820px;
+    margin: 0 auto 38px;
+    text-align: center;
+  }
+
+  #{{ section_key }} .av-ba__eyebrow {
+    margin: 0 0 10px;
+    color: var(--av-ba-accent);
+    font-size: 13px;
+    font-weight: 850;
+    letter-spacing: .14em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  #{{ section_key }} .av-ba__heading {
+    max-width: 790px;
+    margin: 0 auto;
+    color: var(--av-ba-text);
+    font-size: clamp(34px, 4.8vw, 62px);
+    font-weight: 850;
+    letter-spacing: -.05em;
+    line-height: .98;
+  }
+
+  #{{ section_key }} .av-ba__intro {
+    max-width: 700px;
+    margin: 18px auto 0;
+    color: var(--av-ba-muted);
+    font-size: clamp(16px, 1.7vw, 19px);
+    line-height: 1.58;
+  }
+
+  #{{ section_key }} .rte p { margin: 0; }
+  #{{ section_key }} .rte p + p { margin-top: .75em; }
+
+  #{{ section_key }} .av-ba__tabs { display: none; }
+
+  #{{ section_key }} .av-ba__comparison {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+
+  #{{ section_key }} .av-ba__card {
+    overflow: hidden;
+    border: 1px solid var(--av-ba-border);
+    border-radius: var(--av-ba-radius);
+    background: var(--av-ba-card);
+    box-shadow: 0 18px 50px rgba(17, 17, 17, .07);
+  }
+
+  #{{ section_key }} .av-ba__card--after {
+    border-color: rgba(2, 198, 234, .55);
+    box-shadow: 0 18px 55px rgba(2, 198, 234, .13);
+  }
+
+  #{{ section_key }} .av-ba__visual {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: #eaf9fc;
+  }
+
+  #{{ section_key }} .av-ba__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #{{ section_key }} .av-ba__image-label {
+    position: absolute;
+    z-index: 2;
+    top: 18px;
+    left: 18px;
+    padding: 9px 14px;
+    border-radius: 999px;
+    color: #111;
+    background: rgba(255, 255, 255, .92);
+    box-shadow: 0 8px 24px rgba(17, 17, 17, .1);
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: .07em;
+    line-height: 1;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+  }
+
+  #{{ section_key }} .av-ba__image-label--before {
+    border: 1px solid var(--av-ba-before);
+  }
+
+  #{{ section_key }} .av-ba__image-label--after {
+    border: 1px solid var(--av-ba-accent);
+  }
+
+  #{{ section_key }} .av-ba__placeholder {
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 14px;
+    padding: 30px;
+    color: var(--av-ba-before);
+    text-align: center;
+    background: linear-gradient(145deg, #fff7e9, #eaf9fc);
+  }
+
+  #{{ section_key }} .av-ba__placeholder--after {
+    color: var(--av-ba-accent);
+    background: linear-gradient(145deg, #eaf9fc, #fff);
+  }
+
+  #{{ section_key }} .av-ba__placeholder svg { width: 118px; }
+  #{{ section_key }} .av-ba__placeholder span { font-weight: 750; }
+
+  #{{ section_key }} .av-ba__card-copy { padding: 27px 28px 30px; }
+
+  #{{ section_key }} .av-ba__card-copy h3 {
+    margin: 0;
+    color: var(--av-ba-text);
+    font-size: clamp(24px, 2.4vw, 34px);
+    font-weight: 850;
+    letter-spacing: -.035em;
+    line-height: 1.04;
+  }
+
+  #{{ section_key }} .av-ba__body {
+    margin-top: 13px;
+    color: var(--av-ba-muted);
+    font-size: 16px;
+    line-height: 1.58;
+  }
+
+  #{{ section_key }} .av-ba__points { margin-top: 20px; }
+
+  #{{ section_key }} .av-ba__points ul {
+    display: grid;
+    gap: 11px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #{{ section_key }} .av-ba__points li {
+    position: relative;
+    padding-left: 30px;
+    color: var(--av-ba-text);
+    font-size: 15px;
+    font-weight: 650;
+    line-height: 1.45;
+  }
+
+  #{{ section_key }} .av-ba__points li::before {
+    position: absolute;
+    top: .05em;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  #{{ section_key }} .av-ba__points--before li::before {
+    content: '!';
+    background: var(--av-ba-before);
+  }
+
+  #{{ section_key }} .av-ba__points--after li::before {
+    content: '\2713';
+    background: var(--av-ba-accent);
+  }
+
+  #{{ section_key }} .av-ba__process-wrap {
+    margin-top: 52px;
+    padding: 34px;
+    border: 1px solid var(--av-ba-border);
+    border-radius: var(--av-ba-radius);
+    background: rgba(255, 255, 255, .76);
+  }
+
+  #{{ section_key }} .av-ba__process-heading {
+    margin: 0 0 24px;
+    text-align: center;
+    color: var(--av-ba-text);
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 850;
+    letter-spacing: -.04em;
+    line-height: 1.05;
+  }
+
+  #{{ section_key }} .av-ba__process {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+  }
+
+  #{{ section_key }} .av-ba__step {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+  }
+
+  #{{ section_key }} .av-ba__step-number {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    color: #07242a;
+    background: var(--av-ba-accent);
+    font-size: 15px;
+    font-weight: 900;
+  }
+
+  #{{ section_key }} .av-ba__step h4 {
+    margin: 1px 0 6px;
+    color: var(--av-ba-text);
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  #{{ section_key }} .av-ba__step .rte {
+    color: var(--av-ba-muted);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  #{{ section_key }} .av-ba__closing {
+    max-width: 760px;
+    margin: 48px auto 0;
+    text-align: center;
+  }
+
+  #{{ section_key }} .av-ba__closing h3 {
+    margin: 0;
+    font-size: clamp(28px, 3.7vw, 46px);
+    font-weight: 850;
+    letter-spacing: -.045em;
+    line-height: 1;
+  }
+
+  #{{ section_key }} .av-ba__closing .rte {
+    margin-top: 14px;
+    color: var(--av-ba-muted);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  #{{ section_key }} .av-ba__button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: min(100%, 330px);
+    min-height: 56px;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 14px 28px;
+    border: 1px solid var(--av-ba-accent);
+    border-radius: 999px;
+    color: #062027;
+    background: var(--av-ba-accent);
+    box-shadow: 0 12px 30px rgba(2, 198, 234, .24);
+    font-size: 15px;
+    font-weight: 850;
+    line-height: 1;
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+
+  #{{ section_key }} .av-ba__button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px rgba(2, 198, 234, .3);
+  }
+
+  #{{ section_key }} .av-ba__disclaimer {
+    max-width: 750px;
+    margin: 22px auto 0;
+    color: var(--av-ba-muted);
+    font-size: 11px;
+    line-height: 1.45;
+    text-align: center;
+  }
+
+  @media (max-width: 749px) {
+    #{{ section_key }} {
+      padding-right: 16px;
+      padding-left: 16px;
+    }
+
+    #{{ section_key }} .av-ba__header { margin-bottom: 26px; }
+    #{{ section_key }} .av-ba__heading { font-size: clamp(34px, 10vw, 46px); }
+
+    #{{ section_key }} .av-ba__tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+      margin-bottom: 12px;
+      padding: 5px;
+      border: 1px solid var(--av-ba-border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .82);
+    }
+
+    #{{ section_key }} .av-ba__tab {
+      min-height: 44px;
+      padding: 9px 12px;
+      border: 0;
+      border-radius: 999px;
+      color: var(--av-ba-muted);
+      background: transparent;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    #{{ section_key }} .av-ba__tab.is-active {
+      color: #062027;
+      background: var(--av-ba-accent);
+      box-shadow: 0 8px 20px rgba(2, 198, 234, .2);
+    }
+
+    #{{ section_key }} .av-ba__comparison { display: block; }
+    #{{ section_key }} .av-ba__card { display: none; }
+    #{{ section_key }} .av-ba__card.is-active { display: block; }
+    #{{ section_key }} .av-ba__card-copy { padding: 23px 20px 25px; }
+    #{{ section_key }} .av-ba__process-wrap { margin-top: 32px; padding: 26px 20px; }
+    #{{ section_key }} .av-ba__process { grid-template-columns: 1fr; gap: 25px; }
+    #{{ section_key }} .av-ba__closing { margin-top: 38px; }
+    #{{ section_key }} .av-ba__button { width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #{{ section_key }} .av-ba__button { transition: none; }
+  }
+</style>
+
+<script>
+  (() => {
+    const section = document.getElementById('{{ section_key }}');
+    if (!section || section.dataset.tabsReady === 'true') return;
+    section.dataset.tabsReady = 'true';
+
+    const tabs = Array.from(section.querySelectorAll('[data-av-ba-tab]'));
+    const panels = Array.from(section.querySelectorAll('[data-av-ba-panel]'));
+
+    const activate = (name) => {
+      tabs.forEach((tab) => {
+        const active = tab.dataset.avBaTab === name;
+        tab.classList.toggle('is-active', active);
+        tab.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+
+      panels.forEach((panel) => {
+        panel.classList.toggle('is-active', panel.dataset.avBaPanel === name);
+      });
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => activate(tab.dataset.avBaTab));
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "00 Avonent Before/After",
+  "tag": "section",
+  "class": "section-avonent-before-after",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "FROM PLATE TO COMFORT"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A heavy meal asks your digestion to do five jobs at once."
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "<p>Protein. Fats. Carbohydrates. Fiber. Lactose. One mixed meal can contain all five—and each one requires different digestive support.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Before support"
+    },
+    {
+      "type": "text",
+      "id": "before_tab",
+      "label": "Mobile tab label",
+      "default": "Before Support"
+    },
+    {
+      "type": "text",
+      "id": "before_label",
+      "label": "Image label",
+      "default": "THE HEAVY-MEAL PROBLEM"
+    },
+    {
+      "type": "image_picker",
+      "id": "before_image",
+      "label": "Before-support image"
+    },
+    {
+      "type": "text",
+      "id": "before_image_alt",
+      "label": "Before image alt text",
+      "default": "Conceptual illustration of a complex mixed meal during digestion"
+    },
+    {
+      "type": "text",
+      "id": "before_heading",
+      "label": "Heading",
+      "default": "One meal. A lot to break down."
+    },
+    {
+      "type": "richtext",
+      "id": "before_text",
+      "label": "Text",
+      "default": "<p>Rich, complicated meals can sometimes leave you feeling bloated, gassy, overly full, or weighed down long after the last bite.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "before_points",
+      "label": "Before-support points",
+      "default": "<ul><li>Protein, fats, carbs, fiber, and dairy all require different digestive work</li><li>Mixed meals can be harder to handle than a single type of food</li><li>Occasional pressure, gas, and uncomfortable fullness can follow</li></ul>"
+    },
+    {
+      "type": "header",
+      "content": "With Avonent support"
+    },
+    {
+      "type": "text",
+      "id": "after_tab",
+      "label": "Mobile tab label",
+      "default": "With Avonent"
+    },
+    {
+      "type": "text",
+      "id": "after_label",
+      "label": "Image label",
+      "default": "WITH AVONENT SUPPORT"
+    },
+    {
+      "type": "image_picker",
+      "id": "after_image",
+      "label": "Avonent-support image"
+    },
+    {
+      "type": "text",
+      "id": "after_image_alt",
+      "label": "After image alt text",
+      "default": "Conceptual illustration of Avonent supporting mixed-meal digestion"
+    },
+    {
+      "type": "text",
+      "id": "after_heading",
+      "label": "Heading",
+      "default": "Support for the whole plate."
+    },
+    {
+      "type": "richtext",
+      "id": "after_text",
+      "label": "Text",
+      "default": "<p>Avonent combines five digestive enzymes to help break down protein, fats, carbohydrates, fiber, and lactose—plus artichoke, ox bile, slippery elm, and targeted botanicals for more complete digestive support.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "after_points",
+      "label": "Avonent-support points",
+      "default": "<ul><li>Broad enzyme support for every part of a mixed meal</li><li>Additional support for normal fat digestion and bile activity</li><li>Designed to support post-meal comfort and help with occasional bloating</li></ul>"
+    },
+    {
+      "type": "header",
+      "content": "How it works"
+    },
+    {
+      "type": "text",
+      "id": "process_heading",
+      "label": "Process heading",
+      "default": "How Avonent supports the process"
+    },
+    {
+      "type": "text",
+      "id": "closing_heading",
+      "label": "Closing heading",
+      "default": "Made for real meals. Not perfect diets."
+    },
+    {
+      "type": "richtext",
+      "id": "closing_text",
+      "label": "Closing text",
+      "default": "<p>Protein-heavy lunches. Restaurant dinners. Dairy. Takeout nights. Avonent provides broader digestive support for the food you actually eat.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "SUPPORT YOUR NEXT MEAL"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "disclaimer",
+      "label": "Disclaimer",
+      "default": "Conceptual illustration showing intended digestive support—not guaranteed results. Individual experiences vary. Use only as directed."
+    },
+    {
+      "type": "header",
+      "content": "Colors and layout"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Avonent accent",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#EAF9FC"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Cards",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Muted text",
+      "default": "#596269"
+    },
+    {
+      "type": "color",
+      "id": "before_color",
+      "label": "Before accent",
+      "default": "#E5A53A"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Borders",
+      "default": "#CFEAF0"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Content width",
+      "min": 900,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "process_step",
+      "name": "Process step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Take as directed"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Use Avonent with your meal according to the directions on the label.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "00 Avonent Before/After",
+      "blocks": [
+        {
+          "type": "process_step",
+          "settings": {
+            "heading": "Take as directed",
+            "text": "<p>Use Avonent with your meal according to the directions on the label.</p>"
+          }
+        },
+        {
+          "type": "process_step",
+          "settings": {
+            "heading": "Support all five digestive jobs",
+            "text": "<p>Protease, lipase, amylase, cellulase, and lactase help break down different parts of a mixed meal.</p>"
+          }
+        },
+        {
+          "type": "process_step",
+          "settings": {
+            "heading": "Feel better supported after eating",
+            "text": "<p>Designed to support comfortable digestion and help with occasional bloating, gas, and post-meal heaviness.*</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

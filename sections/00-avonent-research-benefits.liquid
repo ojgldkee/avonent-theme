@@ -1,0 +1,206 @@
+{% liquid
+  assign section_id = 'AvonentResearchBenefits-' | append: section.id
+%}
+
+<section
+  id="{{ section_id }}"
+  class="avonent-research-benefits"
+  style="
+    --arb-bg: {{ section.settings.background_color }};
+    --arb-card-bg: {{ section.settings.card_background }};
+    --arb-visual-bg: {{ section.settings.visual_background }};
+    --arb-text: {{ section.settings.text_color }};
+    --arb-muted: {{ section.settings.muted_text_color }};
+    --arb-accent: {{ section.settings.accent_color }};
+    --arb-border: {{ section.settings.border_color }};
+    --arb-width: {{ section.settings.content_width }}px;
+    --arb-gap: {{ section.settings.card_gap }}px;
+    --arb-height-desktop: {{ section.settings.card_height_desktop }}px;
+    --arb-height-mobile: {{ section.settings.card_height_mobile }}px;
+    --arb-visual-desktop: {{ section.settings.visual_size_desktop }}px;
+    --arb-visual-mobile: {{ section.settings.visual_size_mobile }}px;
+    --arb-top: {{ section.settings.padding_top_desktop }}px;
+    --arb-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    --arb-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --arb-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+  "
+>
+  <div class="avonent-research-benefits__inner">
+    <header class="avonent-research-benefits__header">
+      <h2 class="avonent-research-benefits__heading">
+        {% if section.settings.heading_accent != blank %}<span>{{ section.settings.heading_accent }}</span>{% endif %}
+        {% if section.settings.heading_rest != blank %} {{ section.settings.heading_rest }}{% endif %}
+      </h2>
+      {% if section.settings.subheading != blank %}
+        <div class="avonent-research-benefits__subheading rte">{{ section.settings.subheading }}</div>
+      {% endif %}
+    </header>
+
+    <div class="avonent-research-benefits__grid" role="list">
+      {% for i in (1..4) %}
+        {% liquid
+          assign image_key = 'card_' | append: i | append: '_image'
+          assign title_key = 'card_' | append: i | append: '_title'
+          assign line_key = 'card_' | append: i | append: '_front'
+          assign back_key = 'card_' | append: i | append: '_back'
+          assign icon_key = 'card_' | append: i | append: '_icon'
+          assign icon_name = section.settings[icon_key]
+          assign card_title = section.settings[title_key]
+        %}
+
+        <div class="avonent-research-benefits__card" role="listitem">
+          <button
+            class="avonent-research-benefits__button"
+            type="button"
+            aria-expanded="false"
+            aria-label="Open {{ card_title | escape }} details"
+            data-arb-card
+          >
+            <span class="avonent-research-benefits__flipper">
+              <span class="avonent-research-benefits__face avonent-research-benefits__face--front" data-arb-front>
+                <span class="avonent-research-benefits__visual" aria-hidden="true">
+                  {% if section.settings[image_key] != blank %}
+                    {{ section.settings[image_key] | image_url: width: 520, height: 520, crop: 'center' | image_tag: loading: 'lazy', class: 'avonent-research-benefits__image', alt: '' }}
+                  {% else %}
+                    <span class="avonent-research-benefits__icon">
+                      {% case icon_name %}
+                        {% when 'energy' %}
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 2.5 5.8 13h5.7l-.7 8.5L18.2 11h-5.7l.7-8.5Z"/></svg>
+                        {% when 'aging' %}
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.5 4.3L18 9l-4.5 1.7L12 15l-1.5-4.3L6 9l4.5-1.7L12 3ZM18.5 14l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2ZM5 14l.7 1.8 1.8.7-1.8.7L5 19l-.7-1.8-1.8-.7 1.8-.7L5 14Z"/></svg>
+                        {% when 'metabolic' %}
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h12M14 4l3 3-3 3M19 17H7M10 14l-3 3 3 3"/></svg>
+                        {% when 'antioxidants' %}
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 14 8l5.2 2-5.2 2-2 5.2-2-5.2-5.2-2L10 8l2-5.2ZM18.4 15.2l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9.9-2.3ZM5.2 15.8l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7.7-1.8Z"/></svg>
+                      {% endcase %}
+                    </span>
+                  {% endif %}
+                </span>
+
+                <span class="avonent-research-benefits__front-copy">
+                  <strong class="avonent-research-benefits__title">{{ card_title }}</strong>
+                  <span class="avonent-research-benefits__line">{{ section.settings[line_key] }}</span>
+                </span>
+                <span class="avonent-research-benefits__toggle" aria-hidden="true">+</span>
+              </span>
+
+              <span class="avonent-research-benefits__face avonent-research-benefits__face--back" aria-hidden="true" data-arb-back>
+                <span class="avonent-research-benefits__back-copy">
+                  <strong class="avonent-research-benefits__back-title">{{ card_title }}</strong>
+                  <span class="avonent-research-benefits__back-text">{{ section.settings[back_key] }}</span>
+                </span>
+                <span class="avonent-research-benefits__toggle" aria-hidden="true">−</span>
+              </span>
+            </span>
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="avonent-research-benefits__cta-wrap">
+      <a class="avonent-research-benefits__cta" href="#avonent-bottom-offer">Try Avonent Risk-Free</a>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.avonent-research-benefits{padding:var(--arb-top) 0 var(--arb-bottom);background:var(--arb-bg);color:var(--arb-text)}
+.avonent-research-benefits__inner{width:min(calc(100% - 40px),var(--arb-width));margin:0 auto}
+.avonent-research-benefits__header{width:min(100%,760px);margin:0 auto 34px;text-align:center}
+.avonent-research-benefits__heading{margin:0;color:var(--arb-text);font-size:clamp(30px,3vw,44px);font-weight:800;line-height:1.06;letter-spacing:-.035em}
+.avonent-research-benefits__heading span{color:var(--arb-accent)}
+.avonent-research-benefits__subheading{margin:13px auto 0;color:var(--arb-muted);font-size:16px;line-height:1.45}.avonent-research-benefits__subheading p{margin:0}
+.avonent-research-benefits__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--arb-gap)}
+.avonent-research-benefits__card{min-width:0;height:var(--arb-height-desktop);perspective:1200px}
+.avonent-research-benefits__button{width:100%;height:100%;margin:0;padding:0;border:0;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.avonent-research-benefits__button:focus-visible{outline:3px solid color-mix(in srgb,var(--arb-accent) 55%,white);outline-offset:3px;border-radius:14px}
+.avonent-research-benefits__flipper{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform 520ms cubic-bezier(.2,.72,.2,1)}
+.avonent-research-benefits__button[aria-expanded='true'] .avonent-research-benefits__flipper{transform:rotateX(180deg)}
+.avonent-research-benefits__face{position:absolute;inset:0;display:grid;align-items:center;border:1px solid var(--arb-border);border-radius:14px;background:var(--arb-card-bg);box-shadow:0 8px 28px rgb(17 24 39/.035);backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.avonent-research-benefits__face--front{grid-template-columns:var(--arb-visual-desktop) minmax(0,1fr) 42px;gap:18px;padding:12px 20px 12px 12px}
+.avonent-research-benefits__face--back{grid-template-columns:minmax(0,1fr) 42px;gap:18px;padding:22px 22px 22px 28px;transform:rotateX(180deg);background:color-mix(in srgb,var(--arb-card-bg) 89%,var(--arb-accent) 11%)}
+.avonent-research-benefits__visual{display:grid;width:var(--arb-visual-desktop);height:var(--arb-visual-desktop);aspect-ratio:1/1;place-items:center;overflow:hidden;border-radius:10px;background:var(--arb-visual-bg)}
+.avonent-research-benefits__image{display:block;width:100%;height:100%;aspect-ratio:1/1;object-fit:cover;object-position:center}
+.avonent-research-benefits__icon{display:grid;width:48px;height:48px;place-items:center;color:var(--arb-accent)}
+.avonent-research-benefits__icon svg{display:block;width:38px;height:38px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.avonent-research-benefits__front-copy,.avonent-research-benefits__back-copy{display:flex;min-width:0;flex-direction:column;justify-content:center}
+.avonent-research-benefits__title,.avonent-research-benefits__back-title{color:var(--arb-text);font-size:21px;font-weight:760;line-height:1.15;letter-spacing:-.02em}
+.avonent-research-benefits__line{margin-top:5px;color:var(--arb-muted);font-size:16px;line-height:1.35}
+.avonent-research-benefits__back-text{margin-top:8px;color:var(--arb-muted);font-size:15px;line-height:1.46}
+.avonent-research-benefits__toggle{display:grid;width:34px;height:34px;place-items:center;justify-self:end;color:var(--arb-muted);border:1px solid var(--arb-border);border-radius:50%;background:#fff;font-size:22px;font-weight:400;line-height:1}
+.avonent-research-benefits__cta-wrap{margin-top:28px}
+.avonent-research-benefits__cta{display:flex;width:100%;min-height:58px;align-items:center;justify-content:center;border-radius:12px;background:var(--arb-accent);color:#06151a;text-decoration:none;font-size:18px;font-weight:800;line-height:1.2;transition:transform .18s ease,filter .18s ease}
+.avonent-research-benefits__cta:hover{filter:brightness(.97);transform:translateY(-1px)}
+.avonent-research-benefits__cta:focus-visible{outline:3px solid color-mix(in srgb,var(--arb-accent) 50%,#000);outline-offset:3px}
+@media(max-width:749px){.avonent-research-benefits{padding:var(--arb-top-mobile) 0 var(--arb-bottom-mobile)}.avonent-research-benefits__inner{width:min(calc(100% - 24px),var(--arb-width))}.avonent-research-benefits__header{width:min(100%,420px);margin-bottom:20px;padding-inline:4px}.avonent-research-benefits__heading{font-size:clamp(27px,8.2vw,34px);line-height:1.03;text-wrap:balance}.avonent-research-benefits__subheading{margin-top:10px;font-size:14.5px;line-height:1.4}.avonent-research-benefits__grid{grid-template-columns:1fr;gap:max(10px,var(--arb-gap))}.avonent-research-benefits__card{height:var(--arb-height-mobile)}.avonent-research-benefits__face{border-radius:13px}.avonent-research-benefits__face--front{grid-template-columns:var(--arb-visual-mobile) minmax(0,1fr) 32px;gap:11px;padding:10px 11px 10px 10px}.avonent-research-benefits__visual{width:var(--arb-visual-mobile);height:var(--arb-visual-mobile);border-radius:9px}.avonent-research-benefits__icon{width:40px;height:40px}.avonent-research-benefits__icon svg{width:31px;height:31px}.avonent-research-benefits__face--back{grid-template-columns:minmax(0,1fr) 32px;gap:9px;padding:15px 12px 15px 16px}.avonent-research-benefits__title,.avonent-research-benefits__back-title{font-size:17px;line-height:1.15}.avonent-research-benefits__line{margin-top:4px;font-size:13.5px;line-height:1.3}.avonent-research-benefits__back-text{margin-top:6px;font-size:13px;line-height:1.36}.avonent-research-benefits__toggle{width:30px;height:30px;font-size:19px}.avonent-research-benefits__cta-wrap{margin-top:18px}.avonent-research-benefits__cta{min-height:54px;border-radius:10px;font-size:17px}}
+@media(max-width:390px){.avonent-research-benefits__face--front{grid-template-columns:var(--arb-visual-mobile) minmax(0,1fr) 28px;gap:9px;padding-right:8px}.avonent-research-benefits__toggle{width:28px;height:28px}}
+@media(prefers-reduced-motion:reduce){.avonent-research-benefits__flipper{transition:none}.avonent-research-benefits__cta{transition:none}}
+{% endstylesheet %}
+
+<script>
+(()=>{const section=document.getElementById('{{ section_id }}');if(!section||section.dataset.flipReady==='true')return;section.dataset.flipReady='true';const cards=Array.from(section.querySelectorAll('[data-arb-card]'));const closeCard=(card)=>{card.setAttribute('aria-expanded','false');const front=card.querySelector('[data-arb-front]');const back=card.querySelector('[data-arb-back]');if(front)front.setAttribute('aria-hidden','false');if(back)back.setAttribute('aria-hidden','true')};const openCard=(card)=>{cards.forEach(other=>{if(other!==card)closeCard(other)});card.setAttribute('aria-expanded','true');const front=card.querySelector('[data-arb-front]');const back=card.querySelector('[data-arb-back]');if(front)front.setAttribute('aria-hidden','true');if(back)back.setAttribute('aria-hidden','false')};cards.forEach(card=>{card.addEventListener('click',()=>{const isOpen=card.getAttribute('aria-expanded')==='true';if(isOpen)closeCard(card);else openCard(card)})})})();
+</script>
+
+{% schema %}
+{
+  "name":"Avonent benefit flips",
+  "tag":"section",
+  "class":"section-avonent-benefit-flips",
+  "settings":[
+    {"type":"header","content":"Heading"},
+    {"type":"text","id":"heading_accent","label":"Accent heading text","default":"Real Benefits."},
+    {"type":"text","id":"heading_rest","label":"Heading text","default":"Backed by Research."},
+    {"type":"richtext","id":"subheading","label":"Subheading","default":"<p>One plant. Four reasons people make it part of their day.</p>"},
+
+    {"type":"header","content":"1 — Energy"},
+    {"type":"image_picker","id":"card_1_image","label":"Lifestyle image"},
+    {"type":"select","id":"card_1_icon","label":"Fallback icon","default":"energy","options":[{"value":"energy","label":"Energy"},{"value":"aging","label":"Aging"},{"value":"metabolic","label":"Metabolism"},{"value":"antioxidants","label":"Antioxidants"}]},
+    {"type":"text","id":"card_1_title","label":"Title","default":"Energy"},
+    {"type":"text","id":"card_1_front","label":"Front sentence","default":"Support steady everyday energy without another coffee."},
+    {"type":"textarea","id":"card_1_back","label":"Flip-side explanation","default":"Moringa leaf brings a broad mix of micronutrients and plant compounds into one simple routine. Those nutrients support normal energy metabolism, making it an easy daily way to support steady energy without adding another stimulant.†"},
+
+    {"type":"header","content":"2 — Aging"},
+    {"type":"image_picker","id":"card_2_image","label":"Lifestyle image"},
+    {"type":"select","id":"card_2_icon","label":"Fallback icon","default":"aging","options":[{"value":"energy","label":"Energy"},{"value":"aging","label":"Aging"},{"value":"metabolic","label":"Metabolism"},{"value":"antioxidants","label":"Antioxidants"}]},
+    {"type":"text","id":"card_2_title","label":"Title","default":"Aging"},
+    {"type":"text","id":"card_2_front","label":"Front sentence","default":"Support strength, mobility, and resilience as the years add up.†"},
+    {"type":"textarea","id":"card_2_back","label":"Flip-side explanation","default":"Healthy aging is about giving your body consistent nutritional support over time. Moringa provides micronutrients and antioxidant phytonutrients that support cellular defense, everyday resilience, and an active lifestyle as the years add up.†"},
+
+    {"type":"header","content":"3 — Metabolism"},
+    {"type":"image_picker","id":"card_3_image","label":"Lifestyle image"},
+    {"type":"select","id":"card_3_icon","label":"Fallback icon","default":"metabolic","options":[{"value":"energy","label":"Energy"},{"value":"aging","label":"Aging"},{"value":"metabolic","label":"Metabolism"},{"value":"antioxidants","label":"Antioxidants"}]},
+    {"type":"text","id":"card_3_title","label":"Title","default":"Metabolism"},
+    {"type":"text","id":"card_3_front","label":"Front sentence","default":"Support healthy glucose metabolism and everyday energy use.†"},
+    {"type":"textarea","id":"card_3_back","label":"Flip-side explanation","default":"Human studies have explored moringa leaf and markers involved in glucose and metabolic health. The research is still developing, but its nutrient and polyphenol profile makes it a compelling addition to a balanced metabolic-wellness routine.†"},
+
+    {"type":"header","content":"4 — Antioxidants"},
+    {"type":"image_picker","id":"card_4_image","label":"Lifestyle image"},
+    {"type":"select","id":"card_4_icon","label":"Fallback icon","default":"antioxidants","options":[{"value":"energy","label":"Energy"},{"value":"aging","label":"Aging"},{"value":"metabolic","label":"Metabolism"},{"value":"antioxidants","label":"Antioxidants"}]},
+    {"type":"text","id":"card_4_title","label":"Title","default":"Antioxidants"},
+    {"type":"text","id":"card_4_front","label":"Front sentence","default":"Powerful plant compounds help defend against everyday oxidative stress.†"},
+    {"type":"textarea","id":"card_4_back","label":"Flip-side explanation","default":"Moringa leaf naturally contains antioxidant polyphenols and flavonoids, including compounds such as quercetin and kaempferol. These plant compounds help support the body’s antioxidant defenses against the oxidative stress that builds up in everyday life.†"},
+
+    {"type":"header","content":"Layout"},
+    {"type":"range","id":"content_width","label":"Content width","min":800,"max":1400,"step":20,"unit":"px","default":1200},
+    {"type":"range","id":"card_gap","label":"Card gap","min":8,"max":40,"step":2,"unit":"px","default":14},
+    {"type":"range","id":"card_height_desktop","label":"Desktop card height","min":120,"max":260,"step":10,"unit":"px","default":160},
+    {"type":"range","id":"card_height_mobile","label":"Mobile card height","min":110,"max":220,"step":10,"unit":"px","default":140},
+    {"type":"range","id":"visual_size_desktop","label":"Desktop square image/icon size","min":80,"max":140,"step":4,"unit":"px","default":108},
+    {"type":"range","id":"visual_size_mobile","label":"Mobile square image/icon size","min":60,"max":100,"step":4,"unit":"px","default":76},
+    {"type":"range","id":"padding_top_desktop","label":"Desktop spacing above","min":0,"max":140,"step":4,"unit":"px","default":52},
+    {"type":"range","id":"padding_bottom_desktop","label":"Desktop spacing below","min":0,"max":140,"step":4,"unit":"px","default":52},
+    {"type":"range","id":"padding_top_mobile","label":"Mobile spacing above","min":0,"max":100,"step":4,"unit":"px","default":32},
+    {"type":"range","id":"padding_bottom_mobile","label":"Mobile spacing below","min":0,"max":100,"step":4,"unit":"px","default":32},
+
+    {"type":"header","content":"Colors"},
+    {"type":"color","id":"background_color","label":"Section background","default":"#F7F8F2"},
+    {"type":"color","id":"card_background","label":"Card background","default":"#FFFFFF"},
+    {"type":"color","id":"visual_background","label":"Square icon background","default":"#E8F8FC"},
+    {"type":"color","id":"text_color","label":"Heading text","default":"#111111"},
+    {"type":"color","id":"muted_text_color","label":"Body text","default":"#4F5965"},
+    {"type":"color","id":"accent_color","label":"Icon / accent color","default":"#02C6EA"},
+    {"type":"color","id":"border_color","label":"Card border","default":"#D8DEE2"}
+  ],
+  "presets":[{"name":"Avonent benefit flips"}]
+}
+{% endschema %}

@@ -1,0 +1,313 @@
+{% comment %}
+  Avonent cart-only polish.
+  Loaded from templates/cart.json so these styles stay isolated to the full cart page.
+{% endcomment %}
+
+<style>
+  /*
+   * CRITICAL CART SUMMARY SPACING FIX
+   * Horizon's _cart-summary block uses gap: var(--gap-2xl) on .cart-summary__inner.
+   * That wrapper gap was the large blank space between Estimated total and checkout.
+   */
+  .cart-page__summary {
+    gap: 4px !important;
+  }
+
+  .cart-page__summary > .section-background {
+    display: none !important;
+  }
+
+  .cart-page__summary .cart-summary,
+  .cart-page__summary .cart-summary--extend {
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .cart-page__summary .cart-summary__inner {
+    gap: 8px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    position: static !important;
+    top: auto !important;
+  }
+
+  .cart-page__summary .avonent-cart-page-protection {
+    margin: 0 0 2px !important;
+  }
+
+  .cart-page__summary .cart-totals {
+    margin: 0 !important;
+    padding: 7px 0 0 !important;
+  }
+
+  .cart-page__summary .cart-totals__container,
+  .cart-page__summary .cart-totals__total {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .cart-page__summary .cart-totals__total {
+    min-height: 34px !important;
+  }
+
+  .cart-page__summary .avonent-cart-ctas {
+    margin: 0 !important;
+    gap: 8px !important;
+  }
+
+  /* Full cart product row. */
+  @media screen and (max-width: 749px) {
+    .cart-page__items {
+      padding: 16px 20px 18px !important;
+    }
+
+    .cart-page__items .cart-items__table-row {
+      display: grid !important;
+      grid-template-columns: 104px minmax(0, 1fr) auto !important;
+      grid-template-rows: auto auto auto auto !important;
+      grid-template-areas:
+        'media details price'
+        'media variants variants'
+        'media unitprice unitprice'
+        'media quantity quantity' !important;
+      column-gap: 14px !important;
+      row-gap: 6px !important;
+      align-items: start !important;
+      padding: 6px 0 20px !important;
+      margin: 0 !important;
+    }
+
+    .cart-page__items .cart-items__media {
+      grid-area: media !important;
+      width: 104px !important;
+      min-width: 104px !important;
+      align-self: start !important;
+    }
+
+    .cart-page__items .cart-items__media-container {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 104px !important;
+      min-width: 104px !important;
+      max-width: 104px !important;
+      height: 104px !important;
+      aspect-ratio: 1 / 1 !important;
+      overflow: hidden !important;
+      border-radius: 15px !important;
+      background: #eefaff !important;
+    }
+
+    .cart-page__items .cart-items__media-image {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: contain !important;
+      object-position: center center !important;
+      padding: 0 !important;
+      border: 0 !important;
+      border-radius: 15px !important;
+      transform: none !important;
+    }
+
+    .cart-page__items .cart-items__details {
+      display: contents !important;
+      padding: 0 !important;
+    }
+
+    .cart-page__items .cart-items__product-info {
+      grid-area: details !important;
+      min-width: 0 !important;
+      padding: 0 !important;
+    }
+
+    .cart-page__items .cart-items__variants-wrapper {
+      grid-area: variants !important;
+      min-width: 0 !important;
+      margin-top: 2px !important;
+    }
+
+    .cart-page__items .cart-items__unit-price-wrapper {
+      grid-area: unitprice !important;
+      min-width: 0 !important;
+      margin-top: 1px !important;
+    }
+
+    .cart-page__items .cart-items__quantity {
+      grid-area: quantity !important;
+      margin-top: 7px !important;
+    }
+
+    .cart-page__items .cart-items__price {
+      grid-area: price !important;
+      width: max-content !important;
+      min-width: 0 !important;
+      justify-self: end !important;
+      align-self: start !important;
+      padding: 0 0 0 6px !important;
+      color: #111 !important;
+      font-size: 15px !important;
+      font-weight: 800 !important;
+      line-height: 1.1 !important;
+    }
+
+    .cart-page__items .cart-items__title {
+      display: block !important;
+      max-width: 100% !important;
+      margin: 0 0 6px !important;
+      font-size: 17px !important;
+      line-height: 1.12 !important;
+      letter-spacing: -.025em !important;
+    }
+
+    .cart-page__items .cart-items__variants-wrapper,
+    .cart-page__items .cart-items__variants,
+    .cart-page__items .cart-items__variants dd {
+      font-size: 14px !important;
+      line-height: 1.25 !important;
+    }
+
+    .cart-page__items .cart-items__unit-price-wrapper > div {
+      font-size: 15px !important;
+      line-height: 1.2 !important;
+    }
+
+    .cart-page__items .cart-items__quantity-controls {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      gap: 11px !important;
+    }
+
+    .cart-page__items quantity-selector,
+    .cart-page__items .quantity-selector {
+      min-width: 132px !important;
+      min-height: 46px !important;
+    }
+
+    .cart-page__summary {
+      gap: 2px !important;
+      padding: 4px 20px 12px !important;
+    }
+
+    .cart-page__summary .avonent-cart-page-protection {
+      margin-bottom: 0 !important;
+    }
+
+    .cart-page__summary .cart-summary__inner {
+      gap: 6px !important;
+    }
+
+    .cart-page__summary .cart-totals {
+      margin: 0 !important;
+      padding-top: 6px !important;
+    }
+
+    .cart-page__summary .cart-totals__total-label {
+      font-size: 15px !important;
+    }
+
+    .cart-page__summary .cart-totals__total-value {
+      font-size: 22px !important;
+    }
+
+    .cart-page__summary .avonent-cart-ctas {
+      margin: 0 !important;
+    }
+  }
+
+  /* You may also like */
+  .ui-test-product-list {
+    padding-top: 26px !important;
+    padding-bottom: 34px !important;
+  }
+
+  .ui-test-product-list .section-resource-list__header {
+    margin-bottom: 14px !important;
+  }
+
+  .ui-test-product-list .section-resource-list__header h2,
+  .ui-test-product-list .section-resource-list__header h3 {
+    margin: 0 !important;
+    color: #071114 !important;
+    font-family: var(--font-heading--family) !important;
+    font-size: clamp(27px, 7vw, 36px) !important;
+    font-weight: 820 !important;
+    line-height: 1.02 !important;
+    letter-spacing: -.04em !important;
+  }
+
+  .ui-test-product-list .section-resource-list__header .button-unstyled {
+    display: none !important;
+  }
+
+  .ui-test-product-list .resource-list__item {
+    overflow: hidden !important;
+    padding: 9px 9px 13px !important;
+    border: 1px solid #d5edf3 !important;
+    border-radius: 18px !important;
+    background: #fff !important;
+    box-shadow: 0 10px 28px rgba(6, 73, 88, .07) !important;
+  }
+
+  .ui-test-product-list .resource-list__item img {
+    border-radius: 14px !important;
+    background: #eefaff !important;
+  }
+
+  .ui-test-product-list .resource-list__item :is(h1,h2,h3,h4,h5,h6,p,a) {
+    font-family: var(--font-heading--family) !important;
+  }
+
+  .ui-test-product-list .resource-list__item a:not(:has(img)) {
+    color: #071114 !important;
+    font-size: 16px !important;
+    font-weight: 760 !important;
+    line-height: 1.18 !important;
+    letter-spacing: -.018em !important;
+    text-decoration: none !important;
+  }
+
+  .ui-test-product-list .resource-list__item s {
+    color: #7a8589 !important;
+    font-weight: 500 !important;
+  }
+
+  .ui-test-product-list .resource-list__item :is(.price, [class*='price']) {
+    font-size: 15px !important;
+    font-weight: 760 !important;
+  }
+
+  body.template-cart .resource-list__item:has(a[href*='/products/shipping-protection']),
+  body.template-cart .product-grid__item:has(a[href*='/products/shipping-protection']) {
+    display: none !important;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ui-test-product-list {
+      padding-inline: 20px !important;
+      padding-top: 24px !important;
+      padding-bottom: 32px !important;
+    }
+
+    .ui-test-product-list .section-resource-list__header {
+      margin-bottom: 13px !important;
+    }
+
+    .ui-test-product-list .resource-list__item {
+      padding: 8px 8px 12px !important;
+      border-radius: 16px !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Avonent Cart Polish",
+  "enabled_on": {
+    "templates": ["cart"]
+  },
+  "settings": []
+}
+{% endschema %}

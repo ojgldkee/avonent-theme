@@ -1,0 +1,43 @@
+<section class="ag-ugc" style="--bg:{{ section.settings.background }};--t:{{ section.settings.text }};--m:{{ section.settings.muted }};--a:{{ section.settings.accent }};">
+  <div class="ag-ugc__in">
+    <h2>{{ section.settings.heading }}</h2>
+    {% if section.settings.subheading != blank %}<p class="ag-ugc__sub">{{ section.settings.subheading }}</p>{% endif %}
+    <div class="ag-ugc__grid">
+      {% for block in section.blocks %}
+        <article class="ag-ugc__card" {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            {{ block.settings.image | image_url: width: 800 | image_tag: widths: '300,500,800', loading: 'lazy', class: 'ag-ugc__img', alt: block.settings.title }}
+          {% else %}
+            <div class="ag-ugc__empty">Add media</div>
+          {% endif %}
+          {% if block.settings.link != blank %}<a href="{{ block.settings.link }}" class="ag-ugc__play" aria-label="Open {{ block.settings.title }}">▶</a>{% endif %}
+          {% if block.settings.title != blank %}<strong>{{ block.settings.title }}</strong>{% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.ag-ugc{background:var(--bg);color:var(--t);padding:34px 0 54px}.ag-ugc__in{width:min(calc(100% - 28px),1100px);margin:auto}.ag-ugc h2{text-align:center;margin:0;font-size:clamp(30px,3.7vw,44px);letter-spacing:-.035em}.ag-ugc__sub{text-align:center;margin:8px auto 24px;max-width:700px;color:var(--m);font-size:13px}.ag-ugc__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.ag-ugc__card{position:relative;overflow:hidden;border-radius:15px;background:#f1ece8}.ag-ugc__img,.ag-ugc__empty{display:grid;place-items:center;width:100%;aspect-ratio:.8;object-fit:cover;color:#887a7e}.ag-ugc__card strong{display:block;padding:11px 12px;background:#fff;font-size:12px}.ag-ugc__play{position:absolute;left:50%;top:43%;transform:translate(-50%,-50%);display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--a);color:#fff;text-decoration:none;font-size:17px}@media(max-width:749px){.ag-ugc__grid{grid-template-columns:1fr 1fr;gap:9px}.ag-ugc__play{width:42px;height:42px;font-size:15px}}
+{% endstylesheet %}
+{% schema %}
+{
+  "name":"Garlic Media",
+  "tag":"section",
+  "settings":[
+    {"type":"text","id":"heading","label":"Heading","default":"What customers are saying"},
+    {"type":"text","id":"subheading","label":"Subheading","default":"Add real customer photos, UGC thumbnails, or product lifestyle images."},
+    {"type":"color","id":"background","label":"Background","default":"#FFFFFF"},
+    {"type":"color","id":"text","label":"Text","default":"#1F1B1D"},
+    {"type":"color","id":"muted","label":"Muted text","default":"#665E61"},
+    {"type":"color","id":"accent","label":"Burgundy","default":"#8B2635"}
+  ],
+  "blocks":[{"type":"media","name":"Media","settings":[
+    {"type":"image_picker","id":"image","label":"Image"},
+    {"type":"url","id":"link","label":"Optional video link"},
+    {"type":"text","id":"title","label":"Title","default":"Customer story"}
+  ]}],
+  "max_blocks":6,
+  "presets":[{"name":"Garlic Media","blocks":[{"type":"media"},{"type":"media"},{"type":"media"}]}]
+}
+{% endschema %}

@@ -1,0 +1,251 @@
+{% liquid
+  assign ticker_id = 'AvonentMoringaHeaderBenefits-' | append: section.id
+%}
+
+{% if template.suffix == 'moringa' %}
+  <section
+    id="{{ ticker_id }}"
+    class="avonent-moringa-header-benefits"
+    aria-label="Pure Moringa wellness benefits"
+    style="
+      --amhb-bg: {{ section.settings.background_color }};
+      --amhb-text: {{ section.settings.text_color }};
+      --amhb-border: {{ section.settings.border_color }};
+      --amhb-speed: {{ section.settings.speed }}s;
+    "
+  >
+    <div class="avonent-moringa-header-benefits__viewport" data-amhb-viewport>
+      <div class="avonent-moringa-header-benefits__track" data-amhb-track>
+        {% for copy_index in (1..2) %}
+          <div
+            class="avonent-moringa-header-benefits__set"
+            data-amhb-set
+            {% if copy_index == 2 %}aria-hidden="true"{% endif %}
+          >
+            {% for i in (1..8) %}
+              {% liquid
+                assign text_key = 'benefit_' | append: i
+                assign icon_key = 'icon_' | append: i
+                assign benefit_text = section.settings[text_key]
+                assign benefit_icon = section.settings[icon_key]
+              %}
+              {% if benefit_text != blank %}
+                <span class="avonent-moringa-header-benefits__item">
+                  <span class="avonent-moringa-header-benefits__icon" aria-hidden="true">
+                    {% case benefit_icon %}
+                      {% when 'leaf' %}
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M19.5 4.5C12.4 4.7 7.7 7.9 7.2 13.2c-.4 4.2 2.2 6.3 5.5 5.8 5.1-.8 7.4-6.4 6.8-14.5Z" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c2.2-4.4 5.7-7.7 10.8-10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                      {% when 'energy' %}
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M13.2 2.5 5.8 13h5.6l-.7 8.5 7.5-11h-5.7l.7-8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                      {% when 'joint' %}
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M8.2 4.2c1.8 2.1 2.7 4.2 2.7 6.3M15.8 19.8c-1.8-2.1-2.7-4.2-2.7-6.3M6 9.5c2.5.2 4.4 1.1 5.8 2.7M18 14.5c-2.5-.2-4.4-1.1-5.8-2.7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="12" cy="12" r="2.2" stroke="currentColor" stroke-width="1.8"/></svg>
+                      {% when 'glucose' %}
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.2S6.5 9.3 6.5 14a5.5 5.5 0 0 0 11 0C17.5 9.3 12 3.2 12 3.2Z" stroke="currentColor" stroke-width="1.8"/><path d="M9.3 14.2h5.4M12 11.5v5.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                      {% when 'heart' %}
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M20.2 5.8c-2-2-5.2-2-7.2 0L12 6.8l-1-1c-2-2-5.2-2-7.2 0s-2 5.2 0 7.2L12 21l8.2-8c2-2 2-5.2 0-7.2Z" stroke="currentColor" stroke-width="1.8"/><path d="M4.4 12h4l1.3-2.7 2.2 5.5 1.5-2.8h6.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      {% when 'inflammation' %}
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M13.2 2.7c.8 4.3-3.4 5-2.2 8.3.7 1.9 2.6 1.7 3.3.2.9 1 1.7 2.5 1.7 4.3A4.8 4.8 0 0 1 11.2 20C7.8 20 5 17.5 5 14.2c0-4.3 3.5-6.6 8.2-11.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                      {% when 'metabolic' %}
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M7 7h10l-2.5-2.5M17 17H7l2.5 2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 7v4M7 17v-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                      {% when 'shield' %}
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8 19 5.6v5.2c0 4.5-2.8 8.4-7 10.4-4.2-2-7-5.9-7-10.4V5.6L12 2.8Z" stroke="currentColor" stroke-width="1.8"/><path d="m8.8 12 2.1 2.1 4.5-4.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      {% when 'sparkle' %}
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2.7c.8 4.5 3.2 6.9 7.7 7.7-4.5.8-6.9 3.2-7.7 7.7-.8-4.5-3.2-6.9-7.7-7.7 4.5-.8 6.9-3.2 7.7-7.7Z" stroke="currentColor" stroke-width="1.8"/></svg>
+                    {% endcase %}
+                  </span>
+                  <span>{{ benefit_text }}</span>
+                </span>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% stylesheet %}
+  .avonent-moringa-header-benefits {
+    width: 100%;
+    overflow: hidden;
+    background: var(--amhb-bg);
+    color: var(--amhb-text);
+    border-top: 1px solid var(--amhb-border);
+    border-bottom: 1px solid var(--amhb-border);
+  }
+
+  .avonent-moringa-header-benefits__viewport {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .avonent-moringa-header-benefits__track {
+    display: flex;
+    width: max-content;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+  }
+
+  .avonent-moringa-header-benefits__track.is-ready {
+    animation: avonentMoringaHeaderBenefits var(--amhb-speed) linear infinite;
+  }
+
+  .avonent-moringa-header-benefits__set {
+    display: flex;
+    align-items: center;
+    flex: none;
+    gap: 46px;
+    padding: 8px 24px;
+  }
+
+  .avonent-moringa-header-benefits__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+    color: var(--amhb-text);
+    font-family: var(--font-body--family);
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 1;
+  }
+
+  .avonent-moringa-header-benefits__icon {
+    display: inline-grid;
+    width: 17px;
+    height: 17px;
+    place-items: center;
+    flex: 0 0 17px;
+    color: var(--amhb-text);
+  }
+
+  .avonent-moringa-header-benefits__icon svg {
+    display: block;
+    width: 17px;
+    height: 17px;
+  }
+
+  @keyframes avonentMoringaHeaderBenefits {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(var(--amhb-shift, -1000px), 0, 0); }
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-moringa-header-benefits__set {
+      gap: 30px;
+      padding: 8px 16px;
+    }
+
+    .avonent-moringa-header-benefits__item {
+      font-size: 12px;
+    }
+
+    .avonent-moringa-header-benefits__icon,
+    .avonent-moringa-header-benefits__icon svg {
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+  @media screen and (min-width: 1100px) {
+    .avonent-moringa-header-benefits {
+      margin-bottom: 24px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .avonent-moringa-header-benefits__track.is-ready {
+      animation: none;
+    }
+  }
+{% endstylesheet %}
+
+<script>
+  (() => {
+    const section = document.getElementById('{{ ticker_id }}');
+    if (!section || section.dataset.seamlessTickerReady === 'true') return;
+    section.dataset.seamlessTickerReady = 'true';
+
+    const viewport = section.querySelector('[data-amhb-viewport]');
+    const track = section.querySelector('[data-amhb-track]');
+    const sets = Array.from(section.querySelectorAll('[data-amhb-set]'));
+    if (!viewport || !track || sets.length < 2) return;
+
+    const primary = sets[0];
+    const clone = sets[1];
+    const originalMarkup = primary.innerHTML;
+    let resizeTimer;
+
+    const buildTicker = () => {
+      track.classList.remove('is-ready');
+      track.style.removeProperty('--amhb-shift');
+      primary.innerHTML = originalMarkup;
+
+      const targetWidth = Math.max(viewport.clientWidth * 1.25, viewport.clientWidth + 320);
+      let repeats = 0;
+
+      while (primary.getBoundingClientRect().width < targetWidth && repeats < 12) {
+        primary.insertAdjacentHTML('beforeend', originalMarkup);
+        repeats += 1;
+      }
+
+      clone.innerHTML = primary.innerHTML;
+      const shift = primary.getBoundingClientRect().width;
+      if (!shift) return;
+
+      track.style.setProperty('--amhb-shift', `${-shift}px`);
+      void track.offsetWidth;
+      track.classList.add('is-ready');
+    };
+
+    const scheduleBuild = () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(buildTicker, 100);
+    };
+
+    buildTicker();
+    window.addEventListener('load', buildTicker, { once: true });
+    window.addEventListener('resize', scheduleBuild, { passive: true });
+
+    if ('ResizeObserver' in window) {
+      const observer = new ResizeObserver(scheduleBuild);
+      observer.observe(viewport);
+    }
+
+    document.fonts?.ready?.then(buildTicker);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Moringa header benefits",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {"type":"text","id":"benefit_1","label":"Benefit 1","default":"92+ Nutrients in One Leaf†"},
+    {"type":"select","id":"icon_1","label":"Icon 1","default":"leaf","options":[{"value":"leaf","label":"Leaf / nutrients"},{"value":"energy","label":"Energy"},{"value":"joint","label":"Joints"},{"value":"glucose","label":"Glucose"},{"value":"heart","label":"Heart"},{"value":"inflammation","label":"Inflammatory response"},{"value":"metabolic","label":"Metabolic"},{"value":"shield","label":"Shield"},{"value":"sparkle","label":"Antioxidant"}]},
+    {"type":"text","id":"benefit_2","label":"Benefit 2","default":"Daily Energy Without Another Coffee†"},
+    {"type":"select","id":"icon_2","label":"Icon 2","default":"energy","options":[{"value":"leaf","label":"Leaf / nutrients"},{"value":"energy","label":"Energy"},{"value":"joint","label":"Joints"},{"value":"glucose","label":"Glucose"},{"value":"heart","label":"Heart"},{"value":"inflammation","label":"Inflammatory response"},{"value":"metabolic","label":"Metabolic"},{"value":"shield","label":"Shield"},{"value":"sparkle","label":"Antioxidant"}]},
+    {"type":"text","id":"benefit_3","label":"Benefit 3","default":"Joint Comfort & Easier Movement†"},
+    {"type":"select","id":"icon_3","label":"Icon 3","default":"joint","options":[{"value":"leaf","label":"Leaf / nutrients"},{"value":"energy","label":"Energy"},{"value":"joint","label":"Joints"},{"value":"glucose","label":"Glucose"},{"value":"heart","label":"Heart"},{"value":"inflammation","label":"Inflammatory response"},{"value":"metabolic","label":"Metabolic"},{"value":"shield","label":"Shield"},{"value":"sparkle","label":"Antioxidant"}]},
+    {"type":"text","id":"benefit_4","label":"Benefit 4","default":"Supports Healthy Blood Sugar‡"},
+    {"type":"select","id":"icon_4","label":"Icon 4","default":"glucose","options":[{"value":"leaf","label":"Leaf / nutrients"},{"value":"energy","label":"Energy"},{"value":"joint","label":"Joints"},{"value":"glucose","label":"Glucose"},{"value":"heart","label":"Heart"},{"value":"inflammation","label":"Inflammatory response"},{"value":"metabolic","label":"Metabolic"},{"value":"shield","label":"Shield"},{"value":"sparkle","label":"Antioxidant"}]},
+    {"type":"text","id":"benefit_5","label":"Benefit 5","default":"Heart & Circulation Support‡"},
+    {"type":"select","id":"icon_5","label":"Icon 5","default":"heart","options":[{"value":"leaf","label":"Leaf / nutrients"},{"value":"energy","label":"Energy"},{"value":"joint","label":"Joints"},{"value":"glucose","label":"Glucose"},{"value":"heart","label":"Heart"},{"value":"inflammation","label":"Inflammatory response"},{"value":"metabolic","label":"Metabolic"},{"value":"shield","label":"Shield"},{"value":"sparkle","label":"Antioxidant"}]},
+    {"type":"text","id":"benefit_6","label":"Benefit 6","default":"Healthy Aging & Antioxidant Defense†"},
+    {"type":"select","id":"icon_6","label":"Icon 6","default":"sparkle","options":[{"value":"leaf","label":"Leaf / nutrients"},{"value":"energy","label":"Energy"},{"value":"joint","label":"Joints"},{"value":"glucose","label":"Glucose"},{"value":"heart","label":"Heart"},{"value":"inflammation","label":"Inflammatory response"},{"value":"metabolic","label":"Metabolic"},{"value":"shield","label":"Shield"},{"value":"sparkle","label":"Antioxidant"}]},
+    {"type":"text","id":"benefit_7","label":"Benefit 7","default":"Metabolic Wellness Support‡"},
+    {"type":"select","id":"icon_7","label":"Icon 7","default":"metabolic","options":[{"value":"leaf","label":"Leaf / nutrients"},{"value":"energy","label":"Energy"},{"value":"joint","label":"Joints"},{"value":"glucose","label":"Glucose"},{"value":"heart","label":"Heart"},{"value":"inflammation","label":"Inflammatory response"},{"value":"metabolic","label":"Metabolic"},{"value":"shield","label":"Shield"},{"value":"sparkle","label":"Antioxidant"}]},
+    {"type":"text","id":"benefit_8","label":"Benefit 8","default":"Everyday Immune Defense†"},
+    {"type":"select","id":"icon_8","label":"Icon 8","default":"shield","options":[{"value":"leaf","label":"Leaf / nutrients"},{"value":"energy","label":"Energy"},{"value":"joint","label":"Joints"},{"value":"glucose","label":"Glucose"},{"value":"heart","label":"Heart"},{"value":"inflammation","label":"Inflammatory response"},{"value":"metabolic","label":"Metabolic"},{"value":"shield","label":"Shield"},{"value":"sparkle","label":"Antioxidant"}]},
+    {"type":"color","id":"background_color","label":"Background","default":"#FFFFFF"},
+    {"type":"color","id":"text_color","label":"Text and icons","default":"#078AA5"},
+    {"type":"color","id":"border_color","label":"Border","default":"#D7EBF0"},
+    {"type":"range","id":"speed","label":"Scroll speed","min":12,"max":60,"step":1,"unit":"s","default":30}
+  ],
+  "presets": [
+    {"name":"Moringa header benefits"}
+  ]
+}
+{% endschema %}

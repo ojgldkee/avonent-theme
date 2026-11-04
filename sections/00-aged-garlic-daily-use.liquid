@@ -1,0 +1,68 @@
+<section
+  class="ag-dailyuse"
+  style="--bg:{{ section.settings.background }};--t:{{ section.settings.text }};--m:{{ section.settings.muted }};--a:{{ section.settings.accent }};--line:{{ section.settings.line }};"
+>
+  <div class="ag-dailyuse__in">
+    <header>
+      <h2>{{ section.settings.heading }}</h2>
+      {% if section.settings.intro != blank %}
+        <div class="ag-dailyuse__intro rte">{{ section.settings.intro }}</div>
+      {% endif %}
+    </header>
+
+    <div class="ag-dailyuse__body">
+      <div class="ag-dailyuse__rows">
+        {% for block in section.blocks %}
+          <div class="ag-dailyuse__row" {{ block.shopify_attributes }}>
+            <span class="ag-dailyuse__line"><i></i></span>
+            <h3>{{ block.settings.heading }}</h3>
+            <div class="rte">{{ block.settings.text }}</div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="ag-dailyuse__visual">
+        {% if section.settings.visual_image != blank %}
+          {{ section.settings.visual_image | image_url: width: 900 | image_tag: widths: '320,480,640,900', sizes: '(min-width:900px) 360px,42vw', loading: 'lazy', class: 'ag-dailyuse__img', alt: section.settings.visual_alt }}
+        {% else %}
+          <div class="ag-dailyuse__capsule" aria-hidden="true"></div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.ag-dailyuse{background:var(--bg);color:var(--t);padding:54px 0}.ag-dailyuse *{box-sizing:border-box}.ag-dailyuse__in{width:min(calc(100% - 28px),980px);margin:auto;padding:34px;border-radius:24px;background:#fff;box-shadow:0 14px 42px rgb(0 69 128 / 5%)}.ag-dailyuse header{max-width:780px}.ag-dailyuse h2{margin:0;color:var(--t);font-size:clamp(34px,4.8vw,54px);font-weight:790;line-height:1.04;letter-spacing:-.04em}.ag-dailyuse__intro{margin-top:16px;max-width:760px;color:var(--m);font-size:16px;line-height:1.62}.ag-dailyuse__intro p{margin:0}.ag-dailyuse__body{display:grid;grid-template-columns:1.12fr .88fr;align-items:end;gap:28px;margin-top:34px}.ag-dailyuse__rows{display:grid;gap:28px}.ag-dailyuse__row{position:relative;padding-top:20px}.ag-dailyuse__line{position:absolute;left:0;top:0;width:100%;height:1px;background:var(--line)}.ag-dailyuse__line i{position:absolute;right:0;top:50%;width:7px;height:7px;border-radius:50%;background:var(--a);transform:translateY(-50%)}.ag-dailyuse__row h3{margin:0;color:var(--t);font-size:18px;font-weight:780}.ag-dailyuse__row .rte{margin-top:7px;color:var(--m);font-size:14px;line-height:1.55}.ag-dailyuse__row .rte p{margin:0}.ag-dailyuse__visual{display:grid;place-items:end center;min-height:310px}.ag-dailyuse__img{display:block;max-width:100%;max-height:310px;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 18px 18px rgb(112 69 9 / 15%))}.ag-dailyuse__capsule{position:relative;width:115px;height:250px;border-radius:58px;background:linear-gradient(90deg,#b8640e 0%,#f6b31f 20%,#ffd45f 52%,#de840e 82%,#9e4d03 100%);box-shadow:inset 12px 0 18px rgb(255 255 255 / 24%),inset -10px 0 15px rgb(100 43 0 / 14%),0 18px 24px rgb(110 65 11 / 16%)}.ag-dailyuse__capsule::before{content:"";position:absolute;left:19px;top:15px;width:30px;height:145px;border-radius:50%;background:linear-gradient(180deg,rgb(255 255 255 / 46%),rgb(255 255 255 / 3%));transform:rotate(8deg)}.ag-dailyuse__capsule::after{content:"";position:absolute;left:50%;bottom:-55px;width:14px;height:70px;transform:translateX(-50%);border-radius:0 0 999px 999px;background:linear-gradient(180deg,#d47a08,#f0a71f)}@media(max-width:749px){.ag-dailyuse{padding:34px 0}.ag-dailyuse__in{padding:26px 20px;border-radius:20px}.ag-dailyuse h2{font-size:36px}.ag-dailyuse__intro{font-size:14px}.ag-dailyuse__body{grid-template-columns:1fr .48fr;gap:14px;margin-top:28px}.ag-dailyuse__rows{gap:26px}.ag-dailyuse__row h3{font-size:17px}.ag-dailyuse__row .rte{font-size:13px}.ag-dailyuse__visual{min-height:270px}.ag-dailyuse__img{max-height:270px}.ag-dailyuse__capsule{width:82px;height:190px;border-radius:44px}.ag-dailyuse__capsule::before{left:13px;width:21px;height:110px}.ag-dailyuse__capsule::after{bottom:-43px;width:10px;height:54px}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name":"Aged Garlic Daily Use",
+  "tag":"section",
+  "enabled_on":{"templates":["product"]},
+  "settings":[
+    {"type":"text","id":"heading","label":"Heading","default":"Unlike Regular Garlic Pills, Aged Garlic Is Made for Daily Use"},
+    {"type":"richtext","id":"intro","label":"Intro text","default":"<p>Avonent Aged Garlic is made for a simple, odorless routine that is easy to keep consistent.</p>"},
+    {"type":"image_picker","id":"visual_image","label":"Softgel or visual image"},
+    {"type":"text","id":"visual_alt","label":"Visual alt text","default":"Avonent aged garlic softgel"},
+    {"type":"color","id":"background","label":"Section background","default":"#F7FCFF"},
+    {"type":"color","id":"text","label":"Text","default":"#071A52"},
+    {"type":"color","id":"muted","label":"Body text","default":"#5F6878"},
+    {"type":"color","id":"accent","label":"Avonent blue","default":"#02C6EA"},
+    {"type":"color","id":"line","label":"Line color","default":"#9EDFEA"}
+  ],
+  "blocks":[
+    {
+      "type":"point",
+      "name":"Daily-use point",
+      "settings":[
+        {"type":"text","id":"heading","label":"Title","default":"Fits Into Your Routine"},
+        {"type":"richtext","id":"text","label":"Text","default":"<p>Two easy-to-take softgels designed for simple daily use.</p>"}
+      ]
+    }
+  ],
+  "max_blocks":4,
+  "presets":[{"name":"Aged Garlic Daily Use","blocks":[{"type":"point"},{"type":"point"}]}]
+}
+{% endschema %}
