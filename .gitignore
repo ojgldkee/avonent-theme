@@ -1,0 +1,19 @@
+# Shopify CLI local state and auth
+.shopify/
+.env
+.env.*
+!.env.example
+
+# Development dependencies and local caches
+node_modules/
+.npm/
+.cache/
+.DS_Store
+Thumbs.db
+
+# Failed/incomplete media backup downloads
+*.part
+
+# Never commit credentials
+*.pem
+*.key
