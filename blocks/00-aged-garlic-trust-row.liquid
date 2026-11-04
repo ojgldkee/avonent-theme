@@ -1,0 +1,48 @@
+<div
+  class="aged-garlic-trust-row"
+  {{ block.shopify_attributes }}
+  style="--agtr-accent:{{ block.settings.accent_color }};--agtr-text:{{ block.settings.text_color }};--agtr-muted:{{ block.settings.muted_color }};--agtr-border:{{ block.settings.border_color }};"
+>
+  {% for i in (1..3) %}
+    {% assign text_key = 'item_' | append: i %}
+    {% if block.settings[text_key] != blank %}
+      <div class="aged-garlic-trust-row__item">
+        <span aria-hidden="true">✓</span>
+        <span>{{ block.settings[text_key] }}</span>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+{% stylesheet %}
+  .aged-garlic-trust-row {
+    display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:8px 16px;
+    width:100%; padding:11px 8px 2px; border-top:1px solid var(--agtr-border); color:var(--agtr-muted);
+  }
+  .aged-garlic-trust-row__item { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:650; line-height:1.2; }
+  .aged-garlic-trust-row__item > span:first-child {
+    display:grid; place-items:center; width:16px; height:16px; border-radius:50%;
+    background:color-mix(in srgb,var(--agtr-accent) 12%,white); color:var(--agtr-accent); font-size:10px; font-weight:900;
+  }
+  @media screen and (max-width:749px) {
+    .aged-garlic-trust-row { gap:8px 10px; }
+    .aged-garlic-trust-row__item { font-size:10.5px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name":"Aged Garlic Trust Row",
+  "tag":null,
+  "settings":[
+    {"type":"text","id":"item_1","label":"Item 1","default":"30-Day Guarantee"},
+    {"type":"text","id":"item_2","label":"Item 2","default":"Secure Checkout"},
+    {"type":"text","id":"item_3","label":"Item 3","default":"U.S. Fulfillment"},
+    {"type":"color","id":"accent_color","label":"Accent","default":"#6D172B"},
+    {"type":"color","id":"text_color","label":"Text","default":"#1A1718"},
+    {"type":"color","id":"muted_color","label":"Muted","default":"#665D60"},
+    {"type":"color","id":"border_color","label":"Border","default":"#EADDD5"}
+  ],
+  "presets":[{"name":"Aged Garlic Trust Row"}]
+}
+{% endschema %}

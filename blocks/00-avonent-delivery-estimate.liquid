@@ -1,0 +1,417 @@
+{% doc %}
+  Avonent delivery estimate.
+
+  Displays a clean dynamic delivery message inside product details.
+  The estimated date is calculated in the visitor's browser.
+
+  Default:
+  • Order today for delivery by [dynamic date] · Ships from USA 🇺🇸
+{% enddoc %}
+
+{% liquid
+  assign root_id = 'AvonentDelivery-' | append: block.id
+%}
+
+<div
+  id="{{ root_id }}"
+  class="avonent-delivery"
+  {{ block.shopify_attributes }}
+  data-delivery-days="{{ block.settings.delivery_days }}"
+  data-skip-weekends="{{ block.settings.skip_weekends }}"
+  style="
+    --avd-accent: {{ block.settings.accent_color }};
+    --avd-text: {{ block.settings.text_color }};
+    --avd-muted: {{ block.settings.muted_text_color }};
+    --avd-divider: {{ block.settings.divider_color }};
+    --avd-bg: {{ block.settings.background_color }};
+    --avd-radius: {{ block.settings.corner_radius }}px;
+    --avd-size: {{ block.settings.text_size }}px;
+    --avd-top: {{ block.settings.spacing_top }}px;
+    --avd-bottom: {{ block.settings.spacing_bottom }}px;
+    --avd-padding-y: {{ block.settings.padding_y }}px;
+    --avd-padding-x: {{ block.settings.padding_x }}px;
+  "
+>
+  <div class="avonent-delivery__inner">
+    {% if block.settings.show_status_dot %}
+      <span class="avonent-delivery__dot" aria-hidden="true"></span>
+    {% endif %}
+
+    <div class="avonent-delivery__text">
+      <span class="avonent-delivery__lead">
+        {{ block.settings.prefix }}
+      </span>
+
+      <strong
+        class="avonent-delivery__date"
+        data-av-delivery-date
+      >
+        {{ block.settings.fallback_date_text }}
+      </strong>
+
+      {% if block.settings.shipping_text != blank %}
+        <span class="avonent-delivery__separator" aria-hidden="true">
+          {{ block.settings.separator }}
+        </span>
+
+        <span class="avonent-delivery__shipping">
+          {{ block.settings.shipping_text }}
+
+          {% if block.settings.show_flag %}
+            <span class="avonent-delivery__flag" aria-hidden="true">🇺🇸</span>
+          {% endif %}
+        </span>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const root = document.getElementById('{{ root_id }}');
+
+    if (!root || root.dataset.avDeliveryInitialized === 'true') return;
+    root.dataset.avDeliveryInitialized = 'true';
+
+    const dateElement = root.querySelector('[data-av-delivery-date]');
+    if (!dateElement) return;
+
+    const deliveryDays = Math.max(
+      0,
+      parseInt(root.dataset.deliveryDays || '4', 10)
+    );
+
+    const skipWeekends = root.dataset.skipWeekends === 'true';
+
+    function addDeliveryDays(date, days) {
+      const result = new Date(date);
+      result.setHours(12, 0, 0, 0);
+
+      if (!skipWeekends) {
+        result.setDate(result.getDate() + days);
+        return result;
+      }
+
+      let added = 0;
+
+      while (added < days) {
+        result.setDate(result.getDate() + 1);
+
+        const day = result.getDay();
+
+        if (day !== 0 && day !== 6) {
+          added += 1;
+        }
+      }
+
+      return result;
+    }
+
+    const estimatedDate = addDeliveryDays(new Date(), deliveryDays);
+
+    const formatted = new Intl.DateTimeFormat(
+      undefined,
+      {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric'
+      }
+    ).format(estimatedDate);
+
+    dateElement.textContent = formatted;
+  })();
+</script>
+
+{% stylesheet %}
+  .avonent-delivery {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding-top: var(--avd-top);
+    padding-bottom: var(--avd-bottom);
+
+    font-family: var(--font-body--family);
+  }
+
+  .avonent-delivery__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: var(--avd-padding-y) var(--avd-padding-x);
+
+    border-top: 1px dashed var(--avd-divider);
+    border-bottom: 1px dashed var(--avd-divider);
+
+    border-radius: var(--avd-radius);
+
+    background: transparent;
+  }
+
+  .avonent-delivery__dot {
+    position: relative;
+
+    flex: 0 0 auto;
+
+    width: 8px;
+    height: 8px;
+
+    margin-right: 9px;
+
+    border-radius: 50%;
+    background: var(--avd-accent);
+  }
+
+  .avonent-delivery__dot::after {
+    content: '';
+
+    position: absolute;
+    inset: -4px;
+
+    border: 1px solid var(--avd-accent);
+    border-radius: 50%;
+
+    opacity: 0.18;
+  }
+
+  .avonent-delivery__text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 4px;
+
+    min-width: 0;
+
+    color: var(--avd-muted);
+
+    font-size: var(--avd-size);
+    font-weight: 450;
+    line-height: 1.35;
+
+    text-align: center;
+  }
+
+  .avonent-delivery__lead {
+    color: var(--avd-muted);
+  }
+
+  .avonent-delivery__date {
+    color: var(--avd-accent);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .avonent-delivery__separator {
+    margin-inline: 2px;
+    color: var(--avd-divider);
+  }
+
+  .avonent-delivery__shipping {
+    color: var(--avd-accent);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .avonent-delivery__flag {
+    margin-left: 2px;
+    font-size: 1.05em;
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-delivery__inner {
+      justify-content: center;
+      padding-inline: max(2px, var(--avd-padding-x));
+    }
+
+    .avonent-delivery__text {
+      justify-content: center;
+      text-align: center;
+      gap: 3px;
+    }
+
+    .avonent-delivery__dot {
+      margin-right: 7px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Avonent Delivery Estimate",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Delivery message"
+    },
+    {
+      "type": "text",
+      "id": "prefix",
+      "label": "Text before date",
+      "default": "Order today for delivery by"
+    },
+    {
+      "type": "range",
+      "id": "delivery_days",
+      "label": "Estimated delivery days",
+      "min": 1,
+      "max": 14,
+      "step": 1,
+      "unit": "day",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "skip_weekends",
+      "label": "Count business days only",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "fallback_date_text",
+      "label": "Fallback date text",
+      "default": "Soon",
+      "info": "Shown briefly before the dynamic delivery date loads."
+    },
+    {
+      "type": "text",
+      "id": "separator",
+      "label": "Separator",
+      "default": "·"
+    },
+    {
+      "type": "text",
+      "id": "shipping_text",
+      "label": "Shipping text",
+      "default": "Ships from USA"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_flag",
+      "label": "Show USA flag",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_status_dot",
+      "label": "Show status dot",
+      "default": true
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent / delivery date",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Main text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Secondary text",
+      "default": "#748086"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider",
+      "default": "#D8E5E9"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size",
+      "min": 10,
+      "max": 17,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Corner roundness",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_y",
+      "label": "Inside vertical padding",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Inside horizontal padding",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "spacing_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "spacing_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    }
+  ],
+  "presets": [
+    {
+      "name": "Avonent Delivery Estimate"
+    }
+  ]
+}
+{% endschema %}

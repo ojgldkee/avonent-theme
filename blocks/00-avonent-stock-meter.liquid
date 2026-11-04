@@ -1,0 +1,231 @@
+{% liquid
+  assign sold_percent = block.settings.sold_percent
+%}
+
+<div
+  class="avonent-stock-meter"
+  {{ block.shopify_attributes }}
+  style="
+    --av-stock-fill: {{ block.settings.fill_color }};
+    --av-stock-track: {{ block.settings.track_color }};
+    --av-stock-text: {{ block.settings.text_color }};
+    --av-stock-height: {{ block.settings.bar_height }}px;
+    --av-stock-radius: {{ block.settings.corner_radius }}px;
+    --av-stock-top: {{ block.settings.spacing_top }}px;
+    --av-stock-bottom: {{ block.settings.spacing_bottom }}px;
+  "
+>
+  <div class="avonent-stock-meter__row">
+
+    <div
+      class="avonent-stock-meter__track"
+      role="progressbar"
+      aria-label="{{ sold_percent }} percent sold"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="{{ sold_percent }}"
+    >
+      <div
+        class="avonent-stock-meter__fill"
+        style="width: {{ sold_percent }}%;"
+      ></div>
+    </div>
+
+    <div class="avonent-stock-meter__label">
+      <strong>{{ sold_percent }}%</strong>
+      <span>{{ block.settings.sold_text }}</span>
+    </div>
+
+  </div>
+</div>
+
+{% stylesheet %}
+  .avonent-stock-meter {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    padding-top: var(--av-stock-top);
+    padding-bottom: var(--av-stock-bottom);
+  }
+
+  .avonent-stock-meter__row {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+
+    gap: 12px;
+  }
+
+  .avonent-stock-meter__track {
+    position: relative;
+
+    flex: 1 1 auto;
+
+    height: var(--av-stock-height);
+
+    overflow: hidden;
+
+    background: var(--av-stock-track);
+
+    border-radius: var(--av-stock-radius);
+  }
+
+  .avonent-stock-meter__fill {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    height: 100%;
+
+    background: var(--av-stock-fill);
+
+    border-radius: inherit;
+
+    transition: width 0.3s ease;
+  }
+
+  .avonent-stock-meter__label {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: baseline;
+
+    gap: 4px;
+
+    color: var(--av-stock-text);
+
+    font-family: var(--font-body--family);
+
+    line-height: 1;
+
+    white-space: nowrap;
+  }
+
+  .avonent-stock-meter__label strong {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .avonent-stock-meter__label span {
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-stock-meter__row {
+      gap: 10px;
+    }
+
+    .avonent-stock-meter__label strong {
+      font-size: 13px;
+    }
+
+    .avonent-stock-meter__label span {
+      font-size: 11px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Avonent Stock Meter",
+  "tag": null,
+  "settings": [
+    {
+      "type": "range",
+      "id": "sold_percent",
+      "label": "Percentage sold",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 76
+    },
+    {
+      "type": "text",
+      "id": "sold_text",
+      "label": "Text after percentage",
+      "default": "Sold"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "fill_color",
+      "label": "Filled bar",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "track_color",
+      "label": "Empty bar",
+      "default": "#DCEEF3"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "range",
+      "id": "bar_height",
+      "label": "Bar thickness",
+      "min": 4,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Bar roundness",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "spacing_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "spacing_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Avonent Stock Meter"
+    }
+  ]
+}
+{% endschema %}

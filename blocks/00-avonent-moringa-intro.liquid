@@ -1,0 +1,70 @@
+{% liquid
+  assign is_moringa = false
+  if closest.product.template_suffix == 'moringa' or closest.product.handle contains 'moringa' or closest.product.title contains 'Moringa'
+    assign is_moringa = true
+  endif
+%}
+
+{% if is_moringa %}
+  <div class="avonent-moringa-intro" {{ block.shopify_attributes }}>
+    {{ block.settings.description }}
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .avonent-moringa-intro {
+    width: 100%;
+    margin: 0;
+    color: #222222;
+    font-family: var(--font-body--family);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.38;
+    letter-spacing: -0.005em;
+  }
+
+  .avonent-moringa-intro p {
+    margin: 0;
+  }
+
+  /* Keep the title, description and benefit grid tight like the reference PDP. */
+  .avonent-product-details__inner:has(.avonent-moringa-intro) {
+    --av-details-gap: 12px !important;
+  }
+
+  .avonent-product-details__inner:has(.avonent-moringa-intro) .avonent-moringa-intro + .shopify-block,
+  .avonent-product-details__inner:has(.avonent-moringa-intro) .avonent-moringa-intro + * {
+    margin-top: 0 !important;
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-moringa-intro {
+      font-size: 15px;
+      line-height: 1.38;
+    }
+
+    .avonent-product-details__inner:has(.avonent-moringa-intro) {
+      --av-details-gap: 10px !important;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Moringa Intro Copy",
+  "tag": null,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Text",
+      "default": "<p>Daily plant nutrition for better energy, easier movement, stronger everyday wellness, and more support as you age.†</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moringa Intro Copy"
+    }
+  ]
+}
+{% endschema %}

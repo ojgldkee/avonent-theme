@@ -1,0 +1,108 @@
+{% liquid
+  assign av_product = closest.product | default: product
+%}
+
+<div
+  class="aged-garlic-hero-copy"
+  {{ block.shopify_attributes }}
+  style="
+    --ag-burgundy: {{ block.settings.accent_color }};
+    --ag-gold: {{ block.settings.gold_color }};
+    --ag-text: {{ block.settings.text_color }};
+    --ag-muted: {{ block.settings.muted_color }};
+    --ag-ivory: {{ block.settings.soft_background }};
+  "
+>
+  {% if block.settings.eyebrow != blank %}
+    <div class="aged-garlic-hero-copy__eyebrow">{{ block.settings.eyebrow }}</div>
+  {% endif %}
+
+  {% if block.settings.heading != blank %}
+    <h1 class="aged-garlic-hero-copy__heading">{{ block.settings.heading }}</h1>
+  {% endif %}
+
+  {% if av_product != blank %}
+    <div class="aged-garlic-hero-copy__product">{{ av_product.title }}</div>
+  {% endif %}
+
+  {% if block.settings.description != blank %}
+    <div class="aged-garlic-hero-copy__description rte">{{ block.settings.description }}</div>
+  {% endif %}
+
+  <div class="aged-garlic-hero-copy__chips" aria-label="Product highlights">
+    {% for i in (1..4) %}
+      {% liquid
+        assign enabled_key = 'chip_' | append: i | append: '_enabled'
+        assign text_key = 'chip_' | append: i | append: '_text'
+      %}
+      {% if block.settings[enabled_key] and block.settings[text_key] != blank %}
+        <span class="aged-garlic-hero-copy__chip">
+          <span class="aged-garlic-hero-copy__check" aria-hidden="true">✓</span>
+          {{ block.settings[text_key] }}
+        </span>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .aged-garlic-hero-copy { width:100%; color:var(--ag-text); }
+  .aged-garlic-hero-copy__eyebrow {
+    margin-bottom:8px; color:var(--ag-burgundy); font-size:11px; font-weight:800;
+    letter-spacing:.13em; line-height:1.2; text-transform:uppercase;
+  }
+  .aged-garlic-hero-copy__heading {
+    max-width:620px; margin:0; color:var(--ag-text); font-family:var(--font-heading--family);
+    font-size:clamp(34px,4vw,54px); font-weight:750; letter-spacing:-.035em; line-height:.98;
+  }
+  .aged-garlic-hero-copy__product {
+    margin-top:10px; color:var(--ag-burgundy); font-size:14px; font-weight:750; line-height:1.35;
+  }
+  .aged-garlic-hero-copy__description {
+    max-width:590px; margin-top:12px; color:var(--ag-muted); font-size:15px; line-height:1.55;
+  }
+  .aged-garlic-hero-copy__description p { margin:0; }
+  .aged-garlic-hero-copy__chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .aged-garlic-hero-copy__chip {
+    display:inline-flex; align-items:center; gap:6px; min-height:34px; padding:7px 10px;
+    border:1px solid color-mix(in srgb,var(--ag-burgundy) 17%,transparent);
+    border-radius:999px; background:var(--ag-ivory); color:var(--ag-text); font-size:12px;
+    font-weight:650; line-height:1.15;
+  }
+  .aged-garlic-hero-copy__check {
+    display:grid; place-items:center; width:17px; height:17px; border-radius:50%;
+    background:var(--ag-burgundy); color:#fff; font-size:10px; font-weight:900;
+  }
+  @media screen and (max-width:749px) {
+    .aged-garlic-hero-copy__heading { font-size:38px; }
+    .aged-garlic-hero-copy__description { font-size:14px; }
+    .aged-garlic-hero-copy__chips { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+    .aged-garlic-hero-copy__chip { border-radius:10px; justify-content:flex-start; padding:8px 9px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Aged Garlic Hero Copy",
+  "tag": null,
+  "settings": [
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"ODORLESS DAILY GARLIC SUPPORT"},
+    {"type":"text","id":"heading","label":"Headline","default":"Aged Garlic. Without the Garlic Breath."},
+    {"type":"richtext","id":"description","label":"Description","default":"<p>A convenient aged garlic softgel formula with CoQ10 + ubiquinol, made for a simple daily wellness routine.</p>"},
+    {"type":"checkbox","id":"chip_1_enabled","label":"Show highlight 1","default":true},
+    {"type":"text","id":"chip_1_text","label":"Highlight 1","default":"Odorless"},
+    {"type":"checkbox","id":"chip_2_enabled","label":"Show highlight 2","default":true},
+    {"type":"text","id":"chip_2_text","label":"Highlight 2","default":"Aged Garlic"},
+    {"type":"checkbox","id":"chip_3_enabled","label":"Show highlight 3","default":true},
+    {"type":"text","id":"chip_3_text","label":"Highlight 3","default":"CoQ10 + Ubiquinol"},
+    {"type":"checkbox","id":"chip_4_enabled","label":"Show highlight 4","default":true},
+    {"type":"text","id":"chip_4_text","label":"Highlight 4","default":"Easy Daily Softgels"},
+    {"type":"color","id":"accent_color","label":"Burgundy","default":"#6D172B"},
+    {"type":"color","id":"gold_color","label":"Gold","default":"#B58A45"},
+    {"type":"color","id":"text_color","label":"Text","default":"#1A1718"},
+    {"type":"color","id":"muted_color","label":"Muted text","default":"#665D60"},
+    {"type":"color","id":"soft_background","label":"Soft background","default":"#FFF7EE"}
+  ],
+  "presets":[{"name":"Aged Garlic Hero Copy"}]
+}
+{% endschema %}

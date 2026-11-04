@@ -1,0 +1,541 @@
+{% doc %}
+  Avonent accordion block.
+
+  Premium single-open accordion for product details.
+  Only one item can be open at a time.
+
+  Default items:
+  - Description
+  - Benefits
+  - Recommended Use
+  - Do You Offer a Guarantee?
+{% enddoc %}
+
+{% liquid
+  assign root_id = 'AvonentAccordion-' | append: block.id
+%}
+
+
+
+<div
+  id="{{ root_id }}"
+  class="avonent-accordion"
+  {{ block.shopify_attributes }}
+  style="
+    --ava-text: {{ block.settings.text_color }};
+    --ava-muted: {{ block.settings.muted_text_color }};
+    --ava-border: {{ block.settings.border_color }};
+    --ava-bg: {{ block.settings.background_color }};
+    --ava-accent: {{ block.settings.accent_color }};
+    --ava-radius: {{ block.settings.corner_radius }}px;
+    --ava-title-size: {{ block.settings.title_size }}px;
+    --ava-body-size: {{ block.settings.body_size }}px;
+    --ava-top: {{ block.settings.spacing_top }}px;
+    --ava-bottom: {{ block.settings.spacing_bottom }}px;
+  "
+>
+  {% for i in (1..6) %}
+    {% liquid
+      assign enabled_key = 'item_' | append: i | append: '_enabled'
+      assign title_key = 'item_' | append: i | append: '_title'
+      assign content_key = 'item_' | append: i | append: '_content'
+
+      assign enabled = block.settings[enabled_key]
+      assign title = block.settings[title_key]
+      assign content = block.settings[content_key]
+
+
+    %}
+
+    {% if enabled and title != blank %}
+      <details
+        class="avonent-accordion__item{% if i == 2 %} avonent-accordion__item--benefits{% endif %}"
+        data-av-accordion-item
+        {% if block.settings.open_first and forloop.first %}
+          open
+        {% endif %}
+      >
+        <summary class="avonent-accordion__summary">
+          <span class="avonent-accordion__title">
+            {{ title }}
+          </span>
+
+          <span class="avonent-accordion__icon" aria-hidden="true">
+            <span class="avonent-accordion__icon-line"></span>
+            <span class="avonent-accordion__icon-line avonent-accordion__icon-line--vertical"></span>
+          </span>
+        </summary>
+
+        <div class="avonent-accordion__content">
+          <div class="avonent-accordion__content-inner rte">
+            {{ content }}
+          </div>
+        </div>
+      </details>
+    {% endif %}
+  {% endfor %}
+</div>
+
+<script>
+  (() => {
+    const root = document.getElementById('{{ root_id }}');
+    if (!root || root.dataset.avAccordionInitialized === 'true') return;
+
+    root.dataset.avAccordionInitialized = 'true';
+
+    const items = Array.from(
+      root.querySelectorAll('[data-av-accordion-item]')
+    );
+
+    items.forEach((item) => {
+      item.addEventListener('toggle', () => {
+        if (!item.open) return;
+
+        items.forEach((otherItem) => {
+          if (otherItem !== item && otherItem.open) {
+            otherItem.open = false;
+          }
+        });
+      });
+    });
+  })();
+</script>
+
+{% stylesheet %}
+  .avonent-accordion {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding-top: var(--ava-top);
+    padding-bottom: var(--ava-bottom);
+
+    color: var(--ava-text);
+  }
+
+  .avonent-accordion__item {
+    width: 100%;
+    box-sizing: border-box;
+
+    margin: 0 0 9px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--ava-border);
+    border-radius: var(--ava-radius);
+
+    background: var(--ava-bg);
+  }
+
+  .avonent-accordion__item:last-child {
+    margin-bottom: 0;
+  }
+
+  .avonent-accordion__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    width: 100%;
+    min-height: 54px;
+
+    padding: 14px 16px;
+
+    list-style: none;
+    cursor: pointer;
+
+    color: var(--ava-text);
+
+    font-family: var(--font-body--family);
+    font-size: var(--ava-title-size);
+    font-weight: 650;
+    line-height: 1.25;
+
+    user-select: none;
+  }
+
+  .avonent-accordion__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .avonent-accordion__summary::marker {
+    display: none;
+    content: '';
+  }
+
+  .avonent-accordion__title {
+    min-width: 0;
+  }
+
+  .avonent-accordion__icon {
+    position: relative;
+
+    flex: 0 0 auto;
+
+    width: 16px;
+    height: 16px;
+
+    color: var(--ava-text);
+  }
+
+  .avonent-accordion__icon-line {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 12px;
+    height: 1.5px;
+
+    border-radius: 999px;
+
+    background: currentColor;
+
+    transform: translate(-50%, -50%);
+    transition: transform 180ms ease, opacity 180ms ease;
+  }
+
+  .avonent-accordion__icon-line--vertical {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .avonent-accordion__item[open]
+    .avonent-accordion__icon-line--vertical {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  .avonent-accordion__content {
+    border-top: 1px solid color-mix(in srgb, var(--ava-border) 75%, transparent);
+  }
+
+  .avonent-accordion__content-inner {
+    padding: 13px 16px 16px;
+
+    color: var(--ava-muted);
+
+    font-family: var(--font-body--family);
+    font-size: var(--ava-body-size);
+    font-weight: 400;
+    line-height: 1.55;
+  }
+
+  .avonent-accordion__content-inner p {
+    margin: 0 0 10px;
+  }
+
+  .avonent-accordion__content-inner p:last-child {
+    margin-bottom: 0;
+  }
+
+  .avonent-accordion__content-inner strong {
+    color: var(--ava-text);
+    font-weight: 650;
+  }
+
+  .avonent-accordion__item--benefits .avonent-accordion__content-inner ul {
+    display: grid;
+    gap: 11px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .avonent-accordion__item--benefits .avonent-accordion__content-inner li {
+    position: relative;
+    margin: 0;
+    padding-left: 28px;
+  }
+
+  .avonent-accordion__item--benefits .avonent-accordion__content-inner li::before {
+    content: '✓';
+    position: absolute;
+    top: 0.08em;
+    left: 0;
+    display: grid;
+    width: 18px;
+    height: 18px;
+    place-items: center;
+    color: #fff;
+    background: #18a66b;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 850;
+    line-height: 1;
+  }
+
+  .avonent-accordion__summary:hover {
+    color: var(--ava-accent);
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-accordion__item {
+      margin-bottom: 8px;
+    }
+
+    .avonent-accordion__summary {
+      min-height: 52px;
+      padding: 13px 14px;
+      font-size: max(13px, var(--ava-title-size));
+    }
+
+    .avonent-accordion__content-inner {
+      padding: 12px 14px 14px;
+      font-size: max(12px, var(--ava-body-size));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Avonent Accordion",
+  "tag": null,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open first item by default",
+      "default": false
+    },
+
+    {
+      "type": "header",
+      "content": "Accordion 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "item_1_enabled",
+      "label": "Show accordion",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "item_1_title",
+      "label": "Title",
+      "default": "Description"
+    },
+    {
+      "type": "richtext",
+      "id": "item_1_content",
+      "label": "Content",
+      "default": "<p><strong>Avonent Advanced Digestive Complex</strong> is a comprehensive 10-in-1 formula designed to support digestion from multiple angles. Each two-capsule serving delivers 1,015 mg of targeted digestive support, including 500 mg of artichoke leaf extract, a 300 mg botanical blend, 125 mg of ox bile, 50 mg of DigeZyme® multi-enzyme complex, and 40 mg of slippery elm bark extract.</p><p>Instead of relying on a single enzyme, this formula combines digestive enzymes, bile support, and soothing botanicals to help your body process everyday meals more comfortably. DigeZyme® helps break down proteins, fats, carbohydrates, fiber, and lactose, while artichoke and ox bile support normal bile activity and the digestion of dietary fats.</p><p>Slippery elm and complementary botanicals round out the formula with gentle digestive support—giving you a complete daily routine for digestive comfort, balance, and consistency.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Accordion 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "item_2_enabled",
+      "label": "Show accordion",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "item_2_title",
+      "label": "Title",
+      "default": "Benefits"
+    },
+    {
+      "type": "richtext",
+      "id": "item_2_content",
+      "label": "Content",
+      "default": "<ul><li><strong>More comfortable digestion:</strong> supports digestive comfort before and after everyday meals.</li><li><strong>Complete food breakdown:</strong> helps digest proteins, fats, carbohydrates, fiber, and lactose.</li><li><strong>Targeted fat digestion:</strong> supports normal bile activity and the breakdown of dietary fats.</li><li><strong>Less post-meal heaviness:</strong> helps ease occasional bloating, gas, and uncomfortable fullness.</li><li><strong>Liver and gallbladder support:</strong> supports normal digestive function involving the liver, bile, and gallbladder.</li><li><strong>Daily digestive balance:</strong> promotes regularity and healthy everyday digestive function.</li><li><strong>Better nutrient breakdown:</strong> supports the digestive process your body uses to access nutrients from food.</li><li><strong>Simple 10-in-1 support:</strong> combines multiple digestive ingredients in one convenient two-capsule serving.</li></ul><p>†These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Accordion 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "item_3_enabled",
+      "label": "Show accordion",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "item_3_title",
+      "label": "Title",
+      "default": "Recommended Use"
+    },
+    {
+      "type": "richtext",
+      "id": "item_3_content",
+      "label": "Content",
+      "default": "<p><strong>Take 2 capsules daily</strong> with water, preferably with a meal. Taking the capsules shortly before or with food allows the formula to support the digestive process when you need it most.</p><p>Use consistently as part of your daily wellness routine, and do not exceed the suggested serving.</p><p><strong>Important:</strong> Consult a qualified healthcare professional before use if you are pregnant, nursing, taking medication, or have a medical condition—especially a gallbladder, bile-duct, liver, pancreatic, or digestive condition. Keep out of reach of children.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Accordion 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "item_4_enabled",
+      "label": "Show accordion",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "item_4_title",
+      "label": "Title",
+      "default": "Do You Offer a Guarantee?"
+    },
+    {
+      "type": "richtext",
+      "id": "item_4_content",
+      "label": "Content",
+      "default": "<p>Yes! All Avonent orders are backed by our 30-day satisfaction guarantee.</p><p>If you're not completely satisfied, contact our support team and we'll review your order and help make it right according to our refund policy.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Accordion 5"
+    },
+    {
+      "type": "checkbox",
+      "id": "item_5_enabled",
+      "label": "Show accordion",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "item_5_title",
+      "label": "Title",
+      "default": "Ingredients"
+    },
+    {
+      "type": "richtext",
+      "id": "item_5_content",
+      "label": "Content",
+      "default": "<p>Add ingredient information here.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Accordion 6"
+    },
+    {
+      "type": "checkbox",
+      "id": "item_6_enabled",
+      "label": "Show accordion",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "item_6_title",
+      "label": "Title",
+      "default": "Shipping"
+    },
+    {
+      "type": "richtext",
+      "id": "item_6_content",
+      "label": "Content",
+      "default": "<p>Add shipping information here.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Title text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Accordion content",
+      "default": "#444444"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#E1E5E7"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Hover accent",
+      "default": "#02C6EA"
+    },
+
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Body text size",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Corner roundness",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "spacing_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "spacing_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Avonent Accordion"
+    }
+  ]
+}
+{% endschema %}
