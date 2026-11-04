@@ -16,7 +16,7 @@
               {% elsif forloop.index == 1 and product.featured_image != blank %}
                 {{ product.featured_image | image_url: width: 1200 | image_tag: widths: '480,720,960,1200', loading: 'lazy', class: 'ag-benefits__img ag-benefits__img--contain', alt: product.title }}
               {% elsif forloop.index == 2 %}
-                <img class="ag-benefits__img ag-benefits__img--contain" src="https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-aged-garlic-softgel-realistic.png?v=1792648420" alt="Golden aged garlic softgels" loading="lazy">
+                <img class="ag-benefits__img ag-benefits__img--contain" src="https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-aged-garlic-softgel-realistic.png?v=1792648420" width="416" height="256" alt="Golden aged garlic softgels" loading="lazy">
               {% else %}
                 <div class="ag-benefits__placeholder">
                   <span>ADD IMAGE</span>
