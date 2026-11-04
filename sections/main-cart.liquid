@@ -1,0 +1,798 @@
+{% liquid
+  assign custom_color = false
+  if section.settings.background_color != blank or section.settings.text_color != blank
+    assign custom_color = true
+    render 'contrast-override', background_color: section.settings.background_color, text_color: section.settings.text_color, section_id: section.id
+  endif
+
+  assign protection_product = all_products['shipping-protection']
+  assign protection_variant = protection_product.selected_or_first_available_variant
+  assign protection_line_key = ''
+  assign protection_quantity = 0
+
+  for item in cart.items
+    if item.product.handle == 'shipping-protection'
+      assign protection_line_key = item.key
+      assign protection_quantity = item.quantity
+      break
+    endif
+  endfor
+
+  assign regular_item_count = cart.item_count | minus: protection_quantity
+%}
+
+{% capture cart_page_more_blocks_content %}
+  <div class="cart-page__more-blocks">{%- content_for 'blocks' -%}</div>
+{% endcapture %}
+
+{% capture reservation_bar %}
+  {% if regular_item_count > 0 %}
+    <div class="avonent-cart-page-reservation" data-avonent-cart-page-reservation role="timer" aria-live="polite">
+      <span class="avonent-cart-page-reservation__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M12 7.7v4.8l3.2 1.9M9.2 3.5h5.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span>Cart reserved for <strong data-avonent-cart-page-countdown>04:59</strong></span>
+    </div>
+  {% endif %}
+{% endcapture %}
+
+{% capture protection_addon %}
+  {% if protection_variant != blank and regular_item_count > 0 %}
+    <div
+      class="avonent-cart-page-protection"
+      data-avonent-cart-page-protection
+      data-variant-id="{{ protection_variant.id }}"
+      data-line-key="{{ protection_line_key }}"
+    >
+      <span class="avonent-cart-page-protection__icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none">
+          <path d="M10 17.5 24 10l14 7.5v10.2c0 7.2-5.8 12.6-14 15.3-8.2-2.7-14-8.1-14-15.3V17.5Z" fill="currentColor" opacity=".12"/>
+          <path d="M10 17.5 24 10l14 7.5v10.2c0 7.2-5.8 12.6-14 15.3-8.2-2.7-14-8.1-14-15.3V17.5Z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+          <path d="m18.5 26.2 3.7 3.7 7.8-8.1" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+
+      <div class="avonent-cart-page-protection__copy">
+        <div class="avonent-cart-page-protection__heading">
+          <strong>Shipping Protection</strong>
+          <span>{{ protection_variant.price | money }}</span>
+        </div>
+        <p>Protect your order from loss, damage, or theft in transit.</p>
+      </div>
+
+      <button
+        type="button"
+        class="avonent-cart-page-protection__toggle"
+        role="switch"
+        aria-label="Toggle shipping protection"
+        aria-checked="{% if protection_line_key != blank %}true{% else %}false{% endif %}"
+        data-avonent-cart-page-protection-toggle
+      ><span></span></button>
+    </div>
+  {% endif %}
+{% endcapture %}
+
+{% capture cart_items_children %}
+  <template id="empty-cart-template">
+    <div class="section-background{% if custom_color %} color-custom-{{ section.id }}{% endif %}"></div>
+    <div class="section{% if custom_color %} color-custom-{{ section.id }}{% endif %} section--{{ section.settings.section_width }}">
+      <div class="cart-page spacing-style cart-page--empty" style="{% render 'spacing-style', settings: section.settings %}">
+        <div class="cart-page__title">{%- content_for 'block', id: 'cart-page-title', type: '_cart-title', force_empty: true %}</div>
+        <div class="cart-page__items">{%- content_for 'block', id: 'cart-page-items', type: '_cart-products', force_empty: true %}</div>
+        {{ cart_page_more_blocks_content }}
+      </div>
+    </div>
+  </template>
+
+  <div class="section-background{% if custom_color %} color-custom-{{ section.id }}{% endif %}"></div>
+  <div class="section{% if custom_color %} color-custom-{{ section.id }}{% endif %} section--{{ section.settings.section_width }} avonent-cart-page-shell">
+    <div class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}" style="{% render 'spacing-style', settings: section.settings %}">
+      <div class="cart-page__title">{%- content_for 'block', id: 'cart-page-title', type: '_cart-title' %}</div>
+      <div class="cart-page__reservation">{{ reservation_bar }}</div>
+      <div class="cart-page__items">{%- content_for 'block', id: 'cart-page-items', type: '_cart-products' %}</div>
+
+      {%- unless cart.empty? -%}
+        <div class="cart-page__summary">
+          {{ protection_addon }}
+          {%- content_for 'block', id: 'cart-page-summary', type: '_cart-summary' -%}
+        </div>
+      {%- endunless -%}
+
+      {{ cart_page_more_blocks_content }}
+    </div>
+  </div>
+{% endcapture %}
+
+{% render 'cart-items-component', children: cart_items_children, section_id: section.id %}
+
+<script>
+  (() => {
+    if (!window.__avonentCartPageProtectionReady) {
+      window.__avonentCartPageProtectionReady = true;
+
+      document.addEventListener('click', async (event) => {
+        const button = event.target.closest('[data-avonent-cart-page-protection-toggle]');
+        if (!button) return;
+
+        const root = button.closest('[data-avonent-cart-page-protection]');
+        if (!root || button.disabled) return;
+
+        const enabled = button.getAttribute('aria-checked') === 'true';
+        const variantId = Number(root.dataset.variantId || 0);
+        const lineKey = root.dataset.lineKey || '';
+
+        button.disabled = true;
+        root.classList.add('is-loading');
+
+        try {
+          if (enabled && lineKey) {
+            await fetch('/cart/change.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify({ id: lineKey, quantity: 0 })
+            });
+          } else if (!enabled && variantId) {
+            await fetch('/cart/add.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] })
+            });
+          }
+          window.location.reload();
+        } catch (error) {
+          console.error('Avonent shipping protection update failed', error);
+          button.disabled = false;
+          root.classList.remove('is-loading');
+        }
+      });
+    }
+
+    const initReservationTimer = () => {
+      const output = document.querySelector('[data-avonent-cart-page-countdown]');
+      if (!output || output.dataset.timerReady === 'true') return;
+      output.dataset.timerReady = 'true';
+
+      let remaining = 299;
+      const render = () => {
+        const minutes = Math.floor(remaining / 60);
+        const seconds = remaining % 60;
+        output.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        if (remaining > 0) remaining -= 1;
+      };
+
+      render();
+      window.setInterval(render, 1000);
+    };
+
+    const removeShippingProtectionRecommendations = () => {
+      document.querySelectorAll('a[href*="/products/shipping-protection"]').forEach((link) => {
+        const card = link.closest('.resource-list__item, .product-grid__item, li');
+        if (card && !card.closest('.cart-page__summary')) card.remove();
+      });
+    };
+
+    const init = () => {
+      initReservationTimer();
+      removeShippingProtectionRecommendations();
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init, { once: true });
+    } else {
+      init();
+    }
+
+    document.addEventListener('shopify:section:load', init);
+
+    const observer = new MutationObserver(removeShippingProtectionRecommendations);
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+  })();
+</script>
+
+{% stylesheet %}
+  /* Hard-hide Shipping Protection anywhere a recommendation list tries to render it. */
+  body.template-cart .resource-list__item:has(a[href*='/products/shipping-protection']),
+  body.template-cart .product-grid__item:has(a[href*='/products/shipping-protection']) {
+    display: none !important;
+  }
+
+  .avonent-cart-page-shell {
+    width: 100%;
+    max-width: 1180px;
+    padding-inline: 0;
+    color: #111111;
+  }
+
+  .cart-page {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    color: #111111;
+    background: #ffffff;
+  }
+
+  .cart-page--empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cart-page--empty .cart-page__title,
+  .cart-page--empty .cart-page__more-blocks { margin-top: var(--margin-6xl); }
+
+  .cart-page__more-blocks { width: 100%; }
+  .cart-page--empty .cart-title { text-align: center; }
+  .cart-page__main { grid-column: 1; }
+
+  /* Drawer-like page header */
+  .cart-page__title {
+    min-height: 74px;
+    display: flex;
+    align-items: center;
+    padding: 18px 28px;
+    border-bottom: 1px solid #e7ebed;
+    background: #ffffff;
+  }
+
+  .cart-page__title :is(h1,h2,h3,h4),
+  .cart-page__title .cart-title {
+    margin: 0;
+    color: #111111;
+    font-family: var(--font-heading--family);
+    font-size: 28px !important;
+    font-weight: 750 !important;
+    line-height: 1;
+    letter-spacing: -.035em;
+  }
+
+  .cart-page__title [class*='count'],
+  .cart-page__title .cart-title__count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 30px;
+    height: 30px;
+    margin-left: 9px;
+    padding-inline: 8px;
+    border-radius: 999px;
+    background: #eafaff;
+    color: #078daa;
+    font-size: 12px;
+    font-weight: 750;
+  }
+
+  /* Cyan reservation strip copied from drawer visual language */
+  .cart-page__reservation {
+    width: 100%;
+  }
+
+  .avonent-cart-page-reservation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 52px;
+    padding: 12px 18px;
+    color: #ffffff;
+    background: #02c6ea;
+    font-family: var(--font-body--family);
+    font-size: 15px;
+    font-weight: 650;
+    letter-spacing: .01em;
+  }
+
+  .avonent-cart-page-reservation__icon {
+    display: inline-flex;
+    width: 23px;
+    height: 23px;
+  }
+
+  .avonent-cart-page-reservation__icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .avonent-cart-page-reservation strong {
+    font-weight: 800;
+  }
+
+  .cart-page__title + .cart-page__reservation,
+  .cart-page__reservation + .cart-page__items {
+    margin-block-start: 0;
+  }
+
+  /* Product area styled like drawer */
+  .cart-page__items {
+    padding: 20px 28px 26px;
+    background: #ffffff;
+  }
+
+  .cart-page__items .cart-items__table-row {
+    padding-block: 8px 24px;
+    border-bottom: 1px solid #e7ebed;
+  }
+
+  .cart-page__items .cart-items__table-row[data-product-handle='shipping-protection'] {
+    display: none !important;
+  }
+
+  .cart-page__items .cart-items__media-container {
+    width: 110px;
+    max-width: 110px;
+  }
+
+  .cart-page__items .cart-items__media-image {
+    border: 0 !important;
+    border-radius: 15px !important;
+    background: #eefaff;
+    object-fit: cover;
+  }
+
+  .cart-page__items .cart-items__details {
+    padding-inline-start: 18px;
+  }
+
+  .cart-page__items .cart-items__title {
+    color: #111111;
+    font-family: var(--font-heading--family);
+    font-size: 20px;
+    font-weight: 760;
+    line-height: 1.12;
+    letter-spacing: -.025em;
+  }
+
+  .cart-page__items .cart-items__variants-wrapper,
+  .cart-page__items .cart-items__variants,
+  .cart-page__items .cart-items__variants dd,
+  .cart-page__items .cart-items__unit-price-wrapper {
+    color: #525c61;
+    font-size: 16px;
+  }
+
+  .cart-page__items .cart-items__unit-price-wrapper > div {
+    color: #111111;
+    font-size: 17px;
+    font-weight: 760;
+  }
+
+  .cart-page__items .compare-at-price {
+    color: #50575a;
+    font-weight: 500;
+  }
+
+  .cart-page__items .cart-items__quantity-controls {
+    gap: 10px;
+  }
+
+  .cart-page__items quantity-selector,
+  .cart-page__items .quantity-selector {
+    border: 1px solid #dfe5e7 !important;
+    border-radius: 8px !important;
+    background: #ffffff;
+  }
+
+  .cart-page__items .cart-items__remove {
+    color: #111111;
+  }
+
+  /* Summary block now intentionally mirrors drawer instead of default cart page. */
+  .cart-page__summary {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 18px 28px 26px;
+    border-top: 1px solid #e7ebed;
+    background: #ffffff;
+  }
+
+  .cart-page__summary > * {
+    width: 100%;
+  }
+
+  .cart-page__summary .cart-summary,
+  .cart-page__summary [class*='cart-summary'] {
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  .cart-page__summary .cart-actions {
+    display: none !important;
+  }
+
+  .cart-page__summary .cart-totals__installments,
+  .cart-page__summary .cart-totals__tax-note {
+    display: none !important;
+  }
+
+  .cart-page__summary .cart-totals {
+    gap: 0;
+    margin: 14px 0 0;
+    padding: 16px 0 0;
+    border-top: 1px solid #e7ebed;
+  }
+
+  .cart-page__summary .cart-totals__container {
+    gap: 0;
+  }
+
+  .cart-page__summary .cart-totals__total {
+    align-items: center;
+  }
+
+  .cart-page__summary .cart-totals__total-label {
+    color: #111111;
+    font-size: 16px;
+    font-weight: 750;
+  }
+
+  .cart-page__summary .cart-totals__total-value {
+    color: #111111;
+    font-size: 25px !important;
+    font-weight: 800;
+    letter-spacing: -.02em;
+  }
+
+  /* Use the same cyan Avonent checkout appearance as the drawer. */
+  .cart-page__summary .avonent-cart-ctas {
+    display: grid;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .cart-page__summary .avonent-cart-checkout,
+  .cart-page__summary .cart__checkout-button,
+  .cart-page__summary [name='checkout'] {
+    min-height: 58px;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+    padding: 0 20px;
+    border: 0 !important;
+    border-radius: 15px !important;
+    background: #02c6ea !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+    font-family: var(--font-heading--family);
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: .045em;
+    text-transform: uppercase;
+  }
+
+  .cart-page__summary .avonent-cart-checkout__lock {
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+  }
+
+  .cart-page__summary .avonent-cart-checkout__lock svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+    stroke-width: 1.8;
+  }
+
+  .cart-page__summary .avonent-cart-checkout__arrow {
+    font-size: 25px;
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .cart-page__summary .avonent-cart-payment-icons {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0,1fr));
+    gap: 6px;
+    width: 100%;
+  }
+
+  .cart-page__summary .avonent-cart-payment-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    height: 39px;
+    padding: 5px;
+    border: 1px solid #dfe5e7;
+    border-radius: 8px;
+    background: #ffffff;
+  }
+
+  .cart-page__summary .avonent-cart-payment-icon svg {
+    max-width: 100%;
+    max-height: 24px;
+  }
+
+  .cart-page__summary .avonent-cart-trusted-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 9px;
+    border-top: 1px solid #e7ebed;
+    color: #111111;
+    font-size: 15px;
+  }
+
+  .cart-page__summary .avonent-cart-trusted-stars {
+    color: #02c6ea;
+    font-size: 20px;
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+
+  .cart-page__summary .avonent-cart-trusted-text {
+    font-weight: 700;
+  }
+
+  /* Shipping Protection card copied from drawer */
+  .avonent-cart-page-protection {
+    display: grid;
+    grid-template-columns: 54px minmax(0,1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 14px;
+    border: 1px solid #aeeaf5;
+    border-radius: 15px;
+    background: linear-gradient(120deg, #f2fdff 0%, #ffffff 100%);
+    box-shadow: 0 7px 22px rgba(2, 137, 164, .055);
+  }
+
+  .avonent-cart-page-protection.is-loading {
+    opacity: .65;
+  }
+
+  .avonent-cart-page-protection__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 13px;
+    background: #ffffff;
+    color: #02bada;
+    box-shadow: 0 5px 14px rgba(2, 137, 164, .08);
+  }
+
+  .avonent-cart-page-protection__icon svg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .avonent-cart-page-protection__heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    color: #111111;
+    font-family: var(--font-heading--family);
+    font-size: 15px;
+    line-height: 1.2;
+  }
+
+  .avonent-cart-page-protection__heading strong {
+    font-weight: 800;
+  }
+
+  .avonent-cart-page-protection__heading span {
+    color: #078daa;
+    font-weight: 800;
+  }
+
+  .avonent-cart-page-protection__copy p {
+    margin: 4px 0 0;
+    color: #67757a;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .avonent-cart-page-protection__toggle {
+    position: relative;
+    width: 52px;
+    height: 30px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: #d7dfe2;
+    cursor: pointer;
+    transition: background .18s ease;
+  }
+
+  .avonent-cart-page-protection__toggle span {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,.16);
+    transition: transform .18s ease;
+  }
+
+  .avonent-cart-page-protection__toggle[aria-checked='true'] {
+    background: #02c6ea;
+  }
+
+  .avonent-cart-page-protection__toggle[aria-checked='true'] span {
+    transform: translateX(22px);
+  }
+
+  @media screen and (min-width: 900px) {
+    .avonent-cart-page-shell {
+      padding-inline: 24px;
+    }
+
+    .cart-page {
+      grid-template-columns: minmax(0,1.35fr) minmax(360px,.65fr);
+      grid-template-rows: min-content min-content 1fr;
+      gap: 0 34px;
+      align-items: start;
+      padding-top: 28px;
+    }
+
+    .cart-page__title {
+      grid-column: 1;
+      padding-inline: 0;
+    }
+
+    .cart-page__reservation {
+      grid-column: 1;
+    }
+
+    .cart-page__items {
+      grid-column: 1;
+      padding-inline: 0;
+    }
+
+    .cart-page__summary {
+      position: sticky;
+      top: calc(var(--header-height, 80px) + 20px);
+      grid-column: 2;
+      grid-row: 1 / span 3;
+      padding: 18px;
+      border: 1px solid #e7ebed;
+      border-radius: 18px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .cart-page__title {
+      min-height: 68px;
+      padding: 16px 28px;
+    }
+
+    .cart-page__title :is(h1,h2,h3,h4),
+    .cart-page__title .cart-title {
+      font-size: 25px !important;
+    }
+
+    .avonent-cart-page-reservation {
+      min-height: 50px;
+      font-size: 14px;
+    }
+
+    .cart-page__items {
+      padding: 18px 28px 22px;
+    }
+
+    .cart-page__items .cart-items__media-container {
+      width: 92px;
+      max-width: 92px;
+    }
+
+    .cart-page__items .cart-items__details {
+      padding-inline-start: 14px;
+    }
+
+    .cart-page__items .cart-items__title {
+      font-size: 18px;
+    }
+
+    .cart-page__items .cart-items__variants-wrapper,
+    .cart-page__items .cart-items__variants,
+    .cart-page__items .cart-items__variants dd,
+    .cart-page__items .cart-items__unit-price-wrapper {
+      font-size: 14px;
+    }
+
+    .cart-page__summary {
+      padding: 18px 28px 24px;
+    }
+
+    .avonent-cart-page-protection {
+      grid-template-columns: 50px minmax(0,1fr) auto;
+      gap: 10px;
+      padding: 12px;
+    }
+
+    .avonent-cart-page-protection__icon {
+      width: 50px;
+      height: 50px;
+    }
+
+    .avonent-cart-page-protection__heading {
+      font-size: 14px;
+    }
+
+    .avonent-cart-page-protection__copy p {
+      font-size: 11px;
+    }
+
+    .avonent-cart-page-protection__toggle {
+      width: 48px;
+      height: 29px;
+    }
+
+    .avonent-cart-page-protection__toggle span {
+      width: 23px;
+      height: 23px;
+    }
+
+    .avonent-cart-page-protection__toggle[aria-checked='true'] span {
+      transform: translateX(19px);
+    }
+
+    .cart-page__summary .cart-totals__total-value {
+      font-size: 23px !important;
+    }
+
+    .cart-page__summary .avonent-cart-checkout,
+    .cart-page__summary .cart__checkout-button,
+    .cart-page__summary [name='checkout'] {
+      min-height: 58px;
+      font-size: 16px;
+    }
+
+    .cart-page__summary .avonent-cart-payment-icons {
+      gap: 5px;
+    }
+
+    .cart-page__summary .avonent-cart-payment-icon {
+      height: 37px;
+      padding: 4px;
+    }
+
+    .cart-page__summary .avonent-cart-trusted-line {
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .cart-page__summary .avonent-cart-trusted-stars {
+      font-size: 18px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.cart",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "blocks": [
+    { "type": "@theme" },
+    { "type": "@app" },
+    { "type": "text" },
+    { "type": "icon" },
+    { "type": "image" },
+    { "type": "button" },
+    { "type": "video" },
+    { "type": "group" },
+    { "type": "spacer" }
+  ],
+  "settings": [
+    { "type": "select", "id": "section_width", "label": "t:settings.width", "options": [{"value":"page-width","label":"t:options.page"},{"value":"full-width","label":"t:options.full"}], "default": "page-width" },
+    { "type": "color", "id": "background_color", "label": "t:settings.background_color", "placeholder": "t:settings.default" },
+    { "type": "color", "id": "text_color", "label": "t:settings.text_color", "placeholder": "t:settings.default" },
+    { "type": "header", "content": "t:content.padding" },
+    { "type": "range", "id": "padding-block-start", "label": "t:settings.top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding-block-end", "label": "t:settings.bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
+  ]
+}
+{% endschema %}

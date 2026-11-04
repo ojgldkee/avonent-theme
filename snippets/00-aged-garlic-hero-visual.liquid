@@ -1,0 +1,191 @@
+{% liquid
+  assign av_product = product | default: closest.product
+%}
+
+<div class="aged-garlic-hero-visual" aria-label="Avonent Aged Garlic + CoQ10 formula">
+  <div class="aged-garlic-hero-visual__glow aged-garlic-hero-visual__glow--one"></div>
+  <div class="aged-garlic-hero-visual__glow aged-garlic-hero-visual__glow--two"></div>
+
+  <div class="aged-garlic-hero-visual__stage">
+    <div class="aged-garlic-hero-visual__formula-card">
+      <div class="aged-garlic-hero-visual__brand">
+        <span class="aged-garlic-hero-visual__mark">A</span>
+        <span>AVONENT</span>
+      </div>
+      <div class="aged-garlic-hero-visual__rule"></div>
+      <span class="aged-garlic-hero-visual__kicker">DAILY WELLNESS</span>
+      <strong>AGED<br>GARLIC</strong>
+      <span class="aged-garlic-hero-visual__plus">+ CoQ10</span>
+      <span class="aged-garlic-hero-visual__sub">ODORLESS SOFTGEL FORMULA</span>
+      <div class="aged-garlic-hero-visual__card-foot">
+        <span>AGED GARLIC</span>
+        <span>COQ10</span>
+        <span>UBIQUINOL</span>
+      </div>
+    </div>
+
+    <svg class="aged-garlic-hero-visual__garlic" viewBox="0 0 360 300" role="img" aria-label="Garlic illustration">
+      <defs>
+        <linearGradient id="garlicFill" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#fffdf8"/>
+          <stop offset="1" stop-color="#e7d1bd"/>
+        </linearGradient>
+        <linearGradient id="garlicShade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f6eadf"/>
+          <stop offset="1" stop-color="#d6bca7"/>
+        </linearGradient>
+      </defs>
+      <path d="M175 58c10-28 8-42 3-55 18 11 26 28 22 52" fill="none" stroke="#8c8c68" stroke-width="8" stroke-linecap="round"/>
+      <path d="M182 58c-50 3-91 34-104 83-13 49 8 107 49 133 30 19 78 19 110 2 47-25 70-83 56-135-13-48-59-85-111-83z" fill="url(#garlicFill)" stroke="#ccb09b" stroke-width="4"/>
+      <path d="M181 66c-20 35-31 79-30 127 0 32 8 60 24 84" fill="none" stroke="#dec8b6" stroke-width="5"/>
+      <path d="M181 67c18 38 27 82 25 128-1 31-8 59-21 83" fill="none" stroke="#d8bda8" stroke-width="5"/>
+      <path d="M138 79c-27 31-41 73-40 114 0 27 7 50 23 71" fill="none" stroke="#e4d1c1" stroke-width="5"/>
+      <path d="M225 81c26 31 38 70 37 113-1 28-9 50-24 70" fill="none" stroke="#d9c1ae" stroke-width="5"/>
+      <ellipse cx="179" cy="282" rx="79" ry="10" fill="#6d172b" opacity=".11"/>
+    </svg>
+
+    <div class="aged-garlic-hero-visual__softgel aged-garlic-hero-visual__softgel--one"></div>
+    <div class="aged-garlic-hero-visual__softgel aged-garlic-hero-visual__softgel--two"></div>
+    <div class="aged-garlic-hero-visual__softgel aged-garlic-hero-visual__softgel--three"></div>
+
+    <div class="aged-garlic-hero-visual__badge">
+      <span>ODORLESS</span>
+      <strong>AGED GARLIC</strong>
+    </div>
+  </div>
+
+  <div class="aged-garlic-hero-visual__caption">
+    <span>AGED GARLIC</span>
+    <i></i>
+    <span>COQ10</span>
+    <i></i>
+    <span>UBIQUINOL</span>
+  </div>
+</div>
+
+<style>
+  .aged-garlic-hero-visual {
+    position:relative;
+    display:grid;
+    place-items:center;
+    width:100%;
+    min-height:620px;
+    overflow:hidden;
+    border-radius:24px;
+    background:
+      radial-gradient(circle at 22% 22%, rgba(255,255,255,.95) 0 14%, transparent 36%),
+      linear-gradient(145deg,#fffaf3 0%,#f6e8dc 46%,#ead6c5 100%);
+    isolation:isolate;
+  }
+  .aged-garlic-hero-visual__stage {
+    position:relative;
+    width:min(92%,620px);
+    height:540px;
+  }
+  .aged-garlic-hero-visual__glow {
+    position:absolute;
+    border-radius:50%;
+    filter:blur(1px);
+    opacity:.8;
+  }
+  .aged-garlic-hero-visual__glow--one {
+    width:340px;height:340px;left:-90px;top:-110px;
+    background:radial-gradient(circle,#fff 0 28%,rgba(255,255,255,0) 72%);
+  }
+  .aged-garlic-hero-visual__glow--two {
+    width:320px;height:320px;right:-120px;bottom:-110px;
+    background:radial-gradient(circle,rgba(109,23,43,.13),rgba(109,23,43,0) 70%);
+  }
+  .aged-garlic-hero-visual__formula-card {
+    position:absolute;
+    z-index:4;
+    left:50%;
+    top:48%;
+    width:250px;
+    min-height:330px;
+    padding:24px 23px 20px;
+    transform:translate(-50%,-50%) rotate(-2deg);
+    border:1px solid rgba(82,31,42,.12);
+    border-radius:22px;
+    background:linear-gradient(180deg,#fffefa 0%,#fff8f0 100%);
+    box-shadow:0 30px 60px rgba(65,25,36,.2);
+    text-align:left;
+  }
+  .aged-garlic-hero-visual__brand {
+    display:flex;align-items:center;gap:8px;
+    color:#1b1718;font-size:12px;font-weight:850;letter-spacing:.08em;
+  }
+  .aged-garlic-hero-visual__mark {
+    display:grid;place-items:center;
+    width:26px;height:26px;border-radius:50%;
+    background:#6d172b;color:#fff;font-size:12px;font-weight:900;
+  }
+  .aged-garlic-hero-visual__rule {
+    width:100%;height:1px;margin:17px 0 18px;background:#eadbd2;
+  }
+  .aged-garlic-hero-visual__kicker {
+    display:block;margin-bottom:6px;color:#9c7840;font-size:9px;font-weight:850;letter-spacing:.16em;
+  }
+  .aged-garlic-hero-visual__formula-card > strong {
+    display:block;color:#3c0d19;font-size:42px;font-weight:850;letter-spacing:-.05em;line-height:.86;
+  }
+  .aged-garlic-hero-visual__plus {
+    display:block;margin-top:9px;color:#6d172b;font-size:21px;font-weight:750;
+  }
+  .aged-garlic-hero-visual__sub {
+    display:block;margin-top:10px;color:#706166;font-size:9px;font-weight:750;letter-spacing:.11em;
+  }
+  .aged-garlic-hero-visual__card-foot {
+    display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:31px;padding-top:13px;border-top:1px solid #eadbd2;
+  }
+  .aged-garlic-hero-visual__card-foot span {
+    color:#6f6064;font-size:7px;font-weight:850;letter-spacing:.05em;text-align:center;
+  }
+  .aged-garlic-hero-visual__garlic {
+    position:absolute;z-index:3;left:0;bottom:16px;width:205px;height:auto;
+    transform:rotate(-7deg);
+    filter:drop-shadow(0 18px 17px rgba(73,39,33,.13));
+  }
+  .aged-garlic-hero-visual__softgel {
+    position:absolute;z-index:5;width:68px;height:31px;border-radius:999px;
+    background:linear-gradient(150deg,#c76b27 0%,#9f431a 46%,#e08e3f 100%);
+    border:1px solid rgba(115,44,15,.3);
+    box-shadow:inset 7px 5px 12px rgba(255,255,255,.2),0 13px 18px rgba(78,34,22,.16);
+  }
+  .aged-garlic-hero-visual__softgel::after {
+    content:"";position:absolute;left:12px;top:5px;width:24px;height:7px;border-radius:99px;background:rgba(255,255,255,.28);transform:rotate(-12deg);
+  }
+  .aged-garlic-hero-visual__softgel--one { right:36px;bottom:113px;transform:rotate(-24deg); }
+  .aged-garlic-hero-visual__softgel--two { right:98px;bottom:51px;transform:rotate(18deg) scale(.86); }
+  .aged-garlic-hero-visual__softgel--three { right:17px;bottom:37px;transform:rotate(-3deg) scale(.72); }
+  .aged-garlic-hero-visual__badge {
+    position:absolute;z-index:5;right:20px;top:46px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    width:112px;height:112px;border:1px solid rgba(109,23,43,.18);border-radius:50%;
+    background:rgba(255,253,249,.88);box-shadow:0 16px 34px rgba(80,38,46,.08);backdrop-filter:blur(8px);
+  }
+  .aged-garlic-hero-visual__badge span { color:#a88447;font-size:8px;font-weight:850;letter-spacing:.12em; }
+  .aged-garlic-hero-visual__badge strong { margin-top:4px;color:#6d172b;font-size:12px;font-weight:850;text-align:center;line-height:1.15; }
+  .aged-garlic-hero-visual__caption {
+    position:absolute;left:22px;right:22px;bottom:20px;z-index:7;
+    display:flex;align-items:center;justify-content:center;gap:12px;
+    color:#6f6064;font-size:9px;font-weight:800;letter-spacing:.1em;
+  }
+  .aged-garlic-hero-visual__caption i { width:3px;height:3px;border-radius:50%;background:#b58a45; }
+  @media(max-width:749px){
+    .aged-garlic-hero-visual { min-height:470px;border-radius:0; }
+    .aged-garlic-hero-visual__stage { width:100%;height:430px; }
+    .aged-garlic-hero-visual__formula-card {
+      top:47%;width:205px;min-height:282px;padding:19px 18px 16px;border-radius:18px;
+    }
+    .aged-garlic-hero-visual__formula-card > strong { font-size:35px; }
+    .aged-garlic-hero-visual__plus { font-size:18px; }
+    .aged-garlic-hero-visual__card-foot { margin-top:22px; }
+    .aged-garlic-hero-visual__garlic { left:-12px;bottom:11px;width:154px; }
+    .aged-garlic-hero-visual__badge { right:12px;top:35px;width:88px;height:88px; }
+    .aged-garlic-hero-visual__softgel--one { right:14px;bottom:89px; }
+    .aged-garlic-hero-visual__softgel--two { right:62px;bottom:42px; }
+    .aged-garlic-hero-visual__softgel--three { right:-3px;bottom:29px; }
+    .aged-garlic-hero-visual__caption { bottom:13px;font-size:8px;gap:8px; }
+  }
+</style>

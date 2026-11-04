@@ -1,0 +1,119 @@
+{% liquid
+  assign av_cb_product = product
+  assign av_cb_variant = av_cb_product.selected_or_first_available_variant
+  assign av_cb_form_id = 'AvonentCinnamonBerberineForm-' | append: av_cb_product.id
+  assign av_cb_unit_price = av_cb_variant.price | default: av_cb_product.price
+  assign av_cb_subscription = av_cb_variant.selling_plan_allocations.first
+%}
+
+<div class="av-cb-hero" data-av-cb-hero data-unit-price="{{ av_cb_unit_price }}">
+  <style>
+    .av-cb-hero{--blue:#02c6ea;--deep:#087e9d;--ink:#08171d;--muted:#5f7078;--line:#d9ebef;--soft:#eefbfe;background:#fff;color:var(--ink);font-family:inherit}
+    .av-cb-hero *{box-sizing:border-box}.av-cb-hero__wrap{width:min(1200px,calc(100% - 32px));margin:0 auto}
+    .av-cb-hero__section{padding:34px 0 24px;background:linear-gradient(180deg,#fff 0%,#f4fcfe 100%)}
+    .av-cb-hero__grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(360px,.98fr);gap:48px;align-items:center}
+    .av-cb-hero__media{min-height:520px;border:1px solid var(--line);border-radius:28px;background:radial-gradient(circle at 50% 38%,#fff 0 24%,#e9faff 58%,#dff7fc 100%);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:28px}
+    .av-cb-hero__media img{max-width:100%;max-height:500px;object-fit:contain;filter:drop-shadow(0 28px 35px rgba(0,0,0,.12))}
+    .av-cb-hero__placeholder{width:min(330px,85%);aspect-ratio:4/5;border-radius:28px;background:#fff;border:1px solid #d8edf2;box-shadow:0 28px 70px rgba(5,103,128,.13);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:34px}
+    .av-cb-hero__placeholder b{font-size:38px;line-height:1}.av-cb-hero__placeholder span{font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-top:10px;color:var(--deep)}.av-cb-hero__placeholder small{margin-top:16px;color:var(--muted)}
+    .av-cb-hero__eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:var(--deep);margin-bottom:12px}.av-cb-hero__eyebrow:before{content:"";width:28px;height:3px;border-radius:99px;background:var(--blue)}
+    .av-cb-hero__title{font-size:clamp(38px,5vw,66px);line-height:.98;letter-spacing:-.045em;margin:0 0 16px;font-weight:850}
+    .av-cb-hero__subtitle{font-size:18px;line-height:1.55;color:var(--muted);margin:0 0 22px;max-width:650px}
+    .av-cb-hero__chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}.av-cb-hero__chip{padding:9px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:750}
+    .av-cb-hero__price{display:flex;align-items:baseline;gap:10px;margin:0 0 15px}.av-cb-hero__price strong{font-size:30px}.av-cb-hero__price span{font-size:13px;color:var(--muted)}
+    .av-cb-hero__bundle-label{font-size:12px;font-weight:850;letter-spacing:.08em;text-transform:uppercase;margin:0 0 9px}
+    .av-cb-hero__bundles{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}
+    .av-cb-hero__bundle{position:relative;border:1.5px solid var(--line);border-radius:16px;padding:15px 11px;background:#fff;cursor:pointer;text-align:left;transition:.18s ease}.av-cb-hero__bundle:hover,.av-cb-hero__bundle.is-active{border-color:var(--blue);box-shadow:0 0 0 2px rgba(2,198,234,.12)}.av-cb-hero__bundle.is-active{background:var(--soft)}
+    .av-cb-hero__bundle strong{display:block;font-size:16px}.av-cb-hero__bundle span{display:block;font-size:12px;color:var(--muted);margin-top:3px}.av-cb-hero__badge{position:absolute!important;top:-9px;right:9px;background:var(--blue);color:#fff!important;border-radius:999px;padding:3px 7px;font-size:9px!important;font-weight:850;text-transform:uppercase;letter-spacing:.05em}
+    .av-cb-hero__buy{width:100%;min-height:58px;border:0;border-radius:14px;background:#111;color:#fff;font-weight:850;font-size:17px;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px}.av-cb-hero__buy[disabled]{opacity:.45;cursor:not-allowed}
+    .av-cb-hero__refill{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:14px;color:#4f5e65;font-size:12px}.av-cb-hero__refill-item{display:inline-flex;align-items:center;gap:7px}.av-cb-hero__refill-icon{width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;color:#151515}.av-cb-hero__divider{width:1px;height:20px;background:#b7c3c7}
+    @media(max-width:900px){.av-cb-hero__grid{grid-template-columns:1fr;gap:24px}.av-cb-hero__media{min-height:390px}.av-cb-hero__title{font-size:46px}}
+    @media(max-width:600px){.av-cb-hero__wrap{width:min(100% - 22px,1200px)}.av-cb-hero__section{padding:16px 0 20px}.av-cb-hero__media{min-height:315px;border-radius:20px}.av-cb-hero__placeholder{width:75%;padding:22px}.av-cb-hero__placeholder b{font-size:30px}.av-cb-hero__title{font-size:38px}.av-cb-hero__subtitle{font-size:15px}.av-cb-hero__bundles{grid-template-columns:1fr}.av-cb-hero__bundle{padding:13px 14px}.av-cb-hero__refill{font-size:11px;gap:9px}}
+  </style>
+
+  <section class="av-cb-hero__section" id="av-cb-top">
+    <div class="av-cb-hero__wrap av-cb-hero__grid">
+      <div class="av-cb-hero__media">
+        {% if av_cb_product.featured_image %}
+          {{ av_cb_product.featured_image | image_url: width: 1200 | image_tag: loading: 'eager', widths: '500,700,900,1200', sizes: '(min-width: 900px) 48vw, 92vw', alt: 'Avonent Berberine + Ceylon Cinnamon softgels' }}
+        {% else %}
+          <div class="av-cb-hero__placeholder">
+            <b>AVONENT</b>
+            <span>Berberine + Ceylon Cinnamon</span>
+            <small>30 daily servings</small>
+          </div>
+        {% endif %}
+      </div>
+
+      <div>
+        <div class="av-cb-hero__eyebrow">Advanced Metabolic Support</div>
+        <h1 class="av-cb-hero__title">Berberine + True Ceylon Cinnamon</h1>
+        <p class="av-cb-hero__subtitle">Three complementary ingredients in one softgel routine: <strong>1,200 mg Ceylon cinnamon</strong>, <strong>400 mg Berberine HCl</strong>, and <strong>200 mg MCT oil</strong> per daily serving.</p>
+
+        <div class="av-cb-hero__chips">
+          <span class="av-cb-hero__chip">True Ceylon · Cinnamomum verum</span>
+          <span class="av-cb-hero__chip">Berberine HCl</span>
+          <span class="av-cb-hero__chip">MCT Oil Softgels</span>
+          <span class="av-cb-hero__chip">30-Day Supply</span>
+        </div>
+
+        <div class="av-cb-hero__price">
+          <strong data-av-cb-price>{{ av_cb_unit_price | money }}</strong>
+          <span data-av-cb-supply>30-day supply</span>
+        </div>
+
+        {% form 'product', av_cb_product, id: av_cb_form_id, class: 'av-cb-hero__form' %}
+          <input type="hidden" name="id" value="{{ av_cb_variant.id }}">
+          <input type="hidden" name="quantity" value="1" data-av-cb-quantity>
+          <p class="av-cb-hero__bundle-label">Choose your supply</p>
+          <div class="av-cb-hero__bundles" role="group" aria-label="Choose supply">
+            <button class="av-cb-hero__bundle is-active" type="button" data-av-cb-bundle="1"><strong>Buy 1</strong><span>30-Day Supply</span></button>
+            <button class="av-cb-hero__bundle" type="button" data-av-cb-bundle="2"><span class="av-cb-hero__badge">Most Popular</span><strong>Buy 2</strong><span>60-Day Supply</span></button>
+            <button class="av-cb-hero__bundle" type="button" data-av-cb-bundle="3"><span class="av-cb-hero__badge">Best Value</span><strong>Buy 3</strong><span>90-Day Supply</span></button>
+          </div>
+
+          <button class="av-cb-hero__buy" type="submit" {% unless av_cb_variant.available %}disabled{% endunless %}>
+            {% if av_cb_variant.available %}Add to Cart · <span data-av-cb-button-price>{{ av_cb_unit_price | money }}</span>{% else %}Currently Unavailable{% endif %}
+          </button>
+        {% endform %}
+
+        {% if av_cb_subscription != blank %}
+          <div class="av-cb-hero__refill" aria-label="Subscription details">
+            <span class="av-cb-hero__refill-item">
+              <span class="av-cb-hero__refill-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M20 6v5h-5M4 18v-5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.2 10a7 7 0 0 0-11.9-3L4 9M5.8 14a7 7 0 0 0 11.9 3L20 15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Refills ship every 30 days
+            </span>
+            <span class="av-cb-hero__divider" aria-hidden="true"></span>
+            <span class="av-cb-hero__refill-item">
+              <span class="av-cb-hero__refill-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Stop or cancel anytime
+            </span>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (() => {
+      const root = document.currentScript.closest('[data-av-cb-hero]');
+      if (!root) return;
+      const unit = Number(root.dataset.unitPrice || 0);
+      const qtyInput = root.querySelector('[data-av-cb-quantity]');
+      const total = root.querySelector('[data-av-cb-price]');
+      const btnTotal = root.querySelector('[data-av-cb-button-price]');
+      const supply = root.querySelector('[data-av-cb-supply]');
+      const money = cents => new Intl.NumberFormat(document.documentElement.lang || 'en-US', {style:'currency', currency:'USD'}).format(cents / 100);
+      root.querySelectorAll('[data-av-cb-bundle]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const qty = Number(btn.dataset.avCbBundle || 1);
+          root.querySelectorAll('[data-av-cb-bundle]').forEach(x => x.classList.toggle('is-active', x === btn));
+          if (qtyInput) qtyInput.value = qty;
+          if (total) total.textContent = money(unit * qty);
+          if (btnTotal) btnTotal.textContent = money(unit * qty);
+          if (supply) supply.textContent = String(qty * 30) + '-day supply';
+        });
+      });
+    })();
+  </script>
+</div>

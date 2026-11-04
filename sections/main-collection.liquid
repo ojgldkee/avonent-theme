@@ -1,0 +1,532 @@
+{% liquid
+  assign is_all_collection = false
+  if collection.handle == 'all'
+    assign is_all_collection = true
+  endif
+
+  assign cinnamon_product = all_products['ceylon-cinnamon-berberine-capsules']
+  assign garlic_product = all_products['aged-garlic-capsules']
+
+  assign hero_image = section.settings.hero_image
+  if hero_image == blank and cinnamon_product != blank
+    assign hero_image = cinnamon_product.featured_image
+  endif
+%}
+
+<section id="avonent-catalog-{{ section.id }}" class="avonent-catalog">
+  {% if is_all_collection %}
+    <div class="avonent-catalog__hero">
+      {% if hero_image != blank %}
+        <div class="avonent-catalog__hero-media">
+          {{
+            hero_image
+            | image_url: width: 1800
+            | image_tag:
+              loading: 'eager',
+              fetchpriority: 'high',
+              widths: '600,900,1200,1500,1800',
+              sizes: '100vw',
+              class: 'avonent-catalog__hero-image',
+              alt: section.settings.hero_heading
+          }}
+        </div>
+      {% endif %}
+
+      <div class="avonent-catalog__hero-copy">
+        {% if section.settings.hero_eyebrow != blank %}
+          <div class="avonent-catalog__hero-eyebrow">{{ section.settings.hero_eyebrow }}</div>
+        {% endif %}
+        <h1>{{ section.settings.hero_heading }}</h1>
+        {% if section.settings.hero_text != blank %}
+          <p>{{ section.settings.hero_text }}</p>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="avonent-catalog__inner">
+    {% unless is_all_collection %}
+      <header class="avonent-catalog__header">
+        <div>
+          <span class="avonent-catalog__eyebrow">THE COLLECTION</span>
+          <h1>{{ collection.title }}</h1>
+          {% if collection.description != blank %}
+            <div class="avonent-catalog__description">{{ collection.description }}</div>
+          {% endif %}
+        </div>
+      </header>
+    {% endunless %}
+
+    <ul class="avonent-catalog__grid" role="list">
+      {% if is_all_collection %}
+        {% assign core_handles = 'ceylon-cinnamon-berberine-capsules,aged-garlic-capsules' | split: ',' %}
+        {% for core_handle in core_handles %}
+          {% assign product = all_products[core_handle] %}
+          {% if product != blank %}
+            <li class="avonent-card-wrap">
+              <article class="avonent-card">
+                <a
+                  class="avonent-card__media"
+                  href="{{ product.url }}"
+                  aria-label="Shop {{ product.title | escape }}"
+                >
+                  {% if product.featured_image != blank %}
+                    {{
+                      product.featured_image
+                      | image_url: width: 1000
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '420,600,800,1000',
+                        sizes: '(min-width: 900px) 430px, calc(100vw - 32px)',
+                        class: 'avonent-card__image',
+                        alt: product.title
+                    }}
+                  {% else %}
+                    <div class="avonent-card__placeholder">
+                      {{ 'product-1' | placeholder_svg_tag }}
+                    </div>
+                  {% endif %}
+                </a>
+
+                <div class="avonent-card__body">
+                  <h2 class="avonent-card__title">
+                    <a href="{{ product.url }}">{{ product.title }}</a>
+                  </h2>
+
+                  <div class="avonent-card__price">
+                    <span class="avonent-card__price-current">{{ product.price | money }}</span>
+                    {% if product.compare_at_price_max > product.price %}
+                      <s>{{ product.compare_at_price_max | money }}</s>
+                    {% endif %}
+                  </div>
+
+                  <a href="{{ product.url }}" class="avonent-card__button">
+                    Shop Now
+                    <span aria-hidden="true">→</span>
+                  </a>
+
+                  <div class="avonent-card__assurance">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M12 3 19 6v5c0 4.8-2.8 8.2-7 10-4.2-1.8-7-5.2-7-10V6z" stroke="currentColor" stroke-width="1.8"/>
+                      <path d="m8.8 12 2 2 4.4-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>90-Day Money-Back Guarantee</span>
+                  </div>
+                </div>
+              </article>
+            </li>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        {% paginate collection.products by 24 %}
+          {% for product in collection.products %}
+            {% liquid
+              assign product_title_downcase = product.title | strip | downcase
+              assign product_handle_downcase = product.handle | strip | downcase
+              assign hide_product = false
+
+              if product_title_downcase == 'shipping protection'
+                assign hide_product = true
+              elsif product_handle_downcase contains 'shipping-protection'
+                assign hide_product = true
+              elsif product_handle_downcase == 'ceylon-cinnamon-bonus-bottle'
+                assign hide_product = true
+              elsif product_handle_downcase == 'ebook-garlic'
+                assign hide_product = true
+              endif
+            %}
+
+            {% unless hide_product %}
+              <li class="avonent-card-wrap">
+                <article class="avonent-card">
+                  <a class="avonent-card__media" href="{{ product.url }}" aria-label="Shop {{ product.title | escape }}">
+                    {% if product.featured_image != blank %}
+                      {{
+                        product.featured_image
+                        | image_url: width: 1000
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '420,600,800,1000',
+                          sizes: '(min-width: 900px) 430px, calc(100vw - 32px)',
+                          class: 'avonent-card__image',
+                          alt: product.title
+                      }}
+                    {% endif %}
+                  </a>
+
+                  <div class="avonent-card__body">
+                    <h2 class="avonent-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h2>
+                    <div class="avonent-card__price">
+                      <span class="avonent-card__price-current">{{ product.price | money }}</span>
+                      {% if product.compare_at_price_max > product.price %}
+                        <s>{{ product.compare_at_price_max | money }}</s>
+                      {% endif %}
+                    </div>
+                    <a href="{{ product.url }}" class="avonent-card__button">Shop Now <span aria-hidden="true">→</span></a>
+                    <div class="avonent-card__assurance">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M12 3 19 6v5c0 4.8-2.8 8.2-7 10-4.2-1.8-7-5.2-7-10V6z" stroke="currentColor" stroke-width="1.8"/>
+                        <path d="m8.8 12 2 2 4.4-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      <span>90-Day Money-Back Guarantee</span>
+                    </div>
+                  </div>
+                </article>
+              </li>
+            {% endunless %}
+          {% endfor %}
+
+          {% if paginate.pages > 1 %}
+            <div class="avonent-catalog__pagination">
+              {{ paginate | default_pagination }}
+            </div>
+          {% endif %}
+        {% endpaginate %}
+      {% endif %}
+    </ul>
+  </div>
+</section>
+
+<style>
+  #avonent-catalog-{{ section.id }} {
+    --av-blue:#02C6EA;
+    --av-blue-dark:#079CB8;
+    --av-ink:#101415;
+    --av-muted:#667176;
+    --av-border:#D9EDF2;
+    min-height:55vh;
+    background:#F7FCFD;
+    color:var(--av-ink);
+  }
+
+  #avonent-catalog-{{ section.id }} *{box-sizing:border-box}
+
+  #avonent-catalog-{{ section.id }} .avonent-catalog__hero{
+    width:100%;
+    background:#EEF9FC;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-catalog__hero-media{
+    width:100%;
+    max-height:560px;
+    overflow:hidden;
+    background:#E8F6FA;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-catalog__hero-image{
+    display:block;
+    width:100%;
+    height:clamp(300px,43vw,560px);
+    object-fit:cover;
+    object-position:center;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-catalog__hero-copy{
+    width:min(860px,calc(100% - 40px));
+    margin:0 auto;
+    padding:40px 0 44px;
+    text-align:center;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-catalog__hero-eyebrow{
+    margin-bottom:10px;
+    color:var(--av-blue-dark);
+    font-family:var(--font-body--family);
+    font-size:12px;
+    font-weight:850;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-catalog__hero-copy h1{
+    max-width:780px;
+    margin:0 auto;
+    color:var(--av-ink);
+    font-family:var(--font-heading--family,var(--font-body--family));
+    font-size:clamp(36px,5vw,60px);
+    font-weight:700;
+    line-height:1.02;
+    letter-spacing:-.04em;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-catalog__hero-copy p{
+    max-width:680px;
+    margin:16px auto 0;
+    color:var(--av-muted);
+    font-family:var(--font-body--family);
+    font-size:17px;
+    line-height:1.55;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-catalog__inner{
+    width:min(980px,calc(100% - 40px));
+    margin:0 auto;
+    padding:52px 0 76px;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-catalog__header{
+    margin-bottom:30px;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-catalog__eyebrow{
+    display:block;
+    margin-bottom:8px;
+    color:var(--av-blue-dark);
+    font-family:var(--font-body--family);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.15em;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-catalog__header h1{
+    margin:0;
+    font-family:var(--font-heading--family,var(--font-body--family));
+    font-size:clamp(34px,4vw,52px);
+    line-height:1.02;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-catalog__description{
+    margin-top:10px;
+    color:var(--av-muted);
+    font-family:var(--font-body--family);
+    font-size:14px;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-catalog__grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:26px;
+    margin:0;
+    padding:0;
+    list-style:none;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card{
+    overflow:hidden;
+    height:100%;
+    border:1px solid var(--av-border);
+    border-radius:22px;
+    background:#fff;
+    box-shadow:0 12px 34px rgba(7,58,69,.055);
+    transition:transform .2s ease,box-shadow .2s ease;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 18px 42px rgba(7,95,113,.10);
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__media{
+    display:block;
+    aspect-ratio:1/1;
+    overflow:hidden;
+    background:#F0F9FB;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__image{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__placeholder,
+  #avonent-catalog-{{ section.id }} .avonent-card__placeholder svg{
+    width:100%;
+    height:100%;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__body{
+    padding:20px 20px 18px;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__title{
+    margin:0;
+    font-family:var(--font-heading--family,var(--font-body--family));
+    font-size:22px;
+    font-weight:760;
+    line-height:1.16;
+    letter-spacing:-.025em;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__title a{
+    color:var(--av-ink);
+    text-decoration:none;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__price{
+    display:flex;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:12px;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__price-current{
+    font-family:var(--font-heading--family,var(--font-body--family));
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:-.025em;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__price s{
+    color:#8B989D;
+    font-family:var(--font-body--family);
+    font-size:13px;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__button{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+    min-height:52px;
+    margin-top:18px;
+    padding:14px 17px;
+    border-radius:12px;
+    background:var(--av-blue);
+    color:#fff;
+    font-family:var(--font-body--family);
+    font-size:15px;
+    font-weight:800;
+    text-decoration:none;
+    transition:background .18s ease,transform .18s ease;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__button:hover{
+    background:var(--av-blue-dark);
+    transform:translateY(-1px);
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__button span{font-size:20px}
+
+  #avonent-catalog-{{ section.id }} .avonent-card__assurance{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    margin-top:13px;
+    color:#68767B;
+    font-family:var(--font-body--family);
+    font-size:12px;
+    font-weight:650;
+    text-align:center;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__assurance svg{
+    width:18px;
+    height:18px;
+    flex:0 0 18px;
+    color:var(--av-blue-dark);
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-catalog__pagination{
+    grid-column:1/-1;
+    margin-top:34px;
+    text-align:center;
+  }
+
+  @media(max-width:749px){
+    #avonent-catalog-{{ section.id }} .avonent-catalog__hero-image{
+      height:auto;
+      aspect-ratio:1.18/1;
+      object-fit:cover;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-catalog__hero-copy{
+      width:calc(100% - 32px);
+      padding:30px 0 34px;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-catalog__hero-eyebrow{
+      font-size:10px;
+      margin-bottom:8px;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-catalog__hero-copy h1{
+      font-size:clamp(32px,9.4vw,44px);
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-catalog__hero-copy p{
+      margin-top:12px;
+      font-size:14.5px;
+      line-height:1.5;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-catalog__inner{
+      width:calc(100% - 28px);
+      padding:34px 0 56px;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-catalog__grid{
+      grid-template-columns:1fr;
+      gap:18px;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-card{
+      border-radius:18px;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-card__body{
+      padding:17px 17px 16px;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-card__title{
+      font-size:20px;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-card__price-current{
+      font-size:20px;
+    }
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    #avonent-catalog-{{ section.id }} .avonent-card,
+    #avonent-catalog-{{ section.id }} .avonent-card__button{
+      transition:none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Avonent Catalog",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "All products hero"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "Small heading",
+      "default": "SHOP AVONENT"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Heading",
+      "default": "The supplement aisle got complicated. We brought the basics back."
+    },
+    {
+      "type": "textarea",
+      "id": "hero_text",
+      "label": "Supporting text",
+      "default": "Focused daily formulas with clearly disclosed ingredients, straightforward routines, and support that is easy to understand."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Avonent Catalog"
+    }
+  ]
+}
+{% endschema %}

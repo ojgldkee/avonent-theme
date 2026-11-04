@@ -1,0 +1,345 @@
+<div class="avonent-cart-trust">
+
+  {% if shop.enabled_payment_types.size > 0 %}
+    <div
+      class="avonent-cart-trust__payments"
+      aria-label="Accepted payment methods"
+    >
+      {% for type in shop.enabled_payment_types %}
+        <span class="avonent-cart-trust__payment">
+          {{ type | payment_type_svg_tag }}
+        </span>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="avonent-cart-trust__rating">
+    <span
+      class="avonent-cart-trust__stars"
+      aria-hidden="true"
+    >
+      ★★★★★
+    </span>
+
+    <span class="avonent-cart-trust__rating-copy">
+      <strong>10,000+</strong> Trusted Customers
+    </span>
+  </div>
+
+  <div class="avonent-cart-trust__badges">
+
+    <div class="avonent-cart-trust__badge">
+      <span class="avonent-cart-trust__icon">
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M12 3 19 6v5c0 4.8-2.9 8.2-7 10-4.1-1.8-7-5.2-7-10V6z"></path>
+          <path d="m9 12 2 2 4-4"></path>
+        </svg>
+      </span>
+
+      <span class="avonent-cart-trust__badge-text">
+        <strong>Secure</strong>
+        <small>Checkout</small>
+      </span>
+    </div>
+
+    <div class="avonent-cart-trust__badge">
+      <span class="avonent-cart-trust__icon">
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M9 3h6"></path>
+          <path d="M10 3v6l-5 8.2A2.4 2.4 0 0 0 7 21h10a2.4 2.4 0 0 0 2-3.8L14 9V3"></path>
+          <path d="M8.5 14h7"></path>
+        </svg>
+      </span>
+
+      <span class="avonent-cart-trust__badge-text">
+        <strong>Third-Party</strong>
+        <small>Lab Tested</small>
+      </span>
+    </div>
+
+    <div class="avonent-cart-trust__badge">
+      <span class="avonent-cart-trust__icon">
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M6 3v18"></path>
+          <path d="M6 4h10l-2 3 2 3H6"></path>
+        </svg>
+      </span>
+
+      <span class="avonent-cart-trust__badge-text">
+        <strong>Ships From</strong>
+        <small>USA</small>
+      </span>
+    </div>
+
+  </div>
+
+</div>
+
+{% stylesheet %}
+
+  /*
+   * AVONENT CART TRUST
+   * No JS. No external libraries.
+   */
+
+  .avonent-cart-trust {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 15px;
+
+    padding-top: 2px;
+  }
+
+
+  /*
+   * PAYMENT ICONS
+   */
+
+  .avonent-cart-trust__payments {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    width: 100%;
+  }
+
+  .avonent-cart-trust__payment {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 23px;
+  }
+
+  .avonent-cart-trust__payment svg {
+    display: block;
+
+    width: auto;
+    height: 23px;
+  }
+
+
+  /*
+   * SOCIAL PROOF
+   */
+
+  .avonent-cart-trust__rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    width: 100%;
+
+    font-family:
+      var(--font-body--family);
+  }
+
+  .avonent-cart-trust__stars {
+    color: #02c6ea;
+
+    font-size: 14px;
+
+    line-height: 1;
+
+    letter-spacing: 1px;
+  }
+
+  .avonent-cart-trust__rating-copy {
+    color: #111111;
+
+    font-size: 12px;
+    font-weight: 450;
+
+    line-height: 1.2;
+  }
+
+  .avonent-cart-trust__rating-copy strong {
+    font-weight: 700;
+  }
+
+
+  /*
+   * TRUST BADGES
+   */
+
+  .avonent-cart-trust__badges {
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    width: 100%;
+
+    padding-top: 14px;
+
+    border-top:
+      1px solid
+      #e8ecee;
+  }
+
+  .avonent-cart-trust__badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    min-width: 0;
+
+    padding:
+      0
+      8px;
+
+    text-align: center;
+  }
+
+  .avonent-cart-trust__badge +
+  .avonent-cart-trust__badge {
+    border-left:
+      1px solid
+      #e8ecee;
+  }
+
+  .avonent-cart-trust__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    margin-bottom: 6px;
+
+    border-radius: 50%;
+
+    background:
+      #eafaff;
+
+    color:
+      #02c6ea;
+  }
+
+  .avonent-cart-trust__icon svg {
+    width: 15px;
+    height: 15px;
+
+    fill: none;
+
+    stroke: currentColor;
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .avonent-cart-trust__badge-text {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+
+    color: #111111;
+
+    font-family:
+      var(--font-body--family);
+
+    line-height: 1.2;
+  }
+
+  .avonent-cart-trust__badge-text strong {
+    font-size: 10px;
+    font-weight: 650;
+  }
+
+  .avonent-cart-trust__badge-text small {
+    margin-top: 2px;
+
+    color: #6d7478;
+
+    font-size: 9px;
+    font-weight: 400;
+  }
+
+
+  /*
+   * DESKTOP
+   */
+
+  @media screen and (min-width: 750px) {
+
+    .avonent-cart-trust {
+      gap: 17px;
+    }
+
+    .avonent-cart-trust__payment {
+      height: 25px;
+    }
+
+    .avonent-cart-trust__payment svg {
+      height: 25px;
+    }
+
+    .avonent-cart-trust__stars {
+      font-size: 15px;
+    }
+
+    .avonent-cart-trust__rating-copy {
+      font-size: 13px;
+    }
+
+    .avonent-cart-trust__badge-text strong {
+      font-size: 11px;
+    }
+
+    .avonent-cart-trust__badge-text small {
+      font-size: 10px;
+    }
+
+  }
+
+
+  /*
+   * SMALL PHONES
+   */
+
+  @media screen and (max-width: 360px) {
+
+    .avonent-cart-trust__badge {
+      padding-inline: 4px;
+    }
+
+    .avonent-cart-trust__badge-text strong {
+      font-size: 9px;
+    }
+
+    .avonent-cart-trust__badge-text small {
+      font-size: 8px;
+    }
+
+    .avonent-cart-trust__payment,
+    .avonent-cart-trust__payment svg {
+      height: 21px;
+    }
+
+  }
+
+{% endstylesheet %}

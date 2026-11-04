@@ -1,0 +1,89 @@
+{% liquid
+  assign av_cb_product = product
+  assign av_cb_variant = av_cb_product.selected_or_first_available_variant
+  assign av_cb_unit_price = av_cb_variant.price | default: av_cb_product.price
+%}
+
+<div class="av-cb-body">
+  <style>
+    .av-cb-body{--blue:#02c6ea;--deep:#087e9d;--ink:#08171d;--muted:#5f7078;--line:#d9ebef;--soft:#eefbfe;--soft2:#f7fdff;background:#fff;color:var(--ink);font-family:inherit}
+    .av-cb-body *{box-sizing:border-box}.av-cb-body__wrap{width:min(1200px,calc(100% - 32px));margin:0 auto}.av-cb-body__section{padding:72px 0}.av-cb-body__section--soft{background:var(--soft2)}.av-cb-body__section--blue{background:var(--deep);color:#fff}
+    .av-cb-body__eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:var(--deep);margin-bottom:12px}.av-cb-body__eyebrow:before{content:"";width:28px;height:3px;border-radius:99px;background:var(--blue)}
+    .av-cb-body__head{text-align:center;max-width:760px;margin:0 auto 34px}.av-cb-body__head h2{font-size:clamp(30px,4vw,48px);line-height:1.05;letter-spacing:-.035em;margin:8px 0 12px}.av-cb-body__head p{font-size:16px;line-height:1.65;color:var(--muted);margin:0}.av-cb-body__section--blue .av-cb-body__head p{color:#d5f2f8}.av-cb-body__section--blue .av-cb-body__eyebrow{color:#8deeff}
+    .av-cb-body__formula{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.av-cb-body__card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:26px;min-height:260px}.av-cb-body__card .num{font-size:38px;font-weight:850;letter-spacing:-.04em;color:var(--blue)}.av-cb-body__card .unit{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;font-weight:850}.av-cb-body__card h3{font-size:22px;margin:18px 0 9px}.av-cb-body__card p{font-size:14px;line-height:1.6;color:var(--muted);margin:0}
+    .av-cb-body__education{display:grid;grid-template-columns:1fr 1fr;gap:24px}.av-cb-body__edu{border-radius:24px;padding:30px;background:#fff;border:1px solid var(--line)}.av-cb-body__edu--ceylon{background:var(--soft);border-color:#aeeaf4}.av-cb-body__edu .label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:850;color:var(--deep)}.av-cb-body__edu h3{font-size:30px;margin:8px 0 12px}.av-cb-body__edu p{color:var(--muted);line-height:1.6;margin:0}
+    .av-cb-body__compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}.av-cb-body__compare-card{border-radius:24px;padding:28px;background:#fff;border:1px solid var(--line)}.av-cb-body__compare-card--av{background:#0a92b3;border-color:#42cce8;color:#fff}.av-cb-body__compare-card h3{font-size:25px;margin:0 0 18px}.av-cb-body__row{display:flex;gap:10px;align-items:flex-start;padding:12px 0;border-top:1px solid rgba(255,255,255,.18)}.av-cb-body__compare-card:not(.av-cb-body__compare-card--av) .av-cb-body__row{border-color:var(--line)}.av-cb-body__check{width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex:0 0 22px}.av-cb-body__compare-card--av .av-cb-body__check{background:#8deeff;color:#07303b}.av-cb-body__row b{font-size:14px}.av-cb-body__row span{display:block;font-size:12px;opacity:.75;margin-top:2px}
+    .av-cb-body__timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.av-cb-body__week{border-radius:18px;padding:22px;background:#fff;border:1px solid var(--line)}.av-cb-body__week b{color:var(--deep);font-size:12px;letter-spacing:.08em;text-transform:uppercase}.av-cb-body__week h3{font-size:18px;margin:8px 0}.av-cb-body__week p{font-size:13px;line-height:1.55;color:var(--muted);margin:0}
+    .av-cb-body__disclaimer{font-size:10px!important;color:#7b8a90!important;max-width:860px;margin:24px auto 0!important;text-align:center;line-height:1.5!important}
+    .av-cb-body__sticky{display:none}
+    @media(max-width:900px){.av-cb-body__formula,.av-cb-body__timeline{grid-template-columns:1fr 1fr}.av-cb-body__education,.av-cb-body__compare{grid-template-columns:1fr}}
+    @media(max-width:600px){.av-cb-body__wrap{width:min(100% - 22px,1200px)}.av-cb-body__section{padding:50px 0}.av-cb-body__formula,.av-cb-body__timeline{grid-template-columns:1fr}.av-cb-body__sticky{position:fixed;display:flex;z-index:40;left:10px;right:10px;bottom:10px;background:#fff;border:1px solid var(--line);box-shadow:0 12px 40px rgba(0,0,0,.16);border-radius:14px;padding:9px;align-items:center;justify-content:space-between;gap:10px}.av-cb-body__sticky b{font-size:12px}.av-cb-body__sticky a{background:#111;color:#fff;padding:12px 18px;border-radius:10px;font-size:12px;font-weight:850;text-decoration:none}.av-cb-body{padding-bottom:72px}}
+  </style>
+
+  <section class="av-cb-body__section av-cb-body__section--soft">
+    <div class="av-cb-body__wrap">
+      <header class="av-cb-body__head">
+        <div class="av-cb-body__eyebrow">Inside the formula</div>
+        <h2>Three ingredients. One simple 30-day formula.</h2>
+        <p>No mystery blend. Every core ingredient and daily amount is clearly stated.</p>
+      </header>
+      <div class="av-cb-body__formula">
+        <article class="av-cb-body__card"><div class="num">1,200</div><div class="unit">mg per daily serving</div><h3>True Ceylon Cinnamon</h3><p>Cinnamomum verum gives the formula a clearly identified cinnamon source and supports healthy glucose metabolism as part of a balanced lifestyle.*</p></article>
+        <article class="av-cb-body__card"><div class="num">400</div><div class="unit">mg per daily serving</div><h3>Berberine HCl</h3><p>A researched botanical compound commonly used in metabolic-wellness formulas to support normal glucose and lipid metabolism.*</p></article>
+        <article class="av-cb-body__card"><div class="num">200</div><div class="unit">mg per daily serving</div><h3>MCT Oil</h3><p>An oil-based carrier that helps create the convenient softgel format instead of a dry powder-only capsule.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="av-cb-body__section">
+    <div class="av-cb-body__wrap">
+      <header class="av-cb-body__head"><div class="av-cb-body__eyebrow">Not all cinnamon is the same</div><h2>True Ceylon vs. common cassia.</h2><p>The cinnamon source is part of the product story—not an afterthought.</p></header>
+      <div class="av-cb-body__education">
+        <article class="av-cb-body__edu av-cb-body__edu--ceylon"><div class="label">Avonent uses</div><h3>Ceylon Cinnamon</h3><p><strong>Cinnamomum verum</strong>, often called true cinnamon. It is naturally much lower in coumarin than common cassia cinnamon and gives the formula a clearly identified cinnamon source.</p></article>
+        <article class="av-cb-body__edu"><div class="label">Common alternative</div><h3>Cassia Cinnamon</h3><p>The cinnamon most shoppers see in ordinary grocery and supplement products. Cassia is a different species and naturally contains substantially more coumarin than Ceylon cinnamon.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="av-cb-body__section av-cb-body__section--blue">
+    <div class="av-cb-body__wrap">
+      <header class="av-cb-body__head"><div class="av-cb-body__eyebrow">The Avonent difference</div><h2>A more complete cinnamon formula.</h2><p>Instead of a generic single-ingredient capsule, Avonent combines three clearly disclosed components in one monthly routine.</p></header>
+      <div class="av-cb-body__compare">
+        <article class="av-cb-body__compare-card av-cb-body__compare-card--av">
+          <h3>Avonent</h3>
+          <div class="av-cb-body__row"><span class="av-cb-body__check">✓</span><div><b>True Ceylon clearly identified</b><span>Cinnamomum verum</span></div></div>
+          <div class="av-cb-body__row"><span class="av-cb-body__check">✓</span><div><b>Ceylon + Berberine</b><span>Two botanical actives in one formula</span></div></div>
+          <div class="av-cb-body__row"><span class="av-cb-body__check">✓</span><div><b>Exact daily amounts shown</b><span>1,200 mg + 400 mg + 200 mg</span></div></div>
+          <div class="av-cb-body__row"><span class="av-cb-body__check">✓</span><div><b>MCT oil softgel base</b><span>Oil-based format</span></div></div>
+          <div class="av-cb-body__row"><span class="av-cb-body__check">✓</span><div><b>Exactly 30 servings</b><span>Built around monthly consistency</span></div></div>
+        </article>
+        <article class="av-cb-body__compare-card">
+          <h3>Typical basic formula</h3>
+          <div class="av-cb-body__row"><span class="av-cb-body__check">–</span><div><b>Cinnamon variety may be vague</b><span>Often simply labeled “cinnamon”</span></div></div>
+          <div class="av-cb-body__row"><span class="av-cb-body__check">–</span><div><b>Often single ingredient</b><span>May require separate products</span></div></div>
+          <div class="av-cb-body__row"><span class="av-cb-body__check">–</span><div><b>Serving details can vary</b><span>Compare labels carefully</span></div></div>
+          <div class="av-cb-body__row"><span class="av-cb-body__check">–</span><div><b>Common powder capsule format</b><span>No MCT oil base</span></div></div>
+          <div class="av-cb-body__row"><span class="av-cb-body__check">–</span><div><b>Supply length varies</b><span>Not always designed as a month</span></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="av-cb-body__section av-cb-body__section--soft">
+    <div class="av-cb-body__wrap">
+      <header class="av-cb-body__head"><div class="av-cb-body__eyebrow">Your 30-day routine</div><h2>Consistency beats complexity.</h2><p>One bottle contains 30 full daily servings.</p></header>
+      <div class="av-cb-body__timeline">
+        <article class="av-cb-body__week"><b>Week 1</b><h3>Start the routine</h3><p>Take the labeled four-softgel serving each day and anchor it to the same part of your routine.</p></article>
+        <article class="av-cb-body__week"><b>Week 2</b><h3>Make it automatic</h3><p>Keep the serving consistent alongside meals, movement, hydration, and sleep.</p></article>
+        <article class="av-cb-body__week"><b>Week 3</b><h3>Stay consistent</h3><p>You are more than halfway through the bottle. Keep using the formula exactly as directed.</p></article>
+        <article class="av-cb-body__week"><b>Week 4</b><h3>Finish the bottle</h3><p>Complete the 30-serving routine and decide whether it fits your long-term wellness habits.</p></article>
+      </div>
+      <p class="av-cb-body__disclaimer">*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Individual experiences vary.</p>
+    </div>
+  </section>
+
+  <div class="av-cb-body__sticky">
+    <b>Berberine + Ceylon · {{ av_cb_unit_price | money }}</b>
+    <a href="#av-cb-top">Choose Supply</a>
+  </div>
+</div>
