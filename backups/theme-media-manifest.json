@@ -1,0 +1,442 @@
+{
+  "version": 1,
+  "generated_at": "2026-11-04",
+  "source_store": "avonent.com",
+  "source_theme_id": "197046730918",
+  "purpose": "Media referenced by Shopify theme settings and templates. Download each source_url before source store media is deleted. File references are store-specific.",
+  "images": [],
+  "unresolved": [
+    {
+      "filename": "06BCB714-74B6-4F81-85FC-3693005D6D21.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "07B1D885-5B03-4CF5-9F24-BA7AEFD3C43B.png",
+      "referenced_by": [
+        "templates/product.garlic.json"
+      ]
+    },
+    {
+      "filename": "08DE2EEB-0E8F-4A11-BD96-9C53476780D4.png",
+      "referenced_by": [
+        "templates/page.avonent-cinnamon-listicle.json"
+      ]
+    },
+    {
+      "filename": "0D358947-7BFD-484E-ADCE-4E7D5BB64395.png",
+      "referenced_by": [
+        "templates/product.moringa.json"
+      ]
+    },
+    {
+      "filename": "0DE44C5F-B261-44E0-9E4A-DBFB50BF3743.png",
+      "referenced_by": [
+        "templates/product.moringa.json"
+      ]
+    },
+    {
+      "filename": "0E6471D8-3430-469A-80EC-2BB42864FDE3.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "1813CD75-B581-413F-BA00-C9D062AE4959.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "1A6460DC-D7AB-4437-8C6B-6FCE6D237D46.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "1A82736D-A542-4EB9-896C-2EF3110BA483.png",
+      "referenced_by": [
+        "templates/product.garlic.json"
+      ]
+    },
+    {
+      "filename": "1B14CB46-7F43-4802-BEF2-129BA252A066.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "1B65CAC8-D1EC-4A92-A1D6-238AC0662275.png",
+      "referenced_by": [
+        "templates/page.avonent-cinnamon-listicle.json"
+      ]
+    },
+    {
+      "filename": "1FA0CA01-7E0B-48B4-BA27-C66E6A6F100B.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "350E3E49-E639-4A7F-B745-1FB5C17B47D8.png",
+      "referenced_by": [
+        "templates/page.avonent-cinnamon-listicle.json"
+      ]
+    },
+    {
+      "filename": "37646A5E-CD1D-45ED-9652-E39FF98543A7.png",
+      "referenced_by": [
+        "templates/product.avonent.json"
+      ]
+    },
+    {
+      "filename": "39215CD8-F01A-487F-9107-028EA0B9B4BE.png",
+      "referenced_by": [
+        "templates/product.moringa.json"
+      ]
+    },
+    {
+      "filename": "40577C11-0518-4C04-9939-5CA3F429DBBF.png",
+      "referenced_by": [
+        "templates/product.garlic.json"
+      ]
+    },
+    {
+      "filename": "442E856B-468D-420D-966A-BE0677A5A2FA.png",
+      "referenced_by": [
+        "templates/product.garlic.json"
+      ]
+    },
+    {
+      "filename": "4450995D-EADC-46CB-BFE4-0624E0B39466.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "4AE10B52-C621-4736-8682-928BADA94ECE.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "4F83536B-2F43-4E45-A78D-45DE2FA625B4.png",
+      "referenced_by": [
+        "templates/index.json"
+      ]
+    },
+    {
+      "filename": "53C5CBE5-7895-4096-92EF-077872E32743.png",
+      "referenced_by": [
+        "templates/page.avonent-cinnamon-listicle.json"
+      ]
+    },
+    {
+      "filename": "54BA8953-968C-4EC2-87D2-80955CC9C583.png",
+      "referenced_by": [
+        "templates/product.moringa.json"
+      ]
+    },
+    {
+      "filename": "57BBE039-9142-4C0F-A3BA-A6CABDB4EFED.png",
+      "referenced_by": [
+        "templates/product.moringa.json"
+      ]
+    },
+    {
+      "filename": "59C856FE-37FE-4862-A5AF-05E26E21A25C.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "62ED769E-2EE1-4A4C-9BE5-F906DFD484C5.png",
+      "referenced_by": [
+        "templates/product.avonent.json",
+        "templates/product.moringa.json"
+      ]
+    },
+    {
+      "filename": "660F3A1D-A9A8-4C2B-8F91-A77754AB205A.png",
+      "referenced_by": [
+        "templates/product.avonent.json",
+        "templates/product.moringa.json"
+      ]
+    },
+    {
+      "filename": "6AD8D6D1-6463-4654-B691-1D0E00128E75.png",
+      "referenced_by": [
+        "templates/product.moringa.json"
+      ]
+    },
+    {
+      "filename": "6C5A3AA4-9F2D-4F06-8E72-23B99A3B9DAF.png",
+      "referenced_by": [
+        "templates/product.garlic.json"
+      ]
+    },
+    {
+      "filename": "6EECC4C1-1B6B-425F-A348-533E76E53580.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "74C6DB7C-DF49-485B-9261-8297DF7A985E.png",
+      "referenced_by": [
+        "templates/page.avonent-cinnamon-listicle.json"
+      ]
+    },
+    {
+      "filename": "75E05387-DF21-4A17-94A1-2CDDC062CB5C.png",
+      "referenced_by": [
+        "templates/product.avonent.json"
+      ]
+    },
+    {
+      "filename": "7DE99ADE-F333-4542-991E-B0BFA2855581.png",
+      "referenced_by": [
+        "templates/product.garlic.json"
+      ]
+    },
+    {
+      "filename": "80211E07-BDA7-4348-AF9E-C68ABF3A6326.png",
+      "referenced_by": [
+        "templates/product.garlic.json"
+      ]
+    },
+    {
+      "filename": "8711DF51-D64A-4204-81CD-A0B0719F46F5.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "8AD2BC79-7DA5-46FD-BF14-8717FB2E9B2B.png",
+      "referenced_by": [
+        "templates/product.avonent.json"
+      ]
+    },
+    {
+      "filename": "92BFCE50-C2ED-4CE6-AEBE-4BCB6C4BB095.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "93ECE910-6549-45F6-95E6-F6266604EC60.png",
+      "referenced_by": [
+        "templates/page.avonent-cinnamon-listicle.json"
+      ]
+    },
+    {
+      "filename": "95EBC813-6F71-4143-B96B-5B6080C9DFDB.png",
+      "referenced_by": [
+        "templates/product.moringa.json"
+      ]
+    },
+    {
+      "filename": "99A8FC23-1F52-4CC7-A154-36FC53C085C0.png",
+      "referenced_by": [
+        "templates/page.avonent-cinnamon-listicle.json"
+      ]
+    },
+    {
+      "filename": "A2D123E9-0689-4A32-84E6-1DBBAE49FE45.png",
+      "referenced_by": [
+        "templates/product.moringa.json"
+      ]
+    },
+    {
+      "filename": "A7162ED3-B2D7-4591-BD38-CD872AE47EAA.png",
+      "referenced_by": [
+        "templates/product.avonent.json",
+        "templates/product.moringa.json"
+      ]
+    },
+    {
+      "filename": "A929BD16-DF1D-422F-A109-10F3AAF241DD.png",
+      "referenced_by": [
+        "templates/product.avonent.json"
+      ]
+    },
+    {
+      "filename": "avonent_customer_1.png",
+      "referenced_by": [
+        "templates/product.garlic.json"
+      ]
+    },
+    {
+      "filename": "avonent_customer_2.png",
+      "referenced_by": [
+        "templates/product.garlic.json"
+      ]
+    },
+    {
+      "filename": "avonent_customer_3.png",
+      "referenced_by": [
+        "templates/product.garlic.json"
+      ]
+    },
+    {
+      "filename": "avonent-cinnamon-results-background.webp",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "avonent-digestive-complex-1996B5-background.png",
+      "referenced_by": [
+        "templates/product.avonent.json"
+      ]
+    },
+    {
+      "filename": "avonent-header-logo_e0aca380-6c71-447a-98cc-eee56dcc2ba3.png",
+      "referenced_by": [
+        "config/settings_data.json"
+      ]
+    },
+    {
+      "filename": "B37E348E-57D9-4600-921E-5ABFE3FDFA35.png",
+      "referenced_by": [
+        "templates/product.avonent.json"
+      ]
+    },
+    {
+      "filename": "B45AFB74-F056-4B81-AB95-AE7BA910FFFA.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "BFDCFB9D-29CB-4E00-BE43-799CAE803D56.png",
+      "referenced_by": [
+        "templates/product.garlic.json"
+      ]
+    },
+    {
+      "filename": "C0179B3C-0499-4890-A83F-1763FE10E11A.png",
+      "referenced_by": [
+        "templates/page.avonent-cinnamon-listicle.json"
+      ]
+    },
+    {
+      "filename": "C04C2E61-6810-481D-AC27-4D6E539CA546.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "C3905579-A29D-4659-BE7B-525132E6E450.png",
+      "referenced_by": [
+        "templates/product.moringa.json"
+      ]
+    },
+    {
+      "filename": "C7150C72-4AC2-4E89-8F5D-DCD580A54719.png",
+      "referenced_by": [
+        "templates/product.garlic.json"
+      ]
+    },
+    {
+      "filename": "ChatGPT_Image_Aug_21_2026_06_32_07_PM.png",
+      "referenced_by": [
+        "config/settings_data.json"
+      ]
+    },
+    {
+      "filename": "D52B056C-FE55-47C9-8416-215D26526F83.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "D6A22A98-3091-4A20-ABE6-7CA88EE29622.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "DAD51A6B-9B03-410F-9251-86EAA51602D3.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "E16B5C18-E5E2-4CE2-8082-66A9A67C4D0E.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "E1E5C4F6-C601-46E5-840A-DFDBA6B66EE2.jpg",
+      "referenced_by": [
+        "templates/product.moringa.json"
+      ]
+    },
+    {
+      "filename": "E66618C5-084F-46DD-B619-39A311EA814E.png",
+      "referenced_by": [
+        "templates/product.moringa.json"
+      ]
+    },
+    {
+      "filename": "E7AF9E64-8AA3-4DD0-9FD8-316F0DB0604E.png",
+      "referenced_by": [
+        "templates/product.moringa.json"
+      ]
+    },
+    {
+      "filename": "ED3C68E7-159E-44D5-B324-51DAF0789157.png",
+      "referenced_by": [
+        "templates/product.garlic.json"
+      ]
+    },
+    {
+      "filename": "EE596049-5BD0-41D5-894B-76076508F580.png",
+      "referenced_by": [
+        "templates/product.avonent.json"
+      ]
+    },
+    {
+      "filename": "F0CDE7AD-5AA2-4277-8490-8BF2C71DAA47.png",
+      "referenced_by": [
+        "templates/product.moringa.json"
+      ]
+    },
+    {
+      "filename": "F3F712FB-A4A8-49B5-BBAA-E045BF99C714.png",
+      "referenced_by": [
+        "templates/product.garlic.json"
+      ]
+    },
+    {
+      "filename": "FD7231F1-01ED-4B52-8882-17A475D74AA1.png",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    },
+    {
+      "filename": "IMG_2354.png",
+      "referenced_by": [
+        "templates/product.garlic.json"
+      ]
+    },
+    {
+      "filename": "IMG_2631.jpg",
+      "referenced_by": [
+        "templates/product.cinnamon-berberine.json"
+      ]
+    }
+  ],
+  "absolute_shopify_cdn_urls": [
+    "https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-90-day-money-back-guarantee.png?v=1793736254",
+    "https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-aged-garlic-softgel-realistic.png?v=1792648250",
+    "https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-aged-garlic-softgel-realistic.png?v=1792648420",
+    "https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-why-trust-avonent.png?v=1793242624",
+    "https://cdn.shopify.com/s/files/1/0779/0673/9384/files/stars-green.svg?v=1761298566",
+    "https://cdn.shopify.com/shopifycloud/model-viewer-ui/assets/v1.0/model-viewer-ui.css",
+    "https://cdn.shopify.com/storefront/standard-events.js"
+  ]
+}
