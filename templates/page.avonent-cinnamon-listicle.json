@@ -1,0 +1,237 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "00-avonent-cinnamon-listicle-v2",
+      "blocks": {
+        "reason_1": {
+          "type": "benefit",
+          "settings": {
+            "category": "INSULIN RESISTANCE",
+            "heading": "Fix Your Destroyed Insulin Sensitivity (The Real Reason Your Blood Sugar Refuses to Drop)",
+            "body": "<p>Eating clean isn't enough when your body stops responding to insulin. Insulin resistance traps glucose in your bloodstream, driving up blood sugar regardless of your diet, and most wellness supplements don't address it.</p><p><strong>Avonent does.</strong> By pairing <strong>True Ceylon Cinnamon</strong> (featuring MHCP to mimic insulin at the cellular level) with <strong>Berberine HCl</strong> (one of nature’s strongest metabolic regulation compounds), Avonent targets insulin sensitivity from two distinct pathways. Suspended in <strong>pure MCT oil for maximum absorption</strong>, this high-potency formula maximizes bioavailability to unlock your cells, restore healthy insulin response, and keep your blood sugar balanced.</p>",
+            "highlight": "An intentional addition to your metabolic wellness routine",
+            "image": "shopify://shop_images/08DE2EEB-0E8F-4A11-BD96-9C53476780D4.png",
+            "image_alt": "Avonent Ceylon cinnamon ingredient photograph",
+            "image_caption": ""
+          }
+        },
+        "reason_2": {
+          "type": "benefit",
+          "settings": {
+            "category": "BLOOD SUGAR STABILIZATION",
+            "heading": "Support Consistent Blood Sugar Levels All Day",
+            "body": "<p>Most supplements only slow down how fast carbs hit your system. They don’t fix why your blood sugar keeps rising and falling throughout the day, so you stay on the rollercoaster.</p><p>Avonent uses genuine Ceylon cinnamon to help keep blood sugar steadier from morning to night. Instead of temporary blocks, it supports more consistent levels so you’re not dealing with the constant spikes and drops.</p>",
+            "highlight": "Know the cinnamon variety—not just the marketing",
+            "image": "shopify://shop_images/93ECE910-6549-45F6-95E6-F6266604EC60.png",
+            "image_alt": "Avonent Ceylon cinnamon ingredient photograph",
+            "image_caption": ""
+          }
+        },
+        "reason_3": {
+          "type": "benefit",
+          "settings": {
+            "category": "ENERGY RESTORATION",
+            "heading": "Get Rid of Afternoon Crashes and Brain Fog",
+            "body": "<p>When your cells are insulin resistant, glucose can’t enter properly. That leaves you exhausted, foggy, and craving sugar even when your blood sugar is already high.</p><p>Avonent’s Ceylon cinnamon helps restore cellular function so glucose can actually fuel your cells instead of sitting in your bloodstream. The result is steadier energy all day without the crashes or constant carb cravings.</p>",
+            "highlight": "Build consistency instead of chasing another quick fix",
+            "image": "shopify://shop_images/1B65CAC8-D1EC-4A92-A1D6-238AC0662275.png",
+            "image_alt": "Avonent Ceylon cinnamon ingredient photograph",
+            "image_caption": ""
+          }
+        },
+        "reason_4": {
+          "type": "benefit",
+          "settings": {
+            "category": "NO SIDE EFFECTS",
+            "heading": "Escape the Side Effects That Won’t Stop",
+            "body": "<p>Those digestive issues aren’t just bad luck. The blood sugar pills many people take disrupt the gut lining and deplete B12. That damage makes the nausea, cramping, and fatigue worse, trapping you in a cycle.</p><p>Avonent combines genuine Ceylon cinnamon with berberine to support cellular balance and healthy glucose metabolism naturally. It helps with both blood sugar and energy without the bloating, cramps, or constant bathroom runs that come with other options.</p>",
+            "highlight": "",
+            "image": "shopify://shop_images/350E3E49-E639-4A7F-B745-1FB5C17B47D8.png",
+            "image_alt": "Avonent Ceylon cinnamon ingredient photograph",
+            "image_caption": ""
+          }
+        },
+        "reason_5": {
+          "type": "benefit",
+          "settings": {
+            "category": "GENUINE CEYLON",
+            "heading": "Not the “Cheap Cassia” Found in Grocery Stores",
+            "body": "<p>Most cinnamon supplements use cheap Cassia. It contains up to 250 times more coumarin, a compound linked to liver stress with daily use. Many are also unverified and low quality.</p><p>Avonent uses 100% authentic Ceylon cinnamon from Sri Lanka. It naturally contains far less coumarin and is third-party tested so you can take it every day without the risk. That’s why it actually supports healthy blood sugar instead of just tasting like cinnamon.</p>",
+            "highlight": "True Ceylon cinnamon—not an unspecified variety",
+            "image": "shopify://shop_images/99A8FC23-1F52-4CC7-A154-36FC53C085C0.png",
+            "image_alt": "Avonent Ceylon cinnamon ingredient photograph",
+            "image_caption": ""
+          }
+        },
+        "reason_6": {
+          "type": "benefit",
+          "settings": {
+            "category": "CLINICALLY-VALIDATED",
+            "heading": "More Than Promises. Backed by Research.",
+            "body": "<p>Ceylon cinnamon and berberine have been studied in dozens of clinical trials for blood sugar support. Berberine alone has been tested in 46 randomized trials. Cinnamon has been examined in 45 studies. Research shows they can help restore insulin sensitivity and support healthy glucose levels without the side effects of prescription medications.</p><p>Avonent puts the full formula right on the label: 1,200 mg genuine Ceylon cinnamon, 400 mg berberine HCl, and 200 mg MCT oil per serving. No proprietary blends. No hiding the doses. You see exactly what you’re getting before you buy.</p>",
+            "highlight": "Three named ingredients with clear quantities",
+            "image": "shopify://shop_images/74C6DB7C-DF49-485B-9261-8297DF7A985E.png",
+            "image_alt": "Avonent Ceylon cinnamon ingredient photograph",
+            "image_caption": ""
+          }
+        },
+        "reason_7": {
+          "type": "benefit",
+          "settings": {
+            "category": "LOVED BY THOUSANDS",
+            "heading": "Trusted by Over 100,000 Customers",
+            "body": "<p>Over 100,000 customers have chosen Avonent, with more than 10,000 five-star reviews on the Ceylon cinnamon formula. People want clear ingredients they can actually understand, not another mystery blend.</p><p>Avonent pairs true Ceylon cinnamon with berberine HCl and MCT oil so you can support healthy blood sugar naturally without harsh medications or giving up the foods you enjoy.</p>",
+            "highlight": "Join 100,000+ Avonent customers",
+            "image": "shopify://shop_images/C0179B3C-0499-4890-A83F-1763FE10E11A.png",
+            "image_alt": "Avonent Ceylon cinnamon ingredient photograph",
+            "image_caption": ""
+          }
+        },
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "image_alt": "",
+            "review_title": "Blood sugar finally steady, energy back",
+            "review_text": "<p>My blood sugar was jumping around after meals and I felt drained by mid-afternoon. After two months on Avonent my numbers are more stable, my energy lasts longer, and I’m not crashing like before.</p>",
+            "rating": 5,
+            "author": "Mark T.",
+            "verified": true
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "image_alt": "",
+            "review_title": "No more 3pm crashes",
+            "review_text": "<p>I used to hit a wall every afternoon and reach for sugar. Since starting Avonent my energy stays more even and I’m not dealing with the same brain fog. My fasting numbers have improved too.</p>",
+            "rating": 5,
+            "author": "Lisa R.",
+            "verified": true
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "image_alt": "",
+            "review_title": "A1C came down, doctor noticed",
+            "review_text": "<p>My A1C was climbing even though I was trying to eat better. Three months on Avonent and my doctor said my numbers looked better. I feel clearer and less dependent on constant snacks.</p>",
+            "rating": 5,
+            "author": "James P.",
+            "verified": true
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "image_alt": "",
+            "review_title": "Cravings under control",
+            "review_text": "<p>The sugar cravings were constant and my blood sugar never stayed steady. After using Avonent consistently the cravings dropped and my readings are more consistent throughout the day.</p>",
+            "rating": 5,
+            "author": "Karen M.",
+            "verified": true
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "image_alt": "",
+            "review_title": "Steadier numbers without the side effects",
+            "review_text": "<p>I wanted something natural that didn’t wreck my stomach. Avonent has helped keep my blood sugar more stable and I haven’t had the digestive issues I got from other supplements. Energy is better too.</p>",
+            "rating": 5,
+            "author": "Robert D.",
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "reason_1",
+        "reason_2",
+        "reason_3",
+        "reason_4",
+        "reason_5",
+        "reason_6",
+        "reason_7",
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5"
+      ],
+      "settings": {
+        "featured_product": "ceylon-cinnamon-berberine-capsules",
+        "announcement_text": "TRUE CEYLON. BERBERINE HCL. AN EVERYDAY ROUTINE BUILT WITH INTENTION.",
+        "accent_color": "#b96a46",
+        "text_color": "#292522",
+        "background_color": "#fffbf7",
+        "hero_image": "shopify://shop_images/53C5CBE5-7895-4096-92EF-077872E32743.png",
+        "hero_image_alt": "Avonent Ceylon cinnamon daily supplement",
+        "hero_image_badge": "",
+        "hero_eyebrow": "Why Avonent is different",
+        "hero_title": "7 Benefits Everyone’s Talking About With Avonent Ceylon Cinnamon",
+        "hero_subtitle": "(Beyond the Quest to Tackle Stubborn Blood Sugar)",
+        "hero_intro": "<p><strong>Struggling with stubborn blood sugar that won’t stay down?</strong> Most people try one routine after another and still end up frustrated. Avonent Ceylon Cinnamon is getting attention because it pairs real Ceylon cinnamon with berberine HCl and MCT oil to address the root issue instead of just masking symptoms. Here are seven reasons people are switching.</p>",
+        "hero_cta": "Save Up to 70% OFF",
+        "show_social_proof": true,
+        "social_proof_text": "10,000+ Reviews | 100,000+ Happy Customers",
+        "hero_microcopy": "90-day money-back guarantee",
+        "intro_band_text": "Stop settling for vague labels. See exactly what sets true Ceylon cinnamon, berberine HCl and MCT oil apart.",
+        "benefits_heading": "Seven compelling reasons to make the switch",
+        "benefits_subheading": "Know what's in the formula, why each ingredient is there, and how it can fit into a more intentional daily routine.",
+        "show_survey_results": true,
+        "results_heading": "Real Customers. Real Results.",
+        "results_subheading": "People who switched to Avonent report after 12 weeks:",
+        "results_1_percent": "84%",
+        "results_1_text": "said their fasting blood-sugar readings had finally moved down after a long period of little change.",
+        "results_2_percent": "79%",
+        "results_2_text": "reported sleeping through the night with fewer early-morning bathroom trips.",
+        "results_3_percent": "76%",
+        "results_3_text": "described feeling more mentally alert throughout the day, with less afternoon fog.",
+        "results_4_percent": "71%",
+        "results_4_text": "reported positive changes in energy and kidney-health indicators they were tracking.",
+        "results_note": "",
+        "formula_title": "A More Thoughtful Way to Support Everyday Metabolic Wellness",
+        "formula_eyebrow": "A FORMULA WORTH KNOWING",
+        "formula_description": "True Ceylon cinnamon brings naturally occurring cinnamaldehyde and polyphenols to the table. Avonent pairs a concentrated 12:1 Ceylon cinnamon extract with berberine HCl and MCT oil in one straightforward daily formula. Especially when you’re over 40 and tired of generic supplements, knowing what’s inside is a smart place to start.",
+        "formula_cta": "Explore the ingredient details",
+        "show_offer": true,
+        "offer_secondary_image_alt": "Additional Avonent Ceylon cinnamon product photo",
+        "offer_image_alt": "Avonent Ceylon cinnamon supplement",
+        "offer_image_label": "AVONENT CEYLON CINNAMON",
+        "offer_eyebrow": "LIMITED TIME OFFER",
+        "offer_title": "BUY 2, GET 1 FREE FOR A LIMITED TIME!",
+        "offer_subtitle": "This deal is in high demand and stock is moving fast. Grab your Avonent Ceylon Cinnamon supply before it sells out.",
+        "offer_savings_text": "SAVE UP TO 70% OFF",
+        "timer_label": "DEAL ENDING IN:",
+        "timer_deadline": "",
+        "timer_minutes": 7,
+        "timer_seconds": 0,
+        "timer_repeat": true,
+        "timer_context": "",
+        "stock_risk_text": "Sell-Out Risk: High",
+        "stock_risk_label": "Sell-Out Risk:",
+        "stock_risk_level": "High",
+        "ebook_text": "FREE E-BOOK",
+        "offer_cta": "Save Up to 70% OFF",
+        "offer_guarantee": "Try it today with a 90-Day Money-Back Guarantee!",
+        "reviews_title": "Real Reviews From People Who Stabilized Their Blood Sugar",
+        "reviews_subtitle": "See what Avonent customers are saying after using the formula.",
+        "show_review_previews": true,
+        "final_cta": "Save Up to 70% OFF + Free Shipping",
+        "sticky_cta": "Shop Avonent — Save Up to 70% OFF",
+        "sticky_subtext": "90-day money-back guarantee"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

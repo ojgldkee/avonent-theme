@@ -1,0 +1,365 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "cinnamon": {
+      "type": "avonent-cinnamon-editor",
+      "blocks": {
+        "hero": {
+          "type": "hero",
+          "settings": {
+            "display_title": "Ceylon Cinnamon 14,400mg Equivalent + Berberine HCl",
+            "hero_description": "Avonent Ceylon Cinnamon + Berberine supports healthy blood sugar, glucose metabolism, and everyday metabolic balance — helping support steadier days around meals and throughout the day.*\n\nFour daily softgels combine true Sri Lankan Ceylon cinnamon with Berberine HCl in one concentrated formula built for consistent daily use.*",
+            "rating_text": "",
+            "benefit_1": "Restores Insulin Sensitivity",
+            "benefit_2": "Stabilizes Blood Sugar Levels",
+            "benefit_3": "Supports Blood Pressure Naturally",
+            "benefit_4": "Supports Steady Energy",
+            "sold_percent": "",
+            "sale_badge": "",
+            "bundle_2_badge": "Free Shipping",
+            "bundle_3_badge": "Free Shipping + E-Book",
+            "bundle_1_title": "",
+            "bundle_1_subtitle": "",
+            "bundle_2_title": "",
+            "bundle_2_subtitle": "",
+            "bundle_3_title": "",
+            "bundle_3_subtitle": "",
+            "add_to_cart_text": "",
+            "refill_text": "",
+            "cancel_text": ""
+          }
+        },
+        "results": {
+          "type": "results",
+          "settings": {
+            "stats_heading": "",
+            "stats_bg": "shopify://shop_images/avonent-cinnamon-results-background.webp",
+            "stats_overlay_color": "",
+            "stats_overlay_opacity": "",
+            "stats_duration": "",
+            "stat_1_start": "",
+            "stat_1_end": "",
+            "stat_1_label": "",
+            "stat_2_start": "",
+            "stat_2_end": "",
+            "stat_2_label": "",
+            "stat_3_start": "",
+            "stat_3_end": "",
+            "stat_3_label": "",
+            "stat_4_start": "",
+            "stat_4_end": "",
+            "stat_4_label": "",
+            "stats_cta": "",
+            "stats_guarantee": "",
+            "stats_text_color": "",
+            "stats_show": true
+          }
+        },
+        "carousel": {
+          "type": "carousel",
+          "settings": {
+            "carousel_heading": "Why This Ceylon Cinnamon Formula Is Different",
+            "carousel_1_image": "shopify://shop_images/FD7231F1-01ED-4B52-8882-17A475D74AA1.png",
+            "carousel_1_title": "Real Ceylon From Sri Lanka",
+            "carousel_1_body": "Most cinnamon supplements use Cassia. Avonent uses real Ceylon cinnamon from Sri Lanka. We concentrate it 12:1 to equal 14,400 mg of raw cinnamon per dose. True Ceylon is naturally low in coumarin. That matters if you are over 50 and plan to take it every day for years, not just a few weeks.",
+            "carousel_2_image": "shopify://shop_images/B45AFB74-F056-4B81-AB95-AE7BA910FFFA.png",
+            "carousel_2_title": "400 mg Berberine HCl",
+            "carousel_2_body": "Berberine helps your body handle sugar and carbs better. It supports lower blood sugar, healthier cholesterol, normal blood pressure, and weight loss. Avonent puts 400 mg in every softgel so you get it in one simple daily dose. No extra bottle needed.",
+            "carousel_3_image": "shopify://shop_images/E16B5C18-E5E2-4CE2-8082-66A9A67C4D0E.png",
+            "carousel_3_title": "MCT Oil Delivery",
+            "carousel_3_body": "The active compounds in Ceylon cinnamon are fat-soluble. Without a fat carrier, most of them pass through your body unused. Regular capsules and powders have very low absorption. Avonent suspends the extract in MCT oil inside a softgel so it can reach your bloodstream. This gives you over 99% absorption so you get the full effects of the product.",
+            "carousel_4_image": "shopify://shop_images/C04C2E61-6810-481D-AC27-4D6E539CA546.png",
+            "carousel_4_title": "14,400 mg Potency. Not Underdosed.",
+            "carousel_4_body": "Most cinnamon supplements underdose you. A few hundred milligrams of powder is not enough to matter. One Avonent softgel delivers a full therapeutic-level dose equal to 14,400 mg of raw Ceylon cinnamon. The softgels are easy to swallow, so you do not have to take a handful of capsules or mix powder into your coffee."
+          }
+        },
+        "science": {
+          "type": "science",
+          "settings": {
+            "science_heading": "Real Support. Backed by Science.",
+            "science_intro": "Your body deserves more than empty promises. Ceylon cinnamon extract supports healthy blood sugar, liver function, and daily metabolic balance with research-backed ingredients and a bioavailable MCT oil delivery system.",
+            "science_1_image": "shopify://shop_images/6EECC4C1-1B6B-425F-A348-533E76E53580.png",
+            "science_1_title": "",
+            "science_1_subtitle": "",
+            "science_1_body": "",
+            "science_2_image": "shopify://shop_images/DAD51A6B-9B03-410F-9251-86EAA51602D3.png",
+            "science_2_title": "",
+            "science_2_subtitle": "",
+            "science_2_body": "",
+            "science_3_image": "shopify://shop_images/59C856FE-37FE-4862-A5AF-05E26E21A25C.png",
+            "science_3_title": "",
+            "science_3_subtitle": "",
+            "science_3_body": "",
+            "science_4_image": "shopify://shop_images/IMG_2631.jpg",
+            "science_4_title": "",
+            "science_4_subtitle": "",
+            "science_4_body": "",
+            "science_cta": "",
+            "science_guarantee": "",
+            "science_ticker_1": "",
+            "science_ticker_2": "",
+            "science_ticker_3": "",
+            "science_ticker_4": "",
+            "science_bg": "",
+            "science_accent": ""
+          }
+        },
+        "journey": {
+          "type": "journey",
+          "settings": {
+            "journey_image": "shopify://shop_images/92BFCE50-C2ED-4CE6-AEBE-4BCB6C4BB095.png",
+            "journey_eyebrow": "YOUR DAILY ROUTINE",
+            "journey_heading": "What You Might Expect from Daily Use of Avonent",
+            "journey_intro": "Consistency matters. Here is a simple look at how a steady daily routine with Avonent may feel over time.*",
+            "journey_1_label": "1 Week",
+            "journey_1_body": "Nothing dramatic yet. The ingredients are becoming part of your daily routine, and the afternoon may begin to feel a little more even.*",
+            "journey_2_label": "1 Month",
+            "journey_2_body": "Meals may feel a little easier to move through, with less of an afternoon dip and more steadiness across the day.*",
+            "journey_3_label": "2 Months",
+            "journey_3_body": "You may notice steadier energy, fewer cravings, and less pull toward late-night snacking as consistency builds.*",
+            "journey_4_label": "3 Months",
+            "journey_4_body": "Your metabolic-support routine has had time to build. This is where staying consistent can matter most.*",
+            "journey_5_label": "6 Months",
+            "journey_5_body": "Your body has received months of consistent daily support for healthy insulin response, metabolic balance, and antioxidant activity — meal after meal.*",
+            "journey_6_label": "12 Months",
+            "journey_6_body": "With long-term consistency, Avonent can become a simple foundation in your metabolic routine — steady support, day after day.*"
+          }
+        },
+        "compare": {
+          "type": "compare",
+          "settings": {
+            "compare_price": "",
+            "compare_heading": "Why Avonent Stands Apart From Typical Cinnamon Supplements",
+            "compare_subheading": "True Sri Lankan Ceylon. A full-strength 12:1 extract. Berberine HCl. A clearly disclosed softgel formula built with intention.",
+            "compare_cta": "",
+            "compare_guarantee": "",
+            "ours_image": "shopify://shop_images/4AE10B52-C621-4736-8682-928BADA94ECE.png",
+            "other_image": "shopify://shop_images/4450995D-EADC-46CB-BFE4-0624E0B39466.png",
+            "ours_name": "Avonent",
+            "other_name": "Other brands",
+            "ours_1": "Independently Lab Tested",
+            "other_1": "No Verified Testing",
+            "ours_2": "No Coumarin — True Ceylon",
+            "other_2": "Cheap Cassia, Higher in Coumarin",
+            "ours_3": "Full-Strength 12:1 Ceylon Extract",
+            "other_3": "Weak Low-Dose Formulas",
+            "ours_4": "400 mg Berberine HCl Included",
+            "other_4": "Berberine Often Not Included",
+            "ours_5": "MCT Oil Softgel Delivery",
+            "other_5": "Basic Dry-Powder Capsules",
+            "ours_6": "Easy-to-Swallow Softgels",
+            "other_6": "Hard-to-Swallow Capsules"
+          }
+        },
+        "benefits": {
+          "type": "benefits",
+          "settings": {
+            "benefits_heading": "",
+            "benefits_subheading": "",
+            "benefits_item_1": "Blood Sugar Support*",
+            "benefits_item_2": "Gentle on the Stomach",
+            "benefits_item_3": "MCT Oil Delivery",
+            "benefits_item_4": "Coumarin-Free Ceylon",
+            "benefits_image": "shopify://shop_images/D6A22A98-3091-4A20-ABE6-7CA88EE29622.png",
+            "benefits_bg": "",
+            "benefits_text": "",
+            "benefits_disclaimer": ""
+          }
+        },
+        "five_reasons": {
+          "type": "five_reasons",
+          "disabled": true,
+          "settings": {
+            "show_section": true,
+            "eyebrow": "5 REASONS WHY",
+            "heading": "Why Avonent Ceylon Cinnamon Is Different",
+            "intro": "",
+            "button_text": "Try Risk-Free Today",
+            "guarantee_text": "90-Day Money-Back Guarantee",
+            "background": "#fff4ec",
+            "accent": "#a84f1b",
+            "reason_1_title": "12:1 Concentrated True Ceylon Cinnamon",
+            "reason_1_body": "Avonent uses Cinnamomum verum sourced from Sri Lanka—not common Cassia. A concentrated 12:1 extract provides the equivalent of 14,400 mg of raw cinnamon in a single daily softgel.",
+            "reason_2_title": "Berberine HCl Included",
+            "reason_2_body": "Instead of making you buy a separate bottle, Avonent combines Berberine HCl with Ceylon cinnamon in the same daily formula for a simpler metabolic-support routine.*",
+            "reason_3_title": "MCT Oil Softgel Delivery",
+            "reason_3_body": "The concentrated cinnamon extract is suspended in MCT oil inside a smooth softgel—no loose powder, gritty drinks, or extra mixing.",
+            "reason_4_title": "One Softgel Per Day",
+            "reason_4_body": "A simple one-softgel daily serving makes it easier to stay consistent without carrying around multiple bottles or taking a handful of capsules.",
+            "reason_5_title": "Clear Formula. 90-Day Guarantee.",
+            "reason_5_body": "You can see what is in the formula, how much you are taking, and try it with the protection of Avonent’s 90-Day Money-Back Guarantee."
+          }
+        },
+        "risk_free": {
+          "type": "risk_free",
+          "settings": {
+            "image": "shopify://shop_images/1A6460DC-D7AB-4437-8C6B-6FCE6D237D46.png",
+            "eyebrow": "FEEL THE DIFFERENCE",
+            "heading": "90-Day Risk-Free Trial",
+            "body": "Try Avonent for 90 days. If it is not right for you, contact us within 90 days and we will help with the next steps under our refund policy.",
+            "button_text": "Try Risk-Free Today",
+            "background": "#fff4ec",
+            "accent": "#a84f1b"
+          }
+        },
+        "faq": {
+          "type": "faq",
+          "settings": {
+            "faq_heading": "",
+            "faq_1_q": "",
+            "faq_1_a": "",
+            "faq_2_q": "",
+            "faq_2_a": "",
+            "faq_3_q": "",
+            "faq_3_a": "",
+            "faq_4_q": "",
+            "faq_4_a": "",
+            "faq_5_q": "",
+            "faq_5_a": "",
+            "faq_6_q": "How do I take it and how long does one bottle last?",
+            "faq_6_a": "Follow the directions on your bottle. One full daily serving is 1 softgel, and each bottle contains 30 daily servings. The simplest approach is to make it part of the same daily routine so consistency is easy to maintain."
+          }
+        },
+        "details": {
+          "type": "details",
+          "settings": {
+            "guarantee_highlight": "",
+            "guarantee_color": "",
+            "stock_title": "",
+            "stock_text": "",
+            "low_stock_line": "",
+            "guarantee_heading": "",
+            "guarantee_body": "",
+            "acc_1_title": "Clinically Supported Benefits",
+            "acc_1_body": "<strong>Two researched ingredients. One focused daily formula.</strong><br><br>• <strong>Healthy blood sugar:</strong> Ceylon cinnamon and Berberine HCl are studied for their roles in healthy glucose metabolism.*<br>• <strong>Healthy insulin response:</strong> Supports normal insulin sensitivity and the way your body handles glucose.*<br>• <strong>Metabolic balance:</strong> Supports healthy metabolic function and cellular energy pathways.*<br>• <strong>Antioxidant support:</strong> Ceylon cinnamon naturally contains polyphenols that help support oxidative balance.*",
+            "acc_2_title": "Key Ingredients",
+            "acc_2_body": "🌿 <strong>True Ceylon Cinnamon — Cinnamomum verum</strong><br>• <strong>Harvested in Sri Lanka</strong> — the traditional home of genuine Ceylon cinnamon.<br>• <strong>12:1 concentrated extract</strong> — 1,200 mg per full daily serving.<br>• <strong>14,400 mg raw-cinnamon equivalent</strong> per full daily serving.<br>• <strong>Not common Cassia</strong> — true Ceylon is naturally much lower in coumarin than Cassia.<br><br><strong>Berberine HCl — 400 mg per daily serving</strong><br>• <strong>Supports healthy glucose metabolism</strong> and insulin sensitivity.*<br>• Adds a <strong>second researched ingredient</strong> for broader metabolic support.*<br><br><strong>MCT Oil Softgel Delivery</strong><br>• A <strong>smooth oil-based softgel format</strong> with no loose cinnamon powder or gritty drink mix.",
+            "acc_3_title": "How It Works",
+            "acc_3_body": "<strong>Built differently from basic cinnamon capsules.</strong><br><br><strong>1. Start with genuine Ceylon.</strong> We use <strong>Cinnamomum verum harvested in Sri Lanka</strong> — not generic Cassia powder.<br><br><strong>2. Concentrate the cinnamon.</strong> A <strong>12:1 extract</strong> provides a <strong>14,400 mg raw-cinnamon equivalent</strong> per full daily serving.<br><br><strong>3. Add Berberine HCl.</strong> <strong>400 mg per daily serving</strong> complements Ceylon cinnamon with another researched ingredient for healthy glucose and metabolic support.*<br><br><strong>4. Use an MCT-oil softgel.</strong> A clean, easy-to-take format without stirring cinnamon into drinks or relying on dry powder capsules.",
+            "trust_image_alt": ""
+          }
+        },
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "photo": "shopify://shop_images/0E6471D8-3430-469A-80EC-2BB42864FDE3.png",
+            "name": "Sarah K.",
+            "title": "Finally feeling like I’m not fighting my body all day",
+            "quote": "My blood sugar used to bounce all over the place no matter what I did. I’d eat clean, skip the junk, and still get those nasty afternoon crashes that made me reach for coffee or something sweet just to function. Started taking Avonent a couple months ago and things actually leveled out. The combo of the Ceylon cinnamon and berberine seems to keep things steadier. Energy lasts longer, fewer spikes and dips, and I’m not constantly thinking about my next snack. Feels good to not be at the mercy of my numbers anymore.",
+            "rating": 5,
+            "rating_display": "5.0",
+            "tag_1": "Steadier Days",
+            "tag_2": "Fewer Cravings",
+            "verified": true
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "photo": "shopify://shop_images/D52B056C-FE55-47C9-8416-215D26526F83.png",
+            "name": "David R.",
+            "title": "Mornings don’t suck as much",
+            "quote": "I used to wake up already tired and foggy, then spend the first hour wondering what my blood sugar was going to do. Tried a bunch of different supplements and nothing really stuck. Avonent has been different. The berberine and Ceylon cinnamon together seem to help keep my levels more even. Cravings are way down, I don’t crash mid-afternoon like I used to, and I can actually get through the morning without feeling like garbage. Simple little softgel but it’s made a noticeable difference.",
+            "rating": 5,
+            "rating_display": "5.0",
+            "tag_1": "Clearer Mornings",
+            "tag_2": "Balanced Cravings",
+            "verified": true
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "photo": "shopify://shop_images/1813CD75-B581-413F-BA00-C9D062AE4959.png",
+            "name": "Jennifer L.",
+            "title": "Even my doctor commented on it",
+            "quote": "I was pretty skeptical at first. Another cinnamon product, right? But my neighbor kept pushing this one because it’s Ceylon and has berberine in it, plus the MCT oil. Figured I’d give it a shot. About two months in my doctor looked at my numbers and asked what I changed. Told him about Avonent and he just nodded and said keep doing it. No stomach issues either, which is a first for me with these kinds of supplements.",
+            "rating": 5,
+            "rating_display": "5.0",
+            "tag_1": "Easy on Stomach",
+            "tag_2": "Two-Month Update",
+            "verified": true
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "photo": "shopify://shop_images/1B14CB46-7F43-4802-BEF2-129BA252A066.png",
+            "name": "Robert H.",
+            "title": "First thing that didn’t disappoint me",
+            "quote": "I’ve wasted so much money on powders and gummies that promised better blood sugar control and never delivered. Got frustrated and almost gave up. Tried Avonent mostly because of the berberine and Ceylon cinnamon combo. 1 softgel per day and my energy stopped crashing in the afternoons. Focus is better, I’m not hunting for snacks every couple hours, and I finally feel more consistent throughout the day. Actually sticks with something for once.",
+            "rating": 5,
+            "rating_display": "5.0",
+            "tag_1": "Steady Focus",
+            "tag_2": "Simple Routine",
+            "verified": true
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "photo": "shopify://shop_images/06BCB714-74B6-4F81-85FC-3693005D6D21.png",
+            "name": "Michael T.",
+            "title": "Wish I knew about this sooner",
+            "quote": "My husband was taking regular cinnamon capsules from the store for a while. Barely did anything and sometimes gave him heartburn. I looked into it and found out most of those are Cassia, which isn’t great long-term. Switched him to Avonent because it uses actual Ceylon and has berberine. Within a few weeks his morning readings dropped from the 140s into the low 120s and stayed more consistent. Energy is better too. Softgels are easier on his stomach than the old capsules were.",
+            "rating": 5,
+            "rating_display": "4.9",
+            "tag_1": "Ceylon Switch",
+            "tag_2": "Gentler Softgels",
+            "verified": true
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "photo": "shopify://shop_images/8711DF51-D64A-4204-81CD-A0B0719F46F5.png",
+            "name": "Patricia M.",
+            "title": "You can tell the quality is better",
+            "quote": "I’m pretty picky about what I put in my body, especially after years of nursing. A lot of supplements are just cheap fillers. Avonent feels different — Ceylon cinnamon, berberine, and the MCT oil base. I’ve been on it about three months now. Energy is more stable, those 2pm sugar cravings basically disappeared, and my last labs looked better. No digestive problems either. For once it actually feels like the product is doing something instead of just sitting on the shelf.",
+            "rating": 5,
+            "rating_display": "5.0",
+            "tag_1": "Quality Formula",
+            "tag_2": "Afternoon Balance",
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "hero",
+        "results",
+        "carousel",
+        "science",
+        "journey",
+        "compare",
+        "benefits",
+        "five_reasons",
+        "risk_free",
+        "faq",
+        "details",
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_6",
+        "review_4",
+        "review_5"
+      ],
+      "settings": {
+        "reviews_heading": "Real stories. Everyday routines.",
+        "reviews_intro": "Experiences shared by Avonent customers.",
+        "trust_image": "shopify://shop_images/1FA0CA01-7E0B-48B4-BA27-C66E6A6F100B.png",
+        "trust_image_alt": "Why Trust Avonent"
+      }
+    }
+  },
+  "order": [
+    "cinnamon"
+  ]
+}

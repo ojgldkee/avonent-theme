@@ -1,0 +1,645 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "00-aged-garlic-offer-v2",
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "text": "Promotes cardiovascular wellness and vitality"
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "text": "24 month aged - completely odorless"
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "text": "Supports heart health and arterial function"
+          }
+        },
+        "b4": {
+          "type": "benefit",
+          "settings": {
+            "text": "Supports healthy blood pressure levels"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "bottom_purchase": false,
+        "purchase_banner_alt": "Avonent Aged Garlic",
+        "purchase_eyebrow": "CHOOSE YOUR ROUTINE",
+        "purchase_heading": "Stay consistent. Stock up. Save more.",
+        "purchase_intro": "<p>Choose your supply of Avonent Aged Garlic and make it part of your daily routine.</p>",
+        "show_rating": true,
+        "rating_text": "Rated 4.9",
+        "proof_text": "100k+ customers",
+        "heading": "Aged Garlic Extract – 7500mg Odorless Softgels",
+        "subheading": "",
+        "sale_badge": "BLACK FRIDAY SALE - SAVE 54%",
+        "stock_text": "Low Stock – Selling Fast",
+        "bundle_1_title": "Buy One",
+        "bundle_1_subtitle": "30 Day Supply",
+        "bundle_1_badge": "",
+        "bundle_2_title": "Buy Two",
+        "bundle_2_subtitle": "60 Day Supply",
+        "bundle_2_badge": "Most Popular",
+        "bundle_3_title": "Buy Three",
+        "bundle_3_subtitle": "90 Day Supply",
+        "bundle_3_badge": "Best Value",
+        "per_bag_label": "each",
+        "subscription_label": "Subscribe & Save",
+        "subscription_plan_id": "3633709222",
+        "subscription_helper": "Automatic refills · cancel anytime",
+        "refill_every_text": "Refills ship every 30 days",
+        "cancel_text": "Skip or cancel anytime",
+        "one_time_label": "One-Time Purchase",
+        "one_time_suffix": "+ $4.95 Shipping",
+        "subscription_return_label": "Switch back to Subscribe & Save —",
+        "show_gifts": false,
+        "shipping_reward_active": false,
+        "gifts_heading": "GIFTS UNLOCKED",
+        "gift_shipping_value": "$4.95",
+        "gift_shipping_title": "FREE Shipping",
+        "gift_ebook_product": "ebook-garlic",
+        "gift_ebook_value": "$24.99 Value",
+        "gift_ebook_title": "FREE Aged Garlic eBook",
+        "gifts_note": "Free standard shipping on this first order only. Refill shipping is $4.95. Digital ebook added once with Buy 3.",
+        "show_refill": false,
+        "refill_heading": "Save more with automatic refills",
+        "refill_text": "Connect this to your subscription option when it is ready.",
+        "refill_link": "",
+        "shipping_prefix": "Ships by",
+        "shipping_business_days": 1,
+        "shipping_suffix": "from US warehouse",
+        "button_text": "ADD TO CART",
+        "show_payments": true,
+        "show_trusted": true,
+        "avatar_1": "shopify://shop_images/avonent_customer_1.png",
+        "avatar_2": "shopify://shop_images/avonent_customer_2.png",
+        "avatar_3": "shopify://shop_images/avonent_customer_3.png",
+        "trusted_heading": "Trusted by 100K+ customers",
+        "trusted_text": "who choose Avonent for simple, consistent cardiovascular wellness support.",
+        "show_sticky": true,
+        "sticky_label": "AVONENT AGED GARLIC",
+        "sticky_button": "ADD TO CART",
+        "background": "#ffffff",
+        "accent": "#02c6ea",
+        "accent_dark": "#0068e8",
+        "gold": "#ffb400",
+        "text": "#071a52",
+        "muted": "#5f6878",
+        "line": "#dcecf5",
+        "batch_total": 0,
+        "batch_sold": 0,
+        "sold_label": "Sold from this batch",
+        "purchase_guarantee": "30-day money-back guarantee",
+        "bundle_1_benefit": "Perfect for getting started",
+        "bundle_2_benefit": "Build a consistent routine",
+        "bundle_3_benefit": "Stock up and stay prepared",
+        "show_sold_bar": false,
+        "sold_percent": 93
+      }
+    },
+    "accordions": {
+      "type": "00-aged-garlic-accordions-v2",
+      "blocks": {
+        "a1": {
+          "type": "item",
+          "settings": {
+            "heading": "Heart-Conscious Daily Support",
+            "content": "<p><strong>Aged garlic extract</strong></p><ul><li>Designed to support everyday cardiovascular wellness.</li><li>Simple to include in everyday wellness habits.</li><li>Provides naturally occurring antioxidant support from aged garlic.</li><li>CoQ10 supports normal cellular energy production.</li><li>Gentle, odorless aged garlic softgel format.</li></ul>"
+          }
+        },
+        "a2": {
+          "type": "item",
+          "settings": {
+            "heading": "Key Ingredients",
+            "content": "<p><strong>Aged Garlic Extract (7,500 mg Garlic Equivalent)</strong></p><ul><li>Derived from garlic aged for <strong>24 months (730 days)</strong>.</li><li>Contains <strong>S-Allyl-Cysteine (SAC)</strong>, a naturally occurring garlic compound formed during aging.</li><li>Includes CoQ10 + ubiquinol.</li><li>Odorless aged garlic softgel format.</li><li>Designed for convenient long-term daily use.</li></ul><p>Aging transforms raw garlic into a refined, odorless extract that is easy to incorporate into a daily routine.</p><p><strong>What’s Not Included</strong></p><ul><li>GMOs</li><li>Gluten</li><li>Unnecessary additives</li><li>Strong garlic smell or lingering aftertaste</li></ul>"
+          }
+        },
+        "a3": {
+          "type": "item",
+          "settings": {
+            "heading": "How It Works",
+            "content": "<p>Take <strong>two softgels daily</strong> with water, following the directions on the product label.</p><p>The extended 24-month aging process creates a milder, odorless aged garlic extract designed to fit into a consistent daily wellness routine.</p>"
+          }
+        },
+        "a4": {
+          "type": "item",
+          "settings": {
+            "heading": "What Can I Expect?",
+            "content": "<p>Avonent is designed for consistent everyday use as part of a heart-conscious wellness routine. The formula combines aged garlic with CoQ10 + ubiquinol while keeping the experience simple, convenient, and odorless.</p>"
+          }
+        },
+        "a5": {
+          "type": "item",
+          "settings": {
+            "heading": "Money Back Guarantee",
+            "content": "<p>Try Avonent with confidence. If the product is not right for you, contact us within 30 days and we will help with the next steps under our refund policy.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "a1",
+        "a2",
+        "a3",
+        "a4",
+        "a5"
+      ],
+      "settings": {
+        "heading": "",
+        "intro": "",
+        "single_open": true,
+        "background": "#ffffff",
+        "text": "#071a52",
+        "muted": "#46536a",
+        "line": "#caddea",
+        "accent": "#02c6ea"
+      }
+    },
+    "trust": {
+      "type": "00-aged-garlic-trust-v2",
+      "blocks": {
+        "t1": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Odorless Formula"
+          }
+        },
+        "t2": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Aged Garlic + CoQ10"
+          }
+        },
+        "t3": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Ubiquinol Included"
+          }
+        },
+        "t4": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Two-Softgel Daily Routine"
+          }
+        },
+        "t5": {
+          "type": "trust_item",
+          "settings": {
+            "text": "U.S. Fulfillment"
+          }
+        },
+        "t6": {
+          "type": "trust_item",
+          "settings": {
+            "text": "30-Day Guarantee"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "settings": {
+        "eyebrow": "WHY AVONENT",
+        "heading": "Why Trust Avonent as Your Wellness Partner?",
+        "footer": "Carefully Crafted Formula",
+        "background": "#ffffff",
+        "accent": "#02c6ea",
+        "accent_dark": "#0068e8",
+        "text": "#ffffff",
+        "check_color": "#72b58a"
+      }
+    },
+    "benefits_slider": {
+      "type": "00-aged-garlic-benefits-slider",
+      "blocks": {
+        "bnf1": {
+          "type": "benefit",
+          "settings": {
+            "image": "shopify://shop_images/442E856B-468D-420D-966A-BE0677A5A2FA.png",
+            "heading": "Aged Garlic Extract",
+            "text": "<p>Garlic aged for <strong>24 months (730 days)</strong> to create a refined aged-garlic extract for consistent daily use.</p>"
+          }
+        },
+        "bnf2": {
+          "type": "benefit",
+          "settings": {
+            "image": "shopify://shop_images/7DE99ADE-F333-4542-991E-B0BFA2855581.png",
+            "heading": "CoQ10 + Ubiquinol",
+            "text": "<p>A complementary combination included to support normal cellular energy production and everyday cardiovascular wellness.</p>"
+          }
+        },
+        "bnf3": {
+          "type": "benefit",
+          "settings": {
+            "image": "shopify://shop_images/BFDCFB9D-29CB-4E00-BE43-799CAE803D56.png",
+            "heading": "S-Allyl-Cysteine (SAC)",
+            "text": "<p>A naturally occurring, water-soluble compound that develops during the extended aging process of garlic.</p>"
+          }
+        },
+        "bnf4": {
+          "type": "benefit",
+          "settings": {
+            "image": "shopify://shop_images/07B1D885-5B03-4CF5-9F24-BA7AEFD3C43B.png",
+            "heading": "Odorless Formula",
+            "text": "<p>Aged garlic without the strong smell or lingering aftertaste commonly associated with raw garlic.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "bnf1",
+        "bnf2",
+        "bnf3",
+        "bnf4"
+      ],
+      "settings": {
+        "extra_button_text": "Try Risk-Free Today",
+        "heading_before": "4 Benefits of",
+        "heading_accent": "Aged Garlic",
+        "choose_background_image": "shopify://shop_images/IMG_2354.png",
+        "choose_heading": "Why Customers Choose Avonent",
+        "choose_intro": "<p>Avonent Odorless Aged Garlic is designed to make a consistent daily wellness routine simple, convenient, and easy to stick with.</p>",
+        "reason_1_heading": "Two Daily Softgels",
+        "reason_1_text": "<p>No complicated schedule—just two easy-to-take softgels that fit naturally into your day.</p>",
+        "reason_2_heading": "Odorless Experience",
+        "reason_2_text": "<p>Enjoy aged garlic without the strong smell or lingering aftertaste associated with traditional garlic.</p>",
+        "reason_3_heading": "Fits Your Routine",
+        "reason_3_text": "<p>Simple to take at home, at work, or on the go—wherever your day takes you.</p>",
+        "reason_4_heading": "Built for the Long Run",
+        "reason_4_text": "<p>Made for people who prefer simple, steady wellness habits over complicated routines.</p>",
+        "choose_button_text": "Try Risk-Free Today",
+        "choose_button_link": "",
+        "choose_guarantee": "30-day money-back guarantee",
+        "choose_background": "#02c6ea",
+        "choose_overlay": "#0068e8",
+        "daily_heading": "Made for Everyday Use",
+        "daily_intro": "<p>The 24-month aging process creates a refined, odorless aged garlic formula designed to make consistency easier.</p>",
+        "daily_point_1_heading": "Simple Daily Serving",
+        "daily_point_1_text": "<p>Two softgels daily—easy to add to a routine you already follow.</p>",
+        "daily_point_2_heading": "No Strong Garlic Aftertaste",
+        "daily_point_2_text": "<p>An odorless format designed without the strong garlic experience of traditional garlic supplements.</p>",
+        "daily_visual": "shopify://shop_images/1A82736D-A542-4EB9-896C-2EF3110BA483.png",
+        "daily_visual_alt": "Avonent aged garlic softgel",
+        "break_image": "shopify://shop_images/F3F712FB-A4A8-49B5-BBAA-E045BF99C714.png",
+        "break_alt": "Avonent Aged Garlic",
+        "break_background": "#0068e8",
+        "break_accent": "#02c6ea",
+        "wellness_heading": "Designed for Everyday Cardiovascular Wellness",
+        "wellness_subheading": "<p>Aged garlic, SAC, CoQ10, and an odorless softgel format come together in one simple daily routine.</p>",
+        "wellness_1": "Cardiovascular Wellness Support",
+        "wellness_2": "CoQ10 + Ubiquinol Formula",
+        "wellness_3": "Naturally Occurring SAC",
+        "wellness_4": "Odorless Aged Garlic",
+        "wellness_product_image": "shopify://shop_images/F3F712FB-A4A8-49B5-BBAA-E045BF99C714.png",
+        "wellness_background": "#02c6ea",
+        "wellness_ring": "#b9f4ff",
+        "crafted_heading": "Carefully Crafted. Thoughtfully Aged.",
+        "crafted_intro": "<p>Avonent Aged Garlic Extract is built around aged garlic and a heart-conscious formula designed for consistent daily use.</p>",
+        "crafted_1_image": "shopify://shop_images/80211E07-BDA7-4348-AF9E-C68ABF3A6326.png",
+        "crafted_1_title": "Heart-Conscious Daily Support",
+        "crafted_1_subtitle": "A formula built around everyday cardiovascular wellness.",
+        "crafted_1_body": "<p>Aged garlic extract and CoQ10 work together as part of a simple daily routine focused on cardiovascular wellness.</p>",
+        "crafted_2_image": "shopify://shop_images/6C5A3AA4-9F2D-4F06-8E72-23B99A3B9DAF.png",
+        "crafted_2_title": "Antioxidant Support",
+        "crafted_2_subtitle": "Naturally occurring compounds from aged garlic.",
+        "crafted_2_body": "<p>The aging process develops characteristic compounds such as SAC while providing naturally occurring antioxidant support.</p>",
+        "crafted_3_image": "shopify://shop_images/C7150C72-4AC2-4E89-8F5D-DCD580A54719.png",
+        "crafted_3_title": "CoQ10 + Ubiquinol",
+        "crafted_3_subtitle": "Support for normal cellular energy production.",
+        "crafted_3_body": "<p>CoQ10 and ubiquinol complement the aged garlic formula and support the cellular processes involved in energy production.</p>",
+        "crafted_4_image": "shopify://shop_images/40577C11-0518-4C04-9939-5CA3F429DBBF.png",
+        "crafted_4_title": "Odorless for Everyday Use",
+        "crafted_4_subtitle": "Heart-conscious support without the strong garlic experience.",
+        "crafted_4_body": "<p>A convenient softgel format designed without the strong smell or lingering aftertaste associated with raw garlic.</p>",
+        "crafted_footer": "Non-GMO · Gluten-Free · No unnecessary additives",
+        "stage_eyebrow": "YOUR DAILY ROUTINE",
+        "stage_heading": "Build the Habit. Keep It Simple.",
+        "stage_intro": "<p>A simple four-stage routine designed to make consistency feel natural.</p>",
+        "stage_1_title": "Start Simple",
+        "stage_1_text": "<ul><li>Take two softgels daily</li><li>Add it to an existing routine</li><li>Keep the schedule uncomplicated</li></ul>",
+        "stage_2_title": "Build the Habit",
+        "stage_2_text": "<ul><li>Keep your routine consistent</li><li>Use it around the same time each day</li><li>Make it easy to remember</li></ul>",
+        "stage_3_title": "Stay Consistent",
+        "stage_3_text": "<ul><li>Continue your daily routine</li><li>Keep wellness habits simple</li><li>Focus on long-term consistency</li></ul>",
+        "stage_4_title": "Make It Last",
+        "stage_4_text": "<ul><li>Build around daily consistency</li><li>Keep the routine practical</li><li>Make it part of everyday life</li></ul>",
+        "stage_button_text": "CHOOSE YOUR SUPPLY",
+        "background": "#f7fcff",
+        "card": "#ffffff",
+        "text": "#071a52",
+        "muted": "#526078",
+        "accent": "#02c6ea"
+      }
+    },
+    "comparison": {
+      "type": "00-aged-garlic-comparison-v2",
+      "blocks": {
+        "c1": {
+          "type": "row",
+          "settings": {
+            "left_text": "Aged garlic format",
+            "right_text": "Varies by brand"
+          }
+        },
+        "c2": {
+          "type": "row",
+          "settings": {
+            "left_text": "Odorless softgel format",
+            "right_text": "Varies by brand"
+          }
+        },
+        "c3": {
+          "type": "row",
+          "settings": {
+            "left_text": "CoQ10 included",
+            "right_text": "Often not included"
+          }
+        },
+        "c4": {
+          "type": "row",
+          "settings": {
+            "left_text": "Ubiquinol included",
+            "right_text": "Often not included"
+          }
+        },
+        "c5": {
+          "type": "row",
+          "settings": {
+            "left_text": "Two-softgel daily routine",
+            "right_text": "Varies by brand"
+          }
+        },
+        "c6": {
+          "type": "row",
+          "settings": {
+            "left_text": "30-day money-back guarantee",
+            "right_text": "Varies by brand"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "settings": {
+        "purchase_point_1": "Carefully Selected Ingredients",
+        "purchase_point_2": "24-Month Aged Garlic Extract",
+        "purchase_point_3": "Odorless Daily Formula",
+        "purchase_point_4": "Quality-Focused Formula",
+        "purchase_button": "Try Risk-Free Today",
+        "purchase_guarantee": "30-day money-back guarantee",
+        "heading": "Avonent vs. Basic Garlic Supplements",
+        "subheading": "A simple side-by-side look at the format and formula differences that make Avonent easier to fit into a daily routine.",
+        "product_image": "shopify://shop_images/F3F712FB-A4A8-49B5-BBAA-E045BF99C714.png",
+        "left_title": "Avonent",
+        "right_title": "Basic Garlic Supplement",
+        "note": "",
+        "background": "#0068e8",
+        "left_background": "#02c6ea",
+        "right_background": "#f7fcff",
+        "text": "#071a52",
+        "light_text": "#ffffff",
+        "line": "#dcecf5"
+      }
+    },
+    "bottom_purchase": {
+      "type": "00-aged-garlic-offer-v2",
+      "settings": {
+        "bottom_purchase": true,
+        "purchase_banner_image": "shopify://shop_images/ED3C68E7-159E-44D5-B324-51DAF0789157.png",
+        "purchase_banner_alt": "Avonent Aged Garlic",
+        "purchase_eyebrow": "CHOOSE YOUR ROUTINE",
+        "purchase_heading": "Stay consistent. Stock up. Save more.",
+        "purchase_intro": "<p>Choose your supply of Avonent Aged Garlic and make it part of your daily routine.</p>",
+        "show_rating": false,
+        "rating_text": "Excellent",
+        "proof_text": "100K+ Customers",
+        "heading": "Aged Garlic Extract – 7500mg Odorless Softgels",
+        "subheading": "",
+        "sale_badge": "",
+        "stock_text": "Choose your supply",
+        "bundle_1_title": "Buy 1",
+        "bundle_1_subtitle": "30 Day Supply",
+        "bundle_1_badge": "",
+        "bundle_2_title": "Buy 2",
+        "bundle_2_subtitle": "60 Day Supply",
+        "bundle_2_badge": "Most Popular",
+        "bundle_3_title": "Buy 3",
+        "bundle_3_subtitle": "90 Day Supply",
+        "bundle_3_badge": "Best Value",
+        "per_bag_label": "each",
+        "subscription_label": "Subscribe & Save",
+        "subscription_plan_id": "3633709222",
+        "subscription_helper": "Automatic refills · cancel anytime",
+        "refill_every_text": "Refills ship every 30 days",
+        "cancel_text": "Skip or cancel anytime",
+        "one_time_label": "One-Time Purchase",
+        "one_time_suffix": "+ $4.95 Shipping",
+        "subscription_return_label": "Switch back to Subscribe & Save —",
+        "show_gifts": false,
+        "shipping_reward_active": false,
+        "gifts_heading": "GIFTS UNLOCKED",
+        "gift_shipping_value": "$4.95",
+        "gift_shipping_title": "FREE Shipping",
+        "gift_ebook_product": "ebook-garlic",
+        "gift_ebook_value": "$24.99 Value",
+        "gift_ebook_title": "FREE Aged Garlic eBook",
+        "gifts_note": "Free standard shipping on this first order only. Refill shipping is $4.95. Digital ebook added once with Buy 3.",
+        "show_refill": false,
+        "refill_heading": "Save more with automatic refills",
+        "refill_text": "Connect this to your subscription option when it is ready.",
+        "refill_link": "",
+        "shipping_prefix": "Ships by",
+        "shipping_business_days": 1,
+        "shipping_suffix": "from US warehouse",
+        "button_text": "ADD TO CART",
+        "show_payments": true,
+        "show_trusted": false,
+        "avatar_1": "shopify://shop_images/avonent_customer_1.png",
+        "avatar_2": "shopify://shop_images/avonent_customer_2.png",
+        "avatar_3": "shopify://shop_images/avonent_customer_3.png",
+        "trusted_heading": "Trusted by 100K+ customers",
+        "trusted_text": "who choose Avonent for simple, consistent cardiovascular wellness support.",
+        "show_sticky": false,
+        "sticky_label": "AVONENT AGED GARLIC",
+        "sticky_button": "ADD TO CART",
+        "background": "#effbfe",
+        "accent": "#02c6ea",
+        "accent_dark": "#0068e8",
+        "gold": "#ffb400",
+        "text": "#071a52",
+        "muted": "#5f6878",
+        "line": "#dcecf5",
+        "batch_total": 0,
+        "batch_sold": 0,
+        "sold_label": "Sold",
+        "purchase_guarantee": "30-day money-back guarantee",
+        "bundle_1_benefit": "Perfect for getting started",
+        "bundle_2_benefit": "Build a consistent routine",
+        "bundle_3_benefit": "Stock up and stay prepared",
+        "show_sold_bar": true,
+        "sold_percent": 93
+      }
+    },
+    "garlic_reviews": {
+      "type": "00-aged-garlic-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "author": "Peter La…",
+            "country": "🇺🇸",
+            "rating": 5,
+            "title": "",
+            "body": "<p>Getting older makes daily habits feel a little more important. Not looking for anything complicated these days, just products that are easy to stick with. That is probably what works best about Avonent. One softgel, no strong garlic smell, and done. It fits into the morning routine without needing much thought. Been trying to stay more mindful about long-term wellness, and this feels like one of those simple habits that is easy to keep around.</p>",
+            "date": "05/20/2026",
+            "verified": true,
+            "excerpt": false
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "author": "Carol Si…",
+            "country": "🇺🇸",
+            "rating": 5,
+            "title": "",
+            "body": "<p>These days, more attention goes into long-term wellness than quick fixes. Avonent has become part of that mindset. The simple routine, odorless softgels, and convenient format make it easy to stay consistent with healthy habits.</p>",
+            "date": "05/05/2026",
+            "verified": true,
+            "excerpt": false
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "author": "Carol Be…",
+            "country": "🇺🇸",
+            "rating": 4,
+            "title": "",
+            "body": "<p>Some supplements end up forgotten after a few weeks, but this one has stayed in rotation. The serving is simple, the softgels are comfortable to take, and the pouch keeps everything organized. It feels like a practical product designed for everyday use rather than something overly complicated.</p>",
+            "date": "04/30/2026",
+            "verified": true,
+            "excerpt": false
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "author": "Kenneth …",
+            "country": "🇺🇸",
+            "rating": 5,
+            "title": "",
+            "body": "<p>Healthy habits tend to work best when they are realistic enough to maintain. That is probably why Avonent has stayed part of the routine. The odorless softgels are convenient, the serving is simple, and everything feels designed around consistency rather than complexity.</p><p>Over time, more focus has gone toward making thoughtful choices and building routines that support long-term wellness goals. Avonent fits naturally into that approach.</p>",
+            "date": "03/27/2026",
+            "verified": true,
+            "excerpt": true
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "author": "James F…",
+            "country": "🇺🇸",
+            "rating": 5,
+            "title": "",
+            "body": "<p>After dealing with one too many supplements that left an unpleasant aftertaste, a change felt overdue. This has been a much more pleasant experience. The softgels are comfortable to take and rarely cross my mind afterward. It fits smoothly into everyday life.</p>",
+            "date": "03/18/2026",
+            "verified": true,
+            "excerpt": false
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "author": "Mark Ric…",
+            "country": "🇺🇸",
+            "rating": 4,
+            "title": "",
+            "body": "<p>Been using aged garlic products off and on for years. This one feels more practical than most. One softgel, done. Does not really need to be more complicated than that.</p>",
+            "date": "03/12/2026",
+            "verified": true,
+            "excerpt": false
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6"
+      ],
+      "settings": {
+        "eyebrow": "CUSTOMER REVIEWS",
+        "heading": "Real routines. Real experiences.",
+        "empty_text": "Have you tried Avonent Aged Garlic? Share your experience with our community.",
+        "share_label": "Share your review",
+        "rating_label": "out of 5 stars",
+        "read_more": "Read more",
+        "read_less": "Read less",
+        "cta": "Choose Your Supply →",
+        "source_note": "Customer reviews transferred from Avonent. Original wording retained.",
+        "verified_label": "Verified customer",
+        "excerpt_label": "Review excerpt"
+      }
+    },
+    "story": {
+      "type": "00-aged-garlic-sales-story",
+      "settings": {
+        "guarantee_eyebrow": "TRY AVONENT FOR 30 DAYS",
+        "guarantee_heading": "A simple guarantee. No fake urgency.",
+        "guarantee_text": "<p>If Avonent is not right for you, contact us within 30 days and we will help with the next steps under our refund policy.</p>",
+        "ivory": "#f7fcff",
+        "cream": "#eff9fe",
+        "burgundy": "#02c6ea",
+        "burgundy_dark": "#0068e8",
+        "gold": "#ffb400",
+        "ink": "#071a52",
+        "muted": "#5f6878",
+        "line": "#dcecf5",
+        "content_width": 1180
+      }
+    }
+  },
+  "order": [
+    "main",
+    "accordions",
+    "trust",
+    "benefits_slider",
+    "comparison",
+    "bottom_purchase",
+    "garlic_reviews",
+    "story"
+  ]
+}

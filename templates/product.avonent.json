@@ -1,0 +1,1170 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "00-avonent-product-main",
+      "blocks": {
+        "00_avonent_rating_QYdjda": {
+          "type": "00-avonent-rating",
+          "name": "Avonent Rating",
+          "settings": {
+            "rating": "4.9",
+            "review_text": "Thousands of 5-Star Reviews",
+            "show_stars": true,
+            "show_rating_number": true,
+            "link": "",
+            "star_color": "#02c6ea",
+            "text_color": "#111111",
+            "star_size": 15,
+            "text_size": 13,
+            "gap": 8,
+            "spacing_top": 0,
+            "spacing_bottom": 0
+          },
+          "blocks": {}
+        },
+        "product_title_F8y7BN": {
+          "type": "product-title",
+          "name": "t:names.title",
+          "settings": {
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h4",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "00_avonent_benefits_grid_AcNT8i": {
+          "type": "00-avonent-benefits-grid",
+          "name": "Avonent Benefits Grid",
+          "settings": {
+            "benefit_1_enabled": true,
+            "benefit_1_text": "Zero Bloat After Meals",
+            "benefit_1_icon": "bolt",
+            "benefit_2_enabled": true,
+            "benefit_2_text": "Wake Up Light & Clear",
+            "benefit_2_icon": "shield_check",
+            "benefit_3_enabled": true,
+            "benefit_3_text": "No More Random Gas",
+            "benefit_3_icon": "gut",
+            "benefit_4_enabled": true,
+            "benefit_4_text": "Eat What You Want",
+            "benefit_4_icon": "heart",
+            "benefit_5_enabled": true,
+            "benefit_5_text": "Energized From Better Digestion",
+            "benefit_5_icon": "activity",
+            "benefit_6_enabled": true,
+            "benefit_6_text": "Calm Everyday Gut Relief",
+            "benefit_6_icon": "sparkle",
+            "benefit_7_enabled": false,
+            "benefit_7_text": "Mental Clarity",
+            "benefit_7_icon": "brain",
+            "benefit_8_enabled": false,
+            "benefit_8_text": "Rest & Recovery",
+            "benefit_8_icon": "moon",
+            "icon_color": "#02c6ea",
+            "text_color": "#111111",
+            "background_color": "#f4fbfd",
+            "columns_desktop": "2",
+            "columns_mobile": "2",
+            "icon_size": 16,
+            "text_size": 12,
+            "column_gap": 18,
+            "row_gap": 9,
+            "corner_radius": 10,
+            "spacing_top": 4,
+            "spacing_bottom": 5,
+            "padding_y": 11,
+            "padding_x": 12
+          },
+          "blocks": {}
+        },
+        "description": {
+          "type": "product-description",
+          "name": "Product description",
+          "settings": {
+            "text": "",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "demand_meter": {
+          "type": "00-avonent-stock-meter",
+          "name": "Avonent Stock Meter",
+          "settings": {
+            "sold_percent": 93,
+            "sold_text": "Sold",
+            "fill_color": "#02c6ea",
+            "track_color": "#e4eff2",
+            "text_color": "#111111",
+            "bar_height": 8,
+            "corner_radius": 16,
+            "spacing_top": 2,
+            "spacing_bottom": 2
+          },
+          "blocks": {}
+        },
+        "00_avonent_price_offer_zQyQbb": {
+          "type": "00-avonent-price-offer",
+          "name": "Avonent Price Offer",
+          "settings": {
+            "one_time_label": "One-Time Purchase",
+            "subscription_label": "Subscribe & Save",
+            "default_purchase_type": "one_time",
+            "show_subscription_helper": true,
+            "subscription_helper": "Recurring delivery · Cancel anytime",
+            "show_sale_badge": true,
+            "sale_name": "SUMMER SALE",
+            "show_savings_amount": true,
+            "show_savings_percent": false,
+            "accent_color": "#02c6ea",
+            "text_color": "#111111",
+            "muted_text_color": "#667177",
+            "border_color": "#dce6e9",
+            "background_color": "#ffffff",
+            "sale_badge_background": "#02c6ea",
+            "sale_badge_text_color": "#ffffff",
+            "corner_radius": 0,
+            "spacing_top": 2,
+            "spacing_bottom": 3
+          },
+          "blocks": {}
+        },
+        "variant_picker": {
+          "type": "variant-picker",
+          "name": "Variant picker",
+          "settings": {
+            "variant_style": "buttons",
+            "show_swatches": false,
+            "option_label_text_color": "",
+            "variant_style_class": "default",
+            "custom_variant_background": "{{ settings.color_palette.background }}",
+            "custom_variant_text": "{{ settings.color_palette.foreground }}",
+            "custom_variant_border": "{{ settings.color_palette.foreground }}",
+            "selected_variant_style_class": "default",
+            "custom_selected_variant_background": "{{ settings.color_palette.foreground }}",
+            "custom_selected_variant_text": "{{ settings.color_palette.background }}",
+            "custom_selected_variant_border": "{{ settings.color_palette.foreground }}",
+            "alignment": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "bundle_selector": {
+          "type": "00-avonent-bundle-selector",
+          "name": "Avonent Bundle Selector",
+          "settings": {
+            "default_bundle": "2",
+            "show_images": true,
+            "bundle_1_enabled": true,
+            "bundle_1_title": "Buy 1",
+            "bundle_1_subtitle": "Starter",
+            "bundle_1_variant": "",
+            "bundle_1_quantity": 1,
+            "bundle_1_badge": "",
+            "bundle_1_savings_text": "",
+            "bundle_2_enabled": true,
+            "bundle_2_title": "Buy 2",
+            "bundle_2_subtitle": "Best Seller",
+            "bundle_2_variant": "",
+            "bundle_2_quantity": 2,
+            "bundle_2_badge": "Most Popular",
+            "bundle_2_savings_text": "",
+            "bundle_3_enabled": true,
+            "bundle_3_title": "Buy 3",
+            "bundle_3_subtitle": "Best Value",
+            "bundle_3_variant": "",
+            "bundle_3_quantity": 3,
+            "bundle_3_badge": "Best Value",
+            "bundle_3_savings_text": "",
+            "bundle_4_enabled": false,
+            "bundle_4_title": "Buy 4",
+            "bundle_4_subtitle": "Stock Up",
+            "bundle_4_variant": "",
+            "bundle_4_quantity": 4,
+            "bundle_4_badge": "",
+            "bundle_4_savings_text": "",
+            "accent_color": "#02c6ea",
+            "selected_background": "#f2fbfd",
+            "card_background": "#ffffff",
+            "border_color": "#dde8eb",
+            "text_color": "#111111",
+            "muted_text_color": "#6f7b80",
+            "card_radius": 12,
+            "card_gap": 10,
+            "spacing_top": 4,
+            "spacing_bottom": 2
+          },
+          "blocks": {}
+        },
+        "delivery_estimate": {
+          "type": "00-avonent-delivery-estimate",
+          "name": "Avonent Delivery Estimate",
+          "settings": {
+            "prefix": "Order today for delivery by",
+            "delivery_days": 4,
+            "skip_weekends": true,
+            "fallback_date_text": "Soon",
+            "separator": "·",
+            "shipping_text": "Ships from USA",
+            "show_flag": true,
+            "show_status_dot": true,
+            "accent_color": "#02c6ea",
+            "text_color": "#111111",
+            "muted_text_color": "#748086",
+            "divider_color": "#d8e5e9",
+            "background_color": "#ffffff",
+            "text_size": 12,
+            "corner_radius": 0,
+            "padding_y": 10,
+            "padding_x": 4,
+            "spacing_top": 3,
+            "spacing_bottom": 3
+          },
+          "blocks": {}
+        },
+        "buy_buttons": {
+          "type": "buy-buttons",
+          "name": "Buy buttons",
+          "settings": {
+            "stacking": true,
+            "text_color": "",
+            "show_pickup_availability": false,
+            "gift_card_form": true,
+            "recipient_button_style": "default",
+            "recipient_button_background": "{{ settings.color_palette.background }}",
+            "recipient_button_text": "{{ settings.color_palette.foreground }}",
+            "recipient_button_border": "{{ settings.color_palette.foreground }}",
+            "selected_recipient_button_style": "default",
+            "selected_recipient_button_background": "{{ settings.color_palette.foreground }}",
+            "selected_recipient_button_text": "{{ settings.color_palette.background }}",
+            "selected_recipient_button_border": "{{ settings.color_palette.foreground }}",
+            "input_style": "default",
+            "input_background_color": "{{ settings.color_palette.background }}",
+            "input_text_color": "{{ settings.color_palette.foreground }}",
+            "input_border_color": "{{ settings.color_palette.foreground }}",
+            "border_width": 1,
+            "border_radius": 14,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "quantity": {
+              "type": "quantity",
+              "static": true,
+              "settings": {
+                "input_style": "default",
+                "input_background_color": "{{ settings.color_palette.background }}",
+                "input_text_color": "{{ settings.color_palette.foreground }}",
+                "input_border_color": "{{ settings.color_palette.foreground }}",
+                "border_width": 1,
+                "border_radius": 14
+              },
+              "blocks": {}
+            },
+            "add-to-cart": {
+              "type": "add-to-cart",
+              "static": true,
+              "settings": {
+                "style_class": "button-custom",
+                "custom_button_background": "#02c6ea",
+                "custom_button_text": "#ffffff",
+                "custom_button_border": "#02c6ea"
+              },
+              "blocks": {}
+            },
+            "accelerated-checkout": {
+              "type": "accelerated-checkout",
+              "disabled": true,
+              "static": true,
+              "settings": {},
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "payment_icons": {
+          "type": "payment-icons",
+          "name": "Payment icons",
+          "settings": {
+            "horizontal_alignment": "center",
+            "gap": 6,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "accordion": {
+          "type": "00-avonent-accordion",
+          "name": "Avonent Accordion",
+          "settings": {
+            "open_first": false,
+            "item_1_enabled": true,
+            "item_1_title": "Description",
+            "item_1_content": "<p><strong>Avonent Advanced Digestive Complex</strong> is a comprehensive 10-in-1 formula designed to support digestion from multiple angles. Each two-capsule serving delivers 1,015 mg of targeted digestive support, including 500 mg of artichoke leaf extract, a 300 mg botanical blend, 125 mg of ox bile, 50 mg of DigeZyme® multi-enzyme complex, and 40 mg of slippery elm bark extract.</p><p>Instead of relying on a single enzyme, this formula combines digestive enzymes, bile support, and soothing botanicals to help your body process everyday meals more comfortably. DigeZyme® helps break down proteins, fats, carbohydrates, fiber, and lactose, while artichoke and ox bile support normal bile activity and the digestion of dietary fats.</p><p>Slippery elm and complementary botanicals round out the formula with gentle digestive support—giving you a complete daily routine for digestive comfort, balance, and consistency.</p>",
+            "item_2_enabled": true,
+            "item_2_title": "Benefits",
+            "item_2_content": "<ul><li><strong>More comfortable digestion:</strong> supports digestive comfort before and after everyday meals.</li><li><strong>Complete food breakdown:</strong> helps digest proteins, fats, carbohydrates, fiber, and lactose.</li><li><strong>Targeted fat digestion:</strong> supports normal bile activity and the breakdown of dietary fats.</li><li><strong>Less post-meal heaviness:</strong> helps ease occasional bloating, gas, and uncomfortable fullness.</li><li><strong>Liver and gallbladder support:</strong> supports normal digestive function involving the liver, bile, and gallbladder.</li><li><strong>Daily digestive balance:</strong> promotes regularity and healthy everyday digestive function.</li><li><strong>Better nutrient breakdown:</strong> supports the digestive process your body uses to access nutrients from food.</li><li><strong>Simple 10-in-1 support:</strong> combines multiple digestive ingredients in one convenient two-capsule serving.</li></ul>",
+            "item_3_enabled": true,
+            "item_3_title": "Recommended Use",
+            "item_3_content": "<p><strong>Take 2 capsules daily</strong> with water, preferably with a meal. Taking the capsules shortly before or with food allows the formula to support the digestive process when you need it most.</p><p>Use consistently as part of your daily wellness routine, and do not exceed the suggested serving.</p>",
+            "item_4_enabled": true,
+            "item_4_title": "Do You Offer a Guarantee?",
+            "item_4_content": "<p>Yes! All Avonent orders are backed by our 30-day satisfaction guarantee.</p><p>If you're not completely satisfied, contact our support team and we'll review your order and help make it right according to our refund policy.</p>",
+            "item_5_enabled": false,
+            "item_5_title": "Ingredients",
+            "item_5_content": "<p>Add ingredient information here.</p>",
+            "item_6_enabled": false,
+            "item_6_title": "Shipping",
+            "item_6_content": "<p>Add shipping information here.</p>",
+            "text_color": "#111111",
+            "muted_text_color": "#444444",
+            "border_color": "#e1e5e7",
+            "background_color": "#ffffff",
+            "accent_color": "#02c6ea",
+            "title_size": 14,
+            "body_size": 13,
+            "corner_radius": 6,
+            "spacing_top": 8,
+            "spacing_bottom": 0
+          },
+          "blocks": {}
+        },
+        "media-gallery": {
+          "type": "_product-media-gallery",
+          "static": true,
+          "settings": {
+            "media_presentation": "carousel",
+            "media_columns": "one",
+            "image_gap": 8,
+            "large_first_image": false,
+            "icons_style": "arrow",
+            "slideshow_controls_style": "thumbnails",
+            "slideshow_mobile_controls_style": "dots",
+            "thumbnail_position": "bottom",
+            "thumbnail_width": 54,
+            "thumbnail_radius": 10,
+            "aspect_ratio": "adapt",
+            "constrain_to_viewport": true,
+            "media_fit": "contain",
+            "media_radius": 16,
+            "extend_media": false,
+            "zoom": true,
+            "video_loop": false,
+            "hide_variants": true,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "00_avonent_rating_QYdjda",
+        "product_title_F8y7BN",
+        "00_avonent_benefits_grid_AcNT8i",
+        "description",
+        "demand_meter",
+        "00_avonent_price_offer_zQyQbb",
+        "variant_picker",
+        "bundle_selector",
+        "delivery_estimate",
+        "buy_buttons",
+        "payment_icons",
+        "accordion"
+      ],
+      "settings": {
+        "content_width": "content-center-aligned",
+        "desktop_media_position": "left",
+        "equal_columns": true,
+        "limit_details_width": false,
+        "gap": 32,
+        "sticky_details_desktop": true,
+        "details_gap": 14,
+        "details_background_color": "#ffffff",
+        "details_border_color": "#e8eef0",
+        "details_border_width": 0,
+        "details_radius": 18,
+        "details_padding_desktop": 20,
+        "details_padding_mobile": 18,
+        "background_color": "#ffffff",
+        "padding-block-start": 0,
+        "padding-block-end": 24
+      }
+    },
+    "avonent_proof_stats": {
+      "type": "00-avonent-proof-stats",
+      "blocks": {
+        "ingredient_research": {
+          "type": "stat",
+          "settings": {
+            "kicker": "INGREDIENT-LEVEL RESEARCH",
+            "value": "12+",
+            "label": "Published studies on our ingredients",
+            "detail": ""
+          }
+        },
+        "formula_amount": {
+          "type": "stat",
+          "settings": {
+            "kicker": "10-IN-1 FORMULA",
+            "value": "1,000+ mg",
+            "label": "Active ingredients per serving",
+            "detail": ""
+          }
+        },
+        "traditional_use": {
+          "type": "stat",
+          "settings": {
+            "kicker": "BOTANICAL TRADITION",
+            "value": "2,000+",
+            "label": "Years of traditional botanical use",
+            "detail": ""
+          }
+        },
+        "orders_shipped": {
+          "type": "stat",
+          "settings": {
+            "kicker": "CUSTOMER MILESTONE",
+            "value": "100,000+",
+            "label": "Orders shipped",
+            "detail": ""
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_research",
+        "formula_amount",
+        "traditional_use",
+        "orders_shipped"
+      ],
+      "settings": {
+        "eyebrow": "TRADITION MEETS FORMULATION",
+        "heading": "Rooted in nature. Built for modern digestion.",
+        "description": "<p>A thoughtfully designed blend of botanicals, digestive enzymes, and bile support for a simple daily wellness routine.</p>",
+        "overlay_opacity": 75,
+        "button_text": "Try Avonent Risk-Free",
+        "button_link": "",
+        "guarantee_text": "30-day money-back guarantee",
+        "footnote": "",
+        "background_color": "#087e9d",
+        "text_color": "#ffffff",
+        "muted_text_color": "#d7f3f8",
+        "accent_color": "#8deeff",
+        "divider_color": "#53b9cf",
+        "button_color": "#02c6ea",
+        "button_text_color": "#07181d",
+        "content_width": 1240,
+        "corner_radius": 16,
+        "padding_top": 24,
+        "padding_bottom": 0
+      }
+    },
+    "avonent_formula_breakdown": {
+      "type": "00-avonent-formula-breakdown",
+      "blocks": {
+        "artichoke_extract": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/EE596049-5BD0-41D5-894B-76076508F580.png",
+            "role": "FAT + BILE SUPPORT",
+            "name": "Artichoke Extract",
+            "amount": "500 mg",
+            "benefit_heading": "For meals that tend to sit heavy.",
+            "explanation": "<p>Artichoke extract supports healthy bile flow, helping your body handle dietary fats and supporting more comfortable digestion after rich meals.</p>",
+            "details_label": "Why it is included",
+            "details": ""
+          }
+        },
+        "terminalia_chebula": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/37646A5E-CD1D-45ED-9652-E39FF98543A7.png",
+            "role": "DAILY REGULARITY",
+            "name": "Terminalia chebula Fruit Extract",
+            "amount": "Part of the 300 mg botanical blend",
+            "benefit_heading": "For a routine that feels more predictable.",
+            "explanation": "<p>A time-tested botanical that supports natural digestive movement, comfortable regularity, and everyday gut balance.</p>",
+            "details_label": "Why it is included",
+            "details": ""
+          }
+        },
+        "sphaeranthus_indicus": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/A929BD16-DF1D-422F-A109-10F3AAF241DD.png",
+            "role": "POST-MEAL COMFORT",
+            "name": "Sphaeranthus indicus Flower Extract",
+            "amount": "Part of the 300 mg botanical blend",
+            "benefit_heading": "Traditional support for modern meals.",
+            "explanation": "<p>A distinctive botanical traditionally used to support digestive comfort and help your stomach feel more settled after eating.</p>",
+            "details_label": "Why it is included",
+            "details": ""
+          }
+        },
+        "ox_bile": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/8AD2BC79-7DA5-46FD-BF14-8717FB2E9B2B.png",
+            "role": "TARGETED FAT DIGESTION",
+            "name": "Ox Bile Powder",
+            "amount": "125 mg",
+            "benefit_heading": "Extra support for heavier meals.",
+            "explanation": "<p>Provides concentrated bile acids that support the breakdown and absorption of dietary fats—especially when rich foods leave you feeling weighed down.</p>",
+            "details_label": "Why it is included",
+            "details": ""
+          }
+        },
+        "digezyme": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/B37E348E-57D9-4600-921E-5ABFE3FDFA35.png",
+            "role": "5-ENZYME FOOD BREAKDOWN",
+            "name": "DigeZyme®",
+            "amount": "50 mg multi-enzyme complex",
+            "benefit_heading": "Helps break down the entire meal.",
+            "explanation": "<p>Five targeted enzymes help break down proteins, fats, carbohydrates, fiber, and lactose—supporting easier digestion and helping your body get more from the foods you eat.*</p>",
+            "details_label": "Why it is included",
+            "details": ""
+          }
+        },
+        "slippery_elm": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/75E05387-DF21-4A17-94A1-2CDDC062CB5C.png",
+            "role": "SOOTHING DIGESTIVE SUPPORT",
+            "name": "Slippery Elm Bark Extract",
+            "amount": "40 mg",
+            "benefit_heading": "Comfort for a sensitive stomach.",
+            "explanation": "<p>Slippery elm forms a naturally soothing texture when mixed with water, helping support the digestive lining and a more comfortable gut environment.</p>",
+            "details_label": "Why it is included",
+            "details": ""
+          }
+        }
+      },
+      "block_order": [
+        "artichoke_extract",
+        "terminalia_chebula",
+        "sphaeranthus_indicus",
+        "ox_bile",
+        "digezyme",
+        "slippery_elm"
+      ],
+      "settings": {
+        "eyebrow": "INSIDE THE FORMULA",
+        "heading": "More than enzymes. A complete plan for what happens after you eat.",
+        "description": "<p>Ten targeted ingredients work across food breakdown, fat digestion, digestive comfort, and regularity—so one simple routine can replace the guesswork.</p>",
+        "content_heading": "Every ingredient has a job.",
+        "content_intro": "<p>No mystery blend. No complicated science lesson. Just a clear look at why each ingredient earned its place.</p>",
+        "mobile_columns": "2",
+        "mobile_initial_count": 6,
+        "show_more_label": "View all ingredients",
+        "show_less_label": "Show fewer ingredients",
+        "trust_1": "Third-party lab tested",
+        "trust_2": "Ships from the USA",
+        "trust_3": "Quality-focused formula",
+        "background_color": "#f7fcfd",
+        "card_color": "#ffffff",
+        "soft_color": "#eaf9fc",
+        "text_color": "#111111",
+        "muted_text_color": "#59676c",
+        "accent_color": "#02c6ea",
+        "border_color": "#d9e9ed",
+        "image_ratio": "4 / 3",
+        "corner_radius": 18,
+        "card_gap": 20,
+        "content_width": 1240,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "00_avonent_before_after_4chKWb": {
+      "type": "00-avonent-before-after",
+      "blocks": {
+        "process_step_9dTF8U": {
+          "type": "process_step",
+          "disabled": true,
+          "settings": {
+            "heading": "Take as directed",
+            "text": "<p>Use Avonent with your meal according to the directions on the label.</p>"
+          }
+        },
+        "process_step_gPm74L": {
+          "type": "process_step",
+          "disabled": true,
+          "settings": {
+            "heading": "Support all five digestive jobs",
+            "text": "<p>Protease, lipase, amylase, cellulase, and lactase help break down different parts of a mixed meal.</p>"
+          }
+        },
+        "process_step_bDcgye": {
+          "type": "process_step",
+          "disabled": true,
+          "settings": {
+            "heading": "Feel better supported after eating",
+            "text": "<p>Designed to support comfortable digestion and help with occasional bloating, gas, and post-meal heaviness.*</p>"
+          }
+        }
+      },
+      "block_order": [
+        "process_step_9dTF8U",
+        "process_step_gPm74L",
+        "process_step_bDcgye"
+      ],
+      "name": "00 Avonent Before/After",
+      "settings": {
+        "eyebrow": "FROM PLATE TO COMFORT",
+        "heading": "A heavy meal asks your digestion to do five jobs at once.",
+        "intro": "<p>Protein. Fats. Carbohydrates. Fiber. Lactose. One mixed meal can contain all five—and each one requires different digestive support.</p>",
+        "before_tab": "Before Support",
+        "before_label": "THE HEAVY-MEAL PROBLEM",
+        "before_image": "shopify://shop_images/A7162ED3-B2D7-4591-BD38-CD872AE47EAA.png",
+        "before_image_alt": "Conceptual illustration of a complex mixed meal during digestion",
+        "before_heading": "One meal. A lot to break down.",
+        "before_text": "<p>Rich, complicated meals can sometimes leave you feeling bloated, gassy, overly full, or weighed down long after the last bite.</p>",
+        "before_points": "<ul><li>Protein, fats, carbs, fiber, and dairy all require different digestive work</li><li>Mixed meals can be harder to handle than a single type of food</li><li>Occasional pressure, gas, and uncomfortable fullness can follow</li></ul>",
+        "after_tab": "With Avonent",
+        "after_label": "WITH AVONENT SUPPORT",
+        "after_image": "shopify://shop_images/660F3A1D-A9A8-4C2B-8F91-A77754AB205A.png",
+        "after_image_alt": "Conceptual illustration of Avonent supporting mixed-meal digestion",
+        "after_heading": "Support for the whole plate.",
+        "after_text": "<p>Avonent combines five digestive enzymes to help break down protein, fats, carbohydrates, fiber, and lactose—plus artichoke, ox bile, slippery elm, and targeted botanicals for more complete digestive support.</p>",
+        "after_points": "<ul><li>Broad enzyme support for every part of a mixed meal</li><li>Additional support for normal fat digestion and bile activity</li><li>Designed to support post-meal comfort and help with occasional bloating</li></ul>",
+        "process_heading": "How Avonent supports the process",
+        "closing_heading": "Made for real meals. Not perfect diets.",
+        "closing_text": "<p>Protein-heavy lunches. Restaurant dinners. Dairy. Takeout nights. Avonent provides broader digestive support for the food you actually eat.</p>",
+        "button_label": "SUPPORT YOUR NEXT MEAL",
+        "button_link": "",
+        "disclaimer": "",
+        "accent_color": "#02c6ea",
+        "background_color": "#eaf9fc",
+        "card_color": "#ffffff",
+        "text_color": "#111111",
+        "muted_color": "#596269",
+        "before_color": "#e5a53a",
+        "border_color": "#cfeaf0",
+        "content_width": 1200,
+        "corner_radius": 24,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "avonent_wellness_journey": {
+      "type": "00-avonent-wellness-journey",
+      "blocks": {
+        "journey_step_cBQCUz": {
+          "type": "journey_step",
+          "settings": {
+            "week": "Week 1",
+            "title": "Start the Routine",
+            "benefit_1": "Take two softgels daily and make Avonent part of the same routine each day.",
+            "benefit_2": "The odorless aged-garlic format makes daily consistency simple.",
+            "benefit_3": "Begin building a consistent cardiovascular-wellness habit.",
+            "benefit_4": ""
+          }
+        },
+        "journey_step_WECQM9": {
+          "type": "journey_step",
+          "settings": {
+            "week": "Week 2",
+            "title": "Build Consistency",
+            "benefit_1": "Consistent aged garlic supports healthy circulation and cardiovascular wellness.",
+            "benefit_2": "CoQ10 supports normal cellular energy production as part of the daily formula.",
+            "benefit_3": "The routine starts to feel easier to maintain day after day.",
+            "benefit_4": ""
+          }
+        },
+        "journey_step_YwtLqb": {
+          "type": "journey_step",
+          "settings": {
+            "week": "Week 3",
+            "title": "Support That Builds",
+            "benefit_1": "Daily use keeps heart and arterial wellness support consistent.",
+            "benefit_2": "The odorless format helps keep the routine simple without strong garlic aftertaste.",
+            "benefit_3": "By now, Avonent can feel like a natural part of your everyday wellness routine.",
+            "benefit_4": ""
+          }
+        },
+        "journey_step_8xDAnR": {
+          "type": "journey_step",
+          "settings": {
+            "week": "Week 4",
+            "title": "Make It Your Baseline",
+            "benefit_1": "Keep taking two softgels daily for consistent cardiovascular-wellness support.",
+            "benefit_2": "Pair the routine with movement, hydration, sleep, and balanced nutrition.",
+            "benefit_3": "Long-term consistency keeps healthy circulation and vitality support part of your everyday routine.",
+            "benefit_4": ""
+          }
+        }
+      },
+      "block_order": [
+        "journey_step_cBQCUz",
+        "journey_step_WECQM9",
+        "journey_step_YwtLqb",
+        "journey_step_8xDAnR"
+      ],
+      "settings": {
+        "eyebrow": "Your Wellness",
+        "heading": "Your First Month with Avonent",
+        "description": "<p>Built for daily use. Here’s how Avonent can fit into a consistent cardiovascular-wellness routine over the first four weeks. Individual experiences vary.</p>",
+        "disclaimer": "",
+        "background_color": "#ffffff",
+        "card_color": "#ffffff",
+        "soft_color": "#eaf9fc",
+        "text_color": "#111111",
+        "muted_text_color": "#596269",
+        "accent_color": "#02c6ea",
+        "border_color": "#d9e5e8",
+        "content_width": 680,
+        "padding_top": 24,
+        "padding_bottom": 0
+      }
+    },
+    "avonent_vs_other_brands": {
+      "type": "00-avonent-vs-other-brands",
+      "blocks": {
+        "row_1": {
+          "type": "comparison_row",
+          "settings": {
+            "icon": "flask",
+            "avonent_text": "Third-Party Tested",
+            "other_text": "No Test Proof",
+            "reason_title": "Quality-Focused",
+            "reason_text": "Built around thoughtful formulation rather than short-lived trends."
+          }
+        },
+        "row_2": {
+          "type": "comparison_row",
+          "settings": {
+            "icon": "shield",
+            "avonent_text": "Made in the USA",
+            "other_text": "Overseas Manufacturing",
+            "reason_title": "Clear & Transparent",
+            "reason_text": "Straightforward product information so you can make a more informed choice."
+          }
+        },
+        "row_3": {
+          "type": "comparison_row",
+          "settings": {
+            "icon": "leaf",
+            "avonent_text": "No Fillers or Junk",
+            "other_text": "Cheap Additives",
+            "reason_title": "Made for Consistency",
+            "reason_text": "Designed to fit naturally into a repeatable daily wellness routine."
+          }
+        },
+        "row_4": {
+          "type": "comparison_row",
+          "settings": {
+            "icon": "sparkle",
+            "avonent_text": "Transparent Formulas",
+            "other_text": "Hidden Ingredients",
+            "reason_title": "Premium by Design",
+            "reason_text": "A clean, modern experience from product discovery through delivery."
+          }
+        },
+        "row_5": {
+          "type": "comparison_row",
+          "settings": {
+            "icon": "check",
+            "avonent_text": "Premium Quality Standards",
+            "other_text": "Low-Cost Shortcuts",
+            "reason_title": "Support That Stays With You",
+            "reason_text": "Helpful customer service and clear policies when you need assistance."
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5"
+      ],
+      "settings": {
+        "avonent_image": "shopify://shop_images/avonent-digestive-complex-1996B5-background.png",
+        "avonent_label": "AVONENT",
+        "other_image": "shopify://shop_images/62ED769E-2EE1-4A4C-9BE5-F906DFD484C5.png",
+        "other_label": "Other Brands",
+        "eyebrow": "THE AVONENT DIFFERENCE",
+        "heading": "Avonent vs. Other Brands",
+        "description": "A premium routine should feel simple, transparent, and built around quality. Customize the comparison below with product claims your brand can substantiate.",
+        "button_text": "Shop Avonent",
+        "button_link": "",
+        "guarantee_text": "30 Day Money-Back Guarantee",
+        "background_color": "#087e9d",
+        "panel_color": "#0a92b3",
+        "panel_soft_color": "#ffffff",
+        "text_color": "#ffffff",
+        "muted_text_color": "#d7f3f8",
+        "other_text_color": "#20282b",
+        "accent_color": "#02c6ea",
+        "accent_dark_color": "#62b9d6",
+        "border_color": "#d7e4e8",
+        "good_icon_color": "#8deeff",
+        "bad_icon_color": "#737a7d",
+        "button_background": "#111111",
+        "button_text_color": "#ffffff",
+        "content_width": 1240,
+        "corner_radius": 12,
+        "avonent_image_size": 220,
+        "other_image_size": 110,
+        "icon_size": 28,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "avonent_money_back_guarantee": {
+      "type": "00-avonent-money-back-guarantee",
+      "settings": {
+        "show_top_strip": false,
+        "strip_text": "30-Day Money-Back Guarantee",
+        "days": 30,
+        "show_seal": true,
+        "eyebrow": "FEEL THE DIFFERENCE",
+        "heading": "30-Day Risk-Free Trial",
+        "description": "<p>Try Avonent for 30 days. If you are not satisfied, contact us within 30 days for help with a return under our refund policy.</p>",
+        "button_text": "Try Risk-Free Today",
+        "button_link": "",
+        "policy_text": "",
+        "policy_link": "shopify://policies/refund-policy",
+        "show_image_badge": false,
+        "image_fit": "contain",
+        "desktop_layout": "stacked",
+        "image_width": 1100,
+        "image_height": 560,
+        "trust_1": "",
+        "trust_2": "",
+        "trust_3": "",
+        "background_color": "#f2fafc",
+        "strip_background": "#087e9d",
+        "strip_text_color": "#ffffff",
+        "text_color": "#111111",
+        "muted_text_color": "#465b62",
+        "accent_color": "#02c6ea",
+        "accent_dark_color": "#1996b5",
+        "button_color": "#02c6ea",
+        "button_text_color": "#ffffff",
+        "content_width": 1240,
+        "corner_radius": 18,
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "00_avonent_bottom_offer_PrLf6d": {
+      "type": "00-avonent-bottom-offer",
+      "name": "00 Avonent Bottom Offer",
+      "settings": {
+        "anchor_id": "avonent-bottom-offer",
+        "eyebrow": "CHOOSE YOUR ROUTINE",
+        "heading": "Stay consistent. Stock up. Save more.",
+        "description": "<p>Choose the supply that fits your routine and keep your daily digestive support within reach.</p>",
+        "purchase_label": "One-Time Purchase",
+        "sale_name": "SUMMER SALE",
+        "bundle_legend": "",
+        "default_bundle": "2",
+        "show_bundle_images": true,
+        "bundle_1_enabled": true,
+        "bundle_1_title": "Buy 1",
+        "bundle_1_subtitle": "30-Day Supply",
+        "bundle_1_quantity": 1,
+        "bundle_1_badge": "",
+        "bundle_1_savings": "Perfect for getting started",
+        "bundle_2_enabled": true,
+        "bundle_2_title": "Buy 2",
+        "bundle_2_subtitle": "60-Day Supply",
+        "bundle_2_quantity": 2,
+        "bundle_2_badge": "Most Popular",
+        "bundle_2_savings": "Build a consistent routine",
+        "bundle_3_enabled": true,
+        "bundle_3_title": "Buy 3",
+        "bundle_3_subtitle": "90-Day Supply",
+        "bundle_3_quantity": 3,
+        "bundle_3_badge": "Best Value",
+        "bundle_3_savings": "Stock up and stay prepared",
+        "show_stock_meter": true,
+        "sold_percent": 93,
+        "sold_text": "Sold",
+        "delivery_text": "Order today for estimated delivery soon",
+        "shipping_text": "Ships from USA 🇺🇸",
+        "guarantee_text": "30-day money-back guarantee",
+        "show_payment_icons": true,
+        "background_color": "#f3fbfd",
+        "card_color": "#ffffff",
+        "soft_color": "#e2f8fc",
+        "text_color": "#111111",
+        "muted_text_color": "#59676c",
+        "accent_color": "#02c6ea",
+        "accent_dark_color": "#087e9d",
+        "urgency_color": "#e53b3b",
+        "border_color": "#d7e7eb",
+        "button_color": "#111111",
+        "button_text_color": "#ffffff",
+        "content_width": 1240,
+        "corner_radius": 14,
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "avonent_customer_reviews": {
+      "type": "00-avonent-customer-reviews",
+      "blocks": {
+        "review_Cx36Nk": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "One bottle replaced my complicated routine",
+            "review": "I used to take multiple digestive products depending on what I ate, which got expensive and confusing. This gives me enzymes, botanicals, and bile support together in one formula. I’ve been feeling better after meals, and it’s much easier to stay consistent when everything is in one bottle. Already ordered another one.",
+            "customer_name": "Kevin D.",
+            "verified": true,
+            "date": "August 19, 2026",
+            "tag_1": "Good Formula",
+            "tag_2": "Easy Routine"
+          }
+        },
+        "review_8LK8CK": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "I don’t feel so heavy after meals anymore",
+            "review": "I’ve tried a few digestive supplements, but most of them either did nothing or were annoying to keep up with. After taking this consistently, I noticed I wasn’t feeling nearly as heavy and uncomfortable after dinner. My stomach just feels calmer overall. It’s become one of those supplements I actually remember to take every day.",
+            "customer_name": "Jordan M.",
+            "verified": true,
+            "date": "August 3, 2026",
+            "tag_1": "Less Bloating",
+            "tag_2": "Digestive Comfort"
+          }
+        },
+        "review_XTXXjQ": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Finally feeling more regular",
+            "review": "Not to overshare, but regularity has always been a struggle for me. About two weeks into using Avonent, things started feeling much more consistent and predictable. I also like that it combines several ingredients instead of making me buy a bunch of separate supplements. Definitely keeping this in my routine.",
+            "customer_name": "Brian T.",
+            "verified": true,
+            "date": "August 7, 2026",
+            "tag_1": "Daily Regularity",
+            "tag_2": "Gut Balance"
+          }
+        },
+        "review_r4U3Cb": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "A noticeable difference after heavier meals",
+            "review": "Heavy or fatty meals used to leave me feeling uncomfortable for hours. Since adding this to my routine, I’ve noticed those meals feel much easier on my stomach. I specifically liked seeing digestive enzymes and ox bile included in the formula. The capsules are easy to take and haven’t bothered my stomach at all.",
+            "customer_name": "Ashley R.",
+            "verified": true,
+            "date": "August 11, 2026",
+            "tag_1": "Meal Support",
+            "tag_2": "Fat Digestion"
+          }
+        },
+        "review_xR9fam": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "My stomach feels calmer throughout the day",
+            "review": "I bought this because I was tired of feeling bloated and off after almost every meal. I wasn’t expecting an overnight miracle, but after staying consistent for a couple of weeks, I realized my stomach had been feeling noticeably calmer. I’m also not dealing with that uncomfortable full feeling as often. Very happy I gave it a try.",
+            "customer_name": "Rachel M.",
+            "verified": true,
+            "date": "August 15, 2026",
+            "tag_1": "Bloat Support",
+            "tag_2": "Daily Comfort"
+          }
+        }
+      },
+      "block_order": [
+        "review_Cx36Nk",
+        "review_8LK8CK",
+        "review_XTXXjQ",
+        "review_r4U3Cb",
+        "review_xR9fam"
+      ],
+      "settings": {
+        "show_trust_line": true,
+        "stars_image_url": "https://cdn.shopify.com/s/files/1/0779/0673/9384/files/stars-green.svg?v=1761298566",
+        "rating_text": "Rated 4.9 / 5",
+        "trusted_text": "Trusted by 75,000+",
+        "eyebrow": "VERIFIED CUSTOMER REVIEWS",
+        "heading": "Real routines. Real Avonent customers.",
+        "description": "<p>Read feedback from customers who made Avonent part of their daily wellness routine.</p>",
+        "mobile_more_text": "Read more reviews",
+        "button_text": "",
+        "button_link": "",
+        "cta_note": "30-day customer satisfaction guarantee",
+        "background_color": "#f1fbfd",
+        "card_color": "#ffffff",
+        "text_color": "#111111",
+        "muted_text_color": "#58676c",
+        "accent_color": "#02c6ea",
+        "accent_dark_color": "#008eaa",
+        "border_color": "#d6e8ec",
+        "corner_radius": 18,
+        "content_width": 1240,
+        "padding_top": 24,
+        "padding_bottom": 24
+      }
+    },
+    "avonent_faq_mCxfYk": {
+      "type": "avonent-faq",
+      "blocks": {
+        "faq_tcHqcn": {
+          "type": "faq",
+          "settings": {
+            "question": "What is Avonent Advanced Digestive Complex?",
+            "answer": "<p>Avonent combines digestive enzymes, carefully selected botanicals, and bile support in one complete daily formula. It is designed to support the breakdown of proteins, fats, carbohydrates, fiber, and lactose while supporting digestive comfort and regularity.*</p>"
+          }
+        },
+        "faq_BHckdg": {
+          "type": "faq",
+          "settings": {
+            "question": "What kinds of food does the formula help digest?",
+            "answer": "<p>The five-enzyme DigeZyme® complex includes amylase, protease, lipase, cellulase, and lactase. Together, these enzymes support the breakdown of carbohydrates, proteins, fats, plant fiber, and lactose—making the formula useful across everyday meals, high-protein foods, dairy, takeout, and richer restaurant meals.*</p>"
+          }
+        },
+        "faq_iRYHGm": {
+          "type": "faq",
+          "settings": {
+            "question": "When and how should I take Avonent?",
+            "answer": "<p>Take Avonent exactly as directed on the product label. Consistency matters, so choose a time that fits naturally into your daily routine. Do not exceed the recommended serving.</p>"
+          }
+        },
+        "faq_Bca8ym": {
+          "type": "faq",
+          "settings": {
+            "question": "Is every batch third-party tested?",
+            "answer": "<p>Yes. Every batch of Avonent is third-party tested for identity, purity, potency, and contaminants before it leaves the facility. We believe what is shown on the label should match what is inside the bottle, which is why we keep the formula and serving details visible and straightforward.</p>"
+          }
+        },
+        "faq_WCe6tR": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I take Avonent with other supplements or medications?",
+            "answer": "<p>Many people include digestive support as part of a broader wellness routine, but every routine is different. If you take prescription or over-the-counter medication, are pregnant or nursing, have a medical condition, or have a procedure planned, speak with a qualified healthcare professional before adding any new supplement.</p>"
+          }
+        },
+        "faq_L88rQi": {
+          "type": "faq",
+          "settings": {
+            "question": "Is Avonent vegan or vegetarian?",
+            "answer": "<p>No. Advanced Digestive Complex contains ox bile powder, so it is not vegan or vegetarian. We list this clearly because you deserve to know exactly what is included before you buy.</p>"
+          }
+        },
+        "faq_XLnfyJ": {
+          "type": "faq",
+          "settings": {
+            "question": "How quickly should I expect to notice a difference?",
+            "answer": "<p>Every body and routine is different. Some people may notice changes sooner than others, while some need more time and consistency. Follow the serving directions, pay attention to your own experience, and remember that individual results can vary.</p>"
+          }
+        },
+        "faq_YnLFVE": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the 30-day money-back guarantee?",
+            "answer": "<p>Every order is covered by our 30-day money-back guarantee. Try Avonent as directed, and if it is not right for you, contact our support team within 30 days of delivery. We will help you with the next steps under our refund policy—clearly, quickly, and without unnecessary hassle.</p>"
+          }
+        },
+        "faq_irXchY": {
+          "type": "faq",
+          "settings": {
+            "question": "Where does Avonent ship from?",
+            "answer": "<p>Avonent orders ship from the United States. Available shipping options and the latest estimated delivery timing are shown during checkout before you place your order.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_tcHqcn",
+        "faq_BHckdg",
+        "faq_iRYHGm",
+        "faq_Bca8ym",
+        "faq_WCe6tR",
+        "faq_L88rQi",
+        "faq_XLnfyJ",
+        "faq_YnLFVE",
+        "faq_irXchY"
+      ],
+      "name": "00 Avonent FAQ",
+      "settings": {
+        "eyebrow": "Questions, answered",
+        "heading": "Frequently asked questions",
+        "subheading": "Clear answers about the formula, testing, shipping, and your 30-day guarantee.",
+        "open_first": false,
+        "show_trust_badges": false,
+        "trust_one": "Third-party tested",
+        "trust_two": "Ships from the USA",
+        "trust_three": "30-day guarantee",
+        "show_support_card": true,
+        "support_heading": "Still have a question?",
+        "support_text": "Our team is here to help you make an informed decision.",
+        "support_label": "Contact Avonent",
+        "support_link": "",
+        "show_disclaimer": true,
+        "accent_color": "#02c6ea",
+        "background_color": "#f3fcfe",
+        "card_color": "#ffffff",
+        "text_color": "#071114",
+        "muted_color": "#53636a",
+        "border_color": "#d5edf3",
+        "padding_top": 88,
+        "padding_bottom": 88
+      }
+    }
+  },
+  "order": [
+    "main",
+    "avonent_proof_stats",
+    "avonent_formula_breakdown",
+    "00_avonent_before_after_4chKWb",
+    "avonent_wellness_journey",
+    "avonent_vs_other_brands",
+    "avonent_money_back_guarantee",
+    "00_avonent_bottom_offer_PrLf6d",
+    "avonent_customer_reviews",
+    "avonent_faq_mCxfYk"
+  ]
+}

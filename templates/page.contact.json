@@ -1,0 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "avonent-contact",
+      "settings": {
+        "eyebrow": "AVONENT SUPPORT",
+        "heading": "How can we help?",
+        "subheading": "Questions about an order, a product, shipping, or your Avonent routine? Send us a message and our support team will help.",
+        "help_heading": "We’re here to help.",
+        "help_text": "Whether you have a product question or need help with an existing order, give us the details and we’ll point you in the right direction.",
+        "accent_color": "#02c6ea",
+        "background_color": "#f1fbfd",
+        "card_color": "#ffffff",
+        "text_color": "#071114",
+        "muted_color": "#53636a",
+        "border_color": "#d5edf3"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
