@@ -1,16 +1,16 @@
 # Move Avonent Theme to another Shopify store
 
-This project stores **the entire Avonent theme source**, copied from the live \`horizon/main\` theme on 2026-11-04. It is not just a lookalike or a single landing-page HTML export.
+This project stores **the entire Avonent theme source**, copied from the live `horizon/main` theme on 2026-11-04. It is not just a lookalike or a single landing-page HTML export.
 
 ## What survives the move
 
-The theme includes the exact code and saved section settings for its Cinnamon Berberine page, Garlic page, homepage, other landing pages, product gallery behavior, sticky add-to-cart, announcement bar, footer, and full theme editor blocks. The original templates are under \`templates/\`; reusable components are under \`sections/\`, \`blocks/\`, and \`snippets/\`.
+The theme includes the exact code and saved section settings for its Cinnamon Berberine page, Garlic page, homepage, other landing pages, product gallery behavior, sticky add-to-cart, announcement bar, footer, and full theme editor blocks. The original templates are under `templates/`; reusable components are under `sections/`, `blocks/`, and `snippets/`.
 
 ## 1. Back up the images
 
-The source theme referred to **70** uploaded Shopify Files images, in \`backups/theme-media-manifest.json\`. These are not included when Shopify exports only its theme.
+The source theme referred to **70** uploaded Shopify Files images, in `backups/theme-media-manifest.json`. These are not included when Shopify exports only its theme.
 
-The GitHub workflow **Back up referenced Avonent theme images** downloads the files from public Shopify CDN links and commits them to \`media/theme/\`. Open **Actions** to see whether it completed successfully. If not, use **Run workflow** while the source images remain accessible.
+The GitHub workflow **Back up referenced Avonent theme images** downloads the files from public Shopify CDN links and commits them to `media/theme/`. Open **Actions** to see whether it completed successfully. If not, use **Run workflow** while the source images remain accessible.
 
 The source theme also contained several absolute Shopify CDN links that may need manual replacement after changing stores. Product media assigned to products and other store data are handled separately; this script does not archive an entire Shopify database.
 
@@ -18,11 +18,11 @@ The source theme also contained several absolute Shopify CDN links that may need
 
 Run Shopify CLI after authenticating with the destination store:
 
-\`\`\`bash
+```bash
 git clone https://github.com/ojgldkee/avonent-theme.git
 cd avonent-theme
 shopify theme push --store YOUR-NEW-STORE.myshopify.com --unpublished
-\`\`\`
+```
 
 Do not overwrite the existing destination store theme until you've tested this unpublished version.
 
@@ -30,13 +30,13 @@ Do not overwrite the existing destination store theme until you've tested this u
 
 Create a Shopify custom app in the destination store with the **write_files** permission, install it, and securely set its Admin API token as an environment variable. Do not commit the token to GitHub.
 
-\`\`\`bash
+```bash
 node scripts/import-theme-media.mjs --store YOUR-NEW-STORE.myshopify.com
 # After confirming the dry run and setting SHOPIFY_ADMIN_ACCESS_TOKEN in your environment:
 node scripts/import-theme-media.mjs --store YOUR-NEW-STORE.myshopify.com --apply
-\`\`\`
+```
 
-By default this imports your version-controlled media from the **public GitHub repository**. If the GitHub media backup isn't finished and the original Shopify store is still accessible, use \`--source shopify\` instead.
+By default this imports your version-controlled media from the **public GitHub repository**. If the GitHub media backup isn't finished and the original Shopify store is still accessible, use `--source shopify` instead.
 
 The importer skips filenames already in the new store, uses non-destructive duplicate rules, and processes media through Shopify's Files API. Shopify may take time to process the uploaded images.
 
@@ -45,7 +45,7 @@ The importer skips filenames already in the new store, uses non-destructive dupl
 Shopify theme files do **not** contain the actual product catalog, collection database, pages' stored text outside theme templates, customer records, navigation menu definitions, orders, app subscriptions, metafield/metaobject definitions, or checkout configuration.
 
 1. Recreate/import products and variants, collections, pages, menus, and other business data in the new store.
-2. Assign the theme templates to the appropriate products and pages. Look for \`product.cinnamon-berberine.json\`, \`product.garlic.json\`, \`product.avonent.json\`, and the custom page templates.
+2. Assign the theme templates to the appropriate products and pages. Look for `product.cinnamon-berberine.json`, `product.garlic.json`, `product.avonent.json`, and the custom page templates.
 3. Reconnect apps, subscription selling plans, bundles, custom metafields, metaobjects, and any app blocks.
 4. In **Online Store > Themes > Customize**, check that all image picker settings resolve to the imported files. If not, select the newly imported image. Filename matches may not automatically reconnect all Shopify file IDs.
 5. Adjust logo, announcement bar, brand colors, links, footer legal text, and shipping estimates for the destination brand.
