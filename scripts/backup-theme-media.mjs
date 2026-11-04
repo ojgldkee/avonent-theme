@@ -13,8 +13,10 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const manifest = JSON.parse(await readFile(join(root, 'backups/theme-media-manifest.json'), 'utf8'));
 const destination = join(root, 'media', 'theme');
+const embeddedDestination = join(root, 'media', 'embedded');
 const MAX_BYTES = 50 * 1024 * 1024;
 await mkdir(destination, { recursive: true });
+await mkdir(embeddedDestination, { recursive: true });
 let next = 0;
 let copied = 0;
 let skipped = 0;
@@ -33,7 +35,7 @@ function validate(entry) {
 }
 async function download(entry) {
   const { name, url } = validate(entry);
-  const destinationPath = join(destination, name);
+  const destinationPath = join(entry.embedded ? embeddedDestination : destination, name);
   try {
     if ((await stat(destinationPath)).size > 0) { skipped++; return; }
   } catch { /* Not backed up yet. */ }
@@ -62,7 +64,7 @@ async function download(entry) {
     }
   }
 }
-const items = manifest.images || [];
+const items = (manifest.images || []).concat((manifest.embedded_images || []).map(item => ({ ...item, embedded: true })));
 await Promise.all(Array.from({ length: 4 }, async () => {
   while (true) {
     const index = next++;

@@ -789,5 +789,19 @@
     "https://cdn.shopify.com/shopifycloud/model-viewer-ui/assets/v1.0/model-viewer-ui.css",
     "https://cdn.shopify.com/storefront/standard-events.js"
   ],
-  "note": "Images in this list reside in the original Shopify Files library; GitHub's Liquid/template copy alone does not back up their binary data. Back up these URLs while the original Shopify account remains accessible."
+  "note": "Images in this list reside in the original Shopify Files library; GitHub's Liquid/template copy alone does not back up their binary data. Back up these URLs while the original Shopify account remains accessible.",
+  "embedded_images": [
+    {
+      "filename": "avonent-90-day-money-back-guarantee.png",
+      "source_url": "https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-90-day-money-back-guarantee.png?v=1793736254"
+    },
+    {
+      "filename": "avonent-aged-garlic-softgel-realistic.png",
+      "source_url": "https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-aged-garlic-softgel-realistic.png?v=1792648420"
+    },
+    {
+      "filename": "avonent-why-trust-avonent.png",
+      "source_url": "https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-why-trust-avonent.png?v=1793242624"
+    }
+  ]
 }

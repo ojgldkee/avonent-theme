@@ -8,11 +8,11 @@ The theme includes the exact code and saved section settings for its Cinnamon Be
 
 ## 1. Back up the images
 
-The source theme referred to **70** uploaded Shopify Files images, in `backups/theme-media-manifest.json`. These are not included when Shopify exports only its theme.
+The source theme referred to **70** uploaded Shopify Files images, plus **3** separately hardcoded Avonent images, in `backups/theme-media-manifest.json`. These are not included when Shopify exports only its theme.
 
-The GitHub workflow **Back up referenced Avonent theme images** downloads the files from public Shopify CDN links and commits them to `media/theme/`. Open **Actions** to see whether it completed successfully. If not, use **Run workflow** while the source images remain accessible.
+The GitHub workflow **Back up referenced Avonent theme images** downloads the files from public Shopify CDN links and commits them to `media/theme/` and `media/embedded/`. Open **Actions** to see whether it completed successfully. If not, use **Run workflow** while the source images remain accessible.
 
-The source theme also contained several absolute Shopify CDN links that may need manual replacement after changing stores. Product media assigned to products and other store data are handled separately; this script does not archive an entire Shopify database.
+The source theme also contained several absolute Shopify CDN links. Three brand-owned images are backed up under `media/embedded/`, but hardcoded URLs in Liquid may need to be replaced or reselected after changing stores. Other Shopify framework URLs should remain as-is. Product media assigned to products and other store data are handled separately; this script does not archive an entire Shopify database.
 
 ## 2. Install theme on new store
 

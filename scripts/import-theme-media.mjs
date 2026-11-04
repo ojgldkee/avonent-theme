@@ -26,7 +26,7 @@ if (!['github', 'shopify'].includes(source)) throw new Error('Valid --source val
 if (apply && !token) throw new Error('--apply requires SHOPIFY_ADMIN_ACCESS_TOKEN set for the destination store.');
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const manifest = JSON.parse(await readFile(join(root, 'backups/theme-media-manifest.json'), 'utf8'));
-const images = manifest.images || [];
+const images = (manifest.images || []).concat((manifest.embedded_images || []).map(item => ({ ...item, embedded: true })));
 console.log('Destination: ' + store);
 console.log('Source: ' + source);
 console.log('Referenced theme images: ' + images.length);
@@ -79,7 +79,7 @@ for (let i = 0; i < pending.length; i += 10) {
     alt: item.alt || '',
     originalSource: source === 'shopify'
       ? item.source_url
-      : 'https://raw.githubusercontent.com/ojgldkee/avonent-theme/main/media/theme/' + encodeURIComponent(item.filename)
+      : 'https://raw.githubusercontent.com/ojgldkee/avonent-theme/main/media/' + (item.embedded ? 'embedded' : 'theme') + '/' + encodeURIComponent(item.filename)
   }));
   const data = await graphql(mutation, { files: inputs });
   const errors = data.fileCreate.userErrors || [];

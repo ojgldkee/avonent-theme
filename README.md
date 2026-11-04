@@ -36,3 +36,7 @@ This repository was already **public** when the export began. Do not commit stor
 - GitHub: `ojgldkee/avonent-theme`
 - Original source: live `horizon/main` on Avonent Shopify store (theme ID `197046730918`).
 - Original source theme is **not changed** by this repository export.
+
+## Detailed migration and media backup
+
+See [cross-store migration instructions](docs/MIGRATION.md), [theme media reference manifest](backups/theme-media-manifest.json), and the [automated GitHub media backup workflow](.github/workflows/media-backup.yml). The repository stores the 70 theme-selected images and 3 additional hardcoded Avonent images under `media/`. Product database/media, checkout, Shopify Files associations, menus, and app subscriptions must still be recreated or reconnected in the destination store.
