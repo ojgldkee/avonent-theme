@@ -1,0 +1,31 @@
+name: Shopify Theme Check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - assets/**
+      - blocks/**
+      - config/**
+      - layout/**
+      - locales/**
+      - sections/**
+      - snippets/**
+      - templates/**
+      - .github/workflows/theme-check.yml
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  theme-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint Shopify Liquid and JSON
+        uses: shopify/theme-check-action@v2
+        with:
+          theme_root: '.'
+          flags: '--fail-level error'

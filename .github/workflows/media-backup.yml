@@ -1,0 +1,44 @@
+name: Back up referenced Avonent theme images
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - backups/theme-media-manifest.json
+      - scripts/backup-theme-media.mjs
+      - .github/workflows/media-backup.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: avonent-theme-media-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate the backup script
+        run: node --check scripts/backup-theme-media.mjs
+      - name: Download referenced images from public Shopify CDN
+        run: node scripts/backup-theme-media.mjs
+      - name: Commit image backups to the repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- media/theme
+          if git diff --cached --quiet; then
+            echo "All referenced theme media already backed up."
+          else
+            git commit -m "Back up referenced Avonent landing-page media"
+            git push origin HEAD:main
+          fi
