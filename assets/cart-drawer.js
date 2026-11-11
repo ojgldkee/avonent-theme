@@ -18,17 +18,12 @@ class CartDrawerComponent extends Component {
   /** @type {number} */
   #summaryThreshold = 0.5;
 
-  /** @type {number | null} */
-  #reservationTimer = null;
-
   /** @type {boolean} */
   #protectionMutationPending = false;
 
   /** @type {number} */
   #protectionVariantId = 0;
 
-  static #reservationDuration = 5 * 60 * 1000;
-  static #reservationStorageKey = 'avonentCartReservationEndsAt';
   static #protectionPreferenceKey = 'avonentShippingProtectionEnabled';
 
   /** @type {import('@theme/theme-drawer').ThemeDrawer | null} */
@@ -48,7 +43,6 @@ class CartDrawerComponent extends Component {
     this.addEventListener('click', this.#handleEnhancementClick);
 
     this.#protectionVariantId = Number(this.dataset.protectionVariantId || 0);
-    this.#startReservationTimer();
 
     if (this.#themeDrawer?.hasAttribute('open')) {
       this.#handleDrawerOpen();
@@ -60,17 +54,10 @@ class CartDrawerComponent extends Component {
     document.removeEventListener(StandardEvents.cartLinesUpdate, this.#handleCartLinesUpdate);
     this.#themeDrawer?.removeEventListener(DrawerOpenEvent.eventName, this.#handleDrawerOpen);
     this.removeEventListener('click', this.#handleEnhancementClick);
-
-    if (this.#reservationTimer !== null) {
-      window.clearInterval(this.#reservationTimer);
-      this.#reservationTimer = null;
-    }
   }
 
   #handleDrawerOpen = () => {
     this.#updateStickyState();
-    this.#startReservationTimer();
-    this.#syncShippingProtection();
 
     customElements.whenDefined('shopify-payment-terms').then(() => {
       const cta = this.querySelector('shopify-payment-terms')?.shadowRoot?.querySelector('#shopify-installments-cta');
@@ -97,24 +84,14 @@ class CartDrawerComponent extends Component {
         const settle = () => requestAnimationFrame(() => this.#updateStickyState());
         const isProtectionUpdate = detail?.source === 'avonent-shipping-protection';
 
-        if (!detail?.didError && !isProtectionUpdate && event.action === 'add') {
-          this.#resetReservationTimer();
-        }
-
-        if (!detail?.didError && !isProtectionUpdate && event.action === 'remove' && Number(detail?.itemCount || 0) === 0) {
-          sessionStorage.removeItem(CartDrawerComponent.#reservationStorageKey);
-        }
-
         if (!shouldAutoOpen || detail?.didError || isProtectionUpdate) {
           settle();
-          if (!isProtectionUpdate && !detail?.didError) this.#syncShippingProtection();
           return;
         }
 
         const openAndSettle = () => {
           if (!this.#themeDrawer?.isOpen) this.#themeDrawer?.open();
           settle();
-          this.#syncShippingProtection();
         };
 
         if (sourceModal?.open) {
@@ -139,84 +116,7 @@ class CartDrawerComponent extends Component {
     this.#setShippingProtection(enabled);
   };
 
-  #resetReservationTimer() {
-    const endsAt = Date.now() + CartDrawerComponent.#reservationDuration;
-    sessionStorage.setItem(CartDrawerComponent.#reservationStorageKey, String(endsAt));
-    this.#startReservationTimer();
-  }
-
-  #startReservationTimer() {
-    if (this.#reservationTimer !== null) window.clearInterval(this.#reservationTimer);
-
-    const ensureEndsAt = () => {
-      let endsAt = Number(sessionStorage.getItem(CartDrawerComponent.#reservationStorageKey));
-      if (!Number.isFinite(endsAt) || endsAt <= Date.now()) {
-        endsAt = Date.now() + CartDrawerComponent.#reservationDuration;
-        sessionStorage.setItem(CartDrawerComponent.#reservationStorageKey, String(endsAt));
-      }
-      return endsAt;
-    };
-
-    const render = () => {
-      const endsAt = ensureEndsAt();
-      const remaining = Math.max(0, endsAt - Date.now());
-      const totalSeconds = Math.max(0, Math.ceil(remaining / 1000));
-      const minutes = Math.floor(totalSeconds / 60);
-      const seconds = totalSeconds % 60;
-      const value = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-      for (const output of this.querySelectorAll('[data-avonent-cart-countdown]')) {
-        output.textContent = value;
-      }
-    };
-
-    render();
-    this.#reservationTimer = window.setInterval(render, 1000);
-  }
-
-  async #syncShippingProtection() {
-    if (!this.#protectionVariantId || this.#protectionMutationPending) return;
-
-    try {
-      const response = await fetch(`${window.Shopify?.routes?.root || '/'}cart.js`, {
-        headers: { Accept: 'application/json' },
-        credentials: 'same-origin',
-      });
-      if (!response.ok) return;
-
-      const cart = await response.json();
-      const protectionItems = cart.items.filter(
-        (item) =>
-          Number(item.variant_id) === this.#protectionVariantId ||
-          item.handle === this.dataset.protectionHandle
-      );
-      const regularItems = cart.items.filter(
-        (item) =>
-          Number(item.variant_id) !== this.#protectionVariantId &&
-          item.handle !== this.dataset.protectionHandle
-      );
-      const preference = sessionStorage.getItem(CartDrawerComponent.#protectionPreferenceKey);
-      const shouldEnable = preference !== 'false';
-
-      if (regularItems.length === 0 && protectionItems.length > 0) {
-        await this.#setShippingProtection(false, true, protectionItems[0].key);
-        return;
-      }
-
-      if (regularItems.length > 0 && shouldEnable && protectionItems.length === 0) {
-        await this.#setShippingProtection(true, true);
-        return;
-      }
-
-      if (protectionItems.length > 0 && protectionItems.some((item) => item.quantity !== 1)) {
-        await this.#setShippingProtection(true, true, protectionItems[0].key);
-      }
-    } catch (error) {
-      console.warn('[cart-drawer] Could not sync shipping protection:', error);
-    }
-  }
-
-  async #setShippingProtection(enabled, automatic = false, knownLineKey = '') {
+  async #setShippingProtection(enabled, knownLineKey = '') {
     if (!this.#protectionVariantId || this.#protectionMutationPending) return;
 
     const panel = this.querySelector('[data-avonent-protection]');

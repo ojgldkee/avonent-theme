@@ -1,8 +1,542 @@
-{% # SRA target for /cart endpoints. The Section Rendering API provides the section wrapper. %}
-{% render 'cart-drawer', render_wrapper: false %}
-
+{% comment %}
+  Editable, reusable cart drawer. Rendered as a static section in layout/theme.liquid
+  and returned by the Shopify Section Rendering API after cart updates.
+{% endcomment %}
+{% render 'cart-drawer', render_wrapper: false, drawer_section: section %}
 {% schema %}
 {
-  "name": "t:names.cart_drawer"
+  "name": "Cart drawer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "range",
+      "id": "width",
+      "label": "Drawer width",
+      "min": 320,
+      "max": 600,
+      "step": 10,
+      "default": 440,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#171513"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent",
+      "default": "#A84F1B"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Shipping protection"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping_protection",
+      "label": "Show opt-in add-on",
+      "default": false
+    },
+    {
+      "type": "product",
+      "id": "protection_product",
+      "label": "Add-on product"
+    },
+    {
+      "type": "paragraph",
+      "content": "Customers choose whether to add this item. Do not auto-enroll paid add-ons."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Location",
+          "options": [
+            {
+              "value": "before_items",
+              "label": "Before cart items"
+            },
+            {
+              "value": "after_items",
+              "label": "After cart items"
+            },
+            {
+              "value": "before_checkout",
+              "label": "Before checkout"
+            },
+            {
+              "value": "after_checkout",
+              "label": "After checkout"
+            },
+            {
+              "value": "empty_cart",
+              "label": "Empty cart"
+            }
+          ],
+          "default": "before_items"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Message",
+          "default": "Fast, secure checkout."
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Background",
+          "default": "#FFF5EC"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_icon",
+          "label": "Show icon",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "shipping_progress",
+      "name": "Shipping bar",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Location",
+          "options": [
+            {
+              "value": "before_items",
+              "label": "Before cart items"
+            },
+            {
+              "value": "after_items",
+              "label": "After cart items"
+            },
+            {
+              "value": "before_checkout",
+              "label": "Before checkout"
+            },
+            {
+              "value": "after_checkout",
+              "label": "After checkout"
+            },
+            {
+              "value": "empty_cart",
+              "label": "Empty cart"
+            }
+          ],
+          "default": "before_items"
+        },
+        {
+          "type": "range",
+          "id": "threshold",
+          "label": "Goal (store currency)",
+          "min": 10,
+          "max": 500,
+          "step": 5,
+          "default": 60,
+          "unit": "$"
+        },
+        {
+          "type": "text",
+          "id": "before_message",
+          "label": "Before goal",
+          "default": "You're {amount} away from free shipping"
+        },
+        {
+          "type": "text",
+          "id": "after_message",
+          "label": "After goal",
+          "default": "You unlocked free shipping!"
+        },
+        {
+          "type": "color",
+          "id": "progress_color",
+          "label": "Progress color",
+          "default": "#A84F1B"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Location",
+          "options": [
+            {
+              "value": "before_items",
+              "label": "Before cart items"
+            },
+            {
+              "value": "after_items",
+              "label": "After cart items"
+            },
+            {
+              "value": "before_checkout",
+              "label": "Before checkout"
+            },
+            {
+              "value": "after_checkout",
+              "label": "After checkout"
+            },
+            {
+              "value": "empty_cart",
+              "label": "Empty cart"
+            }
+          ],
+          "default": "after_items"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Body",
+          "default": "<p>Made for your daily routine.</p>"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "left"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Location",
+          "options": [
+            {
+              "value": "before_items",
+              "label": "Before cart items"
+            },
+            {
+              "value": "after_items",
+              "label": "After cart items"
+            },
+            {
+              "value": "before_checkout",
+              "label": "Before checkout"
+            },
+            {
+              "value": "after_checkout",
+              "label": "After checkout"
+            },
+            {
+              "value": "empty_cart",
+              "label": "Empty cart"
+            }
+          ],
+          "default": "after_items"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Alt text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "range",
+          "id": "radius",
+          "label": "Corner radius",
+          "min": 0,
+          "max": 32,
+          "step": 2,
+          "default": 8,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "type": "trust",
+      "name": "Trust badges",
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Location",
+          "options": [
+            {
+              "value": "before_items",
+              "label": "Before cart items"
+            },
+            {
+              "value": "after_items",
+              "label": "After cart items"
+            },
+            {
+              "value": "before_checkout",
+              "label": "Before checkout"
+            },
+            {
+              "value": "after_checkout",
+              "label": "After checkout"
+            },
+            {
+              "value": "empty_cart",
+              "label": "Empty cart"
+            }
+          ],
+          "default": "after_checkout"
+        },
+        {
+          "type": "text",
+          "id": "badge_1",
+          "label": "First badge",
+          "default": "Secure checkout"
+        },
+        {
+          "type": "text",
+          "id": "badge_2",
+          "label": "Second badge",
+          "default": "Easy support"
+        },
+        {
+          "type": "text",
+          "id": "badge_3",
+          "label": "Third badge",
+          "default": "Satisfaction guaranteed"
+        }
+      ]
+    },
+    {
+      "type": "upsell",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Location",
+          "options": [
+            {
+              "value": "before_items",
+              "label": "Before cart items"
+            },
+            {
+              "value": "after_items",
+              "label": "After cart items"
+            },
+            {
+              "value": "before_checkout",
+              "label": "Before checkout"
+            },
+            {
+              "value": "after_checkout",
+              "label": "After checkout"
+            },
+            {
+              "value": "empty_cart",
+              "label": "Empty cart"
+            }
+          ],
+          "default": "after_items"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "You may also like"
+        },
+        {
+          "type": "text",
+          "id": "button",
+          "label": "Button",
+          "default": "View product"
+        }
+      ]
+    },
+    {
+      "type": "divider",
+      "name": "Divider",
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Location",
+          "options": [
+            {
+              "value": "before_items",
+              "label": "Before cart items"
+            },
+            {
+              "value": "after_items",
+              "label": "After cart items"
+            },
+            {
+              "value": "before_checkout",
+              "label": "Before checkout"
+            },
+            {
+              "value": "after_checkout",
+              "label": "After checkout"
+            },
+            {
+              "value": "empty_cart",
+              "label": "Empty cart"
+            }
+          ],
+          "default": "after_items"
+        }
+      ]
+    },
+    {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Location",
+          "options": [
+            {
+              "value": "before_items",
+              "label": "Before cart items"
+            },
+            {
+              "value": "after_items",
+              "label": "After cart items"
+            },
+            {
+              "value": "before_checkout",
+              "label": "Before checkout"
+            },
+            {
+              "value": "after_checkout",
+              "label": "After checkout"
+            },
+            {
+              "value": "empty_cart",
+              "label": "Empty cart"
+            }
+          ],
+          "default": "after_items"
+        },
+        {
+          "type": "range",
+          "id": "height",
+          "label": "Height",
+          "min": 4,
+          "max": 80,
+          "step": 4,
+          "default": 16,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Location",
+          "options": [
+            {
+              "value": "before_items",
+              "label": "Before cart items"
+            },
+            {
+              "value": "after_items",
+              "label": "After cart items"
+            },
+            {
+              "value": "before_checkout",
+              "label": "Before checkout"
+            },
+            {
+              "value": "after_checkout",
+              "label": "After checkout"
+            },
+            {
+              "value": "empty_cart",
+              "label": "Empty cart"
+            }
+          ],
+          "default": "after_checkout"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Questions? Contact us"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 30
 }
 {% endschema %}
