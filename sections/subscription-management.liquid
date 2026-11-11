@@ -1,0 +1,118 @@
+{% comment %}
+  Subscription management landing page. A subscription application owns all
+  authenticated subscription actions, including cancellations. This theme is
+  responsible only for presentation and routing the customer to that app.
+{% endcomment %}
+<style>
+  #shopify-section-{{ section.id }} .av-portal {
+    background: {{ section.settings.background }};
+    color: {{ section.settings.text_color }};
+    padding: {{ section.settings.padding_top }}px 20px {{ section.settings.padding_bottom }}px;
+  }
+  #shopify-section-{{ section.id }} .av-portal__wrap {max-width:{{ section.settings.content_width }}px;margin:0 auto}
+  #shopify-section-{{ section.id }} .av-portal__hero {text-align:center;margin:0 auto 32px;max-width:720px}
+  #shopify-section-{{ section.id }} .av-portal h1 {
+    font-size:clamp(30px,5vw,52px);line-height:1.12;letter-spacing:-.04em;margin:0 0 16px;
+    color:inherit;
+  }
+  #shopify-section-{{ section.id }} .av-portal__lead {font-size:17px;line-height:1.55}
+  #shopify-section-{{ section.id }} .av-portal__cta {
+    display:inline-flex;align-items:center;justify-content:center;
+    min-height:48px;background:{{ section.settings.accent }};color:#fff;
+    padding:12px 26px;border-radius:12px;text-decoration:none;font-weight:750;
+    margin:20px auto 0
+  }
+  #shopify-section-{{ section.id }} .av-portal__grid {
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:26px 0;
+  }
+  #shopify-section-{{ section.id }} .av-portal__card {
+    border:1px solid {{ section.settings.border_color }};border-radius:16px;
+    padding:22px;background:{{ section.settings.card_background }}
+  }
+  #shopify-section-{{ section.id }} .av-portal__card h2 {font-size:19px;margin:0 0 10px;color:inherit}
+  #shopify-section-{{ section.id }} .av-portal__card p {font-size:15px;line-height:1.55;margin:0}
+  #shopify-section-{{ section.id }} .av-portal__card a {color:{{ section.settings.accent }};font-weight:700;text-decoration:underline}
+  #shopify-section-{{ section.id }} .av-portal__faq {padding:18px 0;border-bottom:1px solid {{ section.settings.border_color }}}
+  #shopify-section-{{ section.id }} .av-portal__faq summary {cursor:pointer;font-weight:700;list-style:none}
+  #shopify-section-{{ section.id }} .av-portal__faq summary:after {content:'+';float:right}
+  #shopify-section-{{ section.id }} .av-portal__faq[open] summary:after {content:'−'}
+  #shopify-section-{{ section.id }} .av-portal__app {margin:26px 0}
+  @media (max-width:749px) {
+    #shopify-section-{{ section.id }} .av-portal {padding:{{ section.settings.mobile_padding }}px 16px}
+    #shopify-section-{{ section.id }} .av-portal__grid {grid-template-columns:1fr}
+  }
+</style>
+<div class="av-portal">
+  <div class="av-portal__wrap">
+    <header class="av-portal__hero">
+      <h1>{{ section.settings.heading | escape }}</h1>
+      {% if section.settings.intro != blank %}<div class="av-portal__lead rte">{{ section.settings.intro }}</div>{% endif %}
+      {% if section.settings.portal_url != blank %}
+        <a class="av-portal__cta" href="{{ section.settings.portal_url }}">{{ section.settings.button_text | escape }}</a>
+      {% endif %}
+      {% if section.settings.instructions != blank %}
+        <p class="av-portal__lead">{{ section.settings.instructions | escape }}</p>
+      {% endif %}
+      {% if section.settings.appstle_placeholder %}
+        <div id="appstle-subscription-manage-subscription-button-placeholder"></div>
+      {% endif %}
+    </header>
+    <div class="av-portal__grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'info' %}
+          <article class="av-portal__card" {{ block.shopify_attributes }}>
+            <h2>{{ block.settings.heading | escape }}</h2>
+            <p>{{ block.settings.body | escape | newline_to_br }}</p>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'faq' %}
+          <details class="av-portal__faq" {{ block.shopify_attributes }}>
+            <summary>{{ block.settings.question | escape }}</summary>
+            <div class="rte">{{ block.settings.answer }}</div>
+          </details>
+        {% when '@app' %}
+          <div class="av-portal__app">{% render block %}</div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Manage subscription",
+  "settings": [
+    {"type":"text","id":"heading","label":"Heading","default":"Manage your subscription"},
+    {"type":"richtext","id":"intro","label":"Introduction","default":"<p>Change your delivery schedule, update an order, or cancel your subscription using our secure customer portal.</p>"},
+    {"type":"url","id":"portal_url","label":"Subscription portal link"},
+    {"type":"text","id":"button_text","label":"Button text","default":"Open subscription portal"},
+    {"type":"textarea","id":"instructions","label":"Fallback instructions","default":"Use the Manage Subscription link in your subscription email. You can also contact our team for help."},
+    {"type":"checkbox","id":"appstle_placeholder","label":"Appstle Classic button placeholder","default":false},
+    {"type":"color","id":"background","label":"Background","default":"#FFFFFF"},
+    {"type":"color","id":"card_background","label":"Card background","default":"#FFFAF7"},
+    {"type":"color","id":"text_color","label":"Text color","default":"#171513"},
+    {"type":"color","id":"accent","label":"Accent color","default":"#A84F1B"},
+    {"type":"color","id":"border_color","label":"Border color","default":"#E7D2C4"},
+    {"type":"range","id":"content_width","label":"Content width","min":600,"max":1200,"step":20,"default":960,"unit":"px"},
+    {"type":"range","id":"padding_top","label":"Top spacing","min":0,"max":120,"step":4,"default":64,"unit":"px"},
+    {"type":"range","id":"padding_bottom","label":"Bottom spacing","min":0,"max":120,"step":4,"default":64,"unit":"px"},
+    {"type":"range","id":"mobile_padding","label":"Mobile spacing","min":0,"max":80,"step":4,"default":32,"unit":"px"}
+  ],
+  "blocks": [
+    {"type":"info","name":"Information","settings":[
+      {"type":"text","id":"heading","label":"Heading","default":"Change a delivery"},
+      {"type":"textarea","id":"body","label":"Description","default":"Change the next delivery date or skip an order in your subscription portal."}
+    ]},
+    {"type":"faq","name":"FAQ","settings":[
+      {"type":"text","id":"question","label":"Question","default":"How do I cancel?"},
+      {"type":"richtext","id":"answer","label":"Answer","default":"<p>Open the secure subscription portal and choose the cancellation option. Contact support if you need help.</p>"}
+    ]},
+    {"type":"@app"}
+  ],
+  "presets":[{"name":"Manage subscription","blocks":[
+    {"type":"info"},{"type":"info"},{"type":"faq"}
+  ]}]
+}
+{% endschema %}
