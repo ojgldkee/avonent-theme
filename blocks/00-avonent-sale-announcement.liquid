@@ -31,6 +31,15 @@
     if block.settings.garlic_subheading != blank
       assign av_sale_subheading = block.settings.garlic_subheading
     endif
+  elsif template.name == 'collection'
+    assign av_sale_background = block.settings.collection_background | default: av_sale_background
+    assign av_sale_text_color = block.settings.collection_text_color | default: av_sale_text_color
+  elsif template.name == 'page'
+    assign av_sale_background = block.settings.page_background | default: av_sale_background
+    assign av_sale_text_color = block.settings.page_text_color | default: av_sale_text_color
+  elsif template.name == 'product'
+    assign av_sale_background = block.settings.product_background | default: av_sale_background
+    assign av_sale_text_color = block.settings.product_text_color | default: av_sale_text_color
   endif
 %}
 
@@ -48,7 +57,7 @@
       --av-sale-color: {{ av_sale_text_color }};
       --av-sale-height: {{ block.settings.bar_height }}px;
     "
-    data-duration-minutes="{{ block.settings.timer_minutes }}"
+    data-duration-minutes="{{ block.settings.timer_minutes }}" data-sale-ends-at="{{ block.settings.sale_end_at | escape }}"
   >
     {% if block.settings.link != blank %}
       <a
@@ -139,28 +148,22 @@
     }
 
     function getEndTime() {
+      const specifiedDate = Date.parse(root.dataset.saleEndsAt || '');
+      if (Number.isFinite(specifiedDate)) return specifiedDate;
       try {
-        const saved =
-          Number(localStorage.getItem(storageKey));
-
-        if (saved && saved > Date.now()) {
-          return saved;
-        }
+        const saved = Number(localStorage.getItem(storageKey));
+        if (Number.isFinite(saved) && saved > 0) return saved;
       } catch (error) {}
-
       return createEndTime();
     }
 
-    let endTime = getEndTime();
+    const endTime = getEndTime();
 
     function updateTimer() {
       let remaining =
         endTime - Date.now();
 
-      if (remaining <= 0) {
-        endTime = createEndTime();
-        remaining = endTime - Date.now();
-      }
+      if (remaining <= 0) remaining = 0;
 
       const totalSeconds =
         Math.max(
@@ -493,6 +496,12 @@
       "default": 120
     },
     {
+      "type": "text",
+      "id": "sale_end_at",
+      "label": "Sale end (ISO date/time)",
+      "info": "Example: 2026-12-01T23:59:00-08:00. Countdown does not reset when it reaches zero."
+    },
+    {
       "type": "header",
       "content": "Colors"
     },
@@ -589,6 +598,46 @@
     {
       "type": "header",
       "content": "Layout"
+    },
+    {
+      "type": "header",
+      "content": "Other page colors"
+    },
+    {
+      "type": "color",
+      "id": "collection_background",
+      "label": "Collections background",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "collection_text_color",
+      "label": "Collections text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "page_background",
+      "label": "Pages background",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "page_text_color",
+      "label": "Pages text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "product_background",
+      "label": "Other products background",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "product_text_color",
+      "label": "Other products text",
+      "default": "#FFFFFF"
     },
     {
       "type": "range",
