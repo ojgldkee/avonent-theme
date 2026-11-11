@@ -1,6 +1,31 @@
 {% liquid
   assign av_cb_product = product
   assign av_cb_hero_image = product.featured_image
+  assign av_cb_custom_hero_image = blank
+  assign av_cb_accent_color = editor.settings.accent_color | default: '#A84F1B'
+  assign av_cb_deep_color = editor.settings.deep_color | default: '#7D3612'
+  assign av_cb_best_badge = 'Best Seller'
+  assign av_cb_choice_badge = '#1 Choice for Doctors & Practitioners'
+  assign av_cb_show_best_badge = true
+  assign av_cb_show_choice_badge = true
+  assign av_cb_show_rating = true
+  assign av_cb_show_sold = true
+  assign av_cb_show_sale_badge = true
+  assign av_cb_subscribe_label = 'Subscribe & Save'
+  assign av_cb_one_time_label = 'One-Time Purchase'
+  assign av_cb_shipping_note = '$4.95 Shipping'
+  assign av_cb_switch_label = 'Switch back to Subscribe & Save'
+  assign av_cb_show_delivery = true
+  assign av_cb_delivery_label = 'Estimated delivery by:'
+  assign av_cb_delivery_days = 5
+  assign av_cb_show_guarantee = true
+  assign av_cb_show_stock_notice = true
+  assign av_cb_show_low_stock_line = true
+  assign av_cb_stock_color = '#D62828'
+  assign av_cb_stock_background = '#FFF5F5'
+  assign av_cb_guarantee_image_url = 'https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-90-day-money-back-guarantee.png?v=1793736254'
+  assign av_cb_hero_block = blank
+  assign av_cb_details_block = blank
   assign av_cb_variant = av_cb_product.selected_or_first_available_variant
   assign av_cb_form_id = 'AvonentCinnamonBerberineForm-' | append: av_cb_product.id
   assign av_cb_one_time_unit_price = av_cb_variant.price | default: av_cb_product.price
@@ -17,8 +42,8 @@
     assign av_cb_one_time_compare_unit = 0
   endif
   assign av_cb_guarantee_image = av_cb_product.metafields.custom.av_cb_guarantee_image.value
-  assign av_cb_guarantee_highlight = av_cb_product.metafields.custom.av_cb_guarantee_highlight_text.value | default: '90-Day'
-  assign av_cb_guarantee_color = av_cb_product.metafields.custom.av_cb_guarantee_highlight_color.value | default: '#02C6EA'
+  assign av_cb_guarantee_highlight = av_cb_product.metafields.custom.av_cb_guarantee_highlight_text.value | default: 'Less than 1%'
+  assign av_cb_guarantee_color = av_cb_product.metafields.custom.av_cb_guarantee_highlight_color.value | default: '#A84F1B'
   assign av_cb_stock_title = av_cb_product.metafields.custom.av_cb_low_stock_title.value | default: 'WARNING: Low Stock Notice'
   assign av_cb_stock_text = av_cb_product.metafields.custom.av_cb_low_stock_text.value | default: 'Inventory can move quickly during promotions. If Avonent fits your routine, ordering while stock is available can help avoid interruptions.'
   assign av_cb_display_title = av_cb_product.metafields.custom.av_cb_display_title.value | default: 'Ceylon Cinnamon 14,400mg Equivalent + Berberine HCl'
@@ -35,16 +60,16 @@
   assign av_cb_bundle_3_badge = av_cb_product.metafields.custom.av_cb_bundle_3_badge.value | default: 'Free Shipping + Free E-Book ($24.99 Value)'
   assign av_cb_low_stock_line = av_cb_product.metafields.custom.av_cb_low_stock_line.value | default: 'Low Stock – Selling Fast'
   assign av_cb_bundle_1_title = av_cb_product.metafields.custom.av_cb_bundle_1_title.value | default: 'Buy 1'
-  assign av_cb_bundle_1_subtitle = av_cb_product.metafields.custom.av_cb_bundle_1_subtitle.value | default: '30-Day Supply'
-  assign av_cb_bundle_2_title = av_cb_product.metafields.custom.av_cb_bundle_2_title.value | default: 'Buy 2'
-  assign av_cb_bundle_2_subtitle = av_cb_product.metafields.custom.av_cb_bundle_2_subtitle.value | default: '60-Day Supply'
-  assign av_cb_bundle_3_title = av_cb_product.metafields.custom.av_cb_bundle_3_title.value | default: 'Buy 3'
-  assign av_cb_bundle_3_subtitle = av_cb_product.metafields.custom.av_cb_bundle_3_subtitle.value | default: '90-Day Supply'
+  assign av_cb_bundle_1_subtitle = av_cb_product.metafields.custom.av_cb_bundle_1_subtitle.value
+  assign av_cb_bundle_2_title = av_cb_product.metafields.custom.av_cb_bundle_2_title.value
+  assign av_cb_bundle_2_subtitle = av_cb_product.metafields.custom.av_cb_bundle_2_subtitle.value
+  assign av_cb_bundle_3_title = av_cb_product.metafields.custom.av_cb_bundle_3_title.value
+  assign av_cb_bundle_3_subtitle = av_cb_product.metafields.custom.av_cb_bundle_3_subtitle.value
   assign av_cb_add_to_cart_text = av_cb_product.metafields.custom.av_cb_add_to_cart_text.value | default: 'Add to Cart'
   assign av_cb_refill_text = av_cb_product.metafields.custom.av_cb_refill_text.value | default: 'Refills ship every 30 days'
   assign av_cb_cancel_text = av_cb_product.metafields.custom.av_cb_cancel_text.value | default: 'Stop or cancel anytime'
   assign av_cb_guarantee_heading = av_cb_product.metafields.custom.av_cb_guarantee_heading.value | default: '90-Day Money-Back Guarantee'
-  assign av_cb_guarantee_body = av_cb_product.metafields.custom.av_cb_guarantee_body.value | default: 'money-back guarantee. Try Avonent with confidence and contact us within 90 days if you are not satisfied.'
+  assign av_cb_guarantee_body = av_cb_product.metafields.custom.av_cb_guarantee_body.value | default: 'of customers use our 90-Day Money-Back Guarantee.'
   assign av_cb_acc_1_title = av_cb_product.metafields.custom.av_cb_acc_1_title.value | default: 'Clinically Supported Benefits'
   assign av_cb_acc_1_body = av_cb_product.metafields.custom.av_cb_acc_1_body.value
   assign av_cb_acc_2_title = av_cb_product.metafields.custom.av_cb_acc_2_title.value | default: 'Key Ingredients'
@@ -172,7 +197,37 @@
   for content_block in editor.blocks
     case content_block.type
       when 'hero'
+        assign av_cb_hero_block = content_block
         assign av_cb_hero_image = content_block.settings.hero_image | default: product.featured_image
+        assign av_cb_custom_hero_image = content_block.settings.hero_image
+        assign av_cb_show_best_badge = content_block.settings.show_best_badge
+        assign av_cb_show_choice_badge = content_block.settings.show_choice_badge
+        assign av_cb_show_rating = content_block.settings.show_rating
+        assign av_cb_show_sold = content_block.settings.show_sold
+        assign av_cb_show_sale_badge = content_block.settings.show_sale_badge
+        assign av_cb_show_delivery = content_block.settings.show_delivery
+        if content_block.settings.best_badge != blank
+          assign av_cb_best_badge = content_block.settings.best_badge
+        endif
+        if content_block.settings.choice_badge != blank
+          assign av_cb_choice_badge = content_block.settings.choice_badge
+        endif
+        if content_block.settings.subscribe_label != blank
+          assign av_cb_subscribe_label = content_block.settings.subscribe_label
+        endif
+        if content_block.settings.one_time_label != blank
+          assign av_cb_one_time_label = content_block.settings.one_time_label
+        endif
+        if content_block.settings.shipping_note != blank
+          assign av_cb_shipping_note = content_block.settings.shipping_note
+        endif
+        if content_block.settings.switch_label != blank
+          assign av_cb_switch_label = content_block.settings.switch_label
+        endif
+        if content_block.settings.delivery_label != blank
+          assign av_cb_delivery_label = content_block.settings.delivery_label
+        endif
+        assign av_cb_delivery_days = content_block.settings.delivery_days | default: 5
         if content_block.settings.display_title != blank
           assign av_cb_display_title = content_block.settings.display_title
         endif
@@ -592,6 +647,19 @@
           assign av_cb_faq_6_a = content_block.settings.faq_6_a
         endif
       when 'details'
+        assign av_cb_details_block = content_block
+        assign av_cb_show_guarantee = content_block.settings.show_guarantee
+        assign av_cb_show_stock_notice = content_block.settings.show_stock_notice
+        assign av_cb_show_low_stock_line = content_block.settings.show_low_stock_line
+        if content_block.settings.guarantee_image_url != blank
+          assign av_cb_guarantee_image_url = content_block.settings.guarantee_image_url
+        endif
+        if content_block.settings.stock_color != blank
+          assign av_cb_stock_color = content_block.settings.stock_color
+        endif
+        if content_block.settings.stock_background != blank
+          assign av_cb_stock_background = content_block.settings.stock_background
+        endif
         if content_block.settings.guarantee_image != blank
           assign av_cb_guarantee_image = content_block.settings.guarantee_image
         endif
@@ -650,33 +718,31 @@
     assign av_cb_trust_image_alt = editor.settings.trust_image_alt
   endif
 
-  assign av_cb_guarantee_highlight = 'Less than 1%'
-  assign av_cb_guarantee_color = '#A84F1B'
-  assign av_cb_guarantee_heading = '90-Day Money-Back Guarantee'
-  assign av_cb_guarantee_body = 'of customers use our 90-Day Money-Back Guarantee.'
   assign av_cb_stats_guarantee = '90-Day Money-Back Guarantee'
   assign av_cb_compare_guarantee = '90-Day Money-Back Guarantee'
   assign av_cb_bonus_product = editor.settings.bonus_product
   assign av_cb_bonus_variant = av_cb_bonus_product.selected_or_first_available_variant
   assign av_cb_ebook_product = editor.settings.ebook_product
   assign av_cb_ebook_variant = av_cb_ebook_product.selected_or_first_available_variant
+  if av_cb_bundle_2_title == blank
+    if av_cb_bonus_variant != blank
+      assign av_cb_bundle_2_title = 'Buy 2 Get 1 FREE'
+    else
+      assign av_cb_bundle_2_title = 'Buy 2'
+    endif
+  endif
+  if av_cb_bundle_3_title == blank
+    if av_cb_bonus_variant != blank
+      assign av_cb_bundle_3_title = 'Buy 3 Get 2 FREE'
+    else
+      assign av_cb_bundle_3_title = 'Buy 3'
+    endif
+  endif
 %}
 
-<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="{{ av_cb_bonus_variant.id }}" data-ebook-variant-id="{{ av_cb_ebook_variant.id }}">
+<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="{{ av_cb_bonus_variant.id }}" data-ebook-variant-id="{{ av_cb_ebook_variant.id }}" data-subscription-label="{{ av_cb_subscribe_label | escape }}" data-one-time-label="{{ av_cb_one_time_label | escape }}" data-shipping-note="{{ av_cb_shipping_note | escape }}" data-switch-label="{{ av_cb_switch_label | escape }}" data-delivery-days="{{ av_cb_delivery_days }}" data-currency="{{ cart.currency.iso_code | default: shop.currency }}" style="--blue:{{ av_cb_accent_color }};--deep:{{ av_cb_deep_color }}">
   <style>
     .av-cb{--blue:#A84F1B;--deep:#7D3612;--ink:#171513;--muted:#645C57;--line:#E7D2C4;--soft:#FFF4EC;--soft2:#FFFBF7;background:#fff;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}.av-cb,.av-cb button,.av-cb input,.av-cb select,.av-cb textarea,.av-cb summary{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif!important}
-    html.av-cb-cinnamon-page .avonent-sale-bar__inner{--av-sale-bg:#A84F1B!important;--av-sale-color:#fff!important;background:#A84F1B!important;color:#fff!important}
-    html.av-cb-cinnamon-page .avonent-sale-bar{background:#A84F1B!important;color:#fff!important}
-    html.av-cb-cinnamon-page .avonent-sale-bar__inner{min-height:50px!important;padding:6px 12px!important}
-    html.av-cb-cinnamon-page .avonent-sale-bar__content{display:flex!important;align-items:center!important;justify-content:center!important;gap:18px!important;width:auto!important;max-width:100%!important}
-    html.av-cb-cinnamon-page .avonent-sale-bar__message{display:flex!important;flex-direction:column!important;align-items:center!important;text-align:center!important}
-    html.av-cb-cinnamon-page .avonent-sale-bar__heading{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif!important;font-size:15px!important;font-weight:800!important;line-height:1!important;letter-spacing:.02em!important;color:#fff!important;white-space:nowrap!important}
-    html.av-cb-cinnamon-page .avonent-sale-bar__subheading{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif!important;font-size:9px!important;font-weight:500!important;line-height:1.1!important;color:#fff!important;opacity:.9!important;white-space:nowrap!important}
-    html.av-cb-cinnamon-page .avonent-sale-bar__timer{display:flex!important;align-items:flex-start!important;color:#fff!important}
-    html.av-cb-cinnamon-page .avonent-sale-bar__unit{display:flex!important;flex-direction:column!important;align-items:center!important;min-width:27px!important}
-    html.av-cb-cinnamon-page .avonent-sale-bar__unit>span{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif!important;font-size:18px!important;font-weight:700!important;line-height:.95!important}
-    html.av-cb-cinnamon-page .avonent-sale-bar__unit small{font-size:7px!important;line-height:1!important;color:#fff!important}
-    html.av-cb-cinnamon-page .avonent-sale-bar__colon{font-size:17px!important;line-height:.9!important;color:#fff!important}
     .av-cb-header-logo{display:inline-flex;align-items:center;gap:7px;color:#A84F1B;line-height:1;text-decoration:none!important}
     .av-cb-header-logo svg{width:32px;height:32px;flex:0 0 32px}
     .av-cb-header-logo span{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;color:#111;font-size:24px;font-weight:750;letter-spacing:-.04em}
@@ -1009,13 +1075,18 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
   </style>
 
-  <section class="av-cb__hero" id="av-cb-top">
+  <section class="av-cb__hero" id="av-cb-top" {% if av_cb_hero_block %}{{ av_cb_hero_block.shopify_attributes }}{% endif %}>
     <div class="av-cb__wrap av-cb__hero-grid">
       <div class="av-cb__media">
-        {% if av_cb_product.images.size > 0 %}
+        {% if av_cb_product.images.size > 0 or av_cb_custom_hero_image != blank %}
           <div class="av-cb__product-gallery" data-av-cb-gallery>
             <div class="av-cb__gallery-main">
               <div class="av-cb__gallery-track" data-av-cb-gallery-track>
+                {% if av_cb_custom_hero_image != blank %}
+                  <div class="av-cb__gallery-slide" data-av-cb-gallery-slide>
+                    {{ av_cb_custom_hero_image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '500,700,900,1200,1400', sizes: '(min-width: 900px) 48vw, 92vw', alt: av_cb_display_title }}
+                  </div>
+                {% endif %}
                 {% for image in av_cb_product.images limit: 8 %}
                   <div class="av-cb__gallery-slide" data-av-cb-gallery-slide>
                     {{ image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '500,700,900,1200,1400', sizes: '(min-width: 900px) 48vw, 92vw', alt: image.alt | default: av_cb_display_title }}
@@ -1023,7 +1094,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 {% endfor %}
               </div>
 
-              {% if av_cb_product.images.size > 1 %}
+              {% if av_cb_product.images.size > 1 or av_cb_custom_hero_image != blank %}
                 <button class="av-cb__gallery-arrow av-cb__gallery-arrow--prev" type="button" data-av-cb-gallery-prev aria-label="Previous product image">
                   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14.5 6-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
@@ -1033,10 +1104,15 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
               {% endif %}
             </div>
 
-            {% if av_cb_product.images.size > 1 %}
+            {% if av_cb_product.images.size > 1 or av_cb_custom_hero_image != blank %}
               <div class="av-cb__gallery-thumbs" aria-label="Product images">
+                {% if av_cb_custom_hero_image != blank %}
+                  <button class="av-cb__gallery-thumb is-active" type="button" data-av-cb-gallery-thumb data-index="0" aria-label="View selected product image">
+                    {{ av_cb_custom_hero_image | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90,120,180', alt: av_cb_display_title }}
+                  </button>
+                {% endif %}
                 {% for image in av_cb_product.images limit: 8 %}
-                  <button class="av-cb__gallery-thumb{% if forloop.first %} is-active{% endif %}" type="button" data-av-cb-gallery-thumb data-index="{{ forloop.index0 }}" aria-label="View product image {{ forloop.index }}">
+                  <button class="av-cb__gallery-thumb{% if forloop.first and av_cb_custom_hero_image == blank %} is-active{% endif %}" type="button" data-av-cb-gallery-thumb data-index="{% if av_cb_custom_hero_image != blank %}{{ forloop.index }}{% else %}{{ forloop.index0 }}{% endif %}" aria-label="View product image {{ forloop.index }}">
                     {{ image | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90,120,180', alt: image.alt | default: av_cb_display_title }}
                   </button>
                 {% endfor %}
@@ -1053,45 +1129,50 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </div>
 
       <div>
-        <div class="av-cb__hero-badges" aria-label="Product highlights">
-          <span class="av-cb__hero-badge av-cb__hero-badge--best">Best Seller</span>
-          <span class="av-cb__hero-badge av-cb__hero-badge--choice">#1 Choice for Doctors &amp; Practitioners</span>
-        </div>
+        {% if av_cb_show_best_badge or av_cb_show_choice_badge %}
+          <div class="av-cb__hero-badges" aria-label="Product highlights">
+            {% if av_cb_show_best_badge %}<span class="av-cb__hero-badge av-cb__hero-badge--best">{{ av_cb_best_badge | escape }}</span>{% endif %}
+            {% if av_cb_show_choice_badge %}<span class="av-cb__hero-badge av-cb__hero-badge--choice">{{ av_cb_choice_badge | escape }}</span>{% endif %}
+          </div>
+        {% endif %}
 
+        {% if av_cb_show_rating %}
         <div class="av-cb__rating">
           <span class="av-cb__stars" aria-hidden="true">★★★★★</span>
-          <span class="av-cb__rating-text">{{ av_cb_rating_text }}</span>
+          <span class="av-cb__rating-text">{{ av_cb_rating_text | escape }}</span>
         </div>
+        {% endif %}
 
         <h1 class="av-cb__title">{{ av_cb_display_title }}</h1>
 
         <div class="av-cb__benefits">
           {% assign av_cb_benefits = av_cb_benefit_1 | append: '||' | append: av_cb_benefit_2 | append: '||' | append: av_cb_benefit_3 | append: '||' | append: av_cb_benefit_4 | split: '||' %}
           {% for benefit in av_cb_benefits %}
-            <div class="av-cb__benefit">
+            {% if benefit != blank %}<div class="av-cb__benefit">
               <span class="av-cb__benefit-check" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="m4.2 10.2 3.4 3.4 8.2-8.2" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              <span>{{ benefit }}</span>
-            </div>
+              <span>{{ benefit | escape }}</span>
+            </div>{% endif %}
           {% endfor %}
         </div>
 
-        <div class="av-cb__sold" data-av-cb-sold data-sold-start="12" data-sold-target="{{ av_cb_sold_percent }}" style="--sold: {{ av_cb_sold_percent }}%;">
+        {% if av_cb_show_sold %}<div class="av-cb__sold" data-av-cb-sold data-sold-start="12" data-sold-target="{{ av_cb_sold_percent }}" style="--sold: {{ av_cb_sold_percent }}%;">
           <div class="av-cb__sold-row">
             <div class="av-cb__sold-track" aria-hidden="true"><div class="av-cb__sold-fill" data-av-cb-sold-fill></div></div>
             <div class="av-cb__sold-text" data-av-cb-sold-text>{{ av_cb_sold_percent }}% Sold</div>
           </div>
         </div>
 
+        {% endif %}
         <div class="av-cb__pricing av-cb__pricing--purchase-mode">
-          <span class="av-cb__purchase-heading" data-av-cb-purchase-heading>{% if av_cb_subscription != blank %}Subscribe &amp; Save{% else %}One-Time Purchase{% endif %}</span>
+          <span class="av-cb__purchase-heading" data-av-cb-purchase-heading>{% if av_cb_subscription != blank %}{{ av_cb_subscribe_label | escape }}{% else %}{{ av_cb_one_time_label | escape }}{% endif %}</span>
           <span class="av-cb__pricing-values">
             <span class="av-cb__sale-price" data-av-cb-price>{{ av_cb_subscription_unit_price | money }}</span>
             <span class="av-cb__compare-price" data-av-cb-compare-price{% if av_cb_subscription == blank and av_cb_one_time_compare_unit == 0 %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_one_time_unit_price | money }}{% elsif av_cb_one_time_compare_unit > 0 %}{{ av_cb_one_time_compare_unit | money }}{% endif %}</span>
-            <span class="av-cb__sale-badge">{{ av_cb_sale_badge }}</span>
+            {% if av_cb_show_sale_badge and av_cb_sale_badge != blank %}<span class="av-cb__sale-badge">{{ av_cb_sale_badge | escape }}</span>{% endif %}
           </span>
         </div>
 
-        <div class="av-cb__low-stock-line"><span>{{ av_cb_low_stock_line }}</span></div>
+        {% if av_cb_show_low_stock_line and av_cb_low_stock_line != blank %}<div class="av-cb__low-stock-line"><span>{{ av_cb_low_stock_line | escape }}</span></div>{% endif %}
 
         <product-form-component
           data-section-id="{{ editor.id }}"
@@ -1137,6 +1218,9 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 {% assign av_cb_bundle_savings_pct = av_cb_bundle_savings_amount | times: 100.0 | divided_by: av_cb_bundle_subscription_compare | round %}
               {% endif %}
               {% assign av_cb_bundle_savings_text = 'You save ' | append: av_cb_bundle_savings_pct | append: '%' %}
+              {% if av_cb_bundle_subtitle != blank %}
+                {% assign av_cb_bundle_savings_text = av_cb_bundle_subtitle %}
+              {% endif %}
               {% assign av_cb_bundle_one_time_total = av_cb_one_time_unit_price | times: qty %}
               {% assign av_cb_bundle_one_time_compare_total = av_cb_one_time_compare_unit | times: qty %}
               <button class="av-cb__bundle{% if qty == 1 %} is-active{% endif %}" type="button" data-av-cb-bundle="{{ qty }}" data-subscription-price="{{ av_cb_bundle_sub_total }}" data-subscription-compare="{{ av_cb_bundle_subscription_compare }}" data-one-time-price="{{ av_cb_bundle_one_time_total }}" data-one-time-compare="{{ av_cb_bundle_one_time_compare_total }}">
@@ -1150,7 +1234,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                   {% endif %}
                 </span>
                 <span class="av-cb__bundle-copy">
-                  <strong data-av-cb-bundle-title data-one-time-title="{% if qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2{% else %}Buy 3{% endif %}" data-subscription-title="{% if qty == 1 %}Buy 1{% elsif qty == 2 and av_cb_bonus_variant != blank %}Buy 2 Get 1 FREE{% elsif qty == 3 and av_cb_bonus_variant != blank %}Buy 3 Get 2 FREE{% else %}Buy {{ qty }}{% endif %}">{% if qty == 1 %}Buy 1{% elsif qty == 2 and av_cb_bonus_variant != blank %}Buy 2 Get 1 FREE{% elsif qty == 3 and av_cb_bonus_variant != blank %}Buy 3 Get 2 FREE{% else %}Buy {{ qty }}{% endif %}</strong>
+                  <strong data-av-cb-bundle-title data-one-time-title="Buy {{ qty }}" data-subscription-title="{{ av_cb_bundle_title | escape }}">{{ av_cb_bundle_title | escape }}</strong>
                   <span data-av-cb-bundle-subtitle data-one-time-subtitle="" data-subscription-subtitle="{{ av_cb_bundle_savings_text }}">{{ av_cb_bundle_savings_text }}</span>
                 </span>
                 <span class="av-cb__bundle-price">
@@ -1176,13 +1260,15 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             {% endfor %}
           </div>
 
+          {% if av_cb_show_delivery %}
           <div class="av-cb__delivery-estimate" aria-live="polite">
             <span class="av-cb__delivery-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
-            <span>Order now for delivery by: <strong data-av-cb-delivery-date></strong></span>
+            <span>{{ av_cb_delivery_label | escape }} <strong data-av-cb-delivery-date></strong></span>
           </div>
 
+          {% endif %}
           <button class="av-cb__buy" type="submit" {% unless av_cb_variant.available %}disabled{% endunless %}>
             {% if av_cb_variant.available %}
               <span class="av-cb__buy-mainline">
@@ -1216,7 +1302,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
         {% if av_cb_subscription != blank %}
           <button class="av-cb__purchase-toggle" type="button" data-av-cb-purchase-toggle aria-pressed="false">
-            <span data-av-cb-purchase-toggle-text>One-Time Purchase <strong data-av-cb-one-time-toggle-price>{{ av_cb_one_time_unit_price | money }}</strong> + $4.95 Shipping</span>
+            <span data-av-cb-purchase-toggle-text>{{ av_cb_one_time_label | escape }} <strong data-av-cb-one-time-toggle-price>{{ av_cb_one_time_unit_price | money }}</strong> · {{ av_cb_shipping_note | escape }}</span>
           </button>
         {% endif %}
       </div>
@@ -1225,15 +1311,14 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
 
   <div class="av-cb__top-stack">
-    <div class="av-cb__guarantee-card" style="--guarantee-highlight: {{ av_cb_guarantee_color }}; --guarantee-text: #171717;">
+    {% if av_cb_show_guarantee %}
+    <div class="av-cb__guarantee-card" style="--guarantee-highlight: {{ av_cb_guarantee_color }}; --guarantee-text: #171717;" {% if av_cb_details_block %}{{ av_cb_details_block.shopify_attributes }}{% endif %}>
       <div class="av-cb__guarantee-image">
-        <img
-          src="https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-90-day-money-back-guarantee.png?v=1793736254"
-          width="240"
-          height="240"
-          loading="lazy"
-          alt="90-Day Money-Back Guarantee"
-        >
+        {% if av_cb_guarantee_image != blank %}
+          {{ av_cb_guarantee_image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120,180,240', alt: av_cb_guarantee_heading }}
+        {% elsif av_cb_guarantee_image_url != blank %}
+          <img src="{{ av_cb_guarantee_image_url | escape }}" width="240" height="240" loading="lazy" alt="{{ av_cb_guarantee_heading | escape }}">
+        {% endif %}
       </div>
       <div class="av-cb__guarantee-copy">
         <h3>{{ av_cb_guarantee_heading }}</h3>
@@ -1241,13 +1326,16 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </div>
     </div>
 
-    <div class="av-cb__low-stock" style="--low-stock: #D62828; --low-stock-bg: #FFF5F5;">
+    {% endif %}
+    {% if av_cb_show_stock_notice %}
+    <div class="av-cb__low-stock" style="--low-stock: {{ av_cb_stock_color }}; --low-stock-bg: {{ av_cb_stock_background }};">
       <div class="av-cb__low-stock-icon" aria-hidden="true">!</div>
       <div>
         <h3>{{ av_cb_stock_title }}</h3>
-        <p>{{ av_cb_stock_text }}</p>
+        <p>{{ av_cb_stock_text | escape }}</p>
       </div>
     </div>
+    {% endif %}
 
     <div class="av-cb__accordion-list" data-av-cb-accordion-list>
       <details class="av-cb__accordion">
@@ -1891,6 +1979,10 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       }
 
       const subscriptionUnit = Number(root.dataset.subscriptionUnitPrice || 0);
+      const subscriptionLabel = root.dataset.subscriptionLabel || 'Subscribe & Save';
+      const oneTimeLabel = root.dataset.oneTimeLabel || 'One-Time Purchase';
+      const shippingNote = root.dataset.shippingNote || '';
+      const switchLabel = root.dataset.switchLabel || 'Switch back to Subscribe & Save';
       const oneTimeUnit = Number(root.dataset.oneTimeUnitPrice || 0);
       const oneTimeCompareUnit = Number(root.dataset.oneTimeCompareUnitPrice || 0);
       const qtyInput = root.querySelector('[data-av-cb-quantity]');
@@ -1910,7 +2002,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const bundleButtons = Array.from(root.querySelectorAll('[data-av-cb-bundle]'));
       const subscriptionPerks = Array.from(root.querySelectorAll('[data-av-cb-subscription-perk]'));
       const bundleUnlocks = Array.from(root.querySelectorAll('[data-av-cb-bundle-unlock]'));
-      const money = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'en-US', {style:'currency', currency:'USD'}).format(Number(cents || 0) / 100);
+      const money = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'en-US', {style:'currency', currency:root.dataset.currency || 'USD'}).format(Number(cents || 0) / 100);
       let purchaseMode = sellingPlanInput ? 'subscription' : 'one-time';
 
       const selectedBundle = () => root.querySelector('[data-av-cb-bundle].is-active') || bundleButtons[0];
@@ -1937,7 +2029,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         }
         if (refillRow) refillRow.hidden = !isSubscription;
         if (purchaseToggle) purchaseToggle.setAttribute('aria-pressed', String(!isSubscription));
-        if (purchaseHeading) purchaseHeading.textContent = isSubscription ? 'Subscribe & Save' : 'One-Time Purchase';
+        if (purchaseHeading) purchaseHeading.textContent = isSubscription ? subscriptionLabel : oneTimeLabel;
 
         bundleButtons.forEach((btn) => {
           const values = valuesFor(btn);
@@ -1971,10 +2063,18 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         });
 
         if (purchaseToggleText) {
-          if (isSubscription) purchaseToggleText.innerHTML = 'One-Time Purchase <strong>' + money(oneTimeUnit * values.qty) + '</strong> + $4.95 Shipping';
+          if (isSubscription) {
+            purchaseToggleText.textContent = oneTimeLabel + ' ';
+            const amount = document.createElement('strong');
+            amount.textContent = money(oneTimeUnit * values.qty);
+            purchaseToggleText.append(amount, shippingNote ? ' · ' + shippingNote : '');
+          }
           else {
             const subscriptionDisplayPrice = Number(active?.dataset.subscriptionPrice || 0);
-            purchaseToggleText.innerHTML = 'Switch back to Subscribe & Save — <strong>' + money(subscriptionDisplayPrice) + '</strong>';
+            purchaseToggleText.textContent = switchLabel + ' — ';
+            const amount = document.createElement('strong');
+            amount.textContent = money(subscriptionDisplayPrice);
+            purchaseToggleText.append(amount);
           }
         }
       };
@@ -2135,7 +2235,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const deliveryDate = root.querySelector('[data-av-cb-delivery-date]');
       if (deliveryDate) {
         const date = new Date();
-        date.setDate(date.getDate() + 5);
+        date.setDate(date.getDate() + Math.max(1, Math.min(21, Number(root.dataset.deliveryDays) || 5)));
         const day = date.getDate();
         const mod100 = day % 100;
         const suffix = mod100 >= 11 && mod100 <= 13 ? 'th' : ({1:'st',2:'nd',3:'rd'}[day % 10] || 'th');

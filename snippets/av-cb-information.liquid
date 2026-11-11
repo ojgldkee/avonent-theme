@@ -1,0 +1,1986 @@
+{% liquid
+  assign av_cb_product = product
+  assign av_cb_hero_image = product.featured_image
+  assign av_cb_custom_hero_image = blank
+  assign av_cb_accent_color = editor.settings.accent_color | default: '#A84F1B'
+  assign av_cb_deep_color = editor.settings.deep_color | default: '#7D3612'
+  assign av_cb_best_badge = 'Best Seller'
+  assign av_cb_choice_badge = '#1 Choice for Doctors & Practitioners'
+  assign av_cb_show_best_badge = true
+  assign av_cb_show_choice_badge = true
+  assign av_cb_show_rating = true
+  assign av_cb_show_sold = true
+  assign av_cb_show_sale_badge = true
+  assign av_cb_subscribe_label = 'Subscribe & Save'
+  assign av_cb_one_time_label = 'One-Time Purchase'
+  assign av_cb_shipping_note = '$4.95 Shipping'
+  assign av_cb_switch_label = 'Switch back to Subscribe & Save'
+  assign av_cb_show_delivery = true
+  assign av_cb_delivery_label = 'Estimated delivery by:'
+  assign av_cb_delivery_days = 5
+  assign av_cb_show_guarantee = true
+  assign av_cb_show_stock_notice = true
+  assign av_cb_show_low_stock_line = true
+  assign av_cb_stock_color = '#D62828'
+  assign av_cb_stock_background = '#FFF5F5'
+  assign av_cb_guarantee_image_url = 'https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-90-day-money-back-guarantee.png?v=1793736254'
+  assign av_cb_hero_block = blank
+  assign av_cb_details_block = blank
+  assign av_cb_variant = av_cb_product.selected_or_first_available_variant
+  assign av_cb_form_id = 'AvonentCinnamonBerberineForm-' | append: av_cb_product.id
+  assign av_cb_one_time_unit_price = av_cb_variant.price | default: av_cb_product.price
+  assign av_cb_subscription = av_cb_variant.selling_plan_allocations.first
+  assign av_cb_subscription_unit_price = av_cb_one_time_unit_price
+  assign av_cb_subscription_plan_id = blank
+  if av_cb_subscription != blank
+    assign av_cb_subscription_unit_price = av_cb_subscription.price
+    assign av_cb_subscription_plan_id = av_cb_subscription.selling_plan.id
+  endif
+  assign av_cb_unit_price = av_cb_subscription_unit_price
+  assign av_cb_one_time_compare_unit = av_cb_variant.compare_at_price
+  if av_cb_one_time_compare_unit == blank or av_cb_one_time_compare_unit <= av_cb_one_time_unit_price
+    assign av_cb_one_time_compare_unit = 0
+  endif
+  assign av_cb_guarantee_image = av_cb_product.metafields.custom.av_cb_guarantee_image.value
+  assign av_cb_guarantee_highlight = av_cb_product.metafields.custom.av_cb_guarantee_highlight_text.value | default: 'Less than 1%'
+  assign av_cb_guarantee_color = av_cb_product.metafields.custom.av_cb_guarantee_highlight_color.value | default: '#A84F1B'
+  assign av_cb_stock_title = av_cb_product.metafields.custom.av_cb_low_stock_title.value | default: 'WARNING: Low Stock Notice'
+  assign av_cb_stock_text = av_cb_product.metafields.custom.av_cb_low_stock_text.value | default: 'Inventory can move quickly during promotions. If Avonent fits your routine, ordering while stock is available can help avoid interruptions.'
+  assign av_cb_display_title = av_cb_product.metafields.custom.av_cb_display_title.value | default: 'Ceylon Cinnamon 14,400mg Equivalent + Berberine HCl'
+  assign av_cb_hero_description = av_cb_product.metafields.custom.av_cb_hero_description.value | default: 'Avonent Ceylon Cinnamon + Berberine supports healthy blood sugar, glucose metabolism, and everyday metabolic balance — helping support steadier days around meals and throughout the day.*\n\nTake 1 softgel per day. Each serving combines true Sri Lankan Ceylon cinnamon with Berberine HCl in one concentrated formula built for consistent daily use.*'
+  assign av_cb_rating_text = av_cb_product.metafields.custom.av_cb_rating_text.value | default: 'Rated 4.9 • 10,000+ Reviews'
+  assign av_cb_benefit_1 = av_cb_product.metafields.custom.av_cb_benefit_1.value | default: 'Restores Insulin Sensitivity'
+  assign av_cb_benefit_2 = av_cb_product.metafields.custom.av_cb_benefit_2.value | default: 'Stabilizes Blood Sugar Levels'
+  assign av_cb_benefit_3 = av_cb_product.metafields.custom.av_cb_benefit_3.value | default: 'Supports Blood Pressure Naturally'
+  assign av_cb_benefit_4 = av_cb_product.metafields.custom.av_cb_benefit_4.value | default: 'Supports Steady Energy'
+  assign av_cb_sold_percent = av_cb_product.metafields.custom.av_cb_sold_percent.value | default: 93
+  assign av_cb_sale_badge = av_cb_product.metafields.custom.av_cb_sale_badge.value | default: 'Fall Sale – Save 65%'
+  assign av_cb_compare_price = av_cb_product.metafields.custom.av_cb_compare_price.value
+  assign av_cb_bundle_2_badge = av_cb_product.metafields.custom.av_cb_bundle_2_badge.value | default: 'Free Shipping'
+  assign av_cb_bundle_3_badge = av_cb_product.metafields.custom.av_cb_bundle_3_badge.value | default: 'Free Shipping + Free E-Book ($24.99 Value)'
+  assign av_cb_low_stock_line = av_cb_product.metafields.custom.av_cb_low_stock_line.value | default: 'Low Stock – Selling Fast'
+  assign av_cb_bundle_1_title = av_cb_product.metafields.custom.av_cb_bundle_1_title.value | default: 'Buy 1'
+  assign av_cb_bundle_1_subtitle = av_cb_product.metafields.custom.av_cb_bundle_1_subtitle.value
+  assign av_cb_bundle_2_title = av_cb_product.metafields.custom.av_cb_bundle_2_title.value
+  assign av_cb_bundle_2_subtitle = av_cb_product.metafields.custom.av_cb_bundle_2_subtitle.value
+  assign av_cb_bundle_3_title = av_cb_product.metafields.custom.av_cb_bundle_3_title.value
+  assign av_cb_bundle_3_subtitle = av_cb_product.metafields.custom.av_cb_bundle_3_subtitle.value
+  assign av_cb_add_to_cart_text = av_cb_product.metafields.custom.av_cb_add_to_cart_text.value | default: 'Add to Cart'
+  assign av_cb_refill_text = av_cb_product.metafields.custom.av_cb_refill_text.value | default: 'Refills ship every 30 days'
+  assign av_cb_cancel_text = av_cb_product.metafields.custom.av_cb_cancel_text.value | default: 'Stop or cancel anytime'
+  assign av_cb_guarantee_heading = av_cb_product.metafields.custom.av_cb_guarantee_heading.value | default: '90-Day Money-Back Guarantee'
+  assign av_cb_guarantee_body = av_cb_product.metafields.custom.av_cb_guarantee_body.value | default: 'of customers use our 90-Day Money-Back Guarantee.'
+  assign av_cb_acc_1_title = av_cb_product.metafields.custom.av_cb_acc_1_title.value | default: 'Clinically Supported Benefits'
+  assign av_cb_acc_1_body = av_cb_product.metafields.custom.av_cb_acc_1_body.value
+  assign av_cb_acc_2_title = av_cb_product.metafields.custom.av_cb_acc_2_title.value | default: 'Key Ingredients'
+  assign av_cb_acc_2_body = av_cb_product.metafields.custom.av_cb_acc_2_body.value
+  assign av_cb_acc_3_title = av_cb_product.metafields.custom.av_cb_acc_3_title.value | default: 'How It Works'
+  assign av_cb_acc_3_body = av_cb_product.metafields.custom.av_cb_acc_3_body.value
+  assign av_cb_trust_image = av_cb_product.metafields.custom.av_cb_trust_image.value
+  assign av_cb_trust_image_alt = av_cb_product.metafields.custom.av_cb_trust_image_alt.value | default: 'Why Trust Avonent'
+  assign av_cb_stats_heading = av_cb_product.metafields.custom.av_cb_stats_heading.value | default: 'Avonent by the Numbers'
+  assign av_cb_stats_bg = images['avonent-cinnamon-results-background.webp']
+  assign av_cb_stats_overlay_color = av_cb_product.metafields.custom.av_cb_stats_overlay_color.value | default: '#087E9D'
+  assign av_cb_stats_overlay_opacity = av_cb_product.metafields.custom.av_cb_stats_overlay_opacity.value | default: 82
+  assign av_cb_stats_duration = av_cb_product.metafields.custom.av_cb_stats_duration.value | default: 1200
+  assign av_cb_stat_1_start = av_cb_product.metafields.custom.av_cb_stat_1_start.value | default: 0
+  assign av_cb_stat_1_end = av_cb_product.metafields.custom.av_cb_stat_1_end.value
+  assign av_cb_stat_1_label = av_cb_product.metafields.custom.av_cb_stat_1_label.value
+  assign av_cb_stat_2_start = av_cb_product.metafields.custom.av_cb_stat_2_start.value | default: 0
+  assign av_cb_stat_2_end = av_cb_product.metafields.custom.av_cb_stat_2_end.value
+  assign av_cb_stat_2_label = av_cb_product.metafields.custom.av_cb_stat_2_label.value
+  assign av_cb_stat_3_start = av_cb_product.metafields.custom.av_cb_stat_3_start.value | default: 0
+  assign av_cb_stat_3_end = av_cb_product.metafields.custom.av_cb_stat_3_end.value
+  assign av_cb_stat_3_label = av_cb_product.metafields.custom.av_cb_stat_3_label.value
+  assign av_cb_stat_4_start = av_cb_product.metafields.custom.av_cb_stat_4_start.value | default: 0
+  assign av_cb_stat_4_end = av_cb_product.metafields.custom.av_cb_stat_4_end.value
+  assign av_cb_stat_4_label = av_cb_product.metafields.custom.av_cb_stat_4_label.value
+  assign av_cb_stats_cta = av_cb_product.metafields.custom.av_cb_stats_cta.value | default: 'Try Risk-Free Today'
+  assign av_cb_stats_guarantee = av_cb_product.metafields.custom.av_cb_stats_guarantee.value | default: '90-Day Money-Back Guarantee'
+  assign av_cb_stats_guarantee_icon = av_cb_product.metafields.custom.av_cb_stats_guarantee_icon.value
+  assign av_cb_stats_text_color = av_cb_product.metafields.custom.av_cb_stats_text_color.value | default: '#FFFFFF'
+  assign av_cb_stats_show = av_cb_product.metafields.custom.av_cb_stats_show.value
+  assign av_cb_carousel_heading = av_cb_product.metafields.custom.av_cb_carousel_heading.value | default: 'Why This Ceylon Cinnamon Formula Is Built Differently'
+  assign av_cb_carousel_1_image = av_cb_product.metafields.custom.av_cb_carousel_1_image.value
+  assign av_cb_carousel_1_title = av_cb_product.metafields.custom.av_cb_carousel_1_title.value | default: 'Sri Lankan Ceylon With a Centuries-Old Heritage'
+  assign av_cb_carousel_1_body = av_cb_product.metafields.custom.av_cb_carousel_1_body.value | default: 'Cinnamon has been prized for thousands of years, and true Ceylon cinnamon — Cinnamomum verum — is indigenous to Sri Lanka. Avonent starts with genuine Sri Lankan Ceylon, not common Cassia, then uses a supplier-confirmed 12:1 concentrated extract for a clearly disclosed daily serving.'
+  assign av_cb_carousel_2_image = av_cb_product.metafields.custom.av_cb_carousel_2_image.value
+  assign av_cb_carousel_2_title = av_cb_product.metafields.custom.av_cb_carousel_2_title.value | default: '400 mg Berberine HCl for Metabolic Support'
+  assign av_cb_carousel_2_body = av_cb_product.metafields.custom.av_cb_carousel_2_body.value | default: 'Each daily serving delivers 400 mg of Berberine HCl. Berberine has been studied for its role in supporting healthy glucose metabolism, insulin sensitivity, and overall metabolic function.* Avonent builds that support directly into your daily routine — no separate berberine bottle needed.'
+  assign av_cb_carousel_3_image = av_cb_product.metafields.custom.av_cb_carousel_3_image.value
+  assign av_cb_carousel_3_title = av_cb_product.metafields.custom.av_cb_carousel_3_title.value | default: 'MCT Oil Softgel Delivery'
+  assign av_cb_carousel_3_body = av_cb_product.metafields.custom.av_cb_carousel_3_body.value
+  assign av_cb_carousel_4_image = av_cb_product.metafields.custom.av_cb_carousel_4_image.value
+  assign av_cb_carousel_4_title = av_cb_product.metafields.custom.av_cb_carousel_4_title.value | default: '14,400 mg Equivalent. Built for Real Potency.'
+  assign av_cb_carousel_4_body = av_cb_product.metafields.custom.av_cb_carousel_4_body.value | default: 'Many cinnamon supplements rely on a few hundred milligrams of basic powder. Avonent uses a concentrated 12:1 Ceylon extract that delivers the equivalent of 14,400 mg of raw cinnamon per full daily serving — so you get a meaningfully concentrated formula without spooning loose cinnamon into coffee or relying on a long stack of basic powder capsules.'
+  assign av_cb_benefits_heading = av_cb_product.metafields.custom.av_cb_benefits_heading.value | default: 'Feel Supported. Every Day.'
+  assign av_cb_benefits_subheading = av_cb_product.metafields.custom.av_cb_benefits_subheading.value | default: 'A concentrated Ceylon cinnamon + Berberine HCl formula built around simple, consistent daily metabolic support.'
+  assign av_cb_benefits_item_1 = av_cb_product.metafields.custom.av_cb_benefits_item_1.value | default: 'Blood Sugar Support*'
+  assign av_cb_benefits_item_2 = av_cb_product.metafields.custom.av_cb_benefits_item_2.value | default: 'Gentle on the Stomach'
+  assign av_cb_benefits_item_3 = av_cb_product.metafields.custom.av_cb_benefits_item_3.value | default: 'MCT Oil Delivery'
+  assign av_cb_benefits_item_4 = av_cb_product.metafields.custom.av_cb_benefits_item_4.value | default: 'Coumarin-Free Ceylon'
+  assign av_cb_benefits_icon_1 = av_cb_product.metafields.custom.av_cb_benefits_icon_1.value
+  assign av_cb_benefits_icon_2 = av_cb_product.metafields.custom.av_cb_benefits_icon_2.value
+  assign av_cb_benefits_icon_3 = av_cb_product.metafields.custom.av_cb_benefits_icon_3.value
+  assign av_cb_benefits_icon_4 = av_cb_product.metafields.custom.av_cb_benefits_icon_4.value
+  assign av_cb_benefits_image = av_cb_product.metafields.custom.av_cb_benefits_image.value
+  assign av_cb_benefits_bg = av_cb_product.metafields.custom.av_cb_benefits_bg.value | default: '#0A88A6'
+  assign av_cb_benefits_text = av_cb_product.metafields.custom.av_cb_benefits_text.value | default: '#FFFFFF'
+  assign av_cb_benefits_disclaimer = blank
+  assign av_cb_science_heading = av_cb_product.metafields.custom.av_cb_science_heading.value | default: 'Two Ingredients. Two Complementary Paths to Metabolic Support.'
+  assign av_cb_science_intro = av_cb_product.metafields.custom.av_cb_science_intro.value | default: 'True Ceylon cinnamon and Berberine HCl are researched for different roles in metabolic health. Avonent brings them together in one clearly disclosed formula to support healthy blood sugar, glucose metabolism, insulin sensitivity, and everyday metabolic balance.*'
+  assign av_cb_science_1_image = av_cb_product.metafields.custom.av_cb_science_1_image.value
+  assign av_cb_science_1_title = av_cb_product.metafields.custom.av_cb_science_1_title.value | default: 'Blood Sugar Support*'
+  assign av_cb_science_1_subtitle = av_cb_product.metafields.custom.av_cb_science_1_subtitle.value | default: 'Supports healthy glucose metabolism*'
+  assign av_cb_science_1_body = av_cb_product.metafields.custom.av_cb_science_1_body.value | default: 'True Ceylon cinnamon and berberine have been studied for their roles in healthy glucose metabolism. Avonent pairs a concentrated 12:1 Ceylon extract with Berberine HCl in one clearly disclosed formula built for consistent daily metabolic support.*'
+  assign av_cb_science_2_image = av_cb_product.metafields.custom.av_cb_science_2_image.value
+  assign av_cb_science_2_title = av_cb_product.metafields.custom.av_cb_science_2_title.value | default: 'Gentle on the Stomach'
+  assign av_cb_science_2_subtitle = av_cb_product.metafields.custom.av_cb_science_2_subtitle.value | default: 'Oil-based softgel, no cinnamon powder'
+  assign av_cb_science_2_body = av_cb_product.metafields.custom.av_cb_science_2_body.value | default: 'Avonent uses an MCT-oil softgel instead of a dry cinnamon powder capsule. No loose powder and no gritty cinnamon taste — just a smoother daily format designed to be easy to take consistently.'
+  assign av_cb_science_3_image = av_cb_product.metafields.custom.av_cb_science_3_image.value
+  assign av_cb_science_3_title = av_cb_product.metafields.custom.av_cb_science_3_title.value | default: 'Liver Health Support'
+  assign av_cb_science_3_subtitle = av_cb_product.metafields.custom.av_cb_science_3_subtitle.value | default: 'Made with coumarin-free Ceylon cinnamon'
+  assign av_cb_science_3_body = av_cb_product.metafields.custom.av_cb_science_3_body.value | default: 'Avonent uses Cinnamomum verum — true Ceylon cinnamon rather than common Cassia. The lab test provided for this formula reported no detectable coumarin, supporting a cleaner cinnamon choice for a consistent daily routine.'
+  assign av_cb_science_4_image = av_cb_product.metafields.custom.av_cb_science_4_image.value
+  assign av_cb_science_4_title = av_cb_product.metafields.custom.av_cb_science_4_title.value | default: 'Enhanced Absorption'
+  assign av_cb_science_4_subtitle = av_cb_product.metafields.custom.av_cb_science_4_subtitle.value | default: 'Helps your body absorb cinnamon'
+  assign av_cb_science_4_body = av_cb_product.metafields.custom.av_cb_science_4_body.value | default: 'Avonent suspends its concentrated Ceylon cinnamon extract in MCT oil inside a softgel instead of using a basic dry-powder capsule. The oil-based carrier is designed to support efficient delivery while keeping the daily routine simple and easy to take.'
+  assign av_cb_science_cta = av_cb_product.metafields.custom.av_cb_science_cta.value | default: 'Try Risk-Free Today'
+  assign av_cb_science_guarantee = av_cb_product.metafields.custom.av_cb_science_guarantee.value | default: '90-Day Money-Back Guarantee'
+  assign av_cb_science_ticker_1 = av_cb_product.metafields.custom.av_cb_science_ticker_1.value | default: '14,400 mg Ceylon Equivalent'
+  assign av_cb_science_ticker_2 = av_cb_product.metafields.custom.av_cb_science_ticker_2.value | default: '400 mg Berberine HCl'
+  assign av_cb_science_ticker_3 = av_cb_product.metafields.custom.av_cb_science_ticker_3.value | default: '200 mg MCT Oil'
+  assign av_cb_science_ticker_4 = av_cb_product.metafields.custom.av_cb_science_ticker_4.value | default: '30 Daily Servings'
+  assign av_cb_science_bg = av_cb_product.metafields.custom.av_cb_science_bg.value | default: '#FFF8F2'
+  assign av_cb_science_accent = av_cb_product.metafields.custom.av_cb_science_accent.value | default: '#A84F1B'
+  assign av_cb_journey_image = av_cb_product.metafields.custom.av_cb_journey_image.value
+  assign av_cb_journey_eyebrow = av_cb_product.metafields.custom.av_cb_journey_eyebrow.value | default: 'YOUR DAILY ROUTINE'
+  assign av_cb_journey_heading = av_cb_product.metafields.custom.av_cb_journey_heading.value | default: 'What You Might Expect from Daily Use of Avonent'
+  assign av_cb_journey_intro = av_cb_product.metafields.custom.av_cb_journey_intro.value | default: 'Consistency matters. Here is a simple look at how a steady daily routine with Avonent may feel over time.*'
+  assign av_cb_journey_1_label = av_cb_product.metafields.custom.av_cb_journey_1_label.value | default: '1 Week'
+  assign av_cb_journey_1_body = av_cb_product.metafields.custom.av_cb_journey_1_body.value | default: 'Nothing dramatic yet. The ingredients are becoming part of your daily routine, and the afternoon may begin to feel a little more even.*'
+  assign av_cb_journey_2_label = av_cb_product.metafields.custom.av_cb_journey_2_label.value | default: '1 Month'
+  assign av_cb_journey_2_body = av_cb_product.metafields.custom.av_cb_journey_2_body.value | default: 'Meals may feel a little easier to move through, with less of an afternoon dip and more steadiness across the day.*'
+  assign av_cb_journey_3_label = av_cb_product.metafields.custom.av_cb_journey_3_label.value | default: '2 Months'
+  assign av_cb_journey_3_body = av_cb_product.metafields.custom.av_cb_journey_3_body.value | default: 'You may notice steadier energy, fewer cravings, and less pull toward late-night snacking as consistency builds.*'
+  assign av_cb_journey_4_label = av_cb_product.metafields.custom.av_cb_journey_4_label.value | default: '3 Months'
+  assign av_cb_journey_4_body = av_cb_product.metafields.custom.av_cb_journey_4_body.value | default: 'Your metabolic-support routine has had time to build. This is where staying consistent can matter most.*'
+  assign av_cb_journey_5_label = av_cb_product.metafields.custom.av_cb_journey_5_label.value | default: '6 Months'
+  assign av_cb_journey_5_body = av_cb_product.metafields.custom.av_cb_journey_5_body.value | default: 'Your body has received months of consistent daily support for healthy insulin response, metabolic balance, and antioxidant activity — meal after meal.*'
+  assign av_cb_journey_6_label = av_cb_product.metafields.custom.av_cb_journey_6_label.value | default: '12 Months'
+  assign av_cb_journey_6_body = av_cb_product.metafields.custom.av_cb_journey_6_body.value | default: 'With long-term consistency, Avonent can become a simple foundation in your metabolic routine — steady support, day after day.*'
+  assign av_cb_compare_heading = av_cb_product.metafields.custom.av_cb_compare_heading.value | default: 'Why Avonent Stands Apart From Typical Cinnamon Supplements'
+  assign av_cb_compare_subheading = av_cb_product.metafields.custom.av_cb_compare_subheading.value | default: 'True Sri Lankan Ceylon. A full-strength 12:1 extract. Berberine HCl. A clearly disclosed softgel formula built with intention.'
+  assign av_cb_compare_cta = av_cb_product.metafields.custom.av_cb_compare_cta.value | default: 'Try Avonent Risk-Free'
+  assign av_cb_compare_guarantee = av_cb_product.metafields.custom.av_cb_compare_guarantee.value | default: '90-Day Money-Back Guarantee'
+  assign av_cb_risk_image = blank
+  assign av_cb_risk_eyebrow = 'FEEL THE DIFFERENCE'
+  assign av_cb_risk_heading = '90-Day Risk-Free Trial'
+  assign av_cb_risk_body = 'Try Avonent for 90 days. If it is not right for you, contact us within 90 days and we will help with the next steps under our refund policy.'
+  assign av_cb_risk_button = 'Try Risk-Free Today'
+  assign av_cb_risk_bg = '#FFF4EC'
+  assign av_cb_risk_accent = '#A84F1B'
+  assign av_cb_faq_heading = av_cb_product.metafields.custom.av_cb_faq_heading.value | default: 'Frequently Asked Questions'
+  assign av_cb_faq_1_q = av_cb_product.metafields.custom.av_cb_faq_1_q.value
+  assign av_cb_faq_1_a = av_cb_product.metafields.custom.av_cb_faq_1_a.value
+  assign av_cb_faq_2_q = av_cb_product.metafields.custom.av_cb_faq_2_q.value
+  assign av_cb_faq_2_a = av_cb_product.metafields.custom.av_cb_faq_2_a.value
+  assign av_cb_faq_3_q = av_cb_product.metafields.custom.av_cb_faq_3_q.value
+  assign av_cb_faq_3_a = av_cb_product.metafields.custom.av_cb_faq_3_a.value
+  assign av_cb_faq_4_q = av_cb_product.metafields.custom.av_cb_faq_4_q.value
+  assign av_cb_faq_4_a = av_cb_product.metafields.custom.av_cb_faq_4_a.value
+  assign av_cb_faq_5_q = av_cb_product.metafields.custom.av_cb_faq_5_q.value
+  assign av_cb_faq_5_a = av_cb_product.metafields.custom.av_cb_faq_5_a.value
+  assign av_cb_faq_6_q = av_cb_product.metafields.custom.av_cb_faq_6_q.value
+  assign av_cb_faq_6_a = av_cb_product.metafields.custom.av_cb_faq_6_a.value
+
+  for content_block in editor.blocks
+    case content_block.type
+      when 'hero'
+        assign av_cb_hero_block = content_block
+        assign av_cb_hero_image = content_block.settings.hero_image | default: product.featured_image
+        assign av_cb_custom_hero_image = content_block.settings.hero_image
+        assign av_cb_show_best_badge = content_block.settings.show_best_badge
+        assign av_cb_show_choice_badge = content_block.settings.show_choice_badge
+        assign av_cb_show_rating = content_block.settings.show_rating
+        assign av_cb_show_sold = content_block.settings.show_sold
+        assign av_cb_show_sale_badge = content_block.settings.show_sale_badge
+        assign av_cb_show_delivery = content_block.settings.show_delivery
+        if content_block.settings.best_badge != blank
+          assign av_cb_best_badge = content_block.settings.best_badge
+        endif
+        if content_block.settings.choice_badge != blank
+          assign av_cb_choice_badge = content_block.settings.choice_badge
+        endif
+        if content_block.settings.subscribe_label != blank
+          assign av_cb_subscribe_label = content_block.settings.subscribe_label
+        endif
+        if content_block.settings.one_time_label != blank
+          assign av_cb_one_time_label = content_block.settings.one_time_label
+        endif
+        if content_block.settings.shipping_note != blank
+          assign av_cb_shipping_note = content_block.settings.shipping_note
+        endif
+        if content_block.settings.switch_label != blank
+          assign av_cb_switch_label = content_block.settings.switch_label
+        endif
+        if content_block.settings.delivery_label != blank
+          assign av_cb_delivery_label = content_block.settings.delivery_label
+        endif
+        assign av_cb_delivery_days = content_block.settings.delivery_days | default: 5
+        if content_block.settings.display_title != blank
+          assign av_cb_display_title = content_block.settings.display_title
+        endif
+        if content_block.settings.hero_description != blank
+          assign av_cb_hero_description = content_block.settings.hero_description
+        endif
+        if content_block.settings.rating_text != blank
+          assign av_cb_rating_text = content_block.settings.rating_text
+        endif
+        if content_block.settings.benefit_1 != blank
+          assign av_cb_benefit_1 = content_block.settings.benefit_1
+        endif
+        if content_block.settings.benefit_2 != blank
+          assign av_cb_benefit_2 = content_block.settings.benefit_2
+        endif
+        if content_block.settings.benefit_3 != blank
+          assign av_cb_benefit_3 = content_block.settings.benefit_3
+        endif
+        if content_block.settings.benefit_4 != blank
+          assign av_cb_benefit_4 = content_block.settings.benefit_4
+        endif
+        if content_block.settings.sold_percent != blank
+          assign av_cb_sold_percent = content_block.settings.sold_percent
+        endif
+        if content_block.settings.sale_badge != blank
+          assign av_cb_sale_badge = content_block.settings.sale_badge
+        endif
+        if content_block.settings.bundle_2_badge != blank
+          assign av_cb_bundle_2_badge = content_block.settings.bundle_2_badge
+        endif
+        if content_block.settings.bundle_3_badge != blank
+          assign av_cb_bundle_3_badge = content_block.settings.bundle_3_badge
+        endif
+        if content_block.settings.bundle_1_title != blank
+          assign av_cb_bundle_1_title = content_block.settings.bundle_1_title
+        endif
+        if content_block.settings.bundle_1_subtitle != blank
+          assign av_cb_bundle_1_subtitle = content_block.settings.bundle_1_subtitle
+        endif
+        if content_block.settings.bundle_2_title != blank
+          assign av_cb_bundle_2_title = content_block.settings.bundle_2_title
+        endif
+        if content_block.settings.bundle_2_subtitle != blank
+          assign av_cb_bundle_2_subtitle = content_block.settings.bundle_2_subtitle
+        endif
+        if content_block.settings.bundle_3_title != blank
+          assign av_cb_bundle_3_title = content_block.settings.bundle_3_title
+        endif
+        if content_block.settings.bundle_3_subtitle != blank
+          assign av_cb_bundle_3_subtitle = content_block.settings.bundle_3_subtitle
+        endif
+        if content_block.settings.add_to_cart_text != blank
+          assign av_cb_add_to_cart_text = content_block.settings.add_to_cart_text
+        endif
+        if content_block.settings.refill_text != blank
+          assign av_cb_refill_text = content_block.settings.refill_text
+        endif
+        if content_block.settings.cancel_text != blank
+          assign av_cb_cancel_text = content_block.settings.cancel_text
+        endif
+      when 'results'
+        if content_block.settings.stats_heading != blank
+          assign av_cb_stats_heading = content_block.settings.stats_heading
+        endif
+        if content_block.settings.stats_bg != blank
+          assign av_cb_stats_bg = content_block.settings.stats_bg
+        endif
+        if content_block.settings.stats_overlay_color != blank
+          assign av_cb_stats_overlay_color = content_block.settings.stats_overlay_color
+        endif
+        if content_block.settings.stats_overlay_opacity != blank
+          assign av_cb_stats_overlay_opacity = content_block.settings.stats_overlay_opacity
+        endif
+        if content_block.settings.stats_duration != blank
+          assign av_cb_stats_duration = content_block.settings.stats_duration
+        endif
+        if content_block.settings.stat_1_start != blank
+          assign av_cb_stat_1_start = content_block.settings.stat_1_start
+        endif
+        if content_block.settings.stat_1_end != blank
+          assign av_cb_stat_1_end = content_block.settings.stat_1_end
+        endif
+        if content_block.settings.stat_1_label != blank
+          assign av_cb_stat_1_label = content_block.settings.stat_1_label
+        endif
+        if content_block.settings.stat_2_start != blank
+          assign av_cb_stat_2_start = content_block.settings.stat_2_start
+        endif
+        if content_block.settings.stat_2_end != blank
+          assign av_cb_stat_2_end = content_block.settings.stat_2_end
+        endif
+        if content_block.settings.stat_2_label != blank
+          assign av_cb_stat_2_label = content_block.settings.stat_2_label
+        endif
+        if content_block.settings.stat_3_start != blank
+          assign av_cb_stat_3_start = content_block.settings.stat_3_start
+        endif
+        if content_block.settings.stat_3_end != blank
+          assign av_cb_stat_3_end = content_block.settings.stat_3_end
+        endif
+        if content_block.settings.stat_3_label != blank
+          assign av_cb_stat_3_label = content_block.settings.stat_3_label
+        endif
+        if content_block.settings.stat_4_start != blank
+          assign av_cb_stat_4_start = content_block.settings.stat_4_start
+        endif
+        if content_block.settings.stat_4_end != blank
+          assign av_cb_stat_4_end = content_block.settings.stat_4_end
+        endif
+        if content_block.settings.stat_4_label != blank
+          assign av_cb_stat_4_label = content_block.settings.stat_4_label
+        endif
+        if content_block.settings.stats_cta != blank
+          assign av_cb_stats_cta = content_block.settings.stats_cta
+        endif
+        if content_block.settings.stats_guarantee != blank
+          assign av_cb_stats_guarantee = content_block.settings.stats_guarantee
+        endif
+        if content_block.settings.stats_guarantee_icon != blank
+          assign av_cb_stats_guarantee_icon = content_block.settings.stats_guarantee_icon
+        endif
+        if content_block.settings.stats_text_color != blank
+          assign av_cb_stats_text_color = content_block.settings.stats_text_color
+        endif
+        if content_block.settings.stats_show != blank
+          assign av_cb_stats_show = content_block.settings.stats_show
+        endif
+      when 'carousel'
+        if content_block.settings.carousel_heading != blank
+          assign av_cb_carousel_heading = content_block.settings.carousel_heading
+        endif
+        if content_block.settings.carousel_1_image != blank
+          assign av_cb_carousel_1_image = content_block.settings.carousel_1_image
+        endif
+        if content_block.settings.carousel_1_title != blank
+          assign av_cb_carousel_1_title = content_block.settings.carousel_1_title
+        endif
+        if content_block.settings.carousel_1_body != blank
+          assign av_cb_carousel_1_body = content_block.settings.carousel_1_body
+        endif
+        if content_block.settings.carousel_2_image != blank
+          assign av_cb_carousel_2_image = content_block.settings.carousel_2_image
+        endif
+        if content_block.settings.carousel_2_title != blank
+          assign av_cb_carousel_2_title = content_block.settings.carousel_2_title
+        endif
+        if content_block.settings.carousel_2_body != blank
+          assign av_cb_carousel_2_body = content_block.settings.carousel_2_body
+        endif
+        if content_block.settings.carousel_3_image != blank
+          assign av_cb_carousel_3_image = content_block.settings.carousel_3_image
+        endif
+        if content_block.settings.carousel_3_title != blank
+          assign av_cb_carousel_3_title = content_block.settings.carousel_3_title
+        endif
+        if content_block.settings.carousel_3_body != blank
+          assign av_cb_carousel_3_body = content_block.settings.carousel_3_body
+        endif
+        if content_block.settings.carousel_4_image != blank
+          assign av_cb_carousel_4_image = content_block.settings.carousel_4_image
+        endif
+        if content_block.settings.carousel_4_title != blank
+          assign av_cb_carousel_4_title = content_block.settings.carousel_4_title
+        endif
+        if content_block.settings.carousel_4_body != blank
+          assign av_cb_carousel_4_body = content_block.settings.carousel_4_body
+        endif
+      when 'science'
+        if content_block.settings.science_heading != blank
+          assign av_cb_science_heading = content_block.settings.science_heading
+        endif
+        if content_block.settings.science_intro != blank
+          assign av_cb_science_intro = content_block.settings.science_intro
+        endif
+        if content_block.settings.science_1_image != blank
+          assign av_cb_science_1_image = content_block.settings.science_1_image
+        endif
+        if content_block.settings.science_1_title != blank
+          assign av_cb_science_1_title = content_block.settings.science_1_title
+        endif
+        if content_block.settings.science_1_subtitle != blank
+          assign av_cb_science_1_subtitle = content_block.settings.science_1_subtitle
+        endif
+        if content_block.settings.science_1_body != blank
+          assign av_cb_science_1_body = content_block.settings.science_1_body
+        endif
+        if content_block.settings.science_2_image != blank
+          assign av_cb_science_2_image = content_block.settings.science_2_image
+        endif
+        if content_block.settings.science_2_title != blank
+          assign av_cb_science_2_title = content_block.settings.science_2_title
+        endif
+        if content_block.settings.science_2_subtitle != blank
+          assign av_cb_science_2_subtitle = content_block.settings.science_2_subtitle
+        endif
+        if content_block.settings.science_2_body != blank
+          assign av_cb_science_2_body = content_block.settings.science_2_body
+        endif
+        if content_block.settings.science_3_image != blank
+          assign av_cb_science_3_image = content_block.settings.science_3_image
+        endif
+        if content_block.settings.science_3_title != blank
+          assign av_cb_science_3_title = content_block.settings.science_3_title
+        endif
+        if content_block.settings.science_3_subtitle != blank
+          assign av_cb_science_3_subtitle = content_block.settings.science_3_subtitle
+        endif
+        if content_block.settings.science_3_body != blank
+          assign av_cb_science_3_body = content_block.settings.science_3_body
+        endif
+        if content_block.settings.science_4_image != blank
+          assign av_cb_science_4_image = content_block.settings.science_4_image
+        endif
+        if content_block.settings.science_4_title != blank
+          assign av_cb_science_4_title = content_block.settings.science_4_title
+        endif
+        if content_block.settings.science_4_subtitle != blank
+          assign av_cb_science_4_subtitle = content_block.settings.science_4_subtitle
+        endif
+        if content_block.settings.science_4_body != blank
+          assign av_cb_science_4_body = content_block.settings.science_4_body
+        endif
+        if content_block.settings.science_cta != blank
+          assign av_cb_science_cta = content_block.settings.science_cta
+        endif
+        if content_block.settings.science_guarantee != blank
+          assign av_cb_science_guarantee = content_block.settings.science_guarantee
+        endif
+        if content_block.settings.science_ticker_1 != blank
+          assign av_cb_science_ticker_1 = content_block.settings.science_ticker_1
+        endif
+        if content_block.settings.science_ticker_2 != blank
+          assign av_cb_science_ticker_2 = content_block.settings.science_ticker_2
+        endif
+        if content_block.settings.science_ticker_3 != blank
+          assign av_cb_science_ticker_3 = content_block.settings.science_ticker_3
+        endif
+        if content_block.settings.science_ticker_4 != blank
+          assign av_cb_science_ticker_4 = content_block.settings.science_ticker_4
+        endif
+        if content_block.settings.science_bg != blank
+          assign av_cb_science_bg = content_block.settings.science_bg
+        endif
+        if content_block.settings.science_accent != blank
+          assign av_cb_science_accent = content_block.settings.science_accent
+        endif
+      when 'journey'
+        if content_block.settings.journey_image != blank
+          assign av_cb_journey_image = content_block.settings.journey_image
+        endif
+        if content_block.settings.journey_eyebrow != blank
+          assign av_cb_journey_eyebrow = content_block.settings.journey_eyebrow
+        endif
+        if content_block.settings.journey_heading != blank
+          assign av_cb_journey_heading = content_block.settings.journey_heading
+        endif
+        if content_block.settings.journey_intro != blank
+          assign av_cb_journey_intro = content_block.settings.journey_intro
+        endif
+        if content_block.settings.journey_1_label != blank
+          assign av_cb_journey_1_label = content_block.settings.journey_1_label
+        endif
+        if content_block.settings.journey_1_body != blank
+          assign av_cb_journey_1_body = content_block.settings.journey_1_body
+        endif
+        if content_block.settings.journey_2_label != blank
+          assign av_cb_journey_2_label = content_block.settings.journey_2_label
+        endif
+        if content_block.settings.journey_2_body != blank
+          assign av_cb_journey_2_body = content_block.settings.journey_2_body
+        endif
+        if content_block.settings.journey_3_label != blank
+          assign av_cb_journey_3_label = content_block.settings.journey_3_label
+        endif
+        if content_block.settings.journey_3_body != blank
+          assign av_cb_journey_3_body = content_block.settings.journey_3_body
+        endif
+        if content_block.settings.journey_4_label != blank
+          assign av_cb_journey_4_label = content_block.settings.journey_4_label
+        endif
+        if content_block.settings.journey_4_body != blank
+          assign av_cb_journey_4_body = content_block.settings.journey_4_body
+        endif
+        if content_block.settings.journey_5_label != blank
+          assign av_cb_journey_5_label = content_block.settings.journey_5_label
+        endif
+        if content_block.settings.journey_5_body != blank
+          assign av_cb_journey_5_body = content_block.settings.journey_5_body
+        endif
+        if content_block.settings.journey_6_label != blank
+          assign av_cb_journey_6_label = content_block.settings.journey_6_label
+        endif
+        if content_block.settings.journey_6_body != blank
+          assign av_cb_journey_6_body = content_block.settings.journey_6_body
+        endif
+      when 'compare'
+        if content_block.settings.compare_price != blank
+          assign av_cb_compare_price = content_block.settings.compare_price
+        endif
+        if content_block.settings.compare_heading != blank
+          assign av_cb_compare_heading = content_block.settings.compare_heading
+        endif
+        if content_block.settings.compare_subheading != blank
+          assign av_cb_compare_subheading = content_block.settings.compare_subheading
+        endif
+        if content_block.settings.compare_cta != blank
+          assign av_cb_compare_cta = content_block.settings.compare_cta
+        endif
+        if content_block.settings.compare_guarantee != blank
+          assign av_cb_compare_guarantee = content_block.settings.compare_guarantee
+        endif
+      when 'benefits'
+        assign av_cb_benefits_block = content_block
+        if content_block.settings.benefits_heading != blank
+          assign av_cb_benefits_heading = content_block.settings.benefits_heading
+        endif
+        if content_block.settings.benefits_subheading != blank
+          assign av_cb_benefits_subheading = content_block.settings.benefits_subheading
+        endif
+        if content_block.settings.benefits_item_1 != blank
+          assign av_cb_benefits_item_1 = content_block.settings.benefits_item_1
+        endif
+        if content_block.settings.benefits_item_2 != blank
+          assign av_cb_benefits_item_2 = content_block.settings.benefits_item_2
+        endif
+        if content_block.settings.benefits_item_3 != blank
+          assign av_cb_benefits_item_3 = content_block.settings.benefits_item_3
+        endif
+        if content_block.settings.benefits_item_4 != blank
+          assign av_cb_benefits_item_4 = content_block.settings.benefits_item_4
+        endif
+        if content_block.settings.benefits_icon_1 != blank
+          assign av_cb_benefits_icon_1 = content_block.settings.benefits_icon_1
+        endif
+        if content_block.settings.benefits_icon_2 != blank
+          assign av_cb_benefits_icon_2 = content_block.settings.benefits_icon_2
+        endif
+        if content_block.settings.benefits_icon_3 != blank
+          assign av_cb_benefits_icon_3 = content_block.settings.benefits_icon_3
+        endif
+        if content_block.settings.benefits_icon_4 != blank
+          assign av_cb_benefits_icon_4 = content_block.settings.benefits_icon_4
+        endif
+        if content_block.settings.benefits_image != blank
+          assign av_cb_benefits_image = content_block.settings.benefits_image
+        endif
+        if content_block.settings.benefits_bg != blank
+          assign av_cb_benefits_bg = content_block.settings.benefits_bg
+        endif
+        if content_block.settings.benefits_text != blank
+          assign av_cb_benefits_text = content_block.settings.benefits_text
+        endif
+        if content_block.settings.benefits_disclaimer != blank
+          assign av_cb_benefits_disclaimer = content_block.settings.benefits_disclaimer
+        endif
+      when 'risk_free'
+        assign av_cb_risk_block = content_block
+        if content_block.settings.image != blank
+          assign av_cb_risk_image = content_block.settings.image
+        endif
+        if content_block.settings.eyebrow != blank
+          assign av_cb_risk_eyebrow = content_block.settings.eyebrow
+        endif
+        if content_block.settings.heading != blank
+          assign av_cb_risk_heading = content_block.settings.heading
+        endif
+        if content_block.settings.body != blank
+          assign av_cb_risk_body = content_block.settings.body
+        endif
+        if content_block.settings.button_text != blank
+          assign av_cb_risk_button = content_block.settings.button_text
+        endif
+        if content_block.settings.background != blank
+          assign av_cb_risk_bg = content_block.settings.background
+        endif
+        if content_block.settings.accent != blank
+          assign av_cb_risk_accent = content_block.settings.accent
+        endif
+      when 'faq'
+        if content_block.settings.faq_heading != blank
+          assign av_cb_faq_heading = content_block.settings.faq_heading
+        endif
+        if content_block.settings.faq_1_q != blank
+          assign av_cb_faq_1_q = content_block.settings.faq_1_q
+        endif
+        if content_block.settings.faq_1_a != blank
+          assign av_cb_faq_1_a = content_block.settings.faq_1_a
+        endif
+        if content_block.settings.faq_2_q != blank
+          assign av_cb_faq_2_q = content_block.settings.faq_2_q
+        endif
+        if content_block.settings.faq_2_a != blank
+          assign av_cb_faq_2_a = content_block.settings.faq_2_a
+        endif
+        if content_block.settings.faq_3_q != blank
+          assign av_cb_faq_3_q = content_block.settings.faq_3_q
+        endif
+        if content_block.settings.faq_3_a != blank
+          assign av_cb_faq_3_a = content_block.settings.faq_3_a
+        endif
+        if content_block.settings.faq_4_q != blank
+          assign av_cb_faq_4_q = content_block.settings.faq_4_q
+        endif
+        if content_block.settings.faq_4_a != blank
+          assign av_cb_faq_4_a = content_block.settings.faq_4_a
+        endif
+        if content_block.settings.faq_5_q != blank
+          assign av_cb_faq_5_q = content_block.settings.faq_5_q
+        endif
+        if content_block.settings.faq_5_a != blank
+          assign av_cb_faq_5_a = content_block.settings.faq_5_a
+        endif
+        if content_block.settings.faq_6_q != blank
+          assign av_cb_faq_6_q = content_block.settings.faq_6_q
+        endif
+        if content_block.settings.faq_6_a != blank
+          assign av_cb_faq_6_a = content_block.settings.faq_6_a
+        endif
+      when 'details'
+        assign av_cb_details_block = content_block
+        assign av_cb_show_guarantee = content_block.settings.show_guarantee
+        assign av_cb_show_stock_notice = content_block.settings.show_stock_notice
+        assign av_cb_show_low_stock_line = content_block.settings.show_low_stock_line
+        if content_block.settings.guarantee_image_url != blank
+          assign av_cb_guarantee_image_url = content_block.settings.guarantee_image_url
+        endif
+        if content_block.settings.stock_color != blank
+          assign av_cb_stock_color = content_block.settings.stock_color
+        endif
+        if content_block.settings.stock_background != blank
+          assign av_cb_stock_background = content_block.settings.stock_background
+        endif
+        if content_block.settings.guarantee_image != blank
+          assign av_cb_guarantee_image = content_block.settings.guarantee_image
+        endif
+        if content_block.settings.guarantee_highlight != blank
+          assign av_cb_guarantee_highlight = content_block.settings.guarantee_highlight
+        endif
+        if content_block.settings.guarantee_color != blank
+          assign av_cb_guarantee_color = content_block.settings.guarantee_color
+        endif
+        assign av_cb_stock_title = content_block.settings.stock_title
+        assign av_cb_stock_text = content_block.settings.stock_text
+        if content_block.settings.low_stock_line != blank
+          assign av_cb_low_stock_line = content_block.settings.low_stock_line
+        endif
+        if content_block.settings.guarantee_heading != blank
+          assign av_cb_guarantee_heading = content_block.settings.guarantee_heading
+        endif
+        if content_block.settings.guarantee_body != blank
+          assign av_cb_guarantee_body = content_block.settings.guarantee_body
+        endif
+        if content_block.settings.acc_1_title != blank
+          assign av_cb_acc_1_title = content_block.settings.acc_1_title
+        endif
+        if content_block.settings.acc_1_body != blank
+          assign av_cb_acc_1_body = content_block.settings.acc_1_body
+        endif
+        if content_block.settings.acc_2_title != blank
+          assign av_cb_acc_2_title = content_block.settings.acc_2_title
+        endif
+        if content_block.settings.acc_2_body != blank
+          assign av_cb_acc_2_body = content_block.settings.acc_2_body
+        endif
+        if content_block.settings.acc_3_title != blank
+          assign av_cb_acc_3_title = content_block.settings.acc_3_title
+        endif
+        if content_block.settings.acc_3_body != blank
+          assign av_cb_acc_3_body = content_block.settings.acc_3_body
+        endif
+        if content_block.settings.trust_image != blank
+          assign av_cb_trust_image = content_block.settings.trust_image
+        endif
+        if content_block.settings.trust_image_alt != blank
+          assign av_cb_trust_image_alt = content_block.settings.trust_image_alt
+        endif
+    endcase
+  endfor
+
+  if editor.settings.trust_image != blank
+    assign av_cb_trust_image = editor.settings.trust_image
+  endif
+  if editor.settings.trust_image_alt != blank
+    assign av_cb_trust_image_alt = editor.settings.trust_image_alt
+  endif
+
+  assign av_cb_stats_guarantee = '90-Day Money-Back Guarantee'
+  assign av_cb_compare_guarantee = '90-Day Money-Back Guarantee'
+  assign av_cb_bonus_product = editor.settings.bonus_product
+  assign av_cb_bonus_variant = av_cb_bonus_product.selected_or_first_available_variant
+  assign av_cb_ebook_product = editor.settings.ebook_product
+  assign av_cb_ebook_variant = av_cb_ebook_product.selected_or_first_available_variant
+  if av_cb_bundle_2_title == blank
+    if av_cb_bonus_variant != blank
+      assign av_cb_bundle_2_title = 'Buy 2 Get 1 FREE'
+    else
+      assign av_cb_bundle_2_title = 'Buy 2'
+    endif
+  endif
+  if av_cb_bundle_3_title == blank
+    if av_cb_bonus_variant != blank
+      assign av_cb_bundle_3_title = 'Buy 3 Get 2 FREE'
+    else
+      assign av_cb_bundle_3_title = 'Buy 3'
+    endif
+  endif
+%}
+
+<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="{{ av_cb_bonus_variant.id }}" data-ebook-variant-id="{{ av_cb_ebook_variant.id }}" data-subscription-label="{{ av_cb_subscribe_label | escape }}" data-one-time-label="{{ av_cb_one_time_label | escape }}" data-shipping-note="{{ av_cb_shipping_note | escape }}" data-switch-label="{{ av_cb_switch_label | escape }}" data-delivery-days="{{ av_cb_delivery_days }}" data-currency="{{ cart.currency.iso_code | default: shop.currency }}" style="--blue:{{ av_cb_accent_color }};--deep:{{ av_cb_deep_color }}">
+  <style>
+    .av-cb{--blue:#A84F1B;--deep:#7D3612;--ink:#171513;--muted:#645C57;--line:#E7D2C4;--soft:#FFF4EC;--soft2:#FFFBF7;background:#fff;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}.av-cb,.av-cb button,.av-cb input,.av-cb select,.av-cb textarea,.av-cb summary{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif!important}
+    .av-cb-header-logo{display:inline-flex;align-items:center;gap:7px;color:#A84F1B;line-height:1;text-decoration:none!important}
+    .av-cb-header-logo svg{width:32px;height:32px;flex:0 0 32px}
+    .av-cb-header-logo span{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;color:#111;font-size:24px;font-weight:750;letter-spacing:-.04em}
+    .av-cb *{box-sizing:border-box}.av-cb a{text-decoration:none}.av-cb__wrap{width:min(1200px,calc(100% - 32px));margin:0 auto}
+    .av-cb__hero{padding:34px 0 10px;background:linear-gradient(180deg,#fff 0%,#fff8f3 100%)}
+    .av-cb__hero-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(360px,.98fr);gap:48px;align-items:center}
+    .av-cb__media{min-height:0;border:0;border-radius:0;background:transparent;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:0}
+    .av-cb__media img{display:block;width:100%;max-width:100%;height:auto;max-height:none;object-fit:contain;filter:none}
+    /* AVONENT PRODUCT GALLERY */
+    .av-cb__product-gallery{width:100%;min-width:0}
+    .av-cb__gallery-main{position:relative;width:100%;overflow:hidden}
+    .av-cb__gallery-track{display:flex;width:100%;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none;overscroll-behavior-x:contain}
+    .av-cb__gallery-track::-webkit-scrollbar{display:none}
+    .av-cb__gallery-slide{flex:0 0 100%;width:100%;scroll-snap-align:start;scroll-snap-stop:always;display:flex;align-items:center;justify-content:center}
+    .av-cb__gallery-slide img{display:block;width:100%;height:auto;object-fit:contain}
+    .av-cb__gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:46px;height:46px;border-radius:50%;border:1px solid rgba(45,35,29,.12);background:rgba(255,255,255,.94);color:#2b231f;display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.09);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+    .av-cb__gallery-arrow--prev{left:14px}.av-cb__gallery-arrow--next{right:14px}
+    .av-cb__gallery-arrow svg{width:22px;height:22px}
+    .av-cb__gallery-thumbs{display:flex;gap:10px;margin-top:12px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;padding:2px}
+    .av-cb__gallery-thumbs::-webkit-scrollbar{display:none}
+    .av-cb__gallery-thumb{width:82px;height:82px;flex:0 0 82px;padding:0;border:2px solid transparent;border-radius:8px;background:#fff;overflow:hidden;cursor:pointer;transition:border-color .18s ease,box-shadow .18s ease}
+    .av-cb__gallery-thumb.is-active{border-color:var(--blue);box-shadow:0 0 0 1px rgba(168,79,27,.12)}
+    .av-cb__gallery-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    @media(max-width:600px){.av-cb__gallery-arrow{width:42px;height:42px}.av-cb__gallery-arrow--prev{left:10px}.av-cb__gallery-arrow--next{right:10px}.av-cb__gallery-thumb{width:68px;height:68px;flex-basis:68px}.av-cb__gallery-thumbs{gap:8px;margin-top:10px}}
+    .av-cb__formula-bottle{width:min(330px,85%);aspect-ratio:4/5;border-radius:28px;background:#fff;border:1px solid #d8edf2;box-shadow:0 28px 70px rgba(5,103,128,.13);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:34px}
+    .av-cb__formula-bottle b{font-size:38px;line-height:1}.av-cb__formula-bottle span{font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-top:10px;color:var(--deep)}.av-cb__formula-bottle small{margin-top:16px;color:var(--muted)}
+    .av-cb__eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--deep);margin-bottom:12px}
+    .av-cb__eyebrow:before{content:"";width:28px;height:3px;border-radius:99px;background:var(--blue)}
+    .av-cb__title{font-size:clamp(32px,4vw,50px);line-height:1.02;letter-spacing:-.035em;margin:0 0 13px;font-weight:760;color:#171513;max-width:760px}.av-cb__hero-description{max-width:680px;margin:0 0 20px;color:#57504b;font-size:16px;line-height:1.58;font-weight:450}.av-cb__hero-description br+br{display:block;content:"";margin-top:9px}
+    .av-cb__subtitle{font-size:18px;line-height:1.55;color:var(--muted);margin:0 0 22px;max-width:650px}
+    .av-cb__chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}.av-cb__chip{padding:9px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:700}
+    .av-cb__price{display:flex;align-items:baseline;gap:10px;margin:0 0 15px}.av-cb__price strong{font-size:30px}.av-cb__price span{font-size:13px;color:var(--muted)}
+    .av-cb__bundle-label{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin:0 0 9px}
+    .av-cb__bundles{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}
+    .av-cb__bundle{position:relative;border:1.5px solid var(--line);border-radius:16px;padding:15px 11px;background:#fff;cursor:pointer;text-align:left;transition:.18s ease}
+    .av-cb__bundle:hover,.av-cb__bundle.is-active{border-color:var(--blue);box-shadow:0 0 0 2px rgba(168,79,27,.12)}.av-cb__bundle.is-active{background:var(--soft)}
+    .av-cb__bundle strong{display:block;font-size:16px}.av-cb__bundle span{display:block;font-size:12px;color:var(--muted);margin-top:3px}.av-cb__badge{position:absolute!important;top:-9px;right:9px;background:var(--blue);color:#fff!important;border-radius:999px;padding:3px 7px;font-size:9px!important;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+
+    .av-cb__hero-badges{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 10px}.av-cb__hero-badge{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:800;line-height:1.1}.av-cb__hero-badge--best{background:#B75522;color:#fff}.av-cb__hero-badge--choice{background:#fff;color:#171513;border:2px solid #171513}.av-cb__rating{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:14px;color:#26343a}.av-cb__stars{display:inline-flex;gap:2px;color:#F4B000;font-size:18px;letter-spacing:1px}.av-cb__rating-text{font-weight:650}
+    .av-cb__benefits{display:grid;gap:15px;margin:20px 0 25px}.av-cb__benefit{display:flex;align-items:flex-start;gap:11px;font-size:15.5px;line-height:1.45;color:#45413E;font-weight:500}.av-cb__benefit-check{width:18px;height:18px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;flex:0 0 18px;margin-top:2px;box-shadow:0 2px 7px rgba(168,79,27,.18)}.av-cb__benefit-check svg{width:10px;height:10px}
+    .av-cb__sold{background:#fff;border:1px solid #e2eef1;border-radius:16px;padding:16px 18px;margin:0 0 18px;box-shadow:0 10px 30px rgba(7,74,91,.06)}.av-cb__sold-row{display:flex;align-items:center;gap:14px}.av-cb__sold-track{height:10px;background:#e9eef0;border-radius:999px;overflow:hidden;flex:1}.av-cb__sold-fill{height:100%;width:var(--sold);background:var(--blue);border-radius:inherit}.av-cb__sold-text{font-size:16px;font-weight:850;color:var(--deep);white-space:nowrap}
+    .av-cb__pricing{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px}.av-cb__pricing--purchase-mode{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px 18px;padding:16px 0 17px;border-top:1px solid #eadfd8;border-bottom:1px solid #eadfd8}.av-cb__pricing-values{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap}.av-cb__purchase-heading{margin:0;color:var(--deep);font-size:21px;font-weight:850;line-height:1.15;letter-spacing:-.02em}.av-cb__sale-price{font-size:27px;font-weight:850;color:var(--blue)}.av-cb__compare-price{font-size:20px;font-weight:650;color:#111;text-decoration:line-through;text-decoration-thickness:1.5px;opacity:.82}.av-cb__sale-badge{display:inline-flex;align-items:center;min-height:31px;padding:0 11px;border-radius:9px;background:var(--blue);color:#fff;font-size:12px;font-weight:850}
+    @media(max-width:600px){.av-cb__pricing--purchase-mode{grid-template-columns:1fr auto;gap:8px 12px;padding:14px 0}.av-cb__purchase-heading{font-size:18px}.av-cb__pricing-values{max-width:190px;gap:6px 8px}.av-cb__sale-price{font-size:22px}.av-cb__compare-price{font-size:15px}.av-cb__sale-badge{font-size:9.5px;min-height:25px;padding:0 8px}}
+    .av-cb__low-stock-line{display:flex;align-items:center;gap:12px;margin:7px 0 18px;color:var(--deep);font-size:16px;font-weight:850}.av-cb__low-stock-line:before,.av-cb__low-stock-line:after{content:"";height:2px;background:#e7c2aa;flex:1}.av-cb__low-stock-line span{white-space:nowrap}
+    .av-cb__bundles{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px}.av-cb__bundle{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;position:relative;border:1.5px solid #e4c8b7;border-radius:16px;padding:15px 16px;background:#fff;cursor:pointer;text-align:left;transition:.18s ease}.av-cb__bundle:hover,.av-cb__bundle.is-active{border-color:var(--blue);box-shadow:0 0 0 2px rgba(168,79,27,.10)}.av-cb__bundle.is-active{background:#fff8f3}.av-cb__bundle-thumb{width:54px;height:54px;border-radius:10px;background:#fff4ec;border:1px solid #ead3c4;display:grid;place-items:center;overflow:hidden}.av-cb__bundle-thumb img{width:100%;height:100%;object-fit:contain}.av-cb__bundle-thumb-fallback{font-size:9px;font-weight:900;color:var(--deep);letter-spacing:.05em;text-align:center;line-height:1.1}.av-cb__bundle-copy strong{display:block;font-size:17px;color:#111}.av-cb__bundle-copy span{display:block;font-size:12px;color:var(--muted);margin-top:3px}.av-cb__bundle-price{text-align:right}.av-cb__bundle-price strong{display:block;color:var(--blue);font-size:18px}.av-cb__bundle-price s{display:block;color:#111;font-size:13px;margin-top:2px;opacity:.78}.av-cb__badge{position:absolute!important;top:-11px;right:14px;background:var(--blue);color:#fff!important;border-radius:999px;padding:4px 10px;font-size:10px!important;font-weight:850;text-transform:uppercase;letter-spacing:.04em}
+    .av-cb__bundle-unlock{display:none!important;grid-column:1/-1;border-top:1px solid #eadfd8;margin-top:2px;padding-top:12px}
+    .av-cb__bundle-unlock[hidden]{display:none!important}
+    .av-cb__bundle.is-active .av-cb__bundle-unlock:not([hidden]){display:block!important}
+    .av-cb__bundle-unlock-title{display:block!important;font-size:10.5px!important;font-weight:850!important;letter-spacing:.09em;text-transform:uppercase;color:#7D3612!important;margin:0 0 5px!important}
+    .av-cb__bundle-unlock-row{display:flex!important;align-items:center;gap:9px;color:#211d1a!important;font-size:13px!important;line-height:1.3;font-weight:750;margin:0!important;padding:6px 0}
+    .av-cb__bundle-unlock-row+.av-cb__bundle-unlock-row{border-top:1px solid #eee2da}
+    .av-cb__bundle-unlock-check{width:21px;height:21px;border-radius:50%;background:#A84F1B;color:#fff!important;display:grid!important;place-items:center;flex:0 0 21px;font-size:12px!important;font-weight:900}
+    .av-cb__bundle-unlock-copy{display:block!important;color:#211d1a!important;margin:0!important}
+    .av-cb__bundle-unlock-copy small{display:block;color:#786d66;font-size:11px;font-weight:500;margin-top:2px}
+    @media(max-width:600px){.av-cb__bundle-unlock{padding-top:10px}.av-cb__bundle-unlock-row{font-size:12.5px!important;padding:5px 0}.av-cb__bundle-unlock-title{font-size:10px!important}}
+
+    .av-cb__buy{width:100%;min-height:56px;border:0;border-radius:14px;background:var(--blue);color:#fff;cursor:pointer;display:flex;justify-content:center;align-items:center;padding:0 16px;box-shadow:0 10px 24px rgba(125,54,18,.18)}.av-cb__buy[disabled]{opacity:.45;cursor:not-allowed}.av-cb__buy-mainline{display:flex;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap;font-size:17px;font-weight:800;line-height:1.15}.av-cb__buy-divider{opacity:.55;font-weight:400}.av-cb__buy-price{font-size:18px;font-weight:850}.av-cb__buy-compare{font-size:15px;font-weight:500;text-decoration:line-through;text-decoration-thickness:1.4px;opacity:.66}
+    .av-cb__micro{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:10px}.av-cb__micro b{color:var(--ink)}
+    .av-cb__trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}.av-cb__trust-grid{display:grid;grid-template-columns:repeat(4,1fr)}.av-cb__trust-item{padding:18px;text-align:center;border-right:1px solid var(--line)}.av-cb__trust-item:last-child{border-right:0}.av-cb__trust-item b{display:block;font-size:14px}.av-cb__trust-item span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+    .av-cb__section{padding:72px 0}.av-cb__section--soft{background:var(--soft2)}.av-cb__section--blue{background:var(--deep);color:#fff}
+    .av-cb__head{text-align:center;max-width:760px;margin:0 auto 34px}.av-cb__head h2{font-size:clamp(30px,4vw,48px);line-height:1.05;letter-spacing:-.035em;margin:8px 0 12px}.av-cb__head p{font-size:16px;line-height:1.65;color:var(--muted);margin:0}.av-cb__section--blue .av-cb__head p{color:#d5f2f8}.av-cb__section--blue .av-cb__eyebrow{color:#8deeff}
+    .av-cb__formula{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.av-cb__formula-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:26px;min-height:260px}.av-cb__formula-card .num{font-size:38px;font-weight:850;letter-spacing:-.04em;color:var(--blue)}.av-cb__formula-card .unit{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;font-weight:800}.av-cb__formula-card h3{font-size:22px;margin:18px 0 9px}.av-cb__formula-card p{font-size:14px;line-height:1.6;color:var(--muted);margin:0}
+    .av-cb__compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}.av-cb__compare-card{border-radius:24px;padding:28px;background:#fff;border:1px solid var(--line)}.av-cb__compare-card--av{background:#0a92b3;border-color:#42cce8;color:#fff}.av-cb__compare-card h3{font-size:25px;margin:0 0 18px}.av-cb__row{display:flex;gap:10px;align-items:flex-start;padding:12px 0;border-top:1px solid rgba(255,255,255,.18)}.av-cb__compare-card:not(.av-cb__compare-card--av) .av-cb__row{border-color:var(--line)}.av-cb__check{width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex:0 0 22px}.av-cb__compare-card--av .av-cb__check{background:#8deeff;color:#07303b}.av-cb__row b{font-size:14px}.av-cb__row span{display:block;font-size:12px;opacity:.75;margin-top:2px}
+    .av-cb__education{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}.av-cb__edu{border-radius:24px;padding:30px;background:#fff;border:1px solid var(--line)}.av-cb__edu--ceylon{background:var(--soft);border-color:#aeeaf4}.av-cb__edu .label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--deep)}.av-cb__edu h3{font-size:30px;margin:8px 0 12px}.av-cb__edu p{color:var(--muted);line-height:1.6;margin:0}
+    .av-cb__timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.av-cb__week{border-radius:18px;padding:22px;background:#fff;border:1px solid var(--line)}.av-cb__week b{color:var(--deep);font-size:12px;letter-spacing:.08em;text-transform:uppercase}.av-cb__week h3{font-size:18px;margin:8px 0}.av-cb__week p{font-size:13px;line-height:1.55;color:var(--muted);margin:0}
+    .av-cb__guarantee{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;background:#fff;border:1px solid var(--line);border-radius:24px;padding:30px}.av-cb__seal{width:100px;height:100px;border-radius:50%;border:8px double var(--blue);display:grid;place-items:center;text-align:center;color:var(--deep);font-weight:900;line-height:1}.av-cb__guarantee h2{font-size:30px;margin:0 0 6px}.av-cb__guarantee p{margin:0;color:var(--muted);line-height:1.55}.av-cb__cta{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:12px;padding:0 22px;background:var(--blue);color:#fff;font-weight:800}
+    .av-cb__faq{max-width:850px;margin:0 auto}.av-cb__faq details{background:#fff;border:1px solid var(--line);border-radius:14px;margin:9px 0;padding:0 18px}.av-cb__faq summary{cursor:pointer;font-weight:800;padding:18px 0;list-style:none}.av-cb__faq summary::-webkit-details-marker{display:none}.av-cb__faq p{color:var(--muted);line-height:1.6;margin:0 0 18px}
+    .av-cb__disclaimer{font-size:10px!important;color:#7b8a90!important;max-width:860px;margin:24px auto 0!important;text-align:center;line-height:1.5!important}
+    .av-cb__sticky{display:none}
+    @media(max-width:900px){.av-cb__hero-grid{grid-template-columns:1fr;gap:24px}.av-cb__media{min-height:390px}.av-cb__trust-grid{grid-template-columns:repeat(2,1fr)}.av-cb__trust-item:nth-child(2){border-right:0}.av-cb__formula,.av-cb__timeline{grid-template-columns:1fr 1fr}.av-cb__education,.av-cb__compare{grid-template-columns:1fr}.av-cb__guarantee{grid-template-columns:auto 1fr}.av-cb__guarantee .av-cb__cta{grid-column:1/-1}.av-cb__title{font-size:40px}}
+    @media(max-width:600px){.av-cb__wrap{width:min(100% - 22px,1200px)}.av-cb__hero{padding-top:0}.av-cb__media{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);min-height:0;border-radius:0}.av-cb__formula-bottle{width:75%;padding:22px}.av-cb__formula-bottle b{font-size:30px}.av-cb__rating{margin-bottom:10px;font-size:12.5px;gap:7px}.av-cb__stars{font-size:16px}.av-cb__title{font-size:28px;line-height:1.03;letter-spacing:-.03em;margin-bottom:10px}.av-cb__hero-description{font-size:14px;line-height:1.48;margin-bottom:15px}.av-cb__hero-description br+br{margin-top:6px}.av-cb__subtitle{font-size:15px}.av-cb__benefit{font-size:13.5px;line-height:1.38;gap:9px}.av-cb__benefits{gap:10px;margin:14px 0 18px}.av-cb__benefit-check{width:17px;height:17px;flex-basis:17px}.av-cb__sold{padding:13px 15px;margin-bottom:14px}.av-cb__sold-text{font-size:14px}.av-cb__bundles{grid-template-columns:1fr}.av-cb__bundle{padding:13px 14px}.av-cb__trust-grid{grid-template-columns:1fr 1fr}.av-cb__trust-item{padding:14px 8px}.av-cb__section{padding:50px 0}.av-cb__formula,.av-cb__timeline{grid-template-columns:1fr}.av-cb__guarantee{grid-template-columns:1fr;text-align:center}.av-cb__seal{margin:auto}.av-cb__sticky{position:fixed;display:grid;grid-template-columns:48px minmax(0,1fr) auto;z-index:40;left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom));background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border:1px solid #E8D5C8;box-shadow:0 14px 38px rgba(43,24,14,.16);border-radius:16px;padding:9px;align-items:center;gap:10px;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(14px);transition:opacity .2s ease,transform .2s ease,visibility .2s ease}.av-cb__sticky.is-visible{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}.av-cb__sticky-img{width:48px;height:48px;border-radius:11px;overflow:hidden;background:#fff5ef;border:1px solid #ead3c4;display:grid;place-items:center}.av-cb__sticky-img img{width:100%;height:100%;object-fit:contain}.av-cb__sticky-copy{min-width:0;display:grid;gap:2px}.av-cb__sticky-title{font-size:12px;line-height:1.2;font-weight:750;color:#1D1916;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.av-cb__sticky-price{font-size:14px;line-height:1.1;font-weight:850;color:var(--blue)}.av-cb__sticky-add{border:0;background:var(--blue);color:#fff;min-height:46px;padding:0 17px;border-radius:12px;font-size:12px;font-weight:850;letter-spacing:.01em;cursor:pointer}.av-cb{padding-bottom:86px}}
+
+    .av-cb__delivery-estimate{display:flex;align-items:center;justify-content:center;gap:9px;margin:14px 0 12px;padding:11px 14px;border-radius:12px;background:#f2f3ed;color:#34312e;font-size:13px;line-height:1.25}.av-cb__delivery-estimate strong{color:var(--deep);font-weight:800;text-decoration:underline;text-underline-offset:2px}.av-cb__delivery-icon{width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;flex:0 0 24px}.av-cb__delivery-icon svg{width:15px;height:15px}
+    .av-cb__refill-row{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:13px;color:#4f5e65;font-size:12px}
+    .av-cb__refill-row[hidden]{display:none!important}
+    .av-cb__refill-item{display:inline-flex;align-items:center;gap:7px}.av-cb__refill-icon{width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;color:#151515}.av-cb__refill-divider{width:1px;height:20px;background:#b7c3c7}
+    .av-cb__purchase-toggle{display:block;width:fit-content;max-width:100%;margin:3px auto 0;padding:4px 10px;border:0;background:transparent;color:var(--deep);font:inherit;font-size:12.5px;font-weight:700;text-align:center;text-decoration:underline;text-underline-offset:3px;cursor:pointer}.av-cb__purchase-toggle:hover{color:var(--blue)}.av-cb__purchase-toggle strong{font-weight:850}
+    .av-cb__top-stack{width:min(1200px,calc(100% - 32px));margin:6px auto 28px;display:grid;gap:10px}
+    .av-cb__guarantee-card{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;border:1.5px dashed var(--blue);border-radius:18px;background:#fffaf6;padding:18px 20px;color:var(--guarantee-text,#171717);box-shadow:0 8px 24px rgba(125,54,18,.06)}
+    .av-cb__guarantee-image{width:76px;height:76px;display:grid;place-items:center;flex:0 0 76px}.av-cb__guarantee-image img{max-width:76px;max-height:76px;object-fit:contain}.av-cb__guarantee-seal{width:72px;height:72px;border-radius:50%;border:2px solid var(--blue);background:#fff;display:grid;place-items:center;text-align:center;color:var(--deep);font-weight:850;line-height:1;box-shadow:inset 0 0 0 4px #fff4ec}.av-cb__guarantee-seal small{font-size:10px;letter-spacing:.06em}
+    .av-cb__guarantee-copy h3{font-size:21px;line-height:1.15;margin:0 0 5px;color:var(--blue)}.av-cb__guarantee-copy p{font-size:14px;line-height:1.45;margin:0;color:#5a666c}.av-cb__guarantee-copy mark{background:transparent;color:var(--guarantee-highlight,var(--blue));font-weight:850}
+    .av-cb__low-stock{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:flex-start;border:1.5px dashed var(--low-stock,#D62828);background:var(--low-stock-bg,#FFF5F5);border-radius:18px;padding:16px 18px;color:var(--low-stock,#D62828)}
+    .av-cb__low-stock-icon{width:22px;height:22px;border-radius:50%;background:var(--low-stock,#D62828);color:#fff;display:grid;place-items:center;font-weight:900;font-size:12px;line-height:1;margin-top:1px}.av-cb__low-stock h3{font-size:17px;margin:0 0 4px;color:inherit}.av-cb__low-stock p{font-size:13px;line-height:1.45;margin:0;color:inherit}
+    .av-cb__accordion-list{display:grid;gap:10px}.av-cb__accordion{border:1px solid #d7dde0;border-radius:14px;background:#fff;overflow:hidden}.av-cb__accordion summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:17px 18px;font-size:18px;font-weight:800;line-height:1.25}.av-cb__accordion summary::-webkit-details-marker{display:none}.av-cb__accordion-icon{width:26px;height:26px;position:relative;flex:0 0 26px;transition:transform .2s ease}.av-cb__accordion-icon:before,.av-cb__accordion-icon:after{content:"";position:absolute;left:50%;top:50%;background:#151515;transform:translate(-50%,-50%);border-radius:2px}.av-cb__accordion-icon:before{width:20px;height:2px}.av-cb__accordion-icon:after{width:2px;height:20px}.av-cb__accordion[open] .av-cb__accordion-icon{transform:rotate(45deg)}.av-cb__accordion-body{padding:2px 18px 19px;color:#4b4541;font-size:15px;line-height:1.58;letter-spacing:-.005em}.av-cb__accordion-body strong{color:#211d1a;font-weight:800}.av-cb__accordion-body em{display:block;color:#6b625d;font-size:13px;line-height:1.5}.av-cb__accordion-body p:first-child{margin-top:0}.av-cb__accordion-body ul{padding-left:20px}.av-cb__accordion-body li{margin:8px 0}
+    .av-cb__trust-image-section{margin-top:10px}
+    .av-cb__trust-image-section img{display:block;width:100%;height:auto;border-radius:18px}
+
+    .av-cb__stats-section{position:relative;isolation:isolate;overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);border-radius:0;padding:48px max(28px,calc((100vw - 1100px)/2)) 30px;color:var(--stats-text,#fff);background-image:var(--stats-bg,linear-gradient(145deg,#7d3612,#a84f1b));background-size:cover;background-position:center;box-shadow:none}
+    .av-cb__stats-section:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,color-mix(in srgb,var(--stats-overlay,#7d3612) 92%,transparent) 0%,color-mix(in srgb,var(--stats-overlay,#7d3612) 80%,transparent) 54%,color-mix(in srgb,var(--stats-overlay,#7d3612) 62%,transparent) 100%);opacity:var(--stats-opacity,.72);z-index:-1}
+    .av-cb__stats-heading{text-align:center;font-size:clamp(28px,4vw,42px);line-height:1.1;margin:0 auto 30px;font-weight:500;letter-spacing:-.025em;max-width:760px;text-shadow:0 2px 18px rgba(0,0,0,.14)}
+    .av-cb__stats-list{display:grid;gap:0;max-width:900px;margin:0 auto}
+    .av-cb__stat{display:grid;grid-template-columns:130px 1fr;align-items:center;gap:20px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.3)}
+    .av-cb__stat:last-child{border-bottom:0}
+    .av-cb__stat-number{display:block;font-size:clamp(46px,6vw,68px);font-weight:400;line-height:.92;letter-spacing:-.035em;margin:0;text-shadow:0 2px 18px rgba(0,0,0,.16)}
+    .av-cb__stat-label{font-size:16px;line-height:1.5;font-weight:400;opacity:.96;max-width:700px;text-shadow:0 1px 12px rgba(0,0,0,.12)}
+    .av-cb__stats-cta{display:flex;align-items:center;justify-content:center;width:100%;max-width:900px;min-height:58px;margin:28px auto 0;padding:0 22px;background:#fff;color:#7d3612;border-radius:999px;font-size:16px;font-weight:650;text-decoration:none!important;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+    .av-cb__stats-guarantee{display:flex;align-items:center;justify-content:center;gap:7px;margin:13px auto 0;font-size:13px;font-weight:700;color:var(--stats-text,#fff)}
+    .av-cb__stats-guarantee-icon{width:17px;height:17px;display:inline-grid;place-items:center;flex:0 0 17px}
+    .av-cb__stats-guarantee-icon img{display:block;width:17px;height:17px;object-fit:contain}
+    .av-cb__stats-guarantee-icon svg{display:block;width:17px;height:17px}
+
+    .av-cb__carousel-section{padding:52px 0 18px;background:#fff}
+    .av-cb__carousel-heading{text-align:center;max-width:760px;margin:0 auto 28px;font-size:clamp(30px,4vw,48px);line-height:1.08;letter-spacing:-.035em;color:var(--ink)}
+    .av-cb__carousel-shell{position:relative;overflow:hidden}
+    .av-cb__carousel-track{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:0 max(16px,calc((100vw - 1200px)/2)) 10px;scrollbar-width:none;-ms-overflow-style:none}
+    .av-cb__carousel-track::-webkit-scrollbar{display:none}
+    .av-cb__carousel-card{flex:0 0 min(520px,78vw);scroll-snap-align:start;background:#fff;border:1px solid #e2e7e9;border-radius:22px;overflow:hidden;box-shadow:0 10px 30px rgba(4,47,58,.05)}
+    .av-cb__carousel-media{aspect-ratio:1.28/1;background:linear-gradient(145deg,#f6eee5,#e8d2b9);overflow:hidden}
+    .av-cb__carousel-media img{display:block;width:100%;height:100%;object-fit:cover}
+    .av-cb__carousel-content{padding:24px 24px 28px;text-align:center}
+    .av-cb__carousel-content h3{font-size:22px;line-height:1.2;margin:0 0 12px;color:#111}
+    .av-cb__carousel-content p{font-size:15px;line-height:1.7;margin:0;color:#4c565b}
+    .av-cb__carousel-controls{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:18px}
+    .av-cb__carousel-dots{display:flex;align-items:center;gap:9px}
+    .av-cb__carousel-dot{width:10px;height:10px;border:0;border-radius:999px;background:#decfc5;padding:0;cursor:pointer;transition:.2s ease}
+    .av-cb__carousel-dot.is-active{width:42px;background:var(--blue)}
+    .av-cb__carousel-arrows{display:flex;gap:12px}
+    .av-cb__carousel-arrow{width:50px;height:50px;border:1px solid #e5cbbb;border-radius:50%;background:#fff5ef;color:var(--blue);display:grid;place-items:center;cursor:pointer;transition:.18s ease}
+    .av-cb__carousel-arrow:hover{background:#f3dfd2}
+    .av-cb__carousel-arrow svg{width:22px;height:22px}
+    @media(min-width:900px){.av-cb__carousel-card{flex-basis:min(520px,44vw)}}
+    @media(max-width:600px){.av-cb__carousel-section{padding:38px 0 14px}.av-cb__carousel-heading{font-size:31px;margin-bottom:22px;padding:0 22px}.av-cb__carousel-track{gap:14px;padding-left:22px;padding-right:22px}.av-cb__carousel-card{flex-basis:82vw;border-radius:18px}.av-cb__carousel-content{padding:20px 18px 23px}.av-cb__carousel-content h3{font-size:19px}.av-cb__carousel-content p{font-size:13.5px;line-height:1.65}.av-cb__carousel-arrow{width:46px;height:46px}}
+    .av-cb__science-section{background:var(--science-bg,#fff8f2);padding:58px 0 0;color:#111}
+    .av-cb__science-wrap{width:min(920px,calc(100% - 32px));margin:0 auto}
+    .av-cb__science-head{text-align:center;max-width:760px;margin:0 auto 32px}
+    .av-cb__science-head h2{font-size:clamp(32px,4.2vw,48px);line-height:1.08;letter-spacing:-.035em;margin:0 0 16px;font-weight:500}
+    .av-cb__science-head h2 em{font-style:normal;color:var(--science-accent,#a84f1b)}
+    .av-cb__science-head p{font-size:16px;line-height:1.65;margin:0 auto;color:#323232;max-width:720px}
+    .av-cb__science-cards{display:grid;gap:16px}
+    .av-cb__science-card{background:#fff;border:1.5px solid #ddd6d0;border-radius:18px;overflow:hidden;transition:border-color .25s ease,box-shadow .25s ease,transform .25s ease}
+    .av-cb__science-card summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:150px 1fr auto;gap:22px;align-items:center;padding:18px 20px}
+    .av-cb__science-card summary::-webkit-details-marker{display:none}
+    .av-cb__science-thumb{width:150px;height:128px;border-radius:12px;overflow:hidden;background:#f3eee8;display:grid;place-items:center;color:var(--science-accent,#a84f1b)}
+    .av-cb__science-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .av-cb__science-thumb svg{width:64px;height:64px}
+    .av-cb__science-copy h3{font-size:21px;line-height:1.18;margin:0 0 7px;font-weight:600;color:#111}
+    .av-cb__science-copy p{font-size:14px;line-height:1.45;margin:0;color:#505050}
+    .av-cb__science-toggle{width:44px;height:44px;border-radius:50%;border:2px solid #b9b9b9;display:grid;place-items:center;position:relative;flex:0 0 44px}
+    .av-cb__science-toggle:before,.av-cb__science-toggle:after{content:"";position:absolute;left:50%;top:50%;background:#888;transform:translate(-50%,-50%);border-radius:4px}
+    .av-cb__science-toggle:before{width:15px;height:2.5px}
+    .av-cb__science-toggle:after{width:2.5px;height:15px}
+    .av-cb__science-card[open] .av-cb__science-toggle:after{opacity:0}
+    .av-cb__science-card[open] summary{display:flex;justify-content:flex-end;padding:12px 18px 0}
+    .av-cb__science-card[open] .av-cb__science-thumb,.av-cb__science-card[open] .av-cb__science-copy{display:none}
+    .av-cb__science-card[open]{border-color:var(--science-accent,#a84f1b);box-shadow:0 12px 30px rgba(168,79,27,.09);transform:translateX(2px)}
+    .av-cb__science-body{padding:2px 22px 24px;font-size:16px;line-height:1.6;color:#515151;transform-origin:left center;animation:avCbScienceSlide .38s cubic-bezier(.2,.8,.2,1) both}
+    @keyframes avCbScienceSlide{0%{opacity:0;transform:translateX(28px) rotateY(-8deg)}100%{opacity:1;transform:translateX(0) rotateY(0)}}
+    .av-cb__science-cta-wrap{padding:28px 0 22px}
+    .av-cb__science-cta{display:flex;align-items:center;justify-content:center;width:min(680px,100%);min-height:58px;margin:0 auto;background:var(--science-accent,#a84f1b);color:#fff!important;border-radius:999px;font-size:16px;font-weight:650;text-decoration:none!important}
+    .av-cb__science-guarantee{display:flex;align-items:center;justify-content:center;gap:8px;margin:12px auto 0;color:#202020;font-size:13px;font-weight:600}
+    .av-cb__science-guarantee svg{width:18px;height:18px;color:var(--science-accent,#a84f1b)}
+    .av-cb__science-ticker{overflow:hidden;border-top:1px solid #ded8d3;border-bottom:1px solid #ded8d3;background:#fff;margin-top:20px}
+    .av-cb__science-ticker-track{display:flex;width:max-content;align-items:center;animation:avCbTicker 24s linear infinite}
+    .av-cb__science-ticker:hover .av-cb__science-ticker-track{animation-play-state:paused}
+    .av-cb__science-ticker-group{display:flex;align-items:center}
+    .av-cb__science-ticker-item{display:flex;align-items:center;gap:9px;white-space:nowrap;padding:13px 28px;font-size:13px;font-weight:700;color:#151515}
+    .av-cb__science-ticker-icon{width:24px;height:24px;border:1.5px solid var(--science-accent,#a84f1b);border-radius:50%;display:grid;place-items:center;color:var(--science-accent,#a84f1b)}
+    .av-cb__science-ticker-icon svg{width:14px;height:14px}
+    @keyframes avCbTicker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    @media(prefers-reduced-motion:reduce){.av-cb__science-ticker-track{animation:none}.av-cb__science-body{animation:none}.av-cb__science-card{transition:none}}
+    @media(max-width:600px){.av-cb__science-section{padding-top:42px}.av-cb__science-wrap{width:min(100% - 22px,920px)}.av-cb__science-head{margin-bottom:25px}.av-cb__science-head h2{font-size:31px}.av-cb__science-head p{font-size:14px}.av-cb__science-cards{gap:15px}.av-cb__science-card{border-radius:15px}.av-cb__science-card summary{grid-template-columns:88px 1fr auto;gap:12px;padding:14px}.av-cb__science-thumb{width:88px;height:82px;border-radius:10px}.av-cb__science-thumb svg{width:44px;height:44px}.av-cb__science-copy h3{font-size:17px;margin-bottom:5px}.av-cb__science-copy p{font-size:12.5px}.av-cb__science-toggle{width:36px;height:36px;flex-basis:36px}.av-cb__science-card[open] summary{padding:10px 12px 0}.av-cb__science-body{padding:0 18px 20px;font-size:14px}.av-cb__science-cta-wrap{padding:22px 0 18px}.av-cb__science-cta{min-height:54px;font-size:15px}.av-cb__science-guarantee{font-size:12px}.av-cb__science-ticker-item{padding:11px 22px;font-size:12px}}
+
+    .av-cb__journey{background:#fff;padding:52px 0 66px}
+    .av-cb__journey-wrap{width:min(900px,calc(100% - 32px));margin:0 auto}
+    .av-cb__journey-head{text-align:center;max-width:760px;margin:0 auto 38px}
+    .av-cb__journey-eyebrow{font-size:12px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:9px}
+    .av-cb__journey-head h2{font-size:clamp(30px,4vw,44px);line-height:1.08;letter-spacing:-.035em;margin:0 0 13px;color:#17120f}
+    .av-cb__journey-head p{font-size:15px;line-height:1.6;color:#655b55;margin:0 auto;max-width:650px}
+    .av-cb__timeline{position:relative;max-width:760px;margin:0 auto;padding-left:64px}
+    .av-cb__timeline:before{content:"";position:absolute;left:20px;top:18px;bottom:18px;width:4px;background:repeating-linear-gradient(to bottom,#9F3E10 0 7px,transparent 7px 14px)}
+    .av-cb__timeline-item{position:relative;padding:0 0 38px}
+    .av-cb__timeline-item:last-child{padding-bottom:0}
+    .av-cb__timeline-dot{position:absolute;left:-60px;top:3px;width:38px;height:38px;border:8px solid #9F3E10;background:#C86F3A;border-radius:50%;box-shadow:0 0 0 5px #fff}
+    .av-cb__timeline-title{display:flex;align-items:center;gap:10px;margin:0 0 11px;color:#A84F1B;font-size:27px;line-height:1.1;font-weight:850;letter-spacing:-.025em}
+    .av-cb__timeline-calendar{width:28px;height:28px;display:grid;place-items:center;flex:0 0 28px;color:#A84F1B}
+    .av-cb__timeline-calendar svg{width:27px;height:27px;display:block}
+    .av-cb__timeline-box{position:relative;background:#F8EBDD;border:3px solid #A84F1B;border-radius:18px;padding:22px 24px;color:#241d19;font-size:17px;line-height:1.42;box-shadow:0 6px 16px rgba(125,54,18,.05)}
+    .av-cb__timeline-box:before{content:"";position:absolute;left:-17px;top:22px;border-top:13px solid transparent;border-bottom:13px solid transparent;border-right:17px solid #A84F1B}
+    .av-cb__timeline-box:after{content:"";position:absolute;left:-12px;top:25px;border-top:10px solid transparent;border-bottom:10px solid transparent;border-right:13px solid #F8EBDD}
+    .av-cb__timeline-box p{margin:0}
+    @media(max-width:600px){.av-cb__journey{padding:42px 0 52px}.av-cb__journey-wrap{width:min(100% - 22px,900px)}.av-cb__journey-head{margin-bottom:31px}.av-cb__journey-head h2{font-size:30px}.av-cb__journey-head p{font-size:13.5px}.av-cb__timeline{padding-left:51px}.av-cb__timeline:before{left:15px;width:3px}.av-cb__timeline-item{padding-bottom:32px}.av-cb__timeline-dot{left:-49px;width:32px;height:32px;border-width:7px}.av-cb__timeline-title{font-size:23px;gap:8px}.av-cb__timeline-calendar{width:25px;height:25px;flex-basis:25px}.av-cb__timeline-calendar svg{width:24px;height:24px}.av-cb__timeline-box{padding:18px 17px;border-width:2.5px;border-radius:15px;font-size:15px;line-height:1.4}.av-cb__timeline-box:before{left:-15px;top:19px;border-top-width:11px;border-bottom-width:11px;border-right-width:15px}.av-cb__timeline-box:after{left:-10px;top:22px;border-top-width:8px;border-bottom-width:8px;border-right-width:11px}}
+
+    .av-cb__compare-section{background:#A84F1B;color:#fff;padding:58px 0}
+    .av-cb__compare-wrap{width:min(1100px,calc(100% - 32px));margin:0 auto}
+    .av-cb__compare-head{text-align:center;max-width:780px;margin:0 auto 34px}
+    .av-cb__compare-head h2{font-size:clamp(32px,4.3vw,50px);line-height:1.06;letter-spacing:-.035em;margin:0 0 14px;color:#fff}
+    .av-cb__compare-head p{font-size:16px;line-height:1.6;margin:0;color:rgba(255,255,255,.9)}
+    .av-cb__compare-layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:32px;align-items:center}
+    .av-cb__compare-table{display:grid;grid-template-columns:1fr 1fr;border-radius:20px;overflow:hidden;box-shadow:0 20px 48px rgba(76,27,5,.18)}
+    .av-cb__compare-col{background:#fff;color:#201713}
+    .av-cb__compare-col--ours{background:#7D3612;color:#fff}
+    .av-cb__compare-brand{min-height:122px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:16px;text-align:center;border-bottom:1px solid rgba(255,255,255,.2)}
+    .av-cb__compare-col:not(.av-cb__compare-col--ours) .av-cb__compare-brand{border-bottom:1px solid #eaded7}
+    .av-cb__compare-brand img{width:72px;height:72px;object-fit:contain;border-radius:12px;background:#fff}
+    .av-cb__compare-brand strong{font-size:17px}
+    .av-cb__compare-generic-icon{width:62px;height:62px;border-radius:50%;background:#f4ece7;display:grid;place-items:center;color:#7d6c64}
+    .av-cb__compare-generic-icon svg{width:34px;height:34px}
+    .av-cb__compare-row{min-height:68px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.18);font-size:13px;line-height:1.35;font-weight:650}
+    .av-cb__compare-col:not(.av-cb__compare-col--ours) .av-cb__compare-row{border-bottom:1px solid #eaded7;color:#4f4743}
+    .av-cb__compare-row:last-child{border-bottom:0}
+    .av-cb__compare-row span{display:inline-flex;align-items:center;gap:8px;justify-content:center}
+    .av-cb__compare-check,.av-cb__compare-x{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex:0 0 22px;font-size:13px;font-weight:900}
+    .av-cb__compare-check{background:#fff;color:#7D3612}
+    .av-cb__compare-x{background:#8f827c;color:#fff}
+    .av-cb__compare-copy h3{font-size:clamp(28px,3.4vw,40px);line-height:1.1;margin:0 0 20px;color:#fff}
+    .av-cb__compare-points{display:grid;gap:14px;margin-bottom:24px}
+    .av-cb__compare-point{display:flex;align-items:flex-start;gap:11px;font-size:14px;line-height:1.5;color:#fff}
+    .av-cb__compare-point i{font-style:normal;width:24px;height:24px;border-radius:50%;background:#fff;color:#A84F1B;display:grid;place-items:center;flex:0 0 24px;font-weight:900;margin-top:1px}
+    .av-cb__compare-cta{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border-radius:999px;background:#fff;color:#7D3612!important;font-weight:850;text-decoration:none!important}
+    .av-cb__compare-guarantee{display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:700;margin-top:12px;color:#fff}
+    .av-cb__compare-guarantee svg{width:17px;height:17px}
+    .av-cb__risk-section{background:var(--risk-bg,#FFF4EC);padding:56px 0 0;text-align:center;overflow:hidden}
+    .av-cb__risk-inner{width:min(880px,calc(100% - 32px));margin:0 auto;display:flex;flex-direction:column;align-items:center}
+    .av-cb__risk-seal{position:relative;width:112px;height:112px;border-radius:50%;background:var(--risk-accent,#A84F1B);color:#fff;display:grid;place-content:center;line-height:.92;margin:0 0 27px;box-shadow:0 12px 30px rgba(125,54,18,.14)}
+    .av-cb__risk-seal strong{font-size:44px;letter-spacing:-.05em}.av-cb__risk-seal small{font-size:16px;font-weight:800}.av-cb__risk-seal-top,.av-cb__risk-seal-bottom{position:absolute;left:50%;transform:translateX(-50%);color:var(--risk-accent,#A84F1B);font-family:inherit;font-size:16px;font-weight:700;white-space:nowrap}.av-cb__risk-seal-top{top:-25px}.av-cb__risk-seal-bottom{bottom:-25px}
+    .av-cb__risk-eyebrow{margin:22px 0 13px;color:var(--risk-accent,#A84F1B);font-size:13px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+    .av-cb__risk-section h2{margin:0;color:#171513;font-size:clamp(32px,4.5vw,48px);font-weight:550;line-height:1.08;letter-spacing:-.035em}
+    .av-cb__risk-section p{max-width:720px;margin:20px auto 0;color:#5f5853;font-size:17px;line-height:1.55}
+    .av-cb__risk-button{display:inline-flex;align-items:center;justify-content:center;min-width:min(420px,90%);min-height:62px;margin:28px auto 0;padding:0 28px;border-radius:999px;background:#fff;color:var(--risk-accent,#A84F1B);font-size:17px;font-weight:850;box-shadow:0 14px 28px rgba(66,37,20,.14)}
+    .av-cb__risk-image-wrap{width:min(760px,100%);margin:34px auto 0;display:flex;justify-content:center;align-items:flex-end;min-height:260px}
+    .av-cb__risk-image{display:block;width:100%;height:auto;max-height:560px;object-fit:contain;object-position:center bottom}.av-cb__risk-image--fallback{width:min(440px,76%)}
+    @media(max-width:600px){.av-cb__risk-section{padding-top:46px}.av-cb__risk-inner{width:min(100% - 24px,880px)}.av-cb__risk-seal{width:92px;height:92px;margin-bottom:22px}.av-cb__risk-seal strong{font-size:36px}.av-cb__risk-seal-top,.av-cb__risk-seal-bottom{font-size:14px}.av-cb__risk-section h2{font-size:34px}.av-cb__risk-section p{font-size:15px}.av-cb__risk-button{min-height:56px;font-size:16px;margin-top:24px}.av-cb__risk-image-wrap{margin-top:28px;min-height:210px}}
+    .av-cb__five-reasons{background:var(--five-bg,#FFF4EC);padding:58px 0 62px;color:#171310;overflow:hidden}
+    .av-cb__five-reasons-inner{width:min(900px,calc(100% - 32px));margin:0 auto}
+    .av-cb__five-reasons-head{text-align:center;max-width:760px;margin:0 auto 34px}
+    .av-cb__five-reasons-badge{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 24px;border-radius:10px;background:var(--five-accent,#A84F1B);color:#fff;font-size:14px;font-weight:850;letter-spacing:.04em}
+    .av-cb__five-reasons-head h2{margin:20px auto 0;font-size:clamp(30px,4.2vw,46px);line-height:1.08;letter-spacing:-.035em;color:#111;font-weight:650}
+    .av-cb__five-reasons-head p{max-width:650px;margin:14px auto 0;color:#5F554F;font-size:16px;line-height:1.55}
+    .av-cb__five-reasons-viewport{overflow:hidden}
+    .av-cb__five-reasons-track{display:flex;gap:18px;transition:transform .42s cubic-bezier(.22,.61,.36,1);will-change:transform}
+    .av-cb__five-reason-card{flex:0 0 100%;overflow:hidden;border:1.5px solid color-mix(in srgb,var(--five-accent,#A84F1B) 80%,#fff);border-radius:18px;background:#fff;box-shadow:0 14px 34px rgba(90,49,26,.07)}
+    .av-cb__five-reason-image{aspect-ratio:16/10;background:#F3E3D8;overflow:hidden}
+    .av-cb__five-reason-image img{display:block;width:100%;height:100%;object-fit:cover}
+    .av-cb__five-reason-placeholder{width:100%;height:100%;display:grid;place-items:center;background:linear-gradient(135deg,#EAD3C3,#FFF8F3);color:var(--five-accent,#A84F1B)}
+    .av-cb__five-reason-placeholder span{display:grid;place-items:center;width:88px;height:88px;border:2px solid currentColor;border-radius:50%;font-size:36px;font-weight:800}
+    .av-cb__five-reason-copy{padding:30px 34px 34px}
+    .av-cb__five-reason-label{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 16px;border-radius:8px;background:var(--five-accent,#A84F1B);color:#fff;font-size:12px;font-weight:850;letter-spacing:.035em}
+    .av-cb__five-reason-copy h3{margin:18px 0 0;color:#111;font-size:26px;line-height:1.15;letter-spacing:-.02em}
+    .av-cb__five-reason-copy p{margin:16px 0 0;color:#514A46;font-size:17px;line-height:1.58}
+    .av-cb__five-reasons-dots{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:24px}
+    .av-cb__five-reasons-dot{width:9px;height:9px;padding:0;border:0;border-radius:999px;background:#CDC7C3;cursor:pointer;transition:width .2s ease,background .2s ease}
+    .av-cb__five-reasons-dot.is-active{width:42px;background:var(--five-accent,#A84F1B)}
+    .av-cb__five-reasons-arrows{display:flex;justify-content:center;gap:12px;margin-top:20px}
+    .av-cb__five-reasons-arrow{display:grid;place-items:center;width:54px;height:54px;padding:0;border:0;border-radius:50%;background:#F0ECE9;color:#2A2623;cursor:pointer}
+    .av-cb__five-reasons-arrow svg{width:24px;height:24px}
+    .av-cb__five-reasons-cta{display:flex;align-items:center;justify-content:center;width:min(420px,100%);min-height:58px;margin:30px auto 0;padding:0 24px;border-radius:999px;background:var(--five-accent,#A84F1B);color:#fff;text-decoration:none;font-size:17px;font-weight:850;box-shadow:0 12px 24px rgba(115,56,24,.12)}
+    .av-cb__five-reasons-guarantee{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:18px;color:#5C514A;font-size:15px}
+    .av-cb__five-reasons-guarantee svg{width:21px;height:21px;color:var(--five-accent,#A84F1B)}
+    @media(max-width:600px){.av-cb__five-reasons{padding:42px 0 48px}.av-cb__five-reasons-inner{width:min(100% - 22px,900px)}.av-cb__five-reasons-head{margin-bottom:26px}.av-cb__five-reasons-badge{min-height:40px;padding:0 20px;font-size:12px}.av-cb__five-reasons-head h2{font-size:28px;margin-top:17px}.av-cb__five-reasons-head p{font-size:13.5px;margin-top:11px}.av-cb__five-reasons-track{gap:12px}.av-cb__five-reason-card{border-radius:14px}.av-cb__five-reason-image{aspect-ratio:1.22/1}.av-cb__five-reason-copy{padding:22px 20px 26px}.av-cb__five-reason-label{min-height:34px;padding:0 13px;font-size:11px}.av-cb__five-reason-copy h3{font-size:22px;margin-top:15px}.av-cb__five-reason-copy p{font-size:14px;line-height:1.55;margin-top:12px}.av-cb__five-reasons-dots{margin-top:19px}.av-cb__five-reasons-arrows{margin-top:17px}.av-cb__five-reasons-arrow{width:48px;height:48px}.av-cb__five-reasons-cta{min-height:54px;margin-top:24px;font-size:15px}.av-cb__five-reasons-guarantee{font-size:13px;margin-top:14px}}
+    .av-cb__post-risk-reviews{background:#fff;padding:54px 0 62px;color:#181411}
+    .av-cb__post-risk-reviews-wrap{width:min(900px,calc(100% - 32px));margin:0 auto}
+    .av-cb__post-risk-reviews-head{text-align:center;margin:0 auto 30px}
+    .av-cb__post-risk-rating{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;font-size:15px;color:#2c2825}
+    .av-cb__post-risk-stars,.av-cb__post-risk-review-rating span{color:#C86F3A;letter-spacing:1px}
+    .av-cb__post-risk-stars{font-size:24px;line-height:1}
+    .av-cb__post-risk-divider{width:1px;height:24px;background:#cfc6c0}
+    .av-cb__post-risk-reviews-head h2{font-size:clamp(32px,4.2vw,48px);line-height:1.08;letter-spacing:-.035em;margin:24px 0 0;font-weight:500}
+    .av-cb__post-risk-review-list{display:grid;gap:22px}
+    .av-cb__post-risk-review-card{background:#fff;border:1.5px solid #ddd8d4;border-radius:18px;padding:28px 30px}
+    .av-cb__post-risk-review-rating{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+    .av-cb__post-risk-review-rating strong{font-size:22px;color:#111}
+    .av-cb__post-risk-review-rating span{font-size:22px}
+    .av-cb__post-risk-review-card p{margin:0;color:#28231f;font-size:17px;line-height:1.62}
+    .av-cb__post-risk-tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+    .av-cb__post-risk-tags span{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 16px;border:1.5px solid #C86F3A;border-radius:999px;color:#B6551B;font-size:13px}
+    .av-cb__post-risk-review-card--extra[hidden]{display:none!important}
+    .av-cb__post-risk-read-more-wrap{display:flex;justify-content:center;align-items:center;width:100%;margin-top:22px;text-align:center}
+    .av-cb__post-risk-read-more{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 24px;border:1.5px solid #C86F3A;border-radius:999px;background:#fff;color:#111;font:inherit;font-size:14px;font-weight:750;text-align:center;cursor:pointer;transition:background .18s ease,color .18s ease,transform .18s ease}
+    .av-cb__post-risk-read-more:hover{background:#FFF5EF}
+    .av-cb__post-risk-read-more:active{transform:translateY(1px)}
+    @media(max-width:600px){.av-cb__post-risk-reviews{padding:36px 0 44px}.av-cb__post-risk-reviews-wrap{width:min(100% - 22px,900px)}.av-cb__post-risk-reviews-head{margin-bottom:20px}.av-cb__post-risk-rating{gap:9px;font-size:13px}.av-cb__post-risk-stars{font-size:20px}.av-cb__post-risk-divider{height:20px}.av-cb__post-risk-reviews-head h2{font-size:28px;margin-top:15px}.av-cb__post-risk-review-list{gap:13px}.av-cb__post-risk-review-card{padding:18px 17px;border-radius:14px}.av-cb__post-risk-review-rating{margin-bottom:15px}.av-cb__post-risk-review-rating strong,.av-cb__post-risk-review-rating span{font-size:19px}.av-cb__post-risk-review-card p{font-size:13.25px;line-height:1.5}.av-cb__post-risk-tags{margin-top:15px;gap:7px}.av-cb__post-risk-tags span{min-height:33px;padding:0 13px;font-size:12px}.av-cb__post-risk-read-more-wrap{margin-top:16px}.av-cb__post-risk-read-more{min-height:42px;padding:0 20px;font-size:13px}}
+    .av-cb__faq-section{background:#fff;padding:62px 0 72px}
+    .av-cb__faq-wrap{width:min(900px,calc(100% - 32px));margin:0 auto}
+    .av-cb__faq-heading{text-align:center;font-size:clamp(34px,4.3vw,50px);line-height:1.05;letter-spacing:-.035em;margin:0 0 32px;color:#16110e}
+    .av-cb__faq-list{display:grid;gap:12px}
+    .av-cb__faq-item{border:1px solid #eadfd8;border-radius:16px;background:#fffaf6;overflow:hidden;transition:border-color .2s ease,box-shadow .2s ease}
+    .av-cb__faq-item[open]{border-color:#d7a585;box-shadow:0 10px 28px rgba(119,59,25,.07)}
+    .av-cb__faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:19px 20px;font-size:16px;font-weight:750;color:#1b1512}
+    .av-cb__faq-item summary::-webkit-details-marker{display:none}
+    .av-cb__faq-plus{width:28px;height:28px;border-radius:50%;border:1.5px solid #d2b09a;position:relative;flex:0 0 28px}
+    .av-cb__faq-plus:before,.av-cb__faq-plus:after{content:"";position:absolute;left:50%;top:50%;background:#A84F1B;transform:translate(-50%,-50%);border-radius:2px}
+    .av-cb__faq-plus:before{width:12px;height:2px}.av-cb__faq-plus:after{width:2px;height:12px}
+    .av-cb__faq-item[open] .av-cb__faq-plus:after{opacity:0}
+    .av-cb__faq-answer{padding:0 20px 20px;color:#5f534d;font-size:14px;line-height:1.65}
+    @media(max-width:800px){.av-cb__compare-layout{grid-template-columns:1fr}.av-cb__compare-copy{max-width:700px;margin:auto}.av-cb__compare-table{max-width:700px;margin:auto}}
+    @media(max-width:600px){.av-cb__compare-section{padding:44px 0}.av-cb__compare-wrap{width:min(100% - 22px,1100px)}.av-cb__compare-head{margin-bottom:25px}.av-cb__compare-head h2{font-size:31px}.av-cb__compare-head p{font-size:13.5px}.av-cb__compare-brand{min-height:104px;padding:12px 8px}.av-cb__compare-brand img{width:58px;height:58px}.av-cb__compare-brand strong{font-size:14px}.av-cb__compare-row{min-height:66px;padding:10px 8px;font-size:11.5px}.av-cb__compare-check,.av-cb__compare-x{width:19px;height:19px;flex-basis:19px;font-size:11px}.av-cb__compare-copy h3{font-size:29px;margin-bottom:16px}.av-cb__compare-point{font-size:13px}.av-cb__faq-section{padding:48px 0 58px}.av-cb__faq-wrap{width:min(100% - 22px,900px)}.av-cb__faq-heading{font-size:31px;margin-bottom:24px}.av-cb__faq-item summary{padding:17px 16px;font-size:14px}.av-cb__faq-answer{padding:0 16px 17px;font-size:13px}}
+
+    .av-cb__benefits-section{position:relative;overflow:hidden;background:var(--benefits-bg,#0A88A6);color:var(--benefits-text,#fff);padding:54px 24px 0}
+    .av-cb__benefits-inner{width:min(980px,100%);margin:0 auto}
+    .av-cb__benefits-head{text-align:center;max-width:760px;margin:0 auto 32px}
+    .av-cb__benefits-head h2{font-size:clamp(32px,4.2vw,50px);line-height:1.05;letter-spacing:-.035em;margin:0 0 14px;color:inherit;font-weight:650}
+    .av-cb__benefits-head p{font-size:16px;line-height:1.6;margin:0 auto;max-width:680px;color:inherit;opacity:.94}
+    .av-cb__benefits-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 40px;max-width:760px;margin:0 auto 36px}
+    .av-cb__benefit-tile{text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+    .av-cb__benefit-icon{width:62px;height:62px;display:grid;place-items:center;color:inherit}
+    .av-cb__benefit-icon img{display:block;max-width:58px;max-height:58px;object-fit:contain;filter:brightness(0) invert(1)}
+    .av-cb__benefit-icon svg{width:54px;height:54px;display:block}
+    .av-cb__benefit-tile strong{font-size:18px;line-height:1.25;font-weight:600;color:inherit;max-width:220px}
+    .av-cb__benefits-image-wrap{min-height:380px;display:flex;align-items:flex-end;justify-content:center;margin-top:12px}
+    .av-cb__benefits-image{display:block;width:min(760px,100%);max-height:520px;object-fit:contain;object-position:center bottom}
+    .av-cb__benefits-image-placeholder{width:min(760px,100%);min-height:380px;display:grid;place-items:end center;color:rgba(255,255,255,.78);border:1px dashed rgba(255,255,255,.32);border-bottom:0;border-radius:24px 24px 0 0;padding:28px;text-align:center;font-size:13px}
+    .av-cb__benefits-disclaimer{font-size:10px;line-height:1.45;text-align:center;opacity:.72;margin:12px auto 18px;max-width:760px}
+    @media(max-width:600px){.av-cb__benefits-section{padding:42px 18px 0}.av-cb__benefits-head{margin-bottom:26px}.av-cb__benefits-head h2{font-size:31px}.av-cb__benefits-head p{font-size:14px}.av-cb__benefits-grid{gap:26px 18px;margin-bottom:26px}.av-cb__benefit-icon{width:52px;height:52px}.av-cb__benefit-icon svg{width:46px;height:46px}.av-cb__benefit-icon img{max-width:48px;max-height:48px}.av-cb__benefit-tile strong{font-size:15px}.av-cb__benefits-image-wrap{min-height:320px;margin-top:6px}.av-cb__benefits-image{max-height:440px}.av-cb__benefits-image-placeholder{min-height:320px}}
+    @media(max-width:600px){.av-cb__rating{font-size:12.5px;margin-bottom:10px}.av-cb__stars{font-size:16px}.av-cb__benefits{gap:13px;margin:15px 0 20px}.av-cb__benefit{font-size:14.5px;gap:10px}.av-cb__benefit-check{width:18px;height:18px;flex-basis:18px}.av-cb__sold{padding:13px 14px;margin-bottom:14px}.av-cb__sold-track{height:8px}.av-cb__sold-text{font-size:14px}.av-cb__pricing{gap:9px;margin-bottom:10px}.av-cb__sale-price{font-size:24px}.av-cb__compare-price{font-size:17px}.av-cb__sale-badge{font-size:10.5px;min-height:28px;padding:0 9px}.av-cb__low-stock-line{font-size:14px;margin:5px 0 14px;gap:8px}.av-cb__bundle{grid-template-columns:48px 1fr auto;gap:11px;padding:13px 12px}.av-cb__bundle-thumb{width:48px;height:48px}.av-cb__bundle-copy strong{font-size:16px}.av-cb__bundle-price strong{font-size:16px}.av-cb__bundle-price s{font-size:12px}.av-cb__refill-row{font-size:11px;gap:8px;margin-top:9px}.av-cb__refill-icon{width:18px;height:18px}.av-cb__top-stack{width:min(100% - 22px,1200px);margin:3px auto 24px;gap:8px}.av-cb__guarantee-card{grid-template-columns:62px 1fr;gap:12px;padding:15px 16px;border-radius:15px}.av-cb__guarantee-image{width:62px;height:62px}.av-cb__guarantee-image img{max-width:62px;max-height:62px}.av-cb__guarantee-seal{width:58px;height:58px;border-width:5px}.av-cb__guarantee-copy h3{font-size:17px}.av-cb__guarantee-copy p{font-size:12.5px}.av-cb__low-stock{padding:14px 15px;border-radius:15px;gap:9px}.av-cb__low-stock-icon{width:20px;height:20px;font-size:11px}.av-cb__low-stock h3{font-size:15px}.av-cb__low-stock p{font-size:12.5px}.av-cb__accordion summary{padding:14px 16px;font-size:16px}.av-cb__accordion-body{padding:0 16px 14px;font-size:12.5px}.av-cb__stats-section{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding:42px 24px 26px;border-radius:0;background-position:center}.av-cb__stats-heading{font-size:31px;margin-bottom:24px;font-weight:500}.av-cb__stat{grid-template-columns:92px 1fr;gap:14px;padding:17px 0}.av-cb__stat-number{font-size:50px;font-weight:400}.av-cb__stat-label{font-size:14px;font-weight:400}.av-cb__stats-cta{min-height:54px;margin-top:22px;font-size:15px;font-weight:650}.av-cb__stats-guarantee{font-size:12px;margin-top:10px}}
+
+
+html.av-cb-cinnamon-page body{margin:0!important}
+html.av-cb-cinnamon-page .page-wrapper{margin:0!important;padding:0!important;width:100%;max-width:none}
+html.av-cb-cinnamon-page #MainContent{margin:0;padding:0;width:100%;max-width:none}
+html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
+.av-cb{padding-bottom:0!important}.av-cb__stats-section{border-radius:0}
+.av-cb__comparison{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:92px auto 30px;max-width:850px;align-items:stretch}
+.av-cb__comparison-card{position:relative;background:#fff;color:#514e4b;border:1px solid #ddd;border-radius:20px;overflow:visible;padding-top:110px;text-align:center}
+.av-cb__comparison-card--ours{background:#9f3e10;border-color:#9f3e10;color:#fff}
+.av-cb__comparison-image{position:absolute;top:-70px;left:50%;transform:translateX(-50%);width:130px;height:140px;display:grid;place-items:center;pointer-events:none}
+.av-cb__comparison-image img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 12px #0002);background:transparent}
+.av-cb__comparison-card h3{font-size:26px;font-weight:600;line-height:1.3;margin:0;padding:14px 12px 28px;color:inherit}
+.av-cb__comparison-row{min-height:115px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;padding:18px 12px;border-top:1px solid #ddd;font-size:16px;line-height:1.4}
+.av-cb__comparison-card--ours .av-cb__comparison-row{border-color:#ffffff45}
+.av-cb__comparison-icon{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#858181;color:#fff;line-height:1}
+.av-cb__comparison-icon svg{width:16px;height:16px;display:block;fill:currentColor}
+.av-cb__comparison-card--ours .av-cb__comparison-icon{background:rgba(255,255,255,.14);color:#fff}
+.av-cb__compare-cta{max-width:680px;margin:auto}
+.av-cb__reviews{padding:50px 0;background:#faf6f2}.av-cb__reviews-head{text-align:center}.av-cb__reviews-head>span{color:#b8612b;font-size:32px;letter-spacing:3px}.av-cb__reviews-head h2{font-size:clamp(28px,4vw,42px);margin:14px 0}.av-cb__reviews-head p{color:#605851}
+.av-cb__photo-track,.av-cb__review-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-inline:contain;padding:12px 0 20px;scrollbar-width:thin;scrollbar-color:#bd7950 #eaded5}
+.av-cb__photo-track figure{flex:0 0 180px;height:190px;margin:0;border-radius:14px;overflow:hidden;scroll-snap-align:start}.av-cb__photo-track img{width:100%;height:100%;object-fit:cover}
+.av-cb__review-card{flex:0 0 calc(50% - 8px);min-width:0;scroll-snap-align:start;background:white;border:1px solid #ddd;border-radius:18px;padding:28px;display:flex;flex-direction:column}
+.av-cb__review-rating{display:flex;align-items:center;gap:12px}.av-cb__review-score{font-size:19px;font-weight:800;color:#171513}.av-cb__review-stars{color:#ab531f;font-size:23px;letter-spacing:1px}.av-cb__review-card h3{font-size:23px;margin:20px 0 12px}.av-cb__review-card p{font-size:17px;line-height:1.65;white-space:normal}.av-cb__review-card footer{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-top:auto;padding-top:22px;border-top:1px solid #eee;font-size:13px}.av-cb__review-card footer span{color:#ab531f;font-weight:700}.av-cb__review-tags{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.av-cb__review-tag{display:flex;align-items:center;justify-content:center;min-height:38px;padding:7px 10px;border:1px solid #c86731;border-radius:999px;color:#b35421;background:#fff8f3;font-size:12px;font-weight:650;text-align:center}.av-cb__review-placeholder{display:grid;place-items:center;background:#e9dfd6;color:#65574d}
+@media(max-width:600px){.av-cb__comparison{gap:12px;margin-top:76px}.av-cb__comparison-card{padding-top:86px;border-radius:14px}.av-cb__comparison-image{width:92px;height:108px;top:-56px}.av-cb__comparison-card h3{font-size:20px;padding:12px 8px 20px}.av-cb__comparison-row{font-size:13px;min-height:115px;padding:15px 8px}.av-cb__review-card{flex-basis:90%;padding:22px}.av-cb__photo-track figure{flex-basis:140px;height:155px}}
+
+  </style>
+<section class="av-cb__hero" id="av-cb-top" {% if av_cb_hero_block %}{{ av_cb_hero_block.shopify_attributes }}{% endif %}>
+    <div class="av-cb__wrap av-cb__hero-grid">
+      <div class="av-cb__media">
+        {% if av_cb_product.images.size > 0 or av_cb_custom_hero_image != blank %}
+          <div class="av-cb__product-gallery" data-av-cb-gallery>
+            <div class="av-cb__gallery-main">
+              <div class="av-cb__gallery-track" data-av-cb-gallery-track>
+                {% if av_cb_custom_hero_image != blank %}
+                  <div class="av-cb__gallery-slide" data-av-cb-gallery-slide>
+                    {{ av_cb_custom_hero_image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '500,700,900,1200,1400', sizes: '(min-width: 900px) 48vw, 92vw', alt: av_cb_display_title }}
+                  </div>
+                {% endif %}
+                {% for image in av_cb_product.images limit: 8 %}
+                  <div class="av-cb__gallery-slide" data-av-cb-gallery-slide>
+                    {{ image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '500,700,900,1200,1400', sizes: '(min-width: 900px) 48vw, 92vw', alt: image.alt | default: av_cb_display_title }}
+                  </div>
+                {% endfor %}
+              </div>
+
+              {% if av_cb_product.images.size > 1 or av_cb_custom_hero_image != blank %}
+                <button class="av-cb__gallery-arrow av-cb__gallery-arrow--prev" type="button" data-av-cb-gallery-prev aria-label="Previous product image">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14.5 6-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button class="av-cb__gallery-arrow av-cb__gallery-arrow--next" type="button" data-av-cb-gallery-next aria-label="Next product image">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9.5 6 6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              {% endif %}
+            </div>
+
+            {% if av_cb_product.images.size > 1 or av_cb_custom_hero_image != blank %}
+              <div class="av-cb__gallery-thumbs" aria-label="Product images">
+                {% if av_cb_custom_hero_image != blank %}
+                  <button class="av-cb__gallery-thumb is-active" type="button" data-av-cb-gallery-thumb data-index="0" aria-label="View selected product image">
+                    {{ av_cb_custom_hero_image | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90,120,180', alt: av_cb_display_title }}
+                  </button>
+                {% endif %}
+                {% for image in av_cb_product.images limit: 8 %}
+                  <button class="av-cb__gallery-thumb{% if forloop.first and av_cb_custom_hero_image == blank %} is-active{% endif %}" type="button" data-av-cb-gallery-thumb data-index="{% if av_cb_custom_hero_image != blank %}{{ forloop.index }}{% else %}{{ forloop.index0 }}{% endif %}" aria-label="View product image {{ forloop.index }}">
+                    {{ image | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90,120,180', alt: image.alt | default: av_cb_display_title }}
+                  </button>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        {% else %}
+          <div class="av-cb__formula-bottle">
+            <b>AVONENT</b>
+            <span>Berberine + Ceylon Cinnamon</span>
+            <small>120 softgels · 30 daily servings</small>
+          </div>
+        {% endif %}
+      </div>
+
+      <div>
+        {% if av_cb_show_best_badge or av_cb_show_choice_badge %}
+          <div class="av-cb__hero-badges" aria-label="Product highlights">
+            {% if av_cb_show_best_badge %}<span class="av-cb__hero-badge av-cb__hero-badge--best">{{ av_cb_best_badge | escape }}</span>{% endif %}
+            {% if av_cb_show_choice_badge %}<span class="av-cb__hero-badge av-cb__hero-badge--choice">{{ av_cb_choice_badge | escape }}</span>{% endif %}
+          </div>
+        {% endif %}
+
+        {% if av_cb_show_rating %}
+        <div class="av-cb__rating">
+          <span class="av-cb__stars" aria-hidden="true">★★★★★</span>
+          <span class="av-cb__rating-text">{{ av_cb_rating_text | escape }}</span>
+        </div>
+        {% endif %}
+
+        <h1 class="av-cb__title">{{ av_cb_display_title }}</h1>
+
+        <div class="av-cb__benefits">
+          {% assign av_cb_benefits = av_cb_benefit_1 | append: '||' | append: av_cb_benefit_2 | append: '||' | append: av_cb_benefit_3 | append: '||' | append: av_cb_benefit_4 | split: '||' %}
+          {% for benefit in av_cb_benefits %}
+            {% if benefit != blank %}<div class="av-cb__benefit">
+              <span class="av-cb__benefit-check" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="m4.2 10.2 3.4 3.4 8.2-8.2" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span>{{ benefit | escape }}</span>
+            </div>{% endif %}
+          {% endfor %}
+        </div>
+
+        {% if av_cb_show_sold %}<div class="av-cb__sold" data-av-cb-sold data-sold-start="12" data-sold-target="{{ av_cb_sold_percent }}" style="--sold: {{ av_cb_sold_percent }}%;">
+          <div class="av-cb__sold-row">
+            <div class="av-cb__sold-track" aria-hidden="true"><div class="av-cb__sold-fill" data-av-cb-sold-fill></div></div>
+            <div class="av-cb__sold-text" data-av-cb-sold-text>{{ av_cb_sold_percent }}% Sold</div>
+          </div>
+        </div>
+
+        {% endif %}
+        <div class="av-cb__pricing av-cb__pricing--purchase-mode">
+          <span class="av-cb__purchase-heading" data-av-cb-purchase-heading>{% if av_cb_subscription != blank %}{{ av_cb_subscribe_label | escape }}{% else %}{{ av_cb_one_time_label | escape }}{% endif %}</span>
+          <span class="av-cb__pricing-values">
+            <span class="av-cb__sale-price" data-av-cb-price>{{ av_cb_subscription_unit_price | money }}</span>
+            <span class="av-cb__compare-price" data-av-cb-compare-price{% if av_cb_subscription == blank and av_cb_one_time_compare_unit == 0 %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_one_time_unit_price | money }}{% elsif av_cb_one_time_compare_unit > 0 %}{{ av_cb_one_time_compare_unit | money }}{% endif %}</span>
+            {% if av_cb_show_sale_badge and av_cb_sale_badge != blank %}<span class="av-cb__sale-badge">{{ av_cb_sale_badge | escape }}</span>{% endif %}
+          </span>
+        </div>
+
+        {% if av_cb_show_low_stock_line and av_cb_low_stock_line != blank %}<div class="av-cb__low-stock-line"><span>{{ av_cb_low_stock_line | escape }}</span></div>{% endif %}
+
+        <product-form-component
+          data-section-id="{{ editor.id }}"
+          data-product-id="{{ av_cb_product.id }}"
+          data-product-url="{{ av_cb_product.url }}"
+          data-quantity-default="1"
+        >
+          <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+        {% form 'product', av_cb_product, id: av_cb_form_id, class: 'av-cb__form', data-type: 'add-to-cart-form' %}
+          <input type="hidden" name="id" ref="variantId" value="{{ av_cb_variant.id }}">
+          <input type="hidden" name="quantity" value="1" data-av-cb-quantity>
+          {% if av_cb_subscription != blank %}
+            <input type="hidden" name="selling_plan" value="{{ av_cb_subscription_plan_id }}" data-av-cb-selling-plan data-plan-id="{{ av_cb_subscription_plan_id }}">
+          {% endif %}
+
+          <div class="av-cb__bundles" role="group" aria-label="Choose supply">
+            {% for qty in (1..3) %}
+              {% if qty == 1 %}
+                {% assign av_cb_bundle_title = av_cb_bundle_1_title %}
+                {% assign av_cb_bundle_subtitle = av_cb_bundle_1_subtitle %}
+              {% elsif qty == 2 %}
+                {% assign av_cb_bundle_title = av_cb_bundle_2_title %}
+                {% assign av_cb_bundle_subtitle = av_cb_bundle_2_subtitle %}
+              {% else %}
+                {% assign av_cb_bundle_title = av_cb_bundle_3_title %}
+                {% assign av_cb_bundle_subtitle = av_cb_bundle_3_subtitle %}
+              {% endif %}
+              {% comment %}
+                Prices come from the first allocated Shopify subscription selling plan.
+                For bigger introductory bundles, the 2/3 paid units remain the
+                chargeable units; bonus items are a separate first-order gift.
+              {% endcomment %}
+              {% assign av_cb_bonus_units = 0 %}
+              {% if av_cb_bonus_variant != blank %}
+                {% assign av_cb_bonus_units = qty | minus: 1 %}
+              {% endif %}
+              {% assign av_cb_total_intro_units = qty | plus: av_cb_bonus_units %}
+              {% assign av_cb_bundle_sub_total = av_cb_subscription_unit_price | times: qty %}
+              {% assign av_cb_bundle_subscription_compare = av_cb_one_time_unit_price | times: av_cb_total_intro_units %}
+              {% assign av_cb_bundle_savings_amount = av_cb_bundle_subscription_compare | minus: av_cb_bundle_sub_total %}
+              {% assign av_cb_bundle_savings_pct = 0 %}
+              {% if av_cb_bundle_subscription_compare > 0 %}
+                {% assign av_cb_bundle_savings_pct = av_cb_bundle_savings_amount | times: 100.0 | divided_by: av_cb_bundle_subscription_compare | round %}
+              {% endif %}
+              {% assign av_cb_bundle_savings_text = 'You save ' | append: av_cb_bundle_savings_pct | append: '%' %}
+              {% if av_cb_bundle_subtitle != blank %}
+                {% assign av_cb_bundle_savings_text = av_cb_bundle_subtitle %}
+              {% endif %}
+              {% assign av_cb_bundle_one_time_total = av_cb_one_time_unit_price | times: qty %}
+              {% assign av_cb_bundle_one_time_compare_total = av_cb_one_time_compare_unit | times: qty %}
+              <button class="av-cb__bundle{% if qty == 1 %} is-active{% endif %}" type="button" data-av-cb-bundle="{{ qty }}" data-subscription-price="{{ av_cb_bundle_sub_total }}" data-subscription-compare="{{ av_cb_bundle_subscription_compare }}" data-one-time-price="{{ av_cb_bundle_one_time_total }}" data-one-time-compare="{{ av_cb_bundle_one_time_compare_total }}">
+                {% if qty == 2 and av_cb_bundle_2_badge != blank %}<span class="av-cb__badge" data-av-cb-subscription-perk>{{ av_cb_bundle_2_badge }}</span>{% endif %}
+                {% if qty == 3 and av_cb_bundle_3_badge != blank %}<span class="av-cb__badge" data-av-cb-subscription-perk>{{ av_cb_bundle_3_badge }}</span>{% endif %}
+                <span class="av-cb__bundle-thumb">
+                  {% if av_cb_hero_image %}
+                    {{ av_cb_hero_image | image_url: width: 120 | image_tag: loading: 'lazy', widths: '60,90,120', alt: av_cb_display_title }}
+                  {% else %}
+                    <span class="av-cb__bundle-thumb-fallback">AVONENT</span>
+                  {% endif %}
+                </span>
+                <span class="av-cb__bundle-copy">
+                  <strong data-av-cb-bundle-title data-one-time-title="Buy {{ qty }}" data-subscription-title="{{ av_cb_bundle_title | escape }}">{{ av_cb_bundle_title | escape }}</strong>
+                  <span data-av-cb-bundle-subtitle data-one-time-subtitle="" data-subscription-subtitle="{{ av_cb_bundle_savings_text }}">{{ av_cb_bundle_savings_text }}</span>
+                </span>
+                <span class="av-cb__bundle-price">
+                  <strong data-av-cb-bundle-price="{{ qty }}">{{ av_cb_bundle_sub_total | money }}</strong>
+                  <s data-av-cb-bundle-compare="{{ qty }}"{% if av_cb_subscription == blank %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_bundle_subscription_compare | money }}{% endif %}</s>
+                </span>
+                {% if qty >= 2 %}
+                  <span class="av-cb__bundle-unlock" data-av-cb-bundle-unlock hidden>
+                    <span class="av-cb__bundle-unlock-title">Gifts Unlocked</span>
+                    <span class="av-cb__bundle-unlock-row">
+                      <span class="av-cb__bundle-unlock-check" aria-hidden="true">✓</span>
+                      <span class="av-cb__bundle-unlock-copy">FREE Shipping</span>
+                    </span>
+                    {% if qty == 3 %}
+                      <span class="av-cb__bundle-unlock-row">
+                        <span class="av-cb__bundle-unlock-check" aria-hidden="true">✓</span>
+                        <span class="av-cb__bundle-unlock-copy">FREE E-Book <strong>($24.99 Value)</strong><small>Digital metabolic-support guide</small></span>
+                      </span>
+                    {% endif %}
+                  </span>
+                {% endif %}
+              </button>
+            {% endfor %}
+          </div>
+
+          {% if av_cb_show_delivery %}
+          <div class="av-cb__delivery-estimate" aria-live="polite">
+            <span class="av-cb__delivery-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span>{{ av_cb_delivery_label | escape }} <strong data-av-cb-delivery-date></strong></span>
+          </div>
+
+          {% endif %}
+          <button class="av-cb__buy" type="submit" {% unless av_cb_variant.available %}disabled{% endunless %}>
+            {% if av_cb_variant.available %}
+              <span class="av-cb__buy-mainline">
+                <span>{{ av_cb_add_to_cart_text }}</span>
+                <span class="av-cb__buy-divider" aria-hidden="true">|</span>
+                <span class="av-cb__buy-price" data-av-cb-button-price>{{ av_cb_subscription_unit_price | money }}</span>
+                <s class="av-cb__buy-compare" data-av-cb-button-compare{% if av_cb_subscription == blank and av_cb_one_time_compare_unit == 0 %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_one_time_unit_price | money }}{% elsif av_cb_one_time_compare_unit > 0 %}{{ av_cb_one_time_compare_unit | money }}{% endif %}</s>
+              </span>
+            {% else %}
+              <span class="av-cb__buy-mainline">Currently Unavailable</span>
+            {% endif %}
+          </button>
+        {% endform %}
+        </product-form-component>
+
+        <div class="av-cb__refill-row" aria-label="Refill details">
+          <span class="av-cb__refill-item">
+            <span class="av-cb__refill-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M20 6v5h-5M4 18v-5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.2 10a7 7 0 0 0-11.9-3L4 9M5.8 14a7 7 0 0 0 11.9 3L20 15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            {{ av_cb_refill_text }}
+          </span>
+          <span class="av-cb__refill-divider" aria-hidden="true"></span>
+          <span class="av-cb__refill-item">
+            <span class="av-cb__refill-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            {{ av_cb_cancel_text }}
+          </span>
+        </div>
+
+        {% if av_cb_subscription != blank %}
+          <button class="av-cb__purchase-toggle" type="button" data-av-cb-purchase-toggle aria-pressed="false">
+            <span data-av-cb-purchase-toggle-text>{{ av_cb_one_time_label | escape }} <strong data-av-cb-one-time-toggle-price>{{ av_cb_one_time_unit_price | money }}</strong> · {{ av_cb_shipping_note | escape }}</span>
+          </button>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+  {% for app_block in editor.blocks %}
+    {% if app_block.type == '@app' %}
+      <div class="av-cb__wrap av-cb__app-block" {{ app_block.shopify_attributes }}>
+        {% render app_block %}
+      </div>
+    {% endif %}
+  {% endfor %}
+
+  <div class="av-cb__top-stack">
+    {% if av_cb_show_guarantee %}
+    <div class="av-cb__guarantee-card" style="--guarantee-highlight: {{ av_cb_guarantee_color }}; --guarantee-text: #171717;" {% if av_cb_details_block %}{{ av_cb_details_block.shopify_attributes }}{% endif %}>
+      <div class="av-cb__guarantee-image">
+        {% if av_cb_guarantee_image != blank %}
+          {{ av_cb_guarantee_image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120,180,240', alt: av_cb_guarantee_heading }}
+        {% elsif av_cb_guarantee_image_url != blank %}
+          <img src="{{ av_cb_guarantee_image_url | escape }}" width="240" height="240" loading="lazy" alt="{{ av_cb_guarantee_heading | escape }}">
+        {% endif %}
+      </div>
+      <div class="av-cb__guarantee-copy">
+        <h3>{{ av_cb_guarantee_heading }}</h3>
+        <p><mark>{{ av_cb_guarantee_highlight }}</mark> {{ av_cb_guarantee_body }}</p>
+      </div>
+    </div>
+
+    {% endif %}
+    {% if av_cb_show_stock_notice %}
+    <div class="av-cb__low-stock" style="--low-stock: {{ av_cb_stock_color }}; --low-stock-bg: {{ av_cb_stock_background }};">
+      <div class="av-cb__low-stock-icon" aria-hidden="true">!</div>
+      <div>
+        <h3>{{ av_cb_stock_title }}</h3>
+        <p>{{ av_cb_stock_text | escape }}</p>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="av-cb__accordion-list" data-av-cb-accordion-list>
+      <details class="av-cb__accordion">
+        <summary><span>{{ av_cb_acc_1_title }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
+        <div class="av-cb__accordion-body rte">{{ av_cb_acc_1_body | newline_to_br }}</div>
+      </details>
+      <details class="av-cb__accordion">
+        <summary><span>{{ av_cb_acc_2_title }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
+        <div class="av-cb__accordion-body rte">{{ av_cb_acc_2_body | newline_to_br }}</div>
+      </details>
+      <details class="av-cb__accordion">
+        <summary><span>{{ av_cb_acc_3_title }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
+        <div class="av-cb__accordion-body rte">{{ av_cb_acc_3_body | newline_to_br }}</div>
+      </details>
+    </div>
+
+    {% if editor.settings.show_trust_image and av_cb_trust_image != blank %}
+    <div class="av-cb__trust-image-section" style="margin-top:10px;">
+      {% if av_cb_trust_image != blank %}
+        <span style="display:block;width:100%;">{{ av_cb_trust_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 900px) 1200px, calc(100vw - 22px)', alt: av_cb_trust_image_alt, style: 'display:block;width:100%;height:auto;border-radius:18px;' }}</span>
+      {% endif %}
+    </div>
+    {% endif %}
+
+  </div>
+{% if editor.settings.show_sticky_cart %}
+<div class="av-cb__sticky" aria-label="Quick add to cart">
+    <span class="av-cb__sticky-img">
+      {% if av_cb_product.featured_image %}
+        {{ av_cb_product.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', widths: '60,90,120', alt: av_cb_product.title }}
+      {% endif %}
+    </span>
+    <span class="av-cb__sticky-copy">
+      <span class="av-cb__sticky-title">{{ editor.settings.sticky_title | default: av_cb_product.title | escape }}</span>
+      <span class="av-cb__sticky-price" data-av-cb-sticky-price>{{ av_cb_subscription_unit_price | money }}</span>
+    </span>
+    <button class="av-cb__sticky-add" type="button" data-av-cb-sticky-add>{{ editor.settings.sticky_button_text | default: 'Add to Cart' | escape }}</button>
+  </div>
+{% endif %}
+
+  <script>
+    (() => {
+      const initialize = () => {
+      const root = document.querySelector('[data-av-cb]');
+      document.documentElement.classList.add('av-cb-cinnamon-page');
+      // Native Shopify Header controls the logo and navigation.
+      // Announcement content is edited through Shopify header settings.
+      // Shopify header navigation is configured in the header editor.
+      if (!root) return;
+
+      const fiveReasons = document.querySelector('[data-av-cb-five-reasons]');
+      if (fiveReasons) {
+        const fiveTrack = fiveReasons.querySelector('[data-av-cb-five-track]');
+        const fiveCards = Array.from(fiveReasons.querySelectorAll('[data-av-cb-five-card]'));
+        const fiveDots = Array.from(fiveReasons.querySelectorAll('[data-av-cb-five-dot]'));
+        const fivePrev = fiveReasons.querySelector('[data-av-cb-five-prev]');
+        const fiveNext = fiveReasons.querySelector('[data-av-cb-five-next]');
+        let fiveIndex = 0;
+
+        const renderFiveReasons = () => {
+          if (!fiveTrack || !fiveCards.length) return;
+          const cardWidth = fiveCards[0].getBoundingClientRect().width;
+          const gap = parseFloat(getComputedStyle(fiveTrack).gap || '0');
+          fiveTrack.style.transform = 'translate3d(' + (-(cardWidth + gap) * fiveIndex) + 'px,0,0)';
+          fiveDots.forEach((dot, index) => dot.classList.toggle('is-active', index === fiveIndex));
+        };
+
+        const goFive = (index) => {
+          fiveIndex = ((index % fiveCards.length) + fiveCards.length) % fiveCards.length;
+          renderFiveReasons();
+        };
+
+        fivePrev?.addEventListener('click', () => goFive(fiveIndex - 1));
+        fiveNext?.addEventListener('click', () => goFive(fiveIndex + 1));
+        fiveDots.forEach((dot, index) => dot.addEventListener('click', () => goFive(index)));
+        window.addEventListener('resize', renderFiveReasons, {passive:true});
+        requestAnimationFrame(renderFiveReasons);
+      }
+
+      const extraReview = document.querySelector('[data-av-cb-extra-review]');
+      const reviewReadMore = document.querySelector('[data-av-cb-review-read-more]');
+      if (extraReview && reviewReadMore) {
+        reviewReadMore.addEventListener('click', () => {
+          const isOpen = reviewReadMore.getAttribute('aria-expanded') === 'true';
+
+          extraReview.hidden = isOpen;
+          reviewReadMore.setAttribute('aria-expanded', String(!isOpen));
+          reviewReadMore.textContent = isOpen ? 'Read More Reviews' : 'Read Less Reviews';
+
+          if (isOpen) {
+            reviewReadMore.scrollIntoView({behavior:'smooth', block:'center'});
+          }
+        });
+      }
+
+      const subscriptionUnit = Number(root.dataset.subscriptionUnitPrice || 0);
+      const subscriptionLabel = root.dataset.subscriptionLabel || 'Subscribe & Save';
+      const oneTimeLabel = root.dataset.oneTimeLabel || 'One-Time Purchase';
+      const shippingNote = root.dataset.shippingNote || '';
+      const switchLabel = root.dataset.switchLabel || 'Switch back to Subscribe & Save';
+      const oneTimeUnit = Number(root.dataset.oneTimeUnitPrice || 0);
+      const oneTimeCompareUnit = Number(root.dataset.oneTimeCompareUnitPrice || 0);
+      const qtyInput = root.querySelector('[data-av-cb-quantity]');
+      const sellingPlanInput = root.querySelector('[data-av-cb-selling-plan]');
+      const total = root.querySelector('[data-av-cb-price]');
+      const topCompare = root.querySelector('[data-av-cb-compare-price]');
+      const btnTotal = root.querySelector('[data-av-cb-button-price]');
+      const btnCompare = root.querySelector('[data-av-cb-button-compare]');
+      const stickyPrice = root.querySelector('[data-av-cb-sticky-price]');
+      const refillRow = root.querySelector('.av-cb__refill-row');
+      const purchaseToggle = root.querySelector('[data-av-cb-purchase-toggle]');
+      const purchaseToggleText = root.querySelector('[data-av-cb-purchase-toggle-text]');
+      const purchaseHeading = root.querySelector('[data-av-cb-purchase-heading]');
+      const productForm = root.querySelector('form[data-type="add-to-cart-form"]');
+      const variantInput = root.querySelector('input[ref="variantId"]');
+      const bonusVariantId = Number(root.dataset.bonusVariantId || 0);
+      const bundleButtons = Array.from(root.querySelectorAll('[data-av-cb-bundle]'));
+      const subscriptionPerks = Array.from(root.querySelectorAll('[data-av-cb-subscription-perk]'));
+      const bundleUnlocks = Array.from(root.querySelectorAll('[data-av-cb-bundle-unlock]'));
+      const money = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'en-US', {style:'currency', currency:root.dataset.currency || 'USD'}).format(Number(cents || 0) / 100);
+      let purchaseMode = sellingPlanInput ? 'subscription' : 'one-time';
+
+      const selectedBundle = () => root.querySelector('[data-av-cb-bundle].is-active') || bundleButtons[0];
+      const valuesFor = (btn) => {
+        const qty = Number(btn?.dataset.avCbBundle || 1);
+        const isSubscription = purchaseMode === 'subscription' && sellingPlanInput;
+        return {
+          qty,
+          price: Number(isSubscription ? btn?.dataset.subscriptionPrice : btn?.dataset.oneTimePrice) || 0,
+          compare: Number(isSubscription ? btn?.dataset.subscriptionCompare : btn?.dataset.oneTimeCompare) || 0
+        };
+      };
+      const setCompare = (el, value, base) => {
+        if (!el) return;
+        const show = Number(value) > Number(base);
+        el.textContent = show ? money(value) : '';
+        el.hidden = !show;
+      };
+      const renderMode = () => {
+        const isSubscription = purchaseMode === 'subscription' && sellingPlanInput;
+        if (sellingPlanInput) {
+          sellingPlanInput.disabled = !isSubscription;
+          if (isSubscription) sellingPlanInput.value = sellingPlanInput.dataset.planId || root.dataset.subscriptionPlanId || '';
+        }
+        if (refillRow) refillRow.hidden = !isSubscription;
+        if (purchaseToggle) purchaseToggle.setAttribute('aria-pressed', String(!isSubscription));
+        if (purchaseHeading) purchaseHeading.textContent = isSubscription ? subscriptionLabel : oneTimeLabel;
+
+        bundleButtons.forEach((btn) => {
+          const values = valuesFor(btn);
+          const priceEl = btn.querySelector('[data-av-cb-bundle-price]');
+          const compareEl = btn.querySelector('[data-av-cb-bundle-compare]');
+          const titleEl = btn.querySelector('[data-av-cb-bundle-title]');
+          const subtitleEl = btn.querySelector('[data-av-cb-bundle-subtitle]');
+          if (priceEl) priceEl.textContent = money(values.price);
+          setCompare(compareEl, values.compare, values.price);
+          if (titleEl) titleEl.textContent = isSubscription ? titleEl.dataset.subscriptionTitle : titleEl.dataset.oneTimeTitle;
+          if (subtitleEl) {
+            const subtitle = isSubscription ? subtitleEl.dataset.subscriptionSubtitle : subtitleEl.dataset.oneTimeSubtitle;
+            subtitleEl.textContent = subtitle || '';
+            subtitleEl.hidden = !subtitle;
+          }
+        });
+
+        const active = selectedBundle();
+        const values = valuesFor(active);
+        if (qtyInput) qtyInput.value = values.qty;
+        if (total) total.textContent = money(values.price);
+        if (btnTotal) btnTotal.textContent = money(values.price);
+        if (stickyPrice) stickyPrice.textContent = money(values.price);
+        setCompare(topCompare, values.compare, values.price);
+        setCompare(btnCompare, values.compare, values.price);
+
+        subscriptionPerks.forEach(perk => { perk.hidden = !isSubscription; });
+        bundleUnlocks.forEach(unlock => {
+          const card = unlock.closest('[data-av-cb-bundle]');
+          unlock.hidden = !(isSubscription && card && card.classList.contains('is-active'));
+        });
+
+        if (purchaseToggleText) {
+          if (isSubscription) {
+            purchaseToggleText.textContent = oneTimeLabel + ' ';
+            const amount = document.createElement('strong');
+            amount.textContent = money(oneTimeUnit * values.qty);
+            purchaseToggleText.append(amount, shippingNote ? ' · ' + shippingNote : '');
+          }
+          else {
+            const subscriptionDisplayPrice = Number(active?.dataset.subscriptionPrice || 0);
+            purchaseToggleText.textContent = switchLabel + ' — ';
+            const amount = document.createElement('strong');
+            amount.textContent = money(subscriptionDisplayPrice);
+            purchaseToggleText.append(amount);
+          }
+        }
+      };
+
+      bundleButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          bundleButtons.forEach(x => x.classList.toggle('is-active', x === btn));
+          renderMode();
+        });
+      });
+      purchaseToggle?.addEventListener('click', () => {
+        purchaseMode = purchaseMode === 'subscription' ? 'one-time' : 'subscription';
+        renderMode();
+      });
+
+      const enableBundleSubmit = () => {
+        const submitButton = productForm?.querySelector('button[type="submit"]');
+        if (submitButton) submitButton.disabled = false;
+      };
+
+      // Safari/iOS can restore the page from the back-forward cache with the
+      // button state exactly as it was before navigation. Always restore it.
+      window.addEventListener('pageshow', enableBundleSubmit);
+
+      const openUpdatedCartDrawer = async (sectionHtml, itemCount) => {
+        // Keep the mounted theme-drawer/dialog in place. Replacing the entire
+        // Shopify section destroys the open dialog and causes blank panels.
+        if (!sectionHtml) {
+          try {
+            const rootPath = window.Shopify?.routes?.root || '/';
+            const request = await fetch(rootPath + '?sections=cart-drawer-section', {
+              credentials: 'same-origin', headers: {'Accept': 'application/json'}
+            });
+            const sectionData = await request.json();
+            sectionHtml = sectionData['cart-drawer-section'] || '';
+          } catch (error) {
+            console.warn('[avonent] Could not refresh cart section', error);
+          }
+        }
+        let refreshed = false;
+        if (sectionHtml) {
+          const parsed = new DOMParser().parseFromString(sectionHtml, 'text/html');
+          const nextDrawer = parsed.querySelector('theme-drawer#cart-drawer');
+          const currentDrawer = document.querySelector('theme-drawer#cart-drawer');
+          const nextInner = nextDrawer?.querySelector('.cart-drawer__inner');
+          const currentInner = currentDrawer?.querySelector('.cart-drawer__inner');
+          const nextEmptyTemplate = nextDrawer?.querySelector('#empty-cart-template');
+          const currentEmptyTemplate = currentDrawer?.querySelector('#empty-cart-template');
+          if (nextInner && currentInner) {
+            currentInner.replaceWith(nextInner);
+            if (nextEmptyTemplate && currentEmptyTemplate) currentEmptyTemplate.replaceWith(nextEmptyTemplate);
+            refreshed = true;
+          }
+        }
+        if (!refreshed) {
+          // Never leave customers looking at an empty overlay on a failed
+          // section render. The full cart remains a working fallback.
+          window.location.assign((window.Shopify?.routes?.root || '/') + 'cart');
+          return;
+        }
+
+        if (Number.isFinite(itemCount)) {
+          await customElements.whenDefined('cart-icon');
+          document.querySelectorAll('cart-icon').forEach((icon) => {
+            if (typeof icon.renderCartBubble === 'function') icon.renderCartBubble(itemCount, true);
+          });
+        }
+
+        await customElements.whenDefined('theme-drawer');
+        const drawer = document.querySelector('#cart-drawer');
+        if (drawer && typeof drawer.open === 'function') {
+          drawer.open();
+        } else {
+          document.querySelector('[data-testid="cart-drawer-trigger"]')?.click();
+        }
+      };
+
+      productForm?.addEventListener('submit', async (event) => {
+        // This custom cinnamon form owns the entire add flow. The theme's
+        // built-in /handleSubmit binding is intentionally removed above so
+        // one click can never add the paid subscription a second time.
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        const isSubscription = purchaseMode === 'subscription' && sellingPlanInput && !sellingPlanInput.disabled;
+        const values = valuesFor(selectedBundle());
+        const bonusQty = isSubscription && bonusVariantId ? (values.qty === 2 ? 1 : (values.qty === 3 ? 2 : 0)) : 0;
+
+        const submitButton = productForm.querySelector('button[type="submit"]');
+        const variantId = Number(variantInput?.value || 0);
+        const sellingPlanId = sellingPlanInput?.value || sellingPlanInput?.dataset.planId || root.dataset.subscriptionPlanId || '';
+
+        if (!variantId || (isSubscription && !sellingPlanId)) {
+          enableBundleSubmit();
+          return;
+        }
+
+        if (submitButton) submitButton.disabled = true;
+
+        try {
+          // Paid optional protection is added only by the customer's explicit
+          // opt-in in the cart drawer, never silently during product add.
+          const items = [];
+
+          // Shopify displays newly-added lines in reverse insertion order.
+          // Bonus goes in before the paid line so the paid cinnamon appears
+          // above the $0 bonus in the drawer.
+          if (bonusQty > 0) {
+            items.push({
+              id: bonusVariantId,
+              quantity: bonusQty,
+              properties: { '_Avonent bonus': 'First order free bottle' }
+            });
+          }
+
+          // One-time digital gift for the Buy 3 subscription only.
+          // The Shopify automatic BXGY discount makes this $24.99 item free
+          // only when three paid cinnamon subscription units qualify.
+          const ebookVariantId = Number(root.dataset.ebookVariantId || 0);
+          if (isSubscription && values.qty === 3 && ebookVariantId) {
+            items.push({
+              id: ebookVariantId,
+              quantity: 1,
+              properties: { '_Avonent gift': 'Buy 3 first-order e-book' }
+            });
+          }
+
+          const paidItem = {
+            id: variantId,
+            quantity: values.qty
+          };
+
+          if (isSubscription) {
+            paidItem.selling_plan = sellingPlanId;
+            if (bonusQty > 0) {
+              paidItem.properties = {
+                '_Avonent bundle': values.qty === 2 ? 'Buy 2 Get 1 Free' : 'Buy 3 Get 2 Free'
+              };
+            }
+          }
+
+          items.push(paidItem);
+
+          const response = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+              items,
+              sections: 'cart-drawer-section',
+              sections_url: window.location.pathname
+            })
+          });
+
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok || result.status || result.errors) {
+            throw new Error(result.description || result.message || 'Unable to add to cart.');
+          }
+
+          const finalCartResponse = await fetch('/cart.js', {
+            headers: { 'Accept': 'application/json' },
+            credentials: 'same-origin',
+            cache: 'no-store'
+          });
+          const finalCart = finalCartResponse.ok ? await finalCartResponse.json() : null;
+
+          await openUpdatedCartDrawer(
+            result.sections?.['cart-drawer-section'] || '',
+            finalCart ? Number(finalCart.item_count || 0) : NaN
+          );
+        } catch (error) {
+          console.error('Avonent cinnamon add failed:', error);
+          alert(error.message || 'Unable to add to cart. Please try again.');
+        } finally {
+          enableBundleSubmit();
+        }
+      }, { capture: true });
+
+      renderMode();
+      enableBundleSubmit();
+
+      const deliveryDate = root.querySelector('[data-av-cb-delivery-date]');
+      if (deliveryDate) {
+        const date = new Date();
+        date.setDate(date.getDate() + Math.max(1, Math.min(21, Number(root.dataset.deliveryDays) || 5)));
+        const day = date.getDate();
+        const mod100 = day % 100;
+        const suffix = mod100 >= 11 && mod100 <= 13 ? 'th' : ({1:'st',2:'nd',3:'rd'}[day % 10] || 'th');
+        deliveryDate.textContent = date.toLocaleDateString(document.documentElement.lang || 'en-US', {month:'long'}) + ' ' + day + suffix;
+      }
+      const soldBar = root.querySelector('[data-av-cb-sold]');
+      if (soldBar && soldBar.dataset.avCbSoldReady !== 'true') {
+        soldBar.dataset.avCbSoldReady = 'true';
+
+        const soldFill = soldBar.querySelector('[data-av-cb-sold-fill]');
+        const soldText = soldBar.querySelector('[data-av-cb-sold-text]');
+        const soldStart = Math.max(0, Math.min(100, Number(soldBar.dataset.soldStart || 12)));
+        const soldTarget = Math.max(soldStart, Math.min(100, Number(soldBar.dataset.soldTarget || 93)));
+
+        let soldHasRun = false;
+
+        const renderSold = (value) => {
+          const clamped = Math.max(0, Math.min(100, value));
+          soldBar.style.setProperty('--sold', clamped + '%');
+          if (soldText) soldText.textContent = Math.round(clamped) + '% Sold';
+        };
+
+        const runSold = () => {
+          if (soldHasRun) return;
+          soldHasRun = true;
+          soldBar.dataset.avCbSoldAnimated = 'true';
+
+          const duration = 1800;
+          const started = performance.now();
+
+          const tick = (now) => {
+            const progress = Math.min(1, (now - started) / duration);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const value = soldStart + ((soldTarget - soldStart) * eased);
+            renderSold(value);
+
+            if (progress < 1) {
+              requestAnimationFrame(tick);
+            } else {
+              renderSold(soldTarget);
+            }
+          };
+
+          requestAnimationFrame(tick);
+        };
+
+        renderSold(soldStart);
+
+        if ('IntersectionObserver' in window) {
+          const soldObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting && !soldHasRun) {
+                runSold();
+                soldObserver.disconnect();
+              }
+            });
+          }, {threshold: 0.2});
+
+          soldObserver.observe(soldBar);
+
+          if (soldBar.getBoundingClientRect().top < window.innerHeight && soldBar.getBoundingClientRect().bottom > 0) {
+            requestAnimationFrame(runSold);
+            soldObserver.disconnect();
+          }
+        } else {
+          const onSoldScroll = () => {
+            if (soldHasRun) return;
+            const rect = soldBar.getBoundingClientRect();
+            if (rect.top <= window.innerHeight * 0.9) {
+              runSold();
+              window.removeEventListener('scroll', onSoldScroll);
+            }
+          };
+
+          window.addEventListener('scroll', onSoldScroll, {passive:true});
+          onSoldScroll();
+        }
+      }
+
+      const statsSections = document.querySelectorAll('[data-av-cb-stats]');
+      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      statsSections.forEach(section => {
+        const numbers = section.querySelectorAll('.av-cb__stat-number');
+        const run = () => {
+          numbers.forEach(el => {
+            if (el.dataset.animated === 'true') return;
+            el.dataset.animated = 'true';
+            const start = Number(el.dataset.start || 0);
+            const end = Number(el.dataset.end || 0);
+            const duration = Math.max(150, Number(el.dataset.duration || 1200));
+            if (reduceMotion || start === end) {
+              el.textContent = Math.round(end) + '%';
+              return;
+            }
+            const started = performance.now();
+            const tick = now => {
+              const progress = Math.min(1, (now - started) / duration);
+              const eased = 1 - Math.pow(1 - progress, 3);
+              const value = Math.round(start + (end - start) * eased);
+              el.textContent = value + '%';
+              if (progress < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+          });
+        };
+        if ('IntersectionObserver' in window) {
+          const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                run();
+                observer.disconnect();
+              }
+            });
+          }, {threshold:.28});
+          observer.observe(section);
+        } else {
+          run();
+        }
+      });
+      const carousels = document.querySelectorAll('[data-av-cb-carousel]');
+      carousels.forEach(carousel => {
+        const track = carousel.querySelector('[data-av-cb-carousel-track]');
+        const cards = Array.from(carousel.querySelectorAll('[data-av-cb-carousel-card]'));
+        const dots = Array.from(carousel.querySelectorAll('[data-av-cb-carousel-dot]'));
+        const prev = carousel.querySelector('[data-av-cb-carousel-prev]');
+        const next = carousel.querySelector('[data-av-cb-carousel-next]');
+        if (!track || !cards.length) return;
+        const setActive = index => dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
+        const goTo = index => {
+          const safe = Math.max(0, Math.min(cards.length - 1, index));
+          track.scrollTo({left: cards[safe].offsetLeft - track.offsetLeft, behavior:'smooth'});
+          setActive(safe);
+        };
+        const currentIndex = () => {
+          const trackLeft = track.getBoundingClientRect().left;
+          let best = 0;
+          let distance = Infinity;
+          cards.forEach((card, i) => {
+            const d = Math.abs(card.getBoundingClientRect().left - trackLeft);
+            if (d < distance) { distance = d; best = i; }
+          });
+          return best;
+        };
+        prev?.addEventListener('click', () => goTo(currentIndex() - 1));
+        next?.addEventListener('click', () => goTo(currentIndex() + 1));
+        dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+        let scrollTimer;
+        track.addEventListener('scroll', () => {
+          clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(() => setActive(currentIndex()), 80);
+        }, {passive:true});
+      });
+      const scienceSections = document.querySelectorAll('[data-av-cb-science]');
+      scienceSections.forEach(section => {
+        const cards = Array.from(section.querySelectorAll('.av-cb__science-card'));
+        cards.forEach(card => {
+          card.addEventListener('toggle', () => {
+            if (!card.open) return;
+            cards.forEach(other => {
+              if (other !== card) other.open = false;
+            });
+          });
+        });
+      });
+      const faqSection = document.querySelector('[data-av-cb-faq]');
+      if (faqSection) {
+        const faqItems = Array.from(faqSection.querySelectorAll('.av-cb__faq-item'));
+        faqItems.forEach(item => {
+          item.addEventListener('toggle', () => {
+            if (!item.open) return;
+            faqItems.forEach(other => {
+              if (other !== item) other.open = false;
+            });
+          });
+        });
+      }
+      const stickyBar = root.querySelector('.av-cb__sticky');
+      const firstAddToCart = root.querySelector('.av-cb__buy');
+      if (stickyBar && firstAddToCart) {
+        let stickyTicking = false;
+        const updateStickyVisibility = () => {
+          stickyBar.classList.toggle('is-visible', firstAddToCart.getBoundingClientRect().bottom < 0);
+          stickyTicking = false;
+        };
+        const requestStickyUpdate = () => {
+          if (stickyTicking) return;
+          stickyTicking = true;
+          requestAnimationFrame(updateStickyVisibility);
+        };
+        updateStickyVisibility();
+        window.addEventListener('scroll', requestStickyUpdate, {passive:true});
+        window.addEventListener('resize', requestStickyUpdate, {passive:true});
+      }
+
+      const stickyAdd = root.querySelector('[data-av-cb-sticky-add]');
+      if (stickyAdd) {
+        stickyAdd.addEventListener('click', () => {
+          const top = root.querySelector('#av-cb-top');
+          top?.scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      }
+
+      const accordions = root.querySelectorAll('.av-cb__accordion');
+      accordions.forEach(item => {
+        item.addEventListener('toggle', () => {
+          if (!item.open) return;
+          accordions.forEach(other => {
+            if (other !== item) other.open = false;
+          });
+        });
+      });
+      };
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize, {once:true});
+      else initialize();
+    })();
+  </script>
+</div>
+
+<script>
+/* AVONENT GALLERY BEHAVIOR */
+(() => {
+  const init = (gallery) => {
+    if (!gallery || gallery.dataset.avCbGalleryReady === 'true') return;
+    gallery.dataset.avCbGalleryReady = 'true';
+
+    const track = gallery.querySelector('[data-av-cb-gallery-track]');
+    const slides = Array.from(gallery.querySelectorAll('[data-av-cb-gallery-slide]'));
+    const thumbs = Array.from(gallery.querySelectorAll('[data-av-cb-gallery-thumb]'));
+    const prev = gallery.querySelector('[data-av-cb-gallery-prev]');
+    const next = gallery.querySelector('[data-av-cb-gallery-next]');
+    if (!track || slides.length < 1) return;
+
+    let activeIndex = 0;
+    let scrollTimer;
+
+    const setActive = (index) => {
+      activeIndex = ((index % slides.length) + slides.length) % slides.length;
+      thumbs.forEach((thumb, i) => thumb.classList.toggle('is-active', i === activeIndex));
+    };
+
+    const goTo = (index) => {
+      const nextIndex = ((index % slides.length) + slides.length) % slides.length;
+      track.scrollTo({ left: slides[nextIndex].offsetLeft, behavior: 'smooth' });
+      setActive(nextIndex);
+    };
+
+    prev?.addEventListener('click', () => goTo(activeIndex - 1));
+    next?.addEventListener('click', () => goTo(activeIndex + 1));
+    thumbs.forEach((thumb, i) => thumb.addEventListener('click', () => goTo(i)));
+
+    track.addEventListener('scroll', () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        const left = track.scrollLeft;
+        let closest = 0;
+        let distance = Infinity;
+        slides.forEach((slide, i) => {
+          const d = Math.abs(slide.offsetLeft - left);
+          if (d < distance) { distance = d; closest = i; }
+        });
+        setActive(closest);
+      }, 70);
+    }, { passive: true });
+  };
+
+  const run = () => document.querySelectorAll('[data-av-cb-gallery]').forEach(init);
+  run();
+  document.addEventListener('shopify:section:load', run);
+})();
+</script>

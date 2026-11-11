@@ -24,6 +24,12 @@
   endfor
 
   assign regular_item_count = cart.item_count | minus: protection_quantity
+  assign drawer_has_payment_block = false
+  for customizable_block in drawer_section.blocks
+    if customizable_block.type == 'payments'
+      assign drawer_has_payment_block = true
+    endif
+  endfor
 -%}
 
 {%- if settings.cart_type == 'drawer' and template.name != 'cart' -%}
@@ -51,7 +57,7 @@
         class="theme-drawer__title h4"
         id="cart-drawer-heading"
       >
-        {{ 'content.your_cart_is_empty' | t }}
+        {{ drawer_cfg.empty_cart_heading | default: 'content.your_cart_is_empty' | escape }}
       </h2>
 
       <div class="cart-drawer__items">
@@ -146,7 +152,7 @@
               {% endif %}
             {% endcapture %}
 
-            {% assign cart_drawer_title = 'content.cart_title' | t %}
+            {% assign cart_drawer_title = drawer_cfg.cart_title | default: 'content.cart_title' %}
 
             {% render 'theme-drawer-header',
               title: cart_drawer_title,
@@ -216,17 +222,17 @@
 
                       <div class="avonent-shipping-protection__copy">
                         <div class="avonent-shipping-protection__heading">
-                          <strong>Shipping Protection</strong>
+                          <strong>{{ drawer_cfg.protection_title | escape }}</strong>
                           <span>{{ protection_variant.price | money }}</span>
                         </div>
-                        <p>Protect your order from loss, damage, or theft in transit.</p>
+                        <p>{{ drawer_cfg.protection_description | escape }}</p>
                       </div>
 
                       <button
                         type="button"
                         class="avonent-shipping-protection__toggle"
                         role="switch"
-                        aria-label="Add shipping protection"
+                        aria-label="{{ drawer_cfg.protection_title | escape }}"
                         aria-checked="{% if protection_line_key != blank %}true{% else %}false{% endif %}"
                         data-avonent-protection-toggle
                       >
@@ -237,7 +243,8 @@
 
                   {% render 'cart-summary',
                     section_id: 'cart-drawer-section',
-                    drawer_settings: drawer_cfg
+                    drawer_settings: drawer_cfg,
+                    suppress_payment_icons: drawer_has_payment_block
                   %}
                   {% for block in drawer_section.blocks %}
                     {% if block.settings.placement == 'after_checkout' %}
@@ -297,6 +304,13 @@
   }
   #cart-drawer .avonent-drawer-block__announcement {background:var(--av-block-bg,#fff5ec);padding:12px;border-radius:10px}
   #cart-drawer .avonent-drawer-block__image {display:block;width:100%;height:auto}
+  #cart-drawer .cart-drawer__summary .avonent-cart-checkout {background:var(--av-drawer-accent,#A84F1B);border-color:var(--av-drawer-accent,#A84F1B);color:#fff}
+  #cart-drawer .avonent-drawer-block__payments {text-align:center}
+  #cart-drawer .avonent-drawer-block__payments-title {font-size:12px;margin:0 0 10px;opacity:.78}
+  #cart-drawer .avonent-drawer-block__payments > img {max-width:100%;height:auto}
+  #cart-drawer .avonent-drawer-block__payment-icons {display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:5px}
+  #cart-drawer .avonent-drawer-block__payment-icons span {display:grid;place-items:center;background:#fff;border:1px solid #e2e2e2;border-radius:5px;width:45px;height:30px;overflow:hidden}
+  #cart-drawer .avonent-drawer-block__payment-icons svg {width:39px;max-height:24px}
   #cart-drawer .avonent-drawer-block__trust {display:flex;justify-content:space-around;gap:10px;flex-wrap:wrap;font-size:12px;text-align:center}
   #cart-drawer .avonent-drawer-block__upsell {display:flex;align-items:center;gap:12px;border:1px solid #eee6df;border-radius:12px;padding:12px}
   #cart-drawer .avonent-drawer-block__upsell img {width:70px;height:70px;object-fit:cover;border-radius:8px}
@@ -1096,9 +1110,6 @@
     opacity: 0.58;
   }
 
-  #cart-drawer .cart-drawer__items .cart-items__table-row:has(a[href*='/products/shipping-protection']) {
-    display: none;
-  }
 
   @media screen and (max-width: 380px) {
     #cart-drawer .avonent-shipping-protection {

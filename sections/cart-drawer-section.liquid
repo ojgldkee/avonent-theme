@@ -40,6 +40,42 @@
       "default": "#A84F1B"
     },
     {
+      "type": "text",
+      "id": "cart_title",
+      "label": "Drawer title",
+      "default": "Cart"
+    },
+    {
+      "type": "text",
+      "id": "empty_cart_heading",
+      "label": "Empty cart message",
+      "default": "Your cart is empty"
+    },
+    {
+      "type": "text",
+      "id": "estimated_total_label",
+      "label": "Estimated total label",
+      "default": "Estimated total"
+    },
+    {
+      "type": "text",
+      "id": "checkout_label",
+      "label": "Checkout button",
+      "default": "SECURE CHECKOUT"
+    },
+    {
+      "type": "checkbox",
+      "id": "checkout_lock",
+      "label": "Show checkout lock",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "checkout_arrow",
+      "label": "Show checkout arrow",
+      "default": true
+    },
+    {
       "type": "checkbox",
       "id": "show_payment_icons",
       "label": "Show payment icons",
@@ -61,8 +97,24 @@
       "label": "Add-on product"
     },
     {
+      "type": "text",
+      "id": "protection_title",
+      "label": "Add-on heading",
+      "default": "Shipping Protection"
+    },
+    {
+      "type": "textarea",
+      "id": "protection_description",
+      "label": "Add-on description",
+      "default": "Protect your order from loss, damage, or theft in transit."
+    },
+    {
       "type": "paragraph",
       "content": "Customers choose whether to add this item. Do not auto-enroll paid add-ons."
+    },
+    {
+      "type": "paragraph",
+      "content": "Add a Payment icons block for editable payment logos and positioning. The default payment icon row is hidden when the block is present."
     }
   ],
   "blocks": [
@@ -533,6 +585,123 @@
           "type": "url",
           "id": "url",
           "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "payments",
+      "name": "Payment icons",
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Location",
+          "options": [
+            {
+              "value": "before_items",
+              "label": "Before items"
+            },
+            {
+              "value": "after_items",
+              "label": "After items"
+            },
+            {
+              "value": "before_checkout",
+              "label": "Before checkout"
+            },
+            {
+              "value": "after_checkout",
+              "label": "After checkout"
+            },
+            {
+              "value": "empty_cart",
+              "label": "Empty cart"
+            }
+          ],
+          "default": "after_checkout"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Accepted payment methods"
+        },
+        {
+          "type": "select",
+          "id": "mode",
+          "label": "Icon mode",
+          "options": [
+            {
+              "value": "auto",
+              "label": "Enabled methods"
+            },
+            {
+              "value": "manual",
+              "label": "Choose icons"
+            },
+            {
+              "value": "image",
+              "label": "Custom image"
+            }
+          ],
+          "default": "auto"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom payment image"
+        },
+        {
+          "type": "checkbox",
+          "id": "visa",
+          "label": "Visa",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "master",
+          "label": "Master",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "american_express",
+          "label": "American Express",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "discover",
+          "label": "Discover",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "paypal",
+          "label": "Paypal",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "apple_pay",
+          "label": "Apple Pay",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "google_pay",
+          "label": "Google Pay",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "shopify_pay",
+          "label": "Shopify Pay",
+          "default": true
+        },
+        {
+          "type": "paragraph",
+          "content": "Only show payments your checkout accepts."
         }
       ]
     }

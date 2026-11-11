@@ -1,0 +1,789 @@
+{% liquid
+  assign av_cb_product = product
+  assign av_cb_hero_image = product.featured_image
+  assign av_cb_custom_hero_image = blank
+  assign av_cb_accent_color = editor.settings.accent_color | default: '#A84F1B'
+  assign av_cb_deep_color = editor.settings.deep_color | default: '#7D3612'
+  assign av_cb_best_badge = 'Best Seller'
+  assign av_cb_choice_badge = '#1 Choice for Doctors & Practitioners'
+  assign av_cb_show_best_badge = true
+  assign av_cb_show_choice_badge = true
+  assign av_cb_show_rating = true
+  assign av_cb_show_sold = true
+  assign av_cb_show_sale_badge = true
+  assign av_cb_subscribe_label = 'Subscribe & Save'
+  assign av_cb_one_time_label = 'One-Time Purchase'
+  assign av_cb_shipping_note = '$4.95 Shipping'
+  assign av_cb_switch_label = 'Switch back to Subscribe & Save'
+  assign av_cb_show_delivery = true
+  assign av_cb_delivery_label = 'Estimated delivery by:'
+  assign av_cb_delivery_days = 5
+  assign av_cb_show_guarantee = true
+  assign av_cb_show_stock_notice = true
+  assign av_cb_show_low_stock_line = true
+  assign av_cb_stock_color = '#D62828'
+  assign av_cb_stock_background = '#FFF5F5'
+  assign av_cb_guarantee_image_url = 'https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-90-day-money-back-guarantee.png?v=1793736254'
+  assign av_cb_hero_block = blank
+  assign av_cb_details_block = blank
+  assign av_cb_variant = av_cb_product.selected_or_first_available_variant
+  assign av_cb_form_id = 'AvonentCinnamonBerberineForm-' | append: av_cb_product.id
+  assign av_cb_one_time_unit_price = av_cb_variant.price | default: av_cb_product.price
+  assign av_cb_subscription = av_cb_variant.selling_plan_allocations.first
+  assign av_cb_subscription_unit_price = av_cb_one_time_unit_price
+  assign av_cb_subscription_plan_id = blank
+  if av_cb_subscription != blank
+    assign av_cb_subscription_unit_price = av_cb_subscription.price
+    assign av_cb_subscription_plan_id = av_cb_subscription.selling_plan.id
+  endif
+  assign av_cb_unit_price = av_cb_subscription_unit_price
+  assign av_cb_one_time_compare_unit = av_cb_variant.compare_at_price
+  if av_cb_one_time_compare_unit == blank or av_cb_one_time_compare_unit <= av_cb_one_time_unit_price
+    assign av_cb_one_time_compare_unit = 0
+  endif
+  assign av_cb_guarantee_image = av_cb_product.metafields.custom.av_cb_guarantee_image.value
+  assign av_cb_guarantee_highlight = av_cb_product.metafields.custom.av_cb_guarantee_highlight_text.value | default: 'Less than 1%'
+  assign av_cb_guarantee_color = av_cb_product.metafields.custom.av_cb_guarantee_highlight_color.value | default: '#A84F1B'
+  assign av_cb_stock_title = av_cb_product.metafields.custom.av_cb_low_stock_title.value | default: 'WARNING: Low Stock Notice'
+  assign av_cb_stock_text = av_cb_product.metafields.custom.av_cb_low_stock_text.value | default: 'Inventory can move quickly during promotions. If Avonent fits your routine, ordering while stock is available can help avoid interruptions.'
+  assign av_cb_display_title = av_cb_product.metafields.custom.av_cb_display_title.value | default: 'Ceylon Cinnamon 14,400mg Equivalent + Berberine HCl'
+  assign av_cb_hero_description = av_cb_product.metafields.custom.av_cb_hero_description.value | default: 'Avonent Ceylon Cinnamon + Berberine supports healthy blood sugar, glucose metabolism, and everyday metabolic balance — helping support steadier days around meals and throughout the day.*\n\nTake 1 softgel per day. Each serving combines true Sri Lankan Ceylon cinnamon with Berberine HCl in one concentrated formula built for consistent daily use.*'
+  assign av_cb_rating_text = av_cb_product.metafields.custom.av_cb_rating_text.value | default: 'Rated 4.9 • 10,000+ Reviews'
+  assign av_cb_benefit_1 = av_cb_product.metafields.custom.av_cb_benefit_1.value | default: 'Restores Insulin Sensitivity'
+  assign av_cb_benefit_2 = av_cb_product.metafields.custom.av_cb_benefit_2.value | default: 'Stabilizes Blood Sugar Levels'
+  assign av_cb_benefit_3 = av_cb_product.metafields.custom.av_cb_benefit_3.value | default: 'Supports Blood Pressure Naturally'
+  assign av_cb_benefit_4 = av_cb_product.metafields.custom.av_cb_benefit_4.value | default: 'Supports Steady Energy'
+  assign av_cb_sold_percent = av_cb_product.metafields.custom.av_cb_sold_percent.value | default: 93
+  assign av_cb_sale_badge = av_cb_product.metafields.custom.av_cb_sale_badge.value | default: 'Fall Sale – Save 65%'
+  assign av_cb_compare_price = av_cb_product.metafields.custom.av_cb_compare_price.value
+  assign av_cb_bundle_2_badge = av_cb_product.metafields.custom.av_cb_bundle_2_badge.value | default: 'Free Shipping'
+  assign av_cb_bundle_3_badge = av_cb_product.metafields.custom.av_cb_bundle_3_badge.value | default: 'Free Shipping + Free E-Book ($24.99 Value)'
+  assign av_cb_low_stock_line = av_cb_product.metafields.custom.av_cb_low_stock_line.value | default: 'Low Stock – Selling Fast'
+  assign av_cb_bundle_1_title = av_cb_product.metafields.custom.av_cb_bundle_1_title.value | default: 'Buy 1'
+  assign av_cb_bundle_1_subtitle = av_cb_product.metafields.custom.av_cb_bundle_1_subtitle.value
+  assign av_cb_bundle_2_title = av_cb_product.metafields.custom.av_cb_bundle_2_title.value
+  assign av_cb_bundle_2_subtitle = av_cb_product.metafields.custom.av_cb_bundle_2_subtitle.value
+  assign av_cb_bundle_3_title = av_cb_product.metafields.custom.av_cb_bundle_3_title.value
+  assign av_cb_bundle_3_subtitle = av_cb_product.metafields.custom.av_cb_bundle_3_subtitle.value
+  assign av_cb_add_to_cart_text = av_cb_product.metafields.custom.av_cb_add_to_cart_text.value | default: 'Add to Cart'
+  assign av_cb_refill_text = av_cb_product.metafields.custom.av_cb_refill_text.value | default: 'Refills ship every 30 days'
+  assign av_cb_cancel_text = av_cb_product.metafields.custom.av_cb_cancel_text.value | default: 'Stop or cancel anytime'
+  assign av_cb_guarantee_heading = av_cb_product.metafields.custom.av_cb_guarantee_heading.value | default: '90-Day Money-Back Guarantee'
+  assign av_cb_guarantee_body = av_cb_product.metafields.custom.av_cb_guarantee_body.value | default: 'of customers use our 90-Day Money-Back Guarantee.'
+  assign av_cb_acc_1_title = av_cb_product.metafields.custom.av_cb_acc_1_title.value | default: 'Clinically Supported Benefits'
+  assign av_cb_acc_1_body = av_cb_product.metafields.custom.av_cb_acc_1_body.value
+  assign av_cb_acc_2_title = av_cb_product.metafields.custom.av_cb_acc_2_title.value | default: 'Key Ingredients'
+  assign av_cb_acc_2_body = av_cb_product.metafields.custom.av_cb_acc_2_body.value
+  assign av_cb_acc_3_title = av_cb_product.metafields.custom.av_cb_acc_3_title.value | default: 'How It Works'
+  assign av_cb_acc_3_body = av_cb_product.metafields.custom.av_cb_acc_3_body.value
+  assign av_cb_trust_image = av_cb_product.metafields.custom.av_cb_trust_image.value
+  assign av_cb_trust_image_alt = av_cb_product.metafields.custom.av_cb_trust_image_alt.value | default: 'Why Trust Avonent'
+  assign av_cb_stats_heading = av_cb_product.metafields.custom.av_cb_stats_heading.value | default: 'Avonent by the Numbers'
+  assign av_cb_stats_bg = images['avonent-cinnamon-results-background.webp']
+  assign av_cb_stats_overlay_color = av_cb_product.metafields.custom.av_cb_stats_overlay_color.value | default: '#087E9D'
+  assign av_cb_stats_overlay_opacity = av_cb_product.metafields.custom.av_cb_stats_overlay_opacity.value | default: 82
+  assign av_cb_stats_duration = av_cb_product.metafields.custom.av_cb_stats_duration.value | default: 1200
+  assign av_cb_stat_1_start = av_cb_product.metafields.custom.av_cb_stat_1_start.value | default: 0
+  assign av_cb_stat_1_end = av_cb_product.metafields.custom.av_cb_stat_1_end.value
+  assign av_cb_stat_1_label = av_cb_product.metafields.custom.av_cb_stat_1_label.value
+  assign av_cb_stat_2_start = av_cb_product.metafields.custom.av_cb_stat_2_start.value | default: 0
+  assign av_cb_stat_2_end = av_cb_product.metafields.custom.av_cb_stat_2_end.value
+  assign av_cb_stat_2_label = av_cb_product.metafields.custom.av_cb_stat_2_label.value
+  assign av_cb_stat_3_start = av_cb_product.metafields.custom.av_cb_stat_3_start.value | default: 0
+  assign av_cb_stat_3_end = av_cb_product.metafields.custom.av_cb_stat_3_end.value
+  assign av_cb_stat_3_label = av_cb_product.metafields.custom.av_cb_stat_3_label.value
+  assign av_cb_stat_4_start = av_cb_product.metafields.custom.av_cb_stat_4_start.value | default: 0
+  assign av_cb_stat_4_end = av_cb_product.metafields.custom.av_cb_stat_4_end.value
+  assign av_cb_stat_4_label = av_cb_product.metafields.custom.av_cb_stat_4_label.value
+  assign av_cb_stats_cta = av_cb_product.metafields.custom.av_cb_stats_cta.value | default: 'Try Risk-Free Today'
+  assign av_cb_stats_guarantee = av_cb_product.metafields.custom.av_cb_stats_guarantee.value | default: '90-Day Money-Back Guarantee'
+  assign av_cb_stats_guarantee_icon = av_cb_product.metafields.custom.av_cb_stats_guarantee_icon.value
+  assign av_cb_stats_text_color = av_cb_product.metafields.custom.av_cb_stats_text_color.value | default: '#FFFFFF'
+  assign av_cb_stats_show = av_cb_product.metafields.custom.av_cb_stats_show.value
+  assign av_cb_carousel_heading = av_cb_product.metafields.custom.av_cb_carousel_heading.value | default: 'Why This Ceylon Cinnamon Formula Is Built Differently'
+  assign av_cb_carousel_1_image = av_cb_product.metafields.custom.av_cb_carousel_1_image.value
+  assign av_cb_carousel_1_title = av_cb_product.metafields.custom.av_cb_carousel_1_title.value | default: 'Sri Lankan Ceylon With a Centuries-Old Heritage'
+  assign av_cb_carousel_1_body = av_cb_product.metafields.custom.av_cb_carousel_1_body.value | default: 'Cinnamon has been prized for thousands of years, and true Ceylon cinnamon — Cinnamomum verum — is indigenous to Sri Lanka. Avonent starts with genuine Sri Lankan Ceylon, not common Cassia, then uses a supplier-confirmed 12:1 concentrated extract for a clearly disclosed daily serving.'
+  assign av_cb_carousel_2_image = av_cb_product.metafields.custom.av_cb_carousel_2_image.value
+  assign av_cb_carousel_2_title = av_cb_product.metafields.custom.av_cb_carousel_2_title.value | default: '400 mg Berberine HCl for Metabolic Support'
+  assign av_cb_carousel_2_body = av_cb_product.metafields.custom.av_cb_carousel_2_body.value | default: 'Each daily serving delivers 400 mg of Berberine HCl. Berberine has been studied for its role in supporting healthy glucose metabolism, insulin sensitivity, and overall metabolic function.* Avonent builds that support directly into your daily routine — no separate berberine bottle needed.'
+  assign av_cb_carousel_3_image = av_cb_product.metafields.custom.av_cb_carousel_3_image.value
+  assign av_cb_carousel_3_title = av_cb_product.metafields.custom.av_cb_carousel_3_title.value | default: 'MCT Oil Softgel Delivery'
+  assign av_cb_carousel_3_body = av_cb_product.metafields.custom.av_cb_carousel_3_body.value
+  assign av_cb_carousel_4_image = av_cb_product.metafields.custom.av_cb_carousel_4_image.value
+  assign av_cb_carousel_4_title = av_cb_product.metafields.custom.av_cb_carousel_4_title.value | default: '14,400 mg Equivalent. Built for Real Potency.'
+  assign av_cb_carousel_4_body = av_cb_product.metafields.custom.av_cb_carousel_4_body.value | default: 'Many cinnamon supplements rely on a few hundred milligrams of basic powder. Avonent uses a concentrated 12:1 Ceylon extract that delivers the equivalent of 14,400 mg of raw cinnamon per full daily serving — so you get a meaningfully concentrated formula without spooning loose cinnamon into coffee or relying on a long stack of basic powder capsules.'
+  assign av_cb_benefits_heading = av_cb_product.metafields.custom.av_cb_benefits_heading.value | default: 'Feel Supported. Every Day.'
+  assign av_cb_benefits_subheading = av_cb_product.metafields.custom.av_cb_benefits_subheading.value | default: 'A concentrated Ceylon cinnamon + Berberine HCl formula built around simple, consistent daily metabolic support.'
+  assign av_cb_benefits_item_1 = av_cb_product.metafields.custom.av_cb_benefits_item_1.value | default: 'Blood Sugar Support*'
+  assign av_cb_benefits_item_2 = av_cb_product.metafields.custom.av_cb_benefits_item_2.value | default: 'Gentle on the Stomach'
+  assign av_cb_benefits_item_3 = av_cb_product.metafields.custom.av_cb_benefits_item_3.value | default: 'MCT Oil Delivery'
+  assign av_cb_benefits_item_4 = av_cb_product.metafields.custom.av_cb_benefits_item_4.value | default: 'Coumarin-Free Ceylon'
+  assign av_cb_benefits_icon_1 = av_cb_product.metafields.custom.av_cb_benefits_icon_1.value
+  assign av_cb_benefits_icon_2 = av_cb_product.metafields.custom.av_cb_benefits_icon_2.value
+  assign av_cb_benefits_icon_3 = av_cb_product.metafields.custom.av_cb_benefits_icon_3.value
+  assign av_cb_benefits_icon_4 = av_cb_product.metafields.custom.av_cb_benefits_icon_4.value
+  assign av_cb_benefits_image = av_cb_product.metafields.custom.av_cb_benefits_image.value
+  assign av_cb_benefits_bg = av_cb_product.metafields.custom.av_cb_benefits_bg.value | default: '#0A88A6'
+  assign av_cb_benefits_text = av_cb_product.metafields.custom.av_cb_benefits_text.value | default: '#FFFFFF'
+  assign av_cb_benefits_disclaimer = blank
+  assign av_cb_science_heading = av_cb_product.metafields.custom.av_cb_science_heading.value | default: 'Two Ingredients. Two Complementary Paths to Metabolic Support.'
+  assign av_cb_science_intro = av_cb_product.metafields.custom.av_cb_science_intro.value | default: 'True Ceylon cinnamon and Berberine HCl are researched for different roles in metabolic health. Avonent brings them together in one clearly disclosed formula to support healthy blood sugar, glucose metabolism, insulin sensitivity, and everyday metabolic balance.*'
+  assign av_cb_science_1_image = av_cb_product.metafields.custom.av_cb_science_1_image.value
+  assign av_cb_science_1_title = av_cb_product.metafields.custom.av_cb_science_1_title.value | default: 'Blood Sugar Support*'
+  assign av_cb_science_1_subtitle = av_cb_product.metafields.custom.av_cb_science_1_subtitle.value | default: 'Supports healthy glucose metabolism*'
+  assign av_cb_science_1_body = av_cb_product.metafields.custom.av_cb_science_1_body.value | default: 'True Ceylon cinnamon and berberine have been studied for their roles in healthy glucose metabolism. Avonent pairs a concentrated 12:1 Ceylon extract with Berberine HCl in one clearly disclosed formula built for consistent daily metabolic support.*'
+  assign av_cb_science_2_image = av_cb_product.metafields.custom.av_cb_science_2_image.value
+  assign av_cb_science_2_title = av_cb_product.metafields.custom.av_cb_science_2_title.value | default: 'Gentle on the Stomach'
+  assign av_cb_science_2_subtitle = av_cb_product.metafields.custom.av_cb_science_2_subtitle.value | default: 'Oil-based softgel, no cinnamon powder'
+  assign av_cb_science_2_body = av_cb_product.metafields.custom.av_cb_science_2_body.value | default: 'Avonent uses an MCT-oil softgel instead of a dry cinnamon powder capsule. No loose powder and no gritty cinnamon taste — just a smoother daily format designed to be easy to take consistently.'
+  assign av_cb_science_3_image = av_cb_product.metafields.custom.av_cb_science_3_image.value
+  assign av_cb_science_3_title = av_cb_product.metafields.custom.av_cb_science_3_title.value | default: 'Liver Health Support'
+  assign av_cb_science_3_subtitle = av_cb_product.metafields.custom.av_cb_science_3_subtitle.value | default: 'Made with coumarin-free Ceylon cinnamon'
+  assign av_cb_science_3_body = av_cb_product.metafields.custom.av_cb_science_3_body.value | default: 'Avonent uses Cinnamomum verum — true Ceylon cinnamon rather than common Cassia. The lab test provided for this formula reported no detectable coumarin, supporting a cleaner cinnamon choice for a consistent daily routine.'
+  assign av_cb_science_4_image = av_cb_product.metafields.custom.av_cb_science_4_image.value
+  assign av_cb_science_4_title = av_cb_product.metafields.custom.av_cb_science_4_title.value | default: 'Enhanced Absorption'
+  assign av_cb_science_4_subtitle = av_cb_product.metafields.custom.av_cb_science_4_subtitle.value | default: 'Helps your body absorb cinnamon'
+  assign av_cb_science_4_body = av_cb_product.metafields.custom.av_cb_science_4_body.value | default: 'Avonent suspends its concentrated Ceylon cinnamon extract in MCT oil inside a softgel instead of using a basic dry-powder capsule. The oil-based carrier is designed to support efficient delivery while keeping the daily routine simple and easy to take.'
+  assign av_cb_science_cta = av_cb_product.metafields.custom.av_cb_science_cta.value | default: 'Try Risk-Free Today'
+  assign av_cb_science_guarantee = av_cb_product.metafields.custom.av_cb_science_guarantee.value | default: '90-Day Money-Back Guarantee'
+  assign av_cb_science_ticker_1 = av_cb_product.metafields.custom.av_cb_science_ticker_1.value | default: '14,400 mg Ceylon Equivalent'
+  assign av_cb_science_ticker_2 = av_cb_product.metafields.custom.av_cb_science_ticker_2.value | default: '400 mg Berberine HCl'
+  assign av_cb_science_ticker_3 = av_cb_product.metafields.custom.av_cb_science_ticker_3.value | default: '200 mg MCT Oil'
+  assign av_cb_science_ticker_4 = av_cb_product.metafields.custom.av_cb_science_ticker_4.value | default: '30 Daily Servings'
+  assign av_cb_science_bg = av_cb_product.metafields.custom.av_cb_science_bg.value | default: '#FFF8F2'
+  assign av_cb_science_accent = av_cb_product.metafields.custom.av_cb_science_accent.value | default: '#A84F1B'
+  assign av_cb_journey_image = av_cb_product.metafields.custom.av_cb_journey_image.value
+  assign av_cb_journey_eyebrow = av_cb_product.metafields.custom.av_cb_journey_eyebrow.value | default: 'YOUR DAILY ROUTINE'
+  assign av_cb_journey_heading = av_cb_product.metafields.custom.av_cb_journey_heading.value | default: 'What You Might Expect from Daily Use of Avonent'
+  assign av_cb_journey_intro = av_cb_product.metafields.custom.av_cb_journey_intro.value | default: 'Consistency matters. Here is a simple look at how a steady daily routine with Avonent may feel over time.*'
+  assign av_cb_journey_1_label = av_cb_product.metafields.custom.av_cb_journey_1_label.value | default: '1 Week'
+  assign av_cb_journey_1_body = av_cb_product.metafields.custom.av_cb_journey_1_body.value | default: 'Nothing dramatic yet. The ingredients are becoming part of your daily routine, and the afternoon may begin to feel a little more even.*'
+  assign av_cb_journey_2_label = av_cb_product.metafields.custom.av_cb_journey_2_label.value | default: '1 Month'
+  assign av_cb_journey_2_body = av_cb_product.metafields.custom.av_cb_journey_2_body.value | default: 'Meals may feel a little easier to move through, with less of an afternoon dip and more steadiness across the day.*'
+  assign av_cb_journey_3_label = av_cb_product.metafields.custom.av_cb_journey_3_label.value | default: '2 Months'
+  assign av_cb_journey_3_body = av_cb_product.metafields.custom.av_cb_journey_3_body.value | default: 'You may notice steadier energy, fewer cravings, and less pull toward late-night snacking as consistency builds.*'
+  assign av_cb_journey_4_label = av_cb_product.metafields.custom.av_cb_journey_4_label.value | default: '3 Months'
+  assign av_cb_journey_4_body = av_cb_product.metafields.custom.av_cb_journey_4_body.value | default: 'Your metabolic-support routine has had time to build. This is where staying consistent can matter most.*'
+  assign av_cb_journey_5_label = av_cb_product.metafields.custom.av_cb_journey_5_label.value | default: '6 Months'
+  assign av_cb_journey_5_body = av_cb_product.metafields.custom.av_cb_journey_5_body.value | default: 'Your body has received months of consistent daily support for healthy insulin response, metabolic balance, and antioxidant activity — meal after meal.*'
+  assign av_cb_journey_6_label = av_cb_product.metafields.custom.av_cb_journey_6_label.value | default: '12 Months'
+  assign av_cb_journey_6_body = av_cb_product.metafields.custom.av_cb_journey_6_body.value | default: 'With long-term consistency, Avonent can become a simple foundation in your metabolic routine — steady support, day after day.*'
+  assign av_cb_compare_heading = av_cb_product.metafields.custom.av_cb_compare_heading.value | default: 'Why Avonent Stands Apart From Typical Cinnamon Supplements'
+  assign av_cb_compare_subheading = av_cb_product.metafields.custom.av_cb_compare_subheading.value | default: 'True Sri Lankan Ceylon. A full-strength 12:1 extract. Berberine HCl. A clearly disclosed softgel formula built with intention.'
+  assign av_cb_compare_cta = av_cb_product.metafields.custom.av_cb_compare_cta.value | default: 'Try Avonent Risk-Free'
+  assign av_cb_compare_guarantee = av_cb_product.metafields.custom.av_cb_compare_guarantee.value | default: '90-Day Money-Back Guarantee'
+  assign av_cb_risk_image = blank
+  assign av_cb_risk_eyebrow = 'FEEL THE DIFFERENCE'
+  assign av_cb_risk_heading = '90-Day Risk-Free Trial'
+  assign av_cb_risk_body = 'Try Avonent for 90 days. If it is not right for you, contact us within 90 days and we will help with the next steps under our refund policy.'
+  assign av_cb_risk_button = 'Try Risk-Free Today'
+  assign av_cb_risk_bg = '#FFF4EC'
+  assign av_cb_risk_accent = '#A84F1B'
+  assign av_cb_faq_heading = av_cb_product.metafields.custom.av_cb_faq_heading.value | default: 'Frequently Asked Questions'
+  assign av_cb_faq_1_q = av_cb_product.metafields.custom.av_cb_faq_1_q.value
+  assign av_cb_faq_1_a = av_cb_product.metafields.custom.av_cb_faq_1_a.value
+  assign av_cb_faq_2_q = av_cb_product.metafields.custom.av_cb_faq_2_q.value
+  assign av_cb_faq_2_a = av_cb_product.metafields.custom.av_cb_faq_2_a.value
+  assign av_cb_faq_3_q = av_cb_product.metafields.custom.av_cb_faq_3_q.value
+  assign av_cb_faq_3_a = av_cb_product.metafields.custom.av_cb_faq_3_a.value
+  assign av_cb_faq_4_q = av_cb_product.metafields.custom.av_cb_faq_4_q.value
+  assign av_cb_faq_4_a = av_cb_product.metafields.custom.av_cb_faq_4_a.value
+  assign av_cb_faq_5_q = av_cb_product.metafields.custom.av_cb_faq_5_q.value
+  assign av_cb_faq_5_a = av_cb_product.metafields.custom.av_cb_faq_5_a.value
+  assign av_cb_faq_6_q = av_cb_product.metafields.custom.av_cb_faq_6_q.value
+  assign av_cb_faq_6_a = av_cb_product.metafields.custom.av_cb_faq_6_a.value
+
+  for content_block in editor.blocks
+    case content_block.type
+      when 'hero'
+        assign av_cb_hero_block = content_block
+        assign av_cb_hero_image = content_block.settings.hero_image | default: product.featured_image
+        assign av_cb_custom_hero_image = content_block.settings.hero_image
+        assign av_cb_show_best_badge = content_block.settings.show_best_badge
+        assign av_cb_show_choice_badge = content_block.settings.show_choice_badge
+        assign av_cb_show_rating = content_block.settings.show_rating
+        assign av_cb_show_sold = content_block.settings.show_sold
+        assign av_cb_show_sale_badge = content_block.settings.show_sale_badge
+        assign av_cb_show_delivery = content_block.settings.show_delivery
+        if content_block.settings.best_badge != blank
+          assign av_cb_best_badge = content_block.settings.best_badge
+        endif
+        if content_block.settings.choice_badge != blank
+          assign av_cb_choice_badge = content_block.settings.choice_badge
+        endif
+        if content_block.settings.subscribe_label != blank
+          assign av_cb_subscribe_label = content_block.settings.subscribe_label
+        endif
+        if content_block.settings.one_time_label != blank
+          assign av_cb_one_time_label = content_block.settings.one_time_label
+        endif
+        if content_block.settings.shipping_note != blank
+          assign av_cb_shipping_note = content_block.settings.shipping_note
+        endif
+        if content_block.settings.switch_label != blank
+          assign av_cb_switch_label = content_block.settings.switch_label
+        endif
+        if content_block.settings.delivery_label != blank
+          assign av_cb_delivery_label = content_block.settings.delivery_label
+        endif
+        assign av_cb_delivery_days = content_block.settings.delivery_days | default: 5
+        if content_block.settings.display_title != blank
+          assign av_cb_display_title = content_block.settings.display_title
+        endif
+        if content_block.settings.hero_description != blank
+          assign av_cb_hero_description = content_block.settings.hero_description
+        endif
+        if content_block.settings.rating_text != blank
+          assign av_cb_rating_text = content_block.settings.rating_text
+        endif
+        if content_block.settings.benefit_1 != blank
+          assign av_cb_benefit_1 = content_block.settings.benefit_1
+        endif
+        if content_block.settings.benefit_2 != blank
+          assign av_cb_benefit_2 = content_block.settings.benefit_2
+        endif
+        if content_block.settings.benefit_3 != blank
+          assign av_cb_benefit_3 = content_block.settings.benefit_3
+        endif
+        if content_block.settings.benefit_4 != blank
+          assign av_cb_benefit_4 = content_block.settings.benefit_4
+        endif
+        if content_block.settings.sold_percent != blank
+          assign av_cb_sold_percent = content_block.settings.sold_percent
+        endif
+        if content_block.settings.sale_badge != blank
+          assign av_cb_sale_badge = content_block.settings.sale_badge
+        endif
+        if content_block.settings.bundle_2_badge != blank
+          assign av_cb_bundle_2_badge = content_block.settings.bundle_2_badge
+        endif
+        if content_block.settings.bundle_3_badge != blank
+          assign av_cb_bundle_3_badge = content_block.settings.bundle_3_badge
+        endif
+        if content_block.settings.bundle_1_title != blank
+          assign av_cb_bundle_1_title = content_block.settings.bundle_1_title
+        endif
+        if content_block.settings.bundle_1_subtitle != blank
+          assign av_cb_bundle_1_subtitle = content_block.settings.bundle_1_subtitle
+        endif
+        if content_block.settings.bundle_2_title != blank
+          assign av_cb_bundle_2_title = content_block.settings.bundle_2_title
+        endif
+        if content_block.settings.bundle_2_subtitle != blank
+          assign av_cb_bundle_2_subtitle = content_block.settings.bundle_2_subtitle
+        endif
+        if content_block.settings.bundle_3_title != blank
+          assign av_cb_bundle_3_title = content_block.settings.bundle_3_title
+        endif
+        if content_block.settings.bundle_3_subtitle != blank
+          assign av_cb_bundle_3_subtitle = content_block.settings.bundle_3_subtitle
+        endif
+        if content_block.settings.add_to_cart_text != blank
+          assign av_cb_add_to_cart_text = content_block.settings.add_to_cart_text
+        endif
+        if content_block.settings.refill_text != blank
+          assign av_cb_refill_text = content_block.settings.refill_text
+        endif
+        if content_block.settings.cancel_text != blank
+          assign av_cb_cancel_text = content_block.settings.cancel_text
+        endif
+      when 'results'
+        if content_block.settings.stats_heading != blank
+          assign av_cb_stats_heading = content_block.settings.stats_heading
+        endif
+        if content_block.settings.stats_bg != blank
+          assign av_cb_stats_bg = content_block.settings.stats_bg
+        endif
+        if content_block.settings.stats_overlay_color != blank
+          assign av_cb_stats_overlay_color = content_block.settings.stats_overlay_color
+        endif
+        if content_block.settings.stats_overlay_opacity != blank
+          assign av_cb_stats_overlay_opacity = content_block.settings.stats_overlay_opacity
+        endif
+        if content_block.settings.stats_duration != blank
+          assign av_cb_stats_duration = content_block.settings.stats_duration
+        endif
+        if content_block.settings.stat_1_start != blank
+          assign av_cb_stat_1_start = content_block.settings.stat_1_start
+        endif
+        if content_block.settings.stat_1_end != blank
+          assign av_cb_stat_1_end = content_block.settings.stat_1_end
+        endif
+        if content_block.settings.stat_1_label != blank
+          assign av_cb_stat_1_label = content_block.settings.stat_1_label
+        endif
+        if content_block.settings.stat_2_start != blank
+          assign av_cb_stat_2_start = content_block.settings.stat_2_start
+        endif
+        if content_block.settings.stat_2_end != blank
+          assign av_cb_stat_2_end = content_block.settings.stat_2_end
+        endif
+        if content_block.settings.stat_2_label != blank
+          assign av_cb_stat_2_label = content_block.settings.stat_2_label
+        endif
+        if content_block.settings.stat_3_start != blank
+          assign av_cb_stat_3_start = content_block.settings.stat_3_start
+        endif
+        if content_block.settings.stat_3_end != blank
+          assign av_cb_stat_3_end = content_block.settings.stat_3_end
+        endif
+        if content_block.settings.stat_3_label != blank
+          assign av_cb_stat_3_label = content_block.settings.stat_3_label
+        endif
+        if content_block.settings.stat_4_start != blank
+          assign av_cb_stat_4_start = content_block.settings.stat_4_start
+        endif
+        if content_block.settings.stat_4_end != blank
+          assign av_cb_stat_4_end = content_block.settings.stat_4_end
+        endif
+        if content_block.settings.stat_4_label != blank
+          assign av_cb_stat_4_label = content_block.settings.stat_4_label
+        endif
+        if content_block.settings.stats_cta != blank
+          assign av_cb_stats_cta = content_block.settings.stats_cta
+        endif
+        if content_block.settings.stats_guarantee != blank
+          assign av_cb_stats_guarantee = content_block.settings.stats_guarantee
+        endif
+        if content_block.settings.stats_guarantee_icon != blank
+          assign av_cb_stats_guarantee_icon = content_block.settings.stats_guarantee_icon
+        endif
+        if content_block.settings.stats_text_color != blank
+          assign av_cb_stats_text_color = content_block.settings.stats_text_color
+        endif
+        if content_block.settings.stats_show != blank
+          assign av_cb_stats_show = content_block.settings.stats_show
+        endif
+      when 'carousel'
+        if content_block.settings.carousel_heading != blank
+          assign av_cb_carousel_heading = content_block.settings.carousel_heading
+        endif
+        if content_block.settings.carousel_1_image != blank
+          assign av_cb_carousel_1_image = content_block.settings.carousel_1_image
+        endif
+        if content_block.settings.carousel_1_title != blank
+          assign av_cb_carousel_1_title = content_block.settings.carousel_1_title
+        endif
+        if content_block.settings.carousel_1_body != blank
+          assign av_cb_carousel_1_body = content_block.settings.carousel_1_body
+        endif
+        if content_block.settings.carousel_2_image != blank
+          assign av_cb_carousel_2_image = content_block.settings.carousel_2_image
+        endif
+        if content_block.settings.carousel_2_title != blank
+          assign av_cb_carousel_2_title = content_block.settings.carousel_2_title
+        endif
+        if content_block.settings.carousel_2_body != blank
+          assign av_cb_carousel_2_body = content_block.settings.carousel_2_body
+        endif
+        if content_block.settings.carousel_3_image != blank
+          assign av_cb_carousel_3_image = content_block.settings.carousel_3_image
+        endif
+        if content_block.settings.carousel_3_title != blank
+          assign av_cb_carousel_3_title = content_block.settings.carousel_3_title
+        endif
+        if content_block.settings.carousel_3_body != blank
+          assign av_cb_carousel_3_body = content_block.settings.carousel_3_body
+        endif
+        if content_block.settings.carousel_4_image != blank
+          assign av_cb_carousel_4_image = content_block.settings.carousel_4_image
+        endif
+        if content_block.settings.carousel_4_title != blank
+          assign av_cb_carousel_4_title = content_block.settings.carousel_4_title
+        endif
+        if content_block.settings.carousel_4_body != blank
+          assign av_cb_carousel_4_body = content_block.settings.carousel_4_body
+        endif
+      when 'science'
+        if content_block.settings.science_heading != blank
+          assign av_cb_science_heading = content_block.settings.science_heading
+        endif
+        if content_block.settings.science_intro != blank
+          assign av_cb_science_intro = content_block.settings.science_intro
+        endif
+        if content_block.settings.science_1_image != blank
+          assign av_cb_science_1_image = content_block.settings.science_1_image
+        endif
+        if content_block.settings.science_1_title != blank
+          assign av_cb_science_1_title = content_block.settings.science_1_title
+        endif
+        if content_block.settings.science_1_subtitle != blank
+          assign av_cb_science_1_subtitle = content_block.settings.science_1_subtitle
+        endif
+        if content_block.settings.science_1_body != blank
+          assign av_cb_science_1_body = content_block.settings.science_1_body
+        endif
+        if content_block.settings.science_2_image != blank
+          assign av_cb_science_2_image = content_block.settings.science_2_image
+        endif
+        if content_block.settings.science_2_title != blank
+          assign av_cb_science_2_title = content_block.settings.science_2_title
+        endif
+        if content_block.settings.science_2_subtitle != blank
+          assign av_cb_science_2_subtitle = content_block.settings.science_2_subtitle
+        endif
+        if content_block.settings.science_2_body != blank
+          assign av_cb_science_2_body = content_block.settings.science_2_body
+        endif
+        if content_block.settings.science_3_image != blank
+          assign av_cb_science_3_image = content_block.settings.science_3_image
+        endif
+        if content_block.settings.science_3_title != blank
+          assign av_cb_science_3_title = content_block.settings.science_3_title
+        endif
+        if content_block.settings.science_3_subtitle != blank
+          assign av_cb_science_3_subtitle = content_block.settings.science_3_subtitle
+        endif
+        if content_block.settings.science_3_body != blank
+          assign av_cb_science_3_body = content_block.settings.science_3_body
+        endif
+        if content_block.settings.science_4_image != blank
+          assign av_cb_science_4_image = content_block.settings.science_4_image
+        endif
+        if content_block.settings.science_4_title != blank
+          assign av_cb_science_4_title = content_block.settings.science_4_title
+        endif
+        if content_block.settings.science_4_subtitle != blank
+          assign av_cb_science_4_subtitle = content_block.settings.science_4_subtitle
+        endif
+        if content_block.settings.science_4_body != blank
+          assign av_cb_science_4_body = content_block.settings.science_4_body
+        endif
+        if content_block.settings.science_cta != blank
+          assign av_cb_science_cta = content_block.settings.science_cta
+        endif
+        if content_block.settings.science_guarantee != blank
+          assign av_cb_science_guarantee = content_block.settings.science_guarantee
+        endif
+        if content_block.settings.science_ticker_1 != blank
+          assign av_cb_science_ticker_1 = content_block.settings.science_ticker_1
+        endif
+        if content_block.settings.science_ticker_2 != blank
+          assign av_cb_science_ticker_2 = content_block.settings.science_ticker_2
+        endif
+        if content_block.settings.science_ticker_3 != blank
+          assign av_cb_science_ticker_3 = content_block.settings.science_ticker_3
+        endif
+        if content_block.settings.science_ticker_4 != blank
+          assign av_cb_science_ticker_4 = content_block.settings.science_ticker_4
+        endif
+        if content_block.settings.science_bg != blank
+          assign av_cb_science_bg = content_block.settings.science_bg
+        endif
+        if content_block.settings.science_accent != blank
+          assign av_cb_science_accent = content_block.settings.science_accent
+        endif
+      when 'journey'
+        if content_block.settings.journey_image != blank
+          assign av_cb_journey_image = content_block.settings.journey_image
+        endif
+        if content_block.settings.journey_eyebrow != blank
+          assign av_cb_journey_eyebrow = content_block.settings.journey_eyebrow
+        endif
+        if content_block.settings.journey_heading != blank
+          assign av_cb_journey_heading = content_block.settings.journey_heading
+        endif
+        if content_block.settings.journey_intro != blank
+          assign av_cb_journey_intro = content_block.settings.journey_intro
+        endif
+        if content_block.settings.journey_1_label != blank
+          assign av_cb_journey_1_label = content_block.settings.journey_1_label
+        endif
+        if content_block.settings.journey_1_body != blank
+          assign av_cb_journey_1_body = content_block.settings.journey_1_body
+        endif
+        if content_block.settings.journey_2_label != blank
+          assign av_cb_journey_2_label = content_block.settings.journey_2_label
+        endif
+        if content_block.settings.journey_2_body != blank
+          assign av_cb_journey_2_body = content_block.settings.journey_2_body
+        endif
+        if content_block.settings.journey_3_label != blank
+          assign av_cb_journey_3_label = content_block.settings.journey_3_label
+        endif
+        if content_block.settings.journey_3_body != blank
+          assign av_cb_journey_3_body = content_block.settings.journey_3_body
+        endif
+        if content_block.settings.journey_4_label != blank
+          assign av_cb_journey_4_label = content_block.settings.journey_4_label
+        endif
+        if content_block.settings.journey_4_body != blank
+          assign av_cb_journey_4_body = content_block.settings.journey_4_body
+        endif
+        if content_block.settings.journey_5_label != blank
+          assign av_cb_journey_5_label = content_block.settings.journey_5_label
+        endif
+        if content_block.settings.journey_5_body != blank
+          assign av_cb_journey_5_body = content_block.settings.journey_5_body
+        endif
+        if content_block.settings.journey_6_label != blank
+          assign av_cb_journey_6_label = content_block.settings.journey_6_label
+        endif
+        if content_block.settings.journey_6_body != blank
+          assign av_cb_journey_6_body = content_block.settings.journey_6_body
+        endif
+      when 'compare'
+        if content_block.settings.compare_price != blank
+          assign av_cb_compare_price = content_block.settings.compare_price
+        endif
+        if content_block.settings.compare_heading != blank
+          assign av_cb_compare_heading = content_block.settings.compare_heading
+        endif
+        if content_block.settings.compare_subheading != blank
+          assign av_cb_compare_subheading = content_block.settings.compare_subheading
+        endif
+        if content_block.settings.compare_cta != blank
+          assign av_cb_compare_cta = content_block.settings.compare_cta
+        endif
+        if content_block.settings.compare_guarantee != blank
+          assign av_cb_compare_guarantee = content_block.settings.compare_guarantee
+        endif
+      when 'benefits'
+        assign av_cb_benefits_block = content_block
+        if content_block.settings.benefits_heading != blank
+          assign av_cb_benefits_heading = content_block.settings.benefits_heading
+        endif
+        if content_block.settings.benefits_subheading != blank
+          assign av_cb_benefits_subheading = content_block.settings.benefits_subheading
+        endif
+        if content_block.settings.benefits_item_1 != blank
+          assign av_cb_benefits_item_1 = content_block.settings.benefits_item_1
+        endif
+        if content_block.settings.benefits_item_2 != blank
+          assign av_cb_benefits_item_2 = content_block.settings.benefits_item_2
+        endif
+        if content_block.settings.benefits_item_3 != blank
+          assign av_cb_benefits_item_3 = content_block.settings.benefits_item_3
+        endif
+        if content_block.settings.benefits_item_4 != blank
+          assign av_cb_benefits_item_4 = content_block.settings.benefits_item_4
+        endif
+        if content_block.settings.benefits_icon_1 != blank
+          assign av_cb_benefits_icon_1 = content_block.settings.benefits_icon_1
+        endif
+        if content_block.settings.benefits_icon_2 != blank
+          assign av_cb_benefits_icon_2 = content_block.settings.benefits_icon_2
+        endif
+        if content_block.settings.benefits_icon_3 != blank
+          assign av_cb_benefits_icon_3 = content_block.settings.benefits_icon_3
+        endif
+        if content_block.settings.benefits_icon_4 != blank
+          assign av_cb_benefits_icon_4 = content_block.settings.benefits_icon_4
+        endif
+        if content_block.settings.benefits_image != blank
+          assign av_cb_benefits_image = content_block.settings.benefits_image
+        endif
+        if content_block.settings.benefits_bg != blank
+          assign av_cb_benefits_bg = content_block.settings.benefits_bg
+        endif
+        if content_block.settings.benefits_text != blank
+          assign av_cb_benefits_text = content_block.settings.benefits_text
+        endif
+        if content_block.settings.benefits_disclaimer != blank
+          assign av_cb_benefits_disclaimer = content_block.settings.benefits_disclaimer
+        endif
+      when 'risk_free'
+        assign av_cb_risk_block = content_block
+        if content_block.settings.image != blank
+          assign av_cb_risk_image = content_block.settings.image
+        endif
+        if content_block.settings.eyebrow != blank
+          assign av_cb_risk_eyebrow = content_block.settings.eyebrow
+        endif
+        if content_block.settings.heading != blank
+          assign av_cb_risk_heading = content_block.settings.heading
+        endif
+        if content_block.settings.body != blank
+          assign av_cb_risk_body = content_block.settings.body
+        endif
+        if content_block.settings.button_text != blank
+          assign av_cb_risk_button = content_block.settings.button_text
+        endif
+        if content_block.settings.background != blank
+          assign av_cb_risk_bg = content_block.settings.background
+        endif
+        if content_block.settings.accent != blank
+          assign av_cb_risk_accent = content_block.settings.accent
+        endif
+      when 'faq'
+        if content_block.settings.faq_heading != blank
+          assign av_cb_faq_heading = content_block.settings.faq_heading
+        endif
+        if content_block.settings.faq_1_q != blank
+          assign av_cb_faq_1_q = content_block.settings.faq_1_q
+        endif
+        if content_block.settings.faq_1_a != blank
+          assign av_cb_faq_1_a = content_block.settings.faq_1_a
+        endif
+        if content_block.settings.faq_2_q != blank
+          assign av_cb_faq_2_q = content_block.settings.faq_2_q
+        endif
+        if content_block.settings.faq_2_a != blank
+          assign av_cb_faq_2_a = content_block.settings.faq_2_a
+        endif
+        if content_block.settings.faq_3_q != blank
+          assign av_cb_faq_3_q = content_block.settings.faq_3_q
+        endif
+        if content_block.settings.faq_3_a != blank
+          assign av_cb_faq_3_a = content_block.settings.faq_3_a
+        endif
+        if content_block.settings.faq_4_q != blank
+          assign av_cb_faq_4_q = content_block.settings.faq_4_q
+        endif
+        if content_block.settings.faq_4_a != blank
+          assign av_cb_faq_4_a = content_block.settings.faq_4_a
+        endif
+        if content_block.settings.faq_5_q != blank
+          assign av_cb_faq_5_q = content_block.settings.faq_5_q
+        endif
+        if content_block.settings.faq_5_a != blank
+          assign av_cb_faq_5_a = content_block.settings.faq_5_a
+        endif
+        if content_block.settings.faq_6_q != blank
+          assign av_cb_faq_6_q = content_block.settings.faq_6_q
+        endif
+        if content_block.settings.faq_6_a != blank
+          assign av_cb_faq_6_a = content_block.settings.faq_6_a
+        endif
+      when 'details'
+        assign av_cb_details_block = content_block
+        assign av_cb_show_guarantee = content_block.settings.show_guarantee
+        assign av_cb_show_stock_notice = content_block.settings.show_stock_notice
+        assign av_cb_show_low_stock_line = content_block.settings.show_low_stock_line
+        if content_block.settings.guarantee_image_url != blank
+          assign av_cb_guarantee_image_url = content_block.settings.guarantee_image_url
+        endif
+        if content_block.settings.stock_color != blank
+          assign av_cb_stock_color = content_block.settings.stock_color
+        endif
+        if content_block.settings.stock_background != blank
+          assign av_cb_stock_background = content_block.settings.stock_background
+        endif
+        if content_block.settings.guarantee_image != blank
+          assign av_cb_guarantee_image = content_block.settings.guarantee_image
+        endif
+        if content_block.settings.guarantee_highlight != blank
+          assign av_cb_guarantee_highlight = content_block.settings.guarantee_highlight
+        endif
+        if content_block.settings.guarantee_color != blank
+          assign av_cb_guarantee_color = content_block.settings.guarantee_color
+        endif
+        if content_block.settings.stock_title != blank
+          assign av_cb_stock_title = content_block.settings.stock_title
+        endif
+        if content_block.settings.stock_text != blank
+          assign av_cb_stock_text = content_block.settings.stock_text
+        endif
+        if content_block.settings.low_stock_line != blank
+          assign av_cb_low_stock_line = content_block.settings.low_stock_line
+        endif
+        if content_block.settings.guarantee_heading != blank
+          assign av_cb_guarantee_heading = content_block.settings.guarantee_heading
+        endif
+        if content_block.settings.guarantee_body != blank
+          assign av_cb_guarantee_body = content_block.settings.guarantee_body
+        endif
+        if content_block.settings.acc_1_title != blank
+          assign av_cb_acc_1_title = content_block.settings.acc_1_title
+        endif
+        if content_block.settings.acc_1_body != blank
+          assign av_cb_acc_1_body = content_block.settings.acc_1_body
+        endif
+        if content_block.settings.acc_2_title != blank
+          assign av_cb_acc_2_title = content_block.settings.acc_2_title
+        endif
+        if content_block.settings.acc_2_body != blank
+          assign av_cb_acc_2_body = content_block.settings.acc_2_body
+        endif
+        if content_block.settings.acc_3_title != blank
+          assign av_cb_acc_3_title = content_block.settings.acc_3_title
+        endif
+        if content_block.settings.acc_3_body != blank
+          assign av_cb_acc_3_body = content_block.settings.acc_3_body
+        endif
+        if content_block.settings.trust_image != blank
+          assign av_cb_trust_image = content_block.settings.trust_image
+        endif
+        if content_block.settings.trust_image_alt != blank
+          assign av_cb_trust_image_alt = content_block.settings.trust_image_alt
+        endif
+    endcase
+  endfor
+
+  if editor.settings.trust_image != blank
+    assign av_cb_trust_image = editor.settings.trust_image
+  endif
+  if editor.settings.trust_image_alt != blank
+    assign av_cb_trust_image_alt = editor.settings.trust_image_alt
+  endif
+
+  assign av_cb_stats_guarantee = '90-Day Money-Back Guarantee'
+  assign av_cb_compare_guarantee = '90-Day Money-Back Guarantee'
+  assign av_cb_bonus_product = editor.settings.bonus_product
+  assign av_cb_bonus_variant = av_cb_bonus_product.selected_or_first_available_variant
+  assign av_cb_ebook_product = editor.settings.ebook_product
+  assign av_cb_ebook_variant = av_cb_ebook_product.selected_or_first_available_variant
+  if av_cb_bundle_2_title == blank
+    if av_cb_bonus_variant != blank
+      assign av_cb_bundle_2_title = 'Buy 2 Get 1 FREE'
+    else
+      assign av_cb_bundle_2_title = 'Buy 2'
+    endif
+  endif
+  if av_cb_bundle_3_title == blank
+    if av_cb_bonus_variant != blank
+      assign av_cb_bundle_3_title = 'Buy 3 Get 2 FREE'
+    else
+      assign av_cb_bundle_3_title = 'Buy 3'
+    endif
+  endif
+%}
+{% liquid
+        assign av_cb_risk_block = editor
+        if editor.settings.image != blank
+          assign av_cb_risk_image = editor.settings.image
+        endif
+        if editor.settings.eyebrow != blank
+          assign av_cb_risk_eyebrow = editor.settings.eyebrow
+        endif
+        if editor.settings.heading != blank
+          assign av_cb_risk_heading = editor.settings.heading
+        endif
+        if editor.settings.body != blank
+          assign av_cb_risk_body = editor.settings.body
+        endif
+        if editor.settings.button_text != blank
+          assign av_cb_risk_button = editor.settings.button_text
+        endif
+        if editor.settings.background != blank
+          assign av_cb_risk_bg = editor.settings.background
+        endif
+        if editor.settings.accent != blank
+          assign av_cb_risk_accent = editor.settings.accent
+        endif
+
+%}
+<div class="av-cb av-cb--standalone" data-av-cb-section="risk_free">
+<section class="av-cb__risk-section" style="--risk-bg:{{ av_cb_risk_bg }};--risk-accent:{{ av_cb_risk_accent }};"{% if av_cb_risk_block != blank %} {{ av_cb_risk_block.shopify_attributes }}{% endif %}>
+    <div class="av-cb__risk-inner">
+      <div class="av-cb__risk-seal" aria-label="90 day risk-free guarantee">
+        <span class="av-cb__risk-seal-top">Risk Free</span>
+        <strong>90</strong>
+        <small>days</small>
+        <span class="av-cb__risk-seal-bottom">Guarantee</span>
+      </div>
+      <div class="av-cb__risk-eyebrow">{{ av_cb_risk_eyebrow }}</div>
+      <h2>{{ av_cb_risk_heading }}</h2>
+      <p>{{ av_cb_risk_body | newline_to_br }}</p>
+      <a class="av-cb__risk-button" href="#av-cb-top">{{ av_cb_risk_button }}</a>
+      <div class="av-cb__risk-image-wrap">
+        {% if av_cb_risk_image != blank %}
+          {{ av_cb_risk_image | image_url: width: 1800 | image_tag: class: 'av-cb__risk-image', loading: 'lazy', widths: '600,900,1200,1600,1800', sizes: '(min-width:900px) 760px, 100vw', alt: av_cb_risk_heading }}
+        {% elsif av_cb_product.featured_image %}
+          {{ av_cb_product.featured_image | image_url: width: 1600 | image_tag: class: 'av-cb__risk-image av-cb__risk-image--fallback', loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width:900px) 760px, 100vw', alt: av_cb_display_title }}
+        {% endif %}
+      </div>
+    </div>
+  </section>
+</div>

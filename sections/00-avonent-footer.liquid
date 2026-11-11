@@ -20,14 +20,14 @@
   id="{{ footer_id }}"
   class="avonent-footer{% if avonent_home_footer %} avonent-footer--home{% endif %}{% if avonent_cinnamon_footer %} avonent-footer--cinnamon{% endif %}"
   style="
-    --av-footer-bg: {% if avonent_home_footer %}#071B22{% elsif avonent_cinnamon_footer %}#2B180F{% else %}{{ section.settings.background_color }}{% endif %};
-    --av-footer-text: {% if avonent_home_footer %}#F4FCFE{% elsif avonent_cinnamon_footer %}#FFF8F2{% else %}{{ section.settings.text_color }}{% endif %};
-    --av-footer-muted: {% if avonent_home_footer %}#A9C7D0{% elsif avonent_cinnamon_footer %}#D8C7BA{% else %}{{ section.settings.muted_text_color }}{% endif %};
-    --av-footer-accent: {% if avonent_home_footer %}#02C6EA{% elsif avonent_cinnamon_footer %}#C86F3A{% else %}{{ section.settings.accent_color }}{% endif %};
-    --av-footer-border: {% if avonent_home_footer %}#17404A{% elsif avonent_cinnamon_footer %}#5B3828{% else %}{{ section.settings.border_color }}{% endif %};
+    --av-footer-bg: {% if avonent_home_footer %}{{ section.settings.home_footer_bg }}{% elsif avonent_cinnamon_footer %}{{ section.settings.cinnamon_footer_bg }}{% else %}{{ section.settings.background_color }}{% endif %};
+    --av-footer-text: {% if avonent_home_footer %}{{ section.settings.home_footer_text }}{% elsif avonent_cinnamon_footer %}{{ section.settings.cinnamon_footer_text }}{% else %}{{ section.settings.text_color }}{% endif %};
+    --av-footer-muted: {% if avonent_home_footer %}{{ section.settings.home_footer_muted }}{% elsif avonent_cinnamon_footer %}{{ section.settings.cinnamon_footer_muted }}{% else %}{{ section.settings.muted_text_color }}{% endif %};
+    --av-footer-accent: {% if avonent_home_footer %}{{ section.settings.home_footer_accent }}{% elsif avonent_cinnamon_footer %}{{ section.settings.cinnamon_footer_accent }}{% else %}{{ section.settings.accent_color }}{% endif %};
+    --av-footer-border: {% if avonent_home_footer %}{{ section.settings.home_footer_border }}{% elsif avonent_cinnamon_footer %}{{ section.settings.cinnamon_footer_border }}{% else %}{{ section.settings.border_color }}{% endif %};
     --av-footer-input-bg: {% if avonent_home_footer %}#FFFFFF{% elsif avonent_cinnamon_footer %}#FFFDFC{% else %}{{ section.settings.input_background }}{% endif %};
     --av-footer-input-text: {% if avonent_home_footer %}#071B22{% elsif avonent_cinnamon_footer %}#2B180F{% else %}{{ section.settings.input_text_color }}{% endif %};
-    --av-footer-button-bg: {% if avonent_home_footer %}#02C6EA{% elsif avonent_cinnamon_footer %}#C86F3A{% else %}{{ section.settings.button_background }}{% endif %};
+    --av-footer-button-bg: {% if avonent_home_footer %}{{ section.settings.home_footer_button }}{% elsif avonent_cinnamon_footer %}{{ section.settings.cinnamon_footer_button }}{% else %}{{ section.settings.button_background }}{% endif %};
     --av-footer-button-text: {% if avonent_home_footer %}#071B22{% elsif avonent_cinnamon_footer %}#FFFFFF{% else %}{{ section.settings.button_text_color }}{% endif %};
     --av-footer-radius: {{ section.settings.corner_radius }}px;
     --av-footer-padding-top: {{ section.settings.padding_top }}px;
@@ -55,8 +55,8 @@
               <span class="avonent-footer__home-logo-text">{{ section.settings.brand_name }}</span>
             {% endif %}
           </a>
-          <div class="avonent-footer__home-tagline">Premium daily wellness, made simple.</div>
-          <div class="avonent-footer__home-description">Focused formulas, clearly presented, built to fit naturally into everyday routines.</div>
+          <div class="avonent-footer__home-tagline">{{ section.settings.tagline | escape }}</div>
+          <div class="avonent-footer__home-description rte">{{ section.settings.brand_description }}</div>
           <div class="avonent-footer__home-support">
             <a href="{% if pages['contact'] != blank %}{{ pages['contact'].url }}{% else %}/pages/contact{% endif %}">Contact support</a>
             <a href="{% if pages['track-your-order'] != blank %}{{ pages['track-your-order'].url }}{% else %}/pages/track-your-order{% endif %}">Track your order</a>
@@ -66,8 +66,14 @@
         <nav class="avonent-footer__home-column" aria-label="Shop Avonent">
           <h3>SHOP</h3>
           <ul>
-            <li><a href="/products/aged-garlic-capsules">Aged Garlic Extract</a></li>
-            <li><a href="/products/ceylon-cinnamon-berberine-capsules">Ceylon Cinnamon + Berberine</a></li>
+            {% if section.settings.main_menu != blank %}
+              {% for link in section.settings.main_menu.links %}
+                <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+              {% endfor %}
+            {% else %}
+              <li><a href="/products/aged-garlic-capsules">Aged Garlic Extract</a></li>
+              <li><a href="/products/ceylon-cinnamon-berberine-capsules">Ceylon Cinnamon + Berberine</a></li>
+            {% endif %}
           </ul>
         </nav>
 
@@ -1725,45 +1731,39 @@
   "name": "00 Avonent Footer",
   "tag": "section",
   "class": "avonent-footer-section",
-
   "enabled_on": {
-    "groups": ["footer"]
+    "groups": [
+      "footer"
+    ]
   },
-
   "settings": [
-
     {
       "type": "header",
       "content": "Brand"
     },
-
     {
       "type": "image_picker",
       "id": "logo",
       "label": "Footer logo"
     },
-
     {
       "type": "text",
       "id": "brand_name",
       "label": "Brand name",
       "default": "Avonent"
     },
-
     {
       "type": "text",
       "id": "tagline",
       "label": "Tagline",
       "default": "Premium daily wellness, made simple."
     },
-
     {
       "type": "richtext",
       "id": "brand_description",
       "label": "Brand description",
       "default": "<p>Thoughtfully selected supplements designed to support better everyday routines.</p>"
     },
-
     {
       "type": "header",
       "content": "Cinnamon product footer"
@@ -1798,307 +1798,253 @@
       "label": "Support availability",
       "default": "Here for you 24/7 — evenings and weekends too."
     },
-
-
     {
       "type": "header",
       "content": "Newsletter"
     },
-
     {
       "type": "checkbox",
       "id": "show_newsletter",
       "label": "Show newsletter",
       "default": true
     },
-
     {
       "type": "text",
       "id": "newsletter_eyebrow",
       "label": "Small heading",
       "default": "STAY CONNECTED"
     },
-
     {
       "type": "text",
       "id": "newsletter_heading",
       "label": "Heading",
       "default": "Stay in the know."
     },
-
     {
       "type": "richtext",
       "id": "newsletter_text",
       "label": "Description",
       "default": "<p>Get product drops, special offers and Avonent updates delivered to your inbox.</p>"
     },
-
     {
       "type": "text",
       "id": "email_placeholder",
       "label": "Email placeholder",
       "default": "Your email address"
     },
-
     {
       "type": "text",
       "id": "button_label",
       "label": "Button text",
       "default": "JOIN"
     },
-
     {
       "type": "text",
       "id": "success_text",
       "label": "Success message",
       "default": "You're on the list."
     },
-
-
     {
       "type": "header",
       "content": "Navigation"
     },
-
     {
       "type": "text",
       "id": "main_menu_heading",
       "label": "Main menu heading",
       "default": "Shop"
     },
-
     {
       "type": "link_list",
       "id": "main_menu",
       "label": "Main menu"
     },
-
     {
       "type": "text",
       "id": "support_menu_heading",
       "label": "Support heading",
       "default": "Help"
     },
-
     {
       "type": "link_list",
       "id": "support_menu",
       "label": "Support menu"
     },
-
     {
       "type": "checkbox",
       "id": "show_policy_links",
       "label": "Show Shopify policies",
       "default": true
     },
-
     {
       "type": "text",
       "id": "policy_heading",
       "label": "Policies heading",
       "default": "Legal"
     },
-
     {
       "type": "text",
       "id": "extra_menu_heading",
       "label": "Extra menu heading",
       "default": "Account"
     },
-
     {
       "type": "link_list",
       "id": "extra_menu",
       "label": "Extra menu"
     },
-
-
     {
       "type": "header",
       "content": "FDA disclaimer"
     },
-
     {
       "type": "checkbox",
       "id": "show_disclaimer",
       "label": "Show disclaimer",
       "default": true
     },
-
     {
       "type": "text",
       "id": "disclaimer_heading",
       "label": "Disclaimer heading",
       "default": "Supplement Disclaimer"
     },
-
     {
       "type": "richtext",
       "id": "fda_disclaimer",
       "label": "FDA disclaimer",
       "default": "<p>† These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>"
     },
-
     {
       "type": "richtext",
       "id": "additional_disclaimer",
       "label": "Additional disclaimer",
       "default": "<p>* Individual results may vary. Testimonials and reviews reflect individual experiences and are not guaranteed outcomes. Consult a qualified healthcare professional before starting a new dietary supplement, especially if you are pregnant, nursing, taking medication, or have a medical condition.</p>"
     },
-
-
     {
       "type": "header",
       "content": "Payment methods"
     },
-
     {
       "type": "checkbox",
       "id": "show_payment_icons",
       "label": "Show payment icons",
       "default": true
     },
-
     {
       "type": "text",
       "id": "payment_heading",
       "label": "Payment heading",
       "default": "SECURE PAYMENT"
     },
-
-
     {
       "type": "header",
       "content": "Bottom"
     },
-
     {
       "type": "text",
       "id": "copyright_text",
       "label": "Copyright text",
       "default": "All rights reserved."
     },
-
     {
       "type": "checkbox",
       "id": "bottom_policy_links",
       "label": "Show Privacy, Terms and Refund links at bottom",
       "default": true
     },
-
-
     {
       "type": "header",
       "content": "Social media"
     },
-
     {
       "type": "checkbox",
       "id": "show_social_icons",
       "label": "Show social icons",
       "default": true
     },
-
     {
       "type": "url",
       "id": "instagram_url",
       "label": "Instagram"
     },
-
     {
       "type": "url",
       "id": "tiktok_url",
       "label": "TikTok"
     },
-
     {
       "type": "url",
       "id": "facebook_url",
       "label": "Facebook"
     },
-
     {
       "type": "url",
       "id": "youtube_url",
       "label": "YouTube"
     },
-
-
     {
       "type": "header",
       "content": "Colors"
     },
-
     {
       "type": "color",
       "id": "background_color",
       "label": "Background",
       "default": "#111315"
     },
-
     {
       "type": "color",
       "id": "text_color",
       "label": "Main text",
       "default": "#FFFFFF"
     },
-
     {
       "type": "color",
       "id": "muted_text_color",
       "label": "Muted text",
       "default": "#AEB5B8"
     },
-
     {
       "type": "color",
       "id": "accent_color",
       "label": "Avonent blue",
       "default": "#02C6EA"
     },
-
     {
       "type": "color",
       "id": "border_color",
       "label": "Borders",
       "default": "#34383B"
     },
-
     {
       "type": "color",
       "id": "input_background",
       "label": "Email field background",
       "default": "#181B1E"
     },
-
     {
       "type": "color",
       "id": "input_text_color",
       "label": "Email field text",
       "default": "#FFFFFF"
     },
-
     {
       "type": "color",
       "id": "button_background",
       "label": "Button background",
       "default": "#FFFFFF"
     },
-
     {
       "type": "color",
       "id": "button_text_color",
       "label": "Button text",
       "default": "#111315"
     },
-
-
     {
       "type": "header",
       "content": "Layout"
     },
-
     {
       "type": "range",
       "id": "corner_radius",
@@ -2109,7 +2055,6 @@
       "unit": "px",
       "default": 14
     },
-
     {
       "type": "range",
       "id": "padding_top",
@@ -2120,7 +2065,6 @@
       "unit": "px",
       "default": 64
     },
-
     {
       "type": "range",
       "id": "padding_bottom",
@@ -2130,10 +2074,88 @@
       "step": 4,
       "unit": "px",
       "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Homepage footer colors"
+    },
+    {
+      "type": "color",
+      "id": "home_footer_bg",
+      "label": "Homepage background",
+      "default": "#071B22"
+    },
+    {
+      "type": "color",
+      "id": "home_footer_text",
+      "label": "Homepage text",
+      "default": "#F4FCFE"
+    },
+    {
+      "type": "color",
+      "id": "home_footer_muted",
+      "label": "Homepage muted text",
+      "default": "#A9C7D0"
+    },
+    {
+      "type": "color",
+      "id": "home_footer_accent",
+      "label": "Homepage accent",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "home_footer_border",
+      "label": "Homepage border",
+      "default": "#17404A"
+    },
+    {
+      "type": "color",
+      "id": "home_footer_button",
+      "label": "Homepage button",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "header",
+      "content": "Cinnamon footer colors"
+    },
+    {
+      "type": "color",
+      "id": "cinnamon_footer_bg",
+      "label": "Cinnamon background",
+      "default": "#2B180F"
+    },
+    {
+      "type": "color",
+      "id": "cinnamon_footer_text",
+      "label": "Cinnamon text",
+      "default": "#FFF8F2"
+    },
+    {
+      "type": "color",
+      "id": "cinnamon_footer_muted",
+      "label": "Cinnamon muted text",
+      "default": "#D8C7BA"
+    },
+    {
+      "type": "color",
+      "id": "cinnamon_footer_accent",
+      "label": "Cinnamon accent",
+      "default": "#C86F3A"
+    },
+    {
+      "type": "color",
+      "id": "cinnamon_footer_border",
+      "label": "Cinnamon border",
+      "default": "#5B3828"
+    },
+    {
+      "type": "color",
+      "id": "cinnamon_footer_button",
+      "label": "Cinnamon button",
+      "default": "#C86F3A"
     }
-
   ],
-
   "presets": [
     {
       "name": "00 Avonent Footer"

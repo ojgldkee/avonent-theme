@@ -237,3 +237,19 @@ class CartDrawerComponent extends Component {
 if (!customElements.get('cart-drawer-component')) {
   customElements.define('cart-drawer-component', CartDrawerComponent);
 }
+
+/* Show and focus the drawer when merchants select cart blocks in the editor.
+   A closed dialog otherwise appears as a blank preview canvas. */
+if (window.Shopify?.designMode) {
+  const showEditorDrawer = (event) => {
+    if (!event.target?.closest?.('#shopify-section-cart-drawer-section')) return;
+    const show = () => {
+      const drawer = document.querySelector('#cart-drawer');
+      if (drawer && typeof drawer.open === 'function') drawer.open();
+    };
+    requestAnimationFrame(show);
+  };
+  document.addEventListener('shopify:block:select', showEditorDrawer);
+  document.addEventListener('shopify:section:select', showEditorDrawer);
+  document.addEventListener('shopify:section:load', showEditorDrawer);
+}

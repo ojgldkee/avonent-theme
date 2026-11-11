@@ -1,0 +1,171 @@
+{% render 'av-cb-reasons', product: product, editor: section %}
+{% schema %}
+{
+  "name": "Product reasons",
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Top badge",
+      "default": "5 REASONS WHY"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Avonent Ceylon Cinnamon Is Different"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro text",
+      "default": "Five details that make this formula easier to understand—and easier to use consistently."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Try Risk-Free Today"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Guarantee text",
+      "default": "90-Day Money-Back Guarantee"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Section background",
+      "default": "#FFF4EC"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Cinnamon accent",
+      "default": "#A84F1B"
+    },
+    {
+      "type": "header",
+      "content": "REASON 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "reason_1_image",
+      "label": "Reason 1 image"
+    },
+    {
+      "type": "text",
+      "id": "reason_1_title",
+      "label": "Reason 1 headline",
+      "default": "12:1 Concentrated True Ceylon Cinnamon"
+    },
+    {
+      "type": "textarea",
+      "id": "reason_1_body",
+      "label": "Reason 1 description",
+      "default": "Avonent uses Cinnamomum verum sourced from Sri Lanka—not common Cassia. A concentrated 12:1 extract provides the equivalent of 14,400 mg of raw cinnamon in a single daily softgel."
+    },
+    {
+      "type": "header",
+      "content": "REASON 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "reason_2_image",
+      "label": "Reason 2 image"
+    },
+    {
+      "type": "text",
+      "id": "reason_2_title",
+      "label": "Reason 2 headline",
+      "default": "Berberine HCl Included"
+    },
+    {
+      "type": "textarea",
+      "id": "reason_2_body",
+      "label": "Reason 2 description",
+      "default": "Instead of making you buy a separate bottle, Avonent combines Berberine HCl with Ceylon cinnamon in the same daily formula for a simpler metabolic-support routine.*"
+    },
+    {
+      "type": "header",
+      "content": "REASON 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "reason_3_image",
+      "label": "Reason 3 image"
+    },
+    {
+      "type": "text",
+      "id": "reason_3_title",
+      "label": "Reason 3 headline",
+      "default": "MCT Oil Softgel Delivery"
+    },
+    {
+      "type": "textarea",
+      "id": "reason_3_body",
+      "label": "Reason 3 description",
+      "default": "The concentrated cinnamon extract is suspended in MCT oil inside a smooth softgel—no loose powder, gritty drinks, or extra mixing."
+    },
+    {
+      "type": "header",
+      "content": "REASON 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "reason_4_image",
+      "label": "Reason 4 image"
+    },
+    {
+      "type": "text",
+      "id": "reason_4_title",
+      "label": "Reason 4 headline",
+      "default": "One Softgel Per Day"
+    },
+    {
+      "type": "textarea",
+      "id": "reason_4_body",
+      "label": "Reason 4 description",
+      "default": "A simple one-softgel daily serving makes it easier to stay consistent without carrying around multiple bottles or taking a handful of capsules."
+    },
+    {
+      "type": "header",
+      "content": "REASON 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "reason_5_image",
+      "label": "Reason 5 image"
+    },
+    {
+      "type": "text",
+      "id": "reason_5_title",
+      "label": "Reason 5 headline",
+      "default": "Clear Formula. 90-Day Guarantee."
+    },
+    {
+      "type": "textarea",
+      "id": "reason_5_body",
+      "label": "Reason 5 description",
+      "default": "You can see what is in the formula, how much you are taking, and try it with the protection of Avonent’s 90-Day Money-Back Guarantee."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product reasons"
+    }
+  ]
+}
+{% endschema %}

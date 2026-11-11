@@ -1,0 +1,93 @@
+{% render 'av-cb-benefits', product: product, editor: section %}
+{% schema %}
+{
+  "name": "Product benefits",
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "benefits_heading",
+      "label": "Benefits heading"
+    },
+    {
+      "type": "textarea",
+      "id": "benefits_subheading",
+      "label": "Benefits subheading"
+    },
+    {
+      "type": "textarea",
+      "id": "benefits_item_1",
+      "label": "Benefit 1",
+      "default": "Blood Sugar Support*"
+    },
+    {
+      "type": "textarea",
+      "id": "benefits_item_2",
+      "label": "Benefit 2",
+      "default": "Gentle on the Stomach"
+    },
+    {
+      "type": "textarea",
+      "id": "benefits_item_3",
+      "label": "Benefit 3",
+      "default": "MCT Oil Delivery"
+    },
+    {
+      "type": "textarea",
+      "id": "benefits_item_4",
+      "label": "Benefit 4",
+      "default": "Coumarin-Free Ceylon"
+    },
+    {
+      "type": "image_picker",
+      "id": "benefits_icon_1",
+      "label": "Benefit 1 icon (optional override)"
+    },
+    {
+      "type": "image_picker",
+      "id": "benefits_icon_2",
+      "label": "Benefit 2 icon (optional override)"
+    },
+    {
+      "type": "image_picker",
+      "id": "benefits_icon_3",
+      "label": "Benefit 3 icon (optional override)"
+    },
+    {
+      "type": "image_picker",
+      "id": "benefits_icon_4",
+      "label": "Benefit 4 icon (optional override)"
+    },
+    {
+      "type": "image_picker",
+      "id": "benefits_image",
+      "label": "Large image under benefits — EDIT HERE"
+    },
+    {
+      "type": "color",
+      "id": "benefits_bg",
+      "label": "Benefits bg"
+    },
+    {
+      "type": "color",
+      "id": "benefits_text",
+      "label": "Benefits text"
+    },
+    {
+      "type": "textarea",
+      "id": "benefits_disclaimer",
+      "label": "Optional FDA disclaimer below this section",
+      "info": "Leave blank if your footer already displays the FDA disclaimer."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product benefits"
+    }
+  ]
+}
+{% endschema %}

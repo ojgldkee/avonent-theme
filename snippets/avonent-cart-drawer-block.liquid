@@ -20,7 +20,8 @@
         <div class="avonent-drawer-block__shipping" style="--av-progress:{{ s.progress_color }};">
           {% if remainder > 0 %}
             {% assign remainder_label = remainder | money %}
-            <span>{{ s.before_message | escape | replace: '{amount}', remainder_label }}</span>
+            {% assign shipping_progress_copy = s.before_message | replace: '{amount}', remainder_label %}
+            <span>{{ shipping_progress_copy | escape }}</span>
           {% else %}
             <span>{{ s.after_message | escape }}</span>
           {% endif %}
@@ -61,6 +62,36 @@
           </div>
         </div>
       {% endif %}
+    {% when 'payments' %}
+      <div class="avonent-drawer-block__payments" aria-label="{{ s.heading | escape }}">
+        {% if s.heading != blank %}<p class="avonent-drawer-block__payments-title">{{ s.heading | escape }}</p>{% endif %}
+        {% if s.mode == 'image' and s.image != blank %}
+          {{ s.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '250,500,900', sizes: '360px', alt: s.heading }}
+        {% else %}
+          {% capture av_manual_payment_types %}
+            {% if s.visa %}visa,{% endif %}
+            {% if s.master %}master,{% endif %}
+            {% if s.american_express %}american_express,{% endif %}
+            {% if s.discover %}discover,{% endif %}
+            {% if s.paypal %}paypal,{% endif %}
+            {% if s.apple_pay %}apple_pay,{% endif %}
+            {% if s.google_pay %}google_pay,{% endif %}
+            {% if s.shopify_pay %}shopify_pay,{% endif %}
+          {% endcapture %}
+          {% liquid
+            assign types = shop.enabled_payment_types
+            if s.mode == 'manual'
+              assign types = av_manual_payment_types | strip | split: ','
+            endif
+          %}
+          <div class="avonent-drawer-block__payment-icons">
+            {% for type in types %}
+              {% assign type_name = type | strip %}
+              {% if type_name != blank %}<span>{{ type_name | payment_type_svg_tag }}</span>{% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
     {% when 'divider' %}
       <hr style="border:0;border-top:1px solid #eee6df;margin:4px 0;">
     {% when 'spacer' %}

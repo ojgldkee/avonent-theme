@@ -1,0 +1,432 @@
+{% render 'av-cb-information', product: product, editor: section %}
+{% schema %}
+{
+  "name": "Product information",
+  "tag": "section",
+  "class": "av-product-info",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product colors"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#A84F1B"
+    },
+    {
+      "type": "color",
+      "id": "deep_color",
+      "label": "Dark accent",
+      "default": "#7D3612"
+    },
+    {
+      "type": "header",
+      "content": "WHY TRUST AVONENT"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_image",
+      "label": "Show trust image",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "trust_image",
+      "label": "Why Trust Avonent image — EDIT HERE"
+    },
+    {
+      "type": "text",
+      "id": "trust_image_alt",
+      "label": "Why Trust Avonent image alt",
+      "default": "Why Trust Avonent"
+    },
+    {
+      "type": "header",
+      "content": "Optional introductory gifts"
+    },
+    {
+      "type": "product",
+      "id": "bonus_product",
+      "label": "Bonus bottle product"
+    },
+    {
+      "type": "product",
+      "id": "ebook_product",
+      "label": "Bonus e-book product"
+    },
+    {
+      "type": "paragraph",
+      "content": "Set up real Shopify automatic discounts for gifts. Product cards do not create a discount."
+    },
+    {
+      "type": "header",
+      "content": "Sticky add to cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sticky_cart",
+      "label": "Show sticky cart",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sticky_title",
+      "label": "Sticky title"
+    },
+    {
+      "type": "text",
+      "id": "sticky_button_text",
+      "label": "Sticky button",
+      "default": "Add to Cart"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "name": "Product purchase",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Badges and social proof"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_best_badge",
+          "label": "Show first badge",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "best_badge",
+          "label": "First badge",
+          "default": "Best Seller"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_choice_badge",
+          "label": "Show second badge",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "choice_badge",
+          "label": "Second badge",
+          "default": "#1 Choice for Doctors & Practitioners"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_rating",
+          "label": "Show rating",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sold",
+          "label": "Show percent sold",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sale_badge",
+          "label": "Show sale badge",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Purchase options"
+        },
+        {
+          "type": "text",
+          "id": "subscribe_label",
+          "label": "Subscription heading",
+          "default": "Subscribe & Save"
+        },
+        {
+          "type": "text",
+          "id": "one_time_label",
+          "label": "One-time heading",
+          "default": "One-Time Purchase"
+        },
+        {
+          "type": "text",
+          "id": "shipping_note",
+          "label": "One-time shipping note",
+          "default": "$4.95 Shipping"
+        },
+        {
+          "type": "text",
+          "id": "switch_label",
+          "label": "Return to subscription",
+          "default": "Switch back to Subscribe & Save"
+        },
+        {
+          "type": "header",
+          "content": "Delivery estimate"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_delivery",
+          "label": "Show delivery date",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "delivery_label",
+          "label": "Delivery label",
+          "default": "Estimated delivery by:"
+        },
+        {
+          "type": "range",
+          "id": "delivery_days",
+          "label": "Days until delivery",
+          "min": 1,
+          "max": 21,
+          "step": 1,
+          "unit": "d",
+          "default": 5
+        },
+        {
+          "type": "image_picker",
+          "id": "hero_image",
+          "label": "Main product image override"
+        },
+        {
+          "type": "textarea",
+          "id": "display_title",
+          "label": "Display title"
+        },
+        {
+          "type": "textarea",
+          "id": "hero_description",
+          "label": "Hero description"
+        },
+        {
+          "type": "textarea",
+          "id": "rating_text",
+          "label": "Rating text"
+        },
+        {
+          "type": "textarea",
+          "id": "benefit_1",
+          "label": "Benefit 1"
+        },
+        {
+          "type": "textarea",
+          "id": "benefit_2",
+          "label": "Benefit 2"
+        },
+        {
+          "type": "textarea",
+          "id": "benefit_3",
+          "label": "Benefit 3"
+        },
+        {
+          "type": "textarea",
+          "id": "benefit_4",
+          "label": "Benefit 4"
+        },
+        {
+          "type": "textarea",
+          "id": "sold_percent",
+          "label": "Sold percent"
+        },
+        {
+          "type": "textarea",
+          "id": "sale_badge",
+          "label": "Sale badge"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_2_badge",
+          "label": "Bundle 2 badge",
+          "default": "Free Shipping"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_3_badge",
+          "label": "Bundle 3 badge",
+          "default": "Free Shipping + E-Book"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_1_title",
+          "label": "Bundle 1 title"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_1_subtitle",
+          "label": "Bundle 1 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_2_title",
+          "label": "Bundle 2 title"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_2_subtitle",
+          "label": "Bundle 2 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_3_title",
+          "label": "Bundle 3 title"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_3_subtitle",
+          "label": "Bundle 3 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "add_to_cart_text",
+          "label": "Add to cart text"
+        },
+        {
+          "type": "textarea",
+          "id": "refill_text",
+          "label": "Refill text"
+        },
+        {
+          "type": "textarea",
+          "id": "cancel_text",
+          "label": "Cancel text"
+        }
+      ]
+    },
+    {
+      "type": "details",
+      "name": "Guarantee & stock",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Guarantee and stock"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_guarantee",
+          "label": "Show guarantee",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "guarantee_image_url",
+          "label": "Guarantee image URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_stock_notice",
+          "label": "Show stock warning",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_low_stock_line",
+          "label": "Show low-stock line",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "stock_color",
+          "label": "Warning color",
+          "default": "#D62828"
+        },
+        {
+          "type": "color",
+          "id": "stock_background",
+          "label": "Warning background",
+          "default": "#FFF5F5"
+        },
+        {
+          "type": "image_picker",
+          "id": "guarantee_image",
+          "label": "Guarantee image"
+        },
+        {
+          "type": "textarea",
+          "id": "guarantee_highlight",
+          "label": "Guarantee highlight"
+        },
+        {
+          "type": "color",
+          "id": "guarantee_color",
+          "label": "Guarantee color"
+        },
+        {
+          "type": "textarea",
+          "id": "stock_title",
+          "label": "Warning heading"
+        },
+        {
+          "type": "textarea",
+          "id": "stock_text",
+          "label": "Warning message"
+        },
+        {
+          "type": "textarea",
+          "id": "low_stock_line",
+          "label": "Low stock line"
+        },
+        {
+          "type": "textarea",
+          "id": "guarantee_heading",
+          "label": "Guarantee heading"
+        },
+        {
+          "type": "textarea",
+          "id": "guarantee_body",
+          "label": "Guarantee body"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_1_title",
+          "label": "Acc 1 title"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_1_body",
+          "label": "Acc 1 body"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_2_title",
+          "label": "Acc 2 title"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_2_body",
+          "label": "Acc 2 body"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_3_title",
+          "label": "Acc 3 title"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_3_body",
+          "label": "Acc 3 body"
+        },
+        {
+          "type": "image_picker",
+          "id": "trust_image",
+          "label": "Trust image"
+        },
+        {
+          "type": "textarea",
+          "id": "trust_image_alt",
+          "label": "Trust image alt"
+        }
+      ]
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "max_blocks": 12
+}
+{% endschema %}

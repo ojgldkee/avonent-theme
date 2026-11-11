@@ -1,8 +1,45 @@
 {% liquid
   assign block_id = 'avonent-sale-' | append: block.id
   assign av_sale_background = block.settings.background_color
+  assign av_sale_text_color = block.settings.text_color
+  assign av_sale_heading = block.settings.heading
+  assign av_sale_subheading = block.settings.subheading
   if template.name == 'index'
-    assign av_sale_background = '#02C6EA'
+    assign av_sale_background = block.settings.home_background | default: av_sale_background
+    assign av_sale_text_color = block.settings.home_text_color | default: av_sale_text_color
+    if block.settings.home_heading != blank
+      assign av_sale_heading = block.settings.home_heading
+    endif
+    if block.settings.home_subheading != blank
+      assign av_sale_subheading = block.settings.home_subheading
+    endif
+  elsif template.suffix == 'cinnamon-berberine'
+    assign av_sale_background = block.settings.cinnamon_background | default: av_sale_background
+    assign av_sale_text_color = block.settings.cinnamon_text_color | default: av_sale_text_color
+    if block.settings.cinnamon_heading != blank
+      assign av_sale_heading = block.settings.cinnamon_heading
+    endif
+    if block.settings.cinnamon_subheading != blank
+      assign av_sale_subheading = block.settings.cinnamon_subheading
+    endif
+  elsif template.suffix == 'garlic' or template.suffix == 'aged-garlic'
+    assign av_sale_background = block.settings.garlic_background | default: av_sale_background
+    assign av_sale_text_color = block.settings.garlic_text_color | default: av_sale_text_color
+    if block.settings.garlic_heading != blank
+      assign av_sale_heading = block.settings.garlic_heading
+    endif
+    if block.settings.garlic_subheading != blank
+      assign av_sale_subheading = block.settings.garlic_subheading
+    endif
+  elsif template.name == 'collection'
+    assign av_sale_background = block.settings.collection_background | default: av_sale_background
+    assign av_sale_text_color = block.settings.collection_text_color | default: av_sale_text_color
+  elsif template.name == 'page'
+    assign av_sale_background = block.settings.page_background | default: av_sale_background
+    assign av_sale_text_color = block.settings.page_text_color | default: av_sale_text_color
+  elsif template.name == 'product'
+    assign av_sale_background = block.settings.product_background | default: av_sale_background
+    assign av_sale_text_color = block.settings.product_text_color | default: av_sale_text_color
   endif
 %}
 
@@ -17,28 +54,28 @@
     class="avonent-sale-bar__inner"
     style="
       --av-sale-bg: {{ av_sale_background }};
-      --av-sale-color: {{ block.settings.text_color }};
+      --av-sale-color: {{ av_sale_text_color }};
       --av-sale-height: {{ block.settings.bar_height }}px;
     "
-    data-duration-minutes="{{ block.settings.timer_minutes }}"
+    data-duration-minutes="{{ block.settings.timer_minutes }}" data-sale-ends-at="{{ block.settings.sale_end_at | escape }}"
   >
     {% if block.settings.link != blank %}
       <a
         href="{{ block.settings.link }}"
         class="avonent-sale-bar__link"
-        aria-label="{{ block.settings.heading | escape }}"
+        aria-label="{{ av_sale_heading | escape }}"
       ></a>
     {% endif %}
 
     <div class="avonent-sale-bar__content">
       <div class="avonent-sale-bar__message">
         <div class="avonent-sale-bar__heading">
-          {{ block.settings.heading }}
+          {{ av_sale_heading | escape }}
         </div>
 
-        {% if block.settings.subheading != blank %}
+        {% if av_sale_subheading != blank %}
           <div class="avonent-sale-bar__subheading">
-            {{ block.settings.subheading }}
+            {{ av_sale_subheading | escape }}
           </div>
         {% endif %}
       </div>
@@ -111,28 +148,22 @@
     }
 
     function getEndTime() {
+      const specifiedDate = Date.parse(root.dataset.saleEndsAt || '');
+      if (Number.isFinite(specifiedDate)) return specifiedDate;
       try {
-        const saved =
-          Number(localStorage.getItem(storageKey));
-
-        if (saved && saved > Date.now()) {
-          return saved;
-        }
+        const saved = Number(localStorage.getItem(storageKey));
+        if (Number.isFinite(saved) && saved > 0) return saved;
       } catch (error) {}
-
       return createEndTime();
     }
 
-    let endTime = getEndTime();
+    const endTime = getEndTime();
 
     function updateTimer() {
       let remaining =
         endTime - Date.now();
 
-      if (remaining <= 0) {
-        endTime = createEndTime();
-        remaining = endTime - Date.now();
-      }
+      if (remaining <= 0) remaining = 0;
 
       const totalSeconds =
         Math.max(
@@ -465,8 +496,92 @@
       "default": 120
     },
     {
+      "type": "text",
+      "id": "sale_end_at",
+      "label": "Sale end (ISO date/time)",
+      "info": "Example: 2026-12-01T23:59:00-08:00. Countdown does not reset when it reaches zero."
+    },
+    {
       "type": "header",
       "content": "Colors"
+    },
+    {
+      "type": "header",
+      "content": "Homepage announcement"
+    },
+    {
+      "type": "color",
+      "id": "home_background",
+      "label": "Homepage background",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "home_text_color",
+      "label": "Homepage text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "text",
+      "id": "home_heading",
+      "label": "Homepage heading"
+    },
+    {
+      "type": "text",
+      "id": "home_subheading",
+      "label": "Homepage message"
+    },
+    {
+      "type": "header",
+      "content": "Cinnamon product page"
+    },
+    {
+      "type": "color",
+      "id": "cinnamon_background",
+      "label": "Cinnamon background",
+      "default": "#A84F1B"
+    },
+    {
+      "type": "color",
+      "id": "cinnamon_text_color",
+      "label": "Cinnamon text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "text",
+      "id": "cinnamon_heading",
+      "label": "Cinnamon heading"
+    },
+    {
+      "type": "text",
+      "id": "cinnamon_subheading",
+      "label": "Cinnamon message"
+    },
+    {
+      "type": "header",
+      "content": "Garlic product page"
+    },
+    {
+      "type": "color",
+      "id": "garlic_background",
+      "label": "Garlic background",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "garlic_text_color",
+      "label": "Garlic text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "text",
+      "id": "garlic_heading",
+      "label": "Garlic heading"
+    },
+    {
+      "type": "text",
+      "id": "garlic_subheading",
+      "label": "Garlic message"
     },
     {
       "type": "color",
@@ -483,6 +598,46 @@
     {
       "type": "header",
       "content": "Layout"
+    },
+    {
+      "type": "header",
+      "content": "Other page colors"
+    },
+    {
+      "type": "color",
+      "id": "collection_background",
+      "label": "Collections background",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "collection_text_color",
+      "label": "Collections text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "page_background",
+      "label": "Pages background",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "page_text_color",
+      "label": "Pages text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "product_background",
+      "label": "Other products background",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "product_text_color",
+      "label": "Other products text",
+      "default": "#FFFFFF"
     },
     {
       "type": "range",
