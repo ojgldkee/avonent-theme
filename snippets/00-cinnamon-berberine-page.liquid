@@ -740,7 +740,7 @@
   endif
 %}
 
-<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="{{ av_cb_bonus_variant.id }}" data-ebook-variant-id="{{ av_cb_ebook_variant.id }}" data-subscription-label="{{ av_cb_subscribe_label | escape }}" data-one-time-label="{{ av_cb_one_time_label | escape }}" data-shipping-note="{{ av_cb_shipping_note | escape }}" data-switch-label="{{ av_cb_switch_label | escape }}" data-delivery-days="{{ av_cb_delivery_days }}" style="--blue:{{ av_cb_accent_color }};--deep:{{ av_cb_deep_color }}">
+<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="{{ av_cb_bonus_variant.id }}" data-ebook-variant-id="{{ av_cb_ebook_variant.id }}" data-subscription-label="{{ av_cb_subscribe_label | escape }}" data-one-time-label="{{ av_cb_one_time_label | escape }}" data-shipping-note="{{ av_cb_shipping_note | escape }}" data-switch-label="{{ av_cb_switch_label | escape }}" data-delivery-days="{{ av_cb_delivery_days }}" data-currency="{{ cart.currency.iso_code | default: shop.currency }}" style="--blue:{{ av_cb_accent_color }};--deep:{{ av_cb_deep_color }}">
   <style>
     .av-cb{--blue:#A84F1B;--deep:#7D3612;--ink:#171513;--muted:#645C57;--line:#E7D2C4;--soft:#FFF4EC;--soft2:#FFFBF7;background:#fff;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}.av-cb,.av-cb button,.av-cb input,.av-cb select,.av-cb textarea,.av-cb summary{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif!important}
     .av-cb-header-logo{display:inline-flex;align-items:center;gap:7px;color:#A84F1B;line-height:1;text-decoration:none!important}
@@ -1078,10 +1078,15 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
   <section class="av-cb__hero" id="av-cb-top" {% if av_cb_hero_block %}{{ av_cb_hero_block.shopify_attributes }}{% endif %}>
     <div class="av-cb__wrap av-cb__hero-grid">
       <div class="av-cb__media">
-        {% if av_cb_product.images.size > 0 %}
+        {% if av_cb_product.images.size > 0 or av_cb_custom_hero_image != blank %}
           <div class="av-cb__product-gallery" data-av-cb-gallery>
             <div class="av-cb__gallery-main">
               <div class="av-cb__gallery-track" data-av-cb-gallery-track>
+                {% if av_cb_custom_hero_image != blank %}
+                  <div class="av-cb__gallery-slide" data-av-cb-gallery-slide>
+                    {{ av_cb_custom_hero_image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '500,700,900,1200,1400', sizes: '(min-width: 900px) 48vw, 92vw', alt: av_cb_display_title }}
+                  </div>
+                {% endif %}
                 {% for image in av_cb_product.images limit: 8 %}
                   <div class="av-cb__gallery-slide" data-av-cb-gallery-slide>
                     {{ image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '500,700,900,1200,1400', sizes: '(min-width: 900px) 48vw, 92vw', alt: image.alt | default: av_cb_display_title }}
@@ -1089,7 +1094,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 {% endfor %}
               </div>
 
-              {% if av_cb_product.images.size > 1 %}
+              {% if av_cb_product.images.size > 1 or av_cb_custom_hero_image != blank %}
                 <button class="av-cb__gallery-arrow av-cb__gallery-arrow--prev" type="button" data-av-cb-gallery-prev aria-label="Previous product image">
                   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14.5 6-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
@@ -1099,10 +1104,15 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
               {% endif %}
             </div>
 
-            {% if av_cb_product.images.size > 1 %}
+            {% if av_cb_product.images.size > 1 or av_cb_custom_hero_image != blank %}
               <div class="av-cb__gallery-thumbs" aria-label="Product images">
+                {% if av_cb_custom_hero_image != blank %}
+                  <button class="av-cb__gallery-thumb is-active" type="button" data-av-cb-gallery-thumb data-index="0" aria-label="View selected product image">
+                    {{ av_cb_custom_hero_image | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90,120,180', alt: av_cb_display_title }}
+                  </button>
+                {% endif %}
                 {% for image in av_cb_product.images limit: 8 %}
-                  <button class="av-cb__gallery-thumb{% if forloop.first %} is-active{% endif %}" type="button" data-av-cb-gallery-thumb data-index="{{ forloop.index0 }}" aria-label="View product image {{ forloop.index }}">
+                  <button class="av-cb__gallery-thumb{% if forloop.first and av_cb_custom_hero_image == blank %} is-active{% endif %}" type="button" data-av-cb-gallery-thumb data-index="{% if av_cb_custom_hero_image != blank %}{{ forloop.index }}{% else %}{{ forloop.index0 }}{% endif %}" aria-label="View product image {{ forloop.index }}">
                     {{ image | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90,120,180', alt: image.alt | default: av_cb_display_title }}
                   </button>
                 {% endfor %}
@@ -1969,6 +1979,10 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       }
 
       const subscriptionUnit = Number(root.dataset.subscriptionUnitPrice || 0);
+      const subscriptionLabel = root.dataset.subscriptionLabel || 'Subscribe & Save';
+      const oneTimeLabel = root.dataset.oneTimeLabel || 'One-Time Purchase';
+      const shippingNote = root.dataset.shippingNote || '';
+      const switchLabel = root.dataset.switchLabel || 'Switch back to Subscribe & Save';
       const oneTimeUnit = Number(root.dataset.oneTimeUnitPrice || 0);
       const oneTimeCompareUnit = Number(root.dataset.oneTimeCompareUnitPrice || 0);
       const qtyInput = root.querySelector('[data-av-cb-quantity]');
@@ -1988,7 +2002,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const bundleButtons = Array.from(root.querySelectorAll('[data-av-cb-bundle]'));
       const subscriptionPerks = Array.from(root.querySelectorAll('[data-av-cb-subscription-perk]'));
       const bundleUnlocks = Array.from(root.querySelectorAll('[data-av-cb-bundle-unlock]'));
-      const money = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'en-US', {style:'currency', currency:'USD'}).format(Number(cents || 0) / 100);
+      const money = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'en-US', {style:'currency', currency:root.dataset.currency || 'USD'}).format(Number(cents || 0) / 100);
       let purchaseMode = sellingPlanInput ? 'subscription' : 'one-time';
 
       const selectedBundle = () => root.querySelector('[data-av-cb-bundle].is-active') || bundleButtons[0];
@@ -2015,7 +2029,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         }
         if (refillRow) refillRow.hidden = !isSubscription;
         if (purchaseToggle) purchaseToggle.setAttribute('aria-pressed', String(!isSubscription));
-        if (purchaseHeading) purchaseHeading.textContent = isSubscription ? 'Subscribe & Save' : 'One-Time Purchase';
+        if (purchaseHeading) purchaseHeading.textContent = isSubscription ? subscriptionLabel : oneTimeLabel;
 
         bundleButtons.forEach((btn) => {
           const values = valuesFor(btn);
@@ -2049,10 +2063,18 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         });
 
         if (purchaseToggleText) {
-          if (isSubscription) purchaseToggleText.innerHTML = 'One-Time Purchase <strong>' + money(oneTimeUnit * values.qty) + '</strong> + $4.95 Shipping';
+          if (isSubscription) {
+            purchaseToggleText.textContent = oneTimeLabel + ' ';
+            const amount = document.createElement('strong');
+            amount.textContent = money(oneTimeUnit * values.qty);
+            purchaseToggleText.append(amount, shippingNote ? ' · ' + shippingNote : '');
+          }
           else {
             const subscriptionDisplayPrice = Number(active?.dataset.subscriptionPrice || 0);
-            purchaseToggleText.innerHTML = 'Switch back to Subscribe & Save — <strong>' + money(subscriptionDisplayPrice) + '</strong>';
+            purchaseToggleText.textContent = switchLabel + ' — ';
+            const amount = document.createElement('strong');
+            amount.textContent = money(subscriptionDisplayPrice);
+            purchaseToggleText.append(amount);
           }
         }
       };
@@ -2213,7 +2235,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const deliveryDate = root.querySelector('[data-av-cb-delivery-date]');
       if (deliveryDate) {
         const date = new Date();
-        date.setDate(date.getDate() + 5);
+        date.setDate(date.getDate() + Math.max(1, Math.min(21, Number(root.dataset.deliveryDays) || 5)));
         const day = date.getDate();
         const mod100 = day % 100;
         const suffix = mod100 >= 11 && mod100 <= 13 ? 'th' : ({1:'st',2:'nd',3:'rd'}[day % 10] || 'th');
