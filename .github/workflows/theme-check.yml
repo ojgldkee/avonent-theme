@@ -29,3 +29,5 @@ jobs:
         with:
           theme_root: '.'
           flags: '--fail-level error'
+      - name: Verify native product section structure
+        run: node scripts/verify-product-sections.mjs
