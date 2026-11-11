@@ -253,7 +253,7 @@
       role="status"
     >
       <span class="cart-totals__total-label cart-primary-typography">
-        {{ 'content.cart_estimated_total' | t }}
+        {% if is_cart_drawer %}{{ drawer_settings.estimated_total_label | default: 'Estimated total' | escape }}{% else %}{{ 'content.cart_estimated_total' | t }}{% endif %}
       </span>
       <text-component
         ref="cartTotal"

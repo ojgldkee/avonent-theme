@@ -57,7 +57,7 @@
         class="theme-drawer__title h4"
         id="cart-drawer-heading"
       >
-        {{ 'content.your_cart_is_empty' | t }}
+        {{ drawer_cfg.empty_cart_heading | default: 'content.your_cart_is_empty' | escape }}
       </h2>
 
       <div class="cart-drawer__items">
@@ -304,6 +304,7 @@
   }
   #cart-drawer .avonent-drawer-block__announcement {background:var(--av-block-bg,#fff5ec);padding:12px;border-radius:10px}
   #cart-drawer .avonent-drawer-block__image {display:block;width:100%;height:auto}
+  #cart-drawer .cart-drawer__summary .avonent-cart-checkout {background:var(--av-drawer-accent,#A84F1B);border-color:var(--av-drawer-accent,#A84F1B);color:#fff}
   #cart-drawer .avonent-drawer-block__payments {text-align:center}
   #cart-drawer .avonent-drawer-block__payments-title {font-size:12px;margin:0 0 10px;opacity:.78}
   #cart-drawer .avonent-drawer-block__payments > img {max-width:100%;height:auto}
