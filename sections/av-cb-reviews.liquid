@@ -74,7 +74,7 @@
 (() => {
   const host = document.getElementById('shopify-section-{{ section.id }}');
   if (!host) return;
-  const root = host.querySelector('[data-av-cb]');
+  const root = host.querySelector('[data-av-cb-section="reviews"]');
   if (!root) return;
 
   const reviews = root.querySelector('.av-cb__reviews');
