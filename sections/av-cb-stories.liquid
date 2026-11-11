@@ -1,0 +1,195 @@
+<section class="av-stories" data-av-stories style="--story-bg:{{ section.settings.background }};--story-fg:{{ section.settings.foreground }};--story-card:{{ section.settings.card_color }};--story-accent:{{ section.settings.accent }};--story-padding:{{ section.settings.padding }}px">
+  <div class="av-stories__wrap">
+    <header class="av-stories__heading">
+      {% if section.settings.eyebrow != blank %}<p>{{ section.settings.eyebrow | escape }}</p>{% endif %}
+      {% if section.settings.heading != blank %}<h2>{{ section.settings.heading | escape }}</h2>{% endif %}
+    </header>
+    <div class="av-stories__grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'story' %}
+          <article class="av-stories__card" {% if forloop.index > section.settings.visible %}hidden data-av-extra-story{% endif %} {{ block.shopify_attributes }}>
+            <div class="av-stories__stars" aria-label="{{ block.settings.rating }} of 5 stars">
+              {% for i in (1..5) %}{% if i <= block.settings.rating %}★{% else %}☆{% endif %}{% endfor %}
+            </div>
+            {% if block.settings.quote != blank %}<p>{{ block.settings.quote | escape }}</p>{% endif %}
+            {% if block.settings.customer != blank %}<strong>{{ block.settings.customer | escape }}</strong>{% endif %}
+            {% if block.settings.verified %}<span class="av-stories__verified">✓ Verified buyer</span>{% endif %}
+            <div class="av-stories__tags">
+              {% if block.settings.tag_1 != blank %}<span>{{ block.settings.tag_1 | escape }}</span>{% endif %}
+              {% if block.settings.tag_2 != blank %}<span>{{ block.settings.tag_2 | escape }}</span>{% endif %}
+            </div>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% if section.blocks.size > section.settings.visible %}
+      <button type="button" class="av-stories__toggle" data-av-stories-toggle aria-expanded="false" data-expanded-label="{{ section.settings.less_label | escape }}" data-collapsed-label="{{ section.settings.more_label | escape }}">{{ section.settings.more_label | escape }}</button>
+    {% endif %}
+  </div>
+</section>
+<style>
+  #shopify-section-{{ section.id }} .av-stories{background:var(--story-bg);color:var(--story-fg);padding:var(--story-padding) 16px}
+  #shopify-section-{{ section.id }} .av-stories__wrap{max-width:1050px;margin:0 auto}
+  #shopify-section-{{ section.id }} .av-stories__heading{text-align:center;margin-bottom:24px}
+  #shopify-section-{{ section.id }} .av-stories__heading p{font-size:14px;color:var(--story-accent);font-weight:700;margin:0 0 10px}
+  #shopify-section-{{ section.id }} .av-stories__heading h2{font-size:clamp(26px,4vw,42px);margin:0;color:inherit}
+  #shopify-section-{{ section.id }} .av-stories__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  #shopify-section-{{ section.id }} .av-stories__card{padding:25px;background:var(--story-card);border:1px solid #eaded6;border-radius:16px}
+  #shopify-section-{{ section.id }} .av-stories__card[hidden]{display:none!important}
+  #shopify-section-{{ section.id }} .av-stories__card p{line-height:1.6;font-size:16px}
+  #shopify-section-{{ section.id }} .av-stories__stars{color:var(--story-accent);letter-spacing:1px;font-size:19px}
+  #shopify-section-{{ section.id }} .av-stories__verified{display:inline-block;margin-left:8px;color:var(--story-accent);font-size:12px}
+  #shopify-section-{{ section.id }} .av-stories__tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  #shopify-section-{{ section.id }} .av-stories__tags span{font-size:12px;border:1px solid var(--story-accent);color:var(--story-accent);padding:6px 10px;border-radius:50px}
+  #shopify-section-{{ section.id }} .av-stories__toggle{display:block;margin:25px auto 0;border:1px solid var(--story-accent);background:none;color:var(--story-accent);padding:12px 20px;border-radius:12px;cursor:pointer;font-weight:700}
+  @media(max-width:749px){#shopify-section-{{ section.id }} .av-stories__grid{grid-template-columns:1fr}}
+</style>
+<script>
+(() => {
+  const root = document.getElementById('shopify-section-{{ section.id }}');
+  const toggle = root?.querySelector('[data-av-stories-toggle]');
+  if (!toggle) return;
+  toggle.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') !== 'true';
+    root.querySelectorAll('[data-av-extra-story]').forEach(card => { card.hidden = !expanded; });
+    toggle.setAttribute('aria-expanded', String(expanded));
+    toggle.textContent = expanded ? toggle.dataset.expandedLabel : toggle.dataset.collapsedLabel;
+  });
+})();
+</script>
+{% schema %}
+{
+  "name": "Customer stories",
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Customer experiences"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Customer reviews"
+    },
+    {
+      "type": "range",
+      "id": "visible",
+      "label": "Reviews before expand",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "text",
+      "id": "more_label",
+      "label": "Expand label",
+      "default": "Read More Reviews"
+    },
+    {
+      "type": "text",
+      "id": "less_label",
+      "label": "Collapse label",
+      "default": "Read Less Reviews"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#FBF7F2"
+    },
+    {
+      "type": "color",
+      "id": "foreground",
+      "label": "Text color",
+      "default": "#171513"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent",
+      "default": "#A84F1B"
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Vertical spacing",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "story",
+      "name": "Story",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Review"
+        },
+        {
+          "type": "text",
+          "id": "customer",
+          "label": "Customer name"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "tag_1",
+          "label": "First tag"
+        },
+        {
+          "type": "text",
+          "id": "tag_2",
+          "label": "Second tag"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verified purchase",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Customer stories",
+      "blocks": [
+        {
+          "type": "story"
+        },
+        {
+          "type": "story"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

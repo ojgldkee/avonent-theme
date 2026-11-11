@@ -383,6 +383,48 @@
         "faq_6_q": "How do I take it and how long does one bottle last?",
         "faq_6_a": "Follow the directions on your bottle. One full daily serving is 1 softgel, and each bottle contains 30 daily servings. The simplest approach is to make it part of the same daily routine so consistency is easy to maintain."
       }
+    },
+    "stories": {
+      "type": "av-cb-stories",
+      "settings": {
+        "heading": "They Felt the Shift. You Will Too.",
+        "eyebrow": "Rated 4.9 / 5",
+        "visible": 2
+      },
+      "blocks": {
+        "story1": {
+          "type": "story",
+          "settings": {
+            "rating": 5,
+            "quote": "I've been consistent with my daily serving every morning for almost two months now, and my blood sugar readings have never been steadier. The first few weeks I didn't notice much, but by week 6 the difference was clear. Sticking with it daily is what made it work.",
+            "tag_1": "Consistent Use",
+            "tag_2": "Steady Blood Sugar"
+          }
+        },
+        "story2": {
+          "type": "story",
+          "settings": {
+            "rating": 5,
+            "quote": "I was skeptical that a supplement could actually move the needle, but three months of daily use later, my fasting numbers are the best they've been in years. It's not a quick fix, but it's something you have to stick with — and for me that consistency paid off.",
+            "tag_1": "Long-Term Results",
+            "tag_2": "Balanced Blood Sugar"
+          }
+        },
+        "story3": {
+          "type": "story",
+          "settings": {
+            "rating": 5,
+            "quote": "The key for me was just not missing days. Once I made it part of my morning routine alongside breakfast, my energy leveled out and my blood sugar readings became a lot more predictable week to week. Small habit, real difference.",
+            "tag_1": "Daily Support",
+            "tag_2": "Blood Sugar Support"
+          }
+        }
+      },
+      "block_order": [
+        "story1",
+        "story2",
+        "story3"
+      ]
     }
   },
   "order": [
@@ -396,6 +438,7 @@
     "benefits",
     "reasons",
     "guarantee",
+    "stories",
     "faq"
   ]
 }
