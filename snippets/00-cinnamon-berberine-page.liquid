@@ -2053,7 +2053,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           });
           const currentCart = currentCartResponse.ok ? await currentCartResponse.json() : { items: [] };
 
-          const wantsProtection = sessionStorage.getItem('avonentShippingProtectionEnabled') !== 'false';
+          const wantsProtection = sessionStorage.getItem('avonentShippingProtectionEnabled') === 'true';
           const alreadyHasProtection = Array.isArray(currentCart.items) && currentCart.items.some((item) =>
             Number(item.variant_id) === protectionVariantId || item.handle === 'shipping-protection'
           );

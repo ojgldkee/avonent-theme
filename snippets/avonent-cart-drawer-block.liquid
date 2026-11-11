@@ -1,0 +1,69 @@
+{% comment %}
+  A self-contained cart drawer content block, edited using the Shopify theme editor.
+  All content is optional. No add-on is placed in the cart automatically.
+{% endcomment %}
+{% liquid
+  assign s = block.settings
+%}
+<div class="avonent-drawer-block" {{ block.shopify_attributes }}>
+  {% case block.type %}
+    {% when 'announcement' %}
+      <div class="avonent-drawer-block__announcement" style="--av-block-bg:{{ s.background }};">
+        {% if s.heading != blank %}<strong>{{ s.heading | escape }}</strong>{% endif %}
+        {% if s.body != blank %}<div>{{ s.body | escape | newline_to_br }}</div>{% endif %}
+      </div>
+    {% when 'shipping_progress' %}
+      {% assign goal_cents = s.threshold | times: 100 %}
+      {% if goal_cents > 0 %}
+        {% assign remainder = goal_cents | minus: cart.total_price %}
+        {% assign percent = cart.total_price | times: 100.0 | divided_by: goal_cents | at_most: 100 | at_least: 0 %}
+        <div class="avonent-drawer-block__shipping" style="--av-progress:{{ s.progress_color }};">
+          {% if remainder > 0 %}
+            {% assign remainder_label = remainder | money %}
+            <span>{{ s.before_message | escape | replace: '{amount}', remainder_label }}</span>
+          {% else %}
+            <span>{{ s.after_message | escape }}</span>
+          {% endif %}
+          <div class="avonent-drawer-block__progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ percent | round }}" aria-label="Free shipping progress">
+            <span style="width:{{ percent }}%;"></span>
+          </div>
+        </div>
+      {% endif %}
+    {% when 'text' %}
+      <div class="avonent-drawer-block__richtext" style="text-align:{{ s.alignment }};">
+        {% if s.heading != blank %}<strong>{{ s.heading | escape }}</strong>{% endif %}
+        {% if s.body != blank %}<div class="rte">{{ s.body }}</div>{% endif %}
+      </div>
+    {% when 'image' %}
+      {% if s.image != blank %}
+        {% if s.link != blank %}<a href="{{ s.link }}">{% endif %}
+        {{ s.image | image_url: width: 900 | image_tag: class: 'avonent-drawer-block__image', loading: 'lazy', widths: '300,450,600,900', alt: s.alt }}
+        {% if s.link != blank %}</a>{% endif %}
+      {% endif %}
+    {% when 'trust' %}
+      <div class="avonent-drawer-block__trust">
+        {% if s.badge_1 != blank %}<span>✓ {{ s.badge_1 | escape }}</span>{% endif %}
+        {% if s.badge_2 != blank %}<span>✓ {{ s.badge_2 | escape }}</span>{% endif %}
+        {% if s.badge_3 != blank %}<span>✓ {{ s.badge_3 | escape }}</span>{% endif %}
+      </div>
+    {% when 'upsell' %}
+      {% if s.product != blank and s.product.available %}
+        {% if s.heading != blank %}<strong>{{ s.heading | escape }}</strong>{% endif %}
+        <div class="avonent-drawer-block__upsell">
+          {% if s.product.featured_image != blank %}
+            {{ s.product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80,160', alt: s.product.title }}
+          {% endif %}
+          <div><strong>{{ s.product.title | escape }}</strong>
+            <div>{{ s.product.price | money }}</div>
+            <a href="{{ s.product.url }}">{{ s.button | escape }}</a>
+          </div>
+        </div>
+      {% endif %}
+    {% when 'divider' %}
+      <hr style="border:0;border-top:1px solid #eee6df;margin:4px 0;">
+    {% when 'spacer' %}
+      <div style="height:{{ s.height }}px;" aria-hidden="true"></div>
+    {% when 'link' %}
+      {% if s.url != blank %}<a href="{{ s.url }}" style="color:var(--av-drawer-accent,#A84F1B);">{{ s.label | escape }}</a>{% endif %}
+  {% endcase %}
+</div>

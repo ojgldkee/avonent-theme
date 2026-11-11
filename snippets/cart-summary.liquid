@@ -313,6 +313,7 @@
     assign avonent_payment_types = 'american_express,apple_pay,diners_club,discover,google_pay,master,paypal,visa' | split: ','
   %}
 
+  {% unless is_cart_drawer and drawer_settings.show_payment_icons == false %}
   <div class="avonent-cart-payment-icons" aria-label="Accepted payment methods">
     {% for type in avonent_payment_types %}
       <span class="avonent-cart-payment-icon">
@@ -320,6 +321,7 @@
       </span>
     {% endfor %}
   </div>
+  {% endunless %}
 
 </div>
 
