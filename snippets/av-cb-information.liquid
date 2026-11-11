@@ -1552,16 +1552,40 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       window.addEventListener('pageshow', enableBundleSubmit);
 
       const openUpdatedCartDrawer = async (sectionHtml, itemCount) => {
+        // Keep the mounted theme-drawer/dialog in place. Replacing the entire
+        // Shopify section destroys the open dialog and causes blank panels.
+        if (!sectionHtml) {
+          try {
+            const rootPath = window.Shopify?.routes?.root || '/';
+            const request = await fetch(rootPath + '?sections=cart-drawer-section', {
+              credentials: 'same-origin', headers: {'Accept': 'application/json'}
+            });
+            const sectionData = await request.json();
+            sectionHtml = sectionData['cart-drawer-section'] || '';
+          } catch (error) {
+            console.warn('[avonent] Could not refresh cart section', error);
+          }
+        }
+        let refreshed = false;
         if (sectionHtml) {
           const parsed = new DOMParser().parseFromString(sectionHtml, 'text/html');
-          const nextSection = parsed.querySelector('#shopify-section-cart-drawer-section');
-          const currentSection = document.querySelector('#shopify-section-cart-drawer-section');
-
-          if (currentSection && nextSection) {
-            currentSection.replaceWith(nextSection);
-          } else if (currentSection) {
-            currentSection.innerHTML = sectionHtml;
+          const nextDrawer = parsed.querySelector('theme-drawer#cart-drawer');
+          const currentDrawer = document.querySelector('theme-drawer#cart-drawer');
+          const nextInner = nextDrawer?.querySelector('.cart-drawer__inner');
+          const currentInner = currentDrawer?.querySelector('.cart-drawer__inner');
+          const nextEmptyTemplate = nextDrawer?.querySelector('#empty-cart-template');
+          const currentEmptyTemplate = currentDrawer?.querySelector('#empty-cart-template');
+          if (nextInner && currentInner) {
+            currentInner.replaceWith(nextInner);
+            if (nextEmptyTemplate && currentEmptyTemplate) currentEmptyTemplate.replaceWith(nextEmptyTemplate);
+            refreshed = true;
           }
+        }
+        if (!refreshed) {
+          // Never leave customers looking at an empty overlay on a failed
+          // section render. The full cart remains a working fallback.
+          window.location.assign((window.Shopify?.routes?.root || '/') + 'cart');
+          return;
         }
 
         if (Number.isFinite(itemCount)) {
