@@ -2037,7 +2037,6 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         const submitButton = productForm.querySelector('button[type="submit"]');
         const variantId = Number(variantInput?.value || 0);
         const sellingPlanId = sellingPlanInput?.value || sellingPlanInput?.dataset.planId || root.dataset.subscriptionPlanId || '';
-        const protectionVariantId = Number(root.dataset.protectionVariantId || 0);
 
         if (!variantId || (isSubscription && !sellingPlanId)) {
           enableBundleSubmit();
@@ -2047,27 +2046,9 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         if (submitButton) submitButton.disabled = true;
 
         try {
-          const currentCartResponse = await fetch('/cart.js', {
-            headers: { 'Accept': 'application/json' },
-            credentials: 'same-origin'
-          });
-          const currentCart = currentCartResponse.ok ? await currentCartResponse.json() : { items: [] };
-
-          const wantsProtection = sessionStorage.getItem('avonentShippingProtectionEnabled') === 'true';
-          const alreadyHasProtection = Array.isArray(currentCart.items) && currentCart.items.some((item) =>
-            Number(item.variant_id) === protectionVariantId || item.handle === 'shipping-protection'
-          );
-
+          // Paid optional protection is added only by the customer's explicit
+          // opt-in in the cart drawer, never silently during product add.
           const items = [];
-
-          // Add protection in the SAME request so opening the drawer never
-          // causes a second protection add and visible cart refresh.
-          if (wantsProtection && protectionVariantId && !alreadyHasProtection) {
-            items.push({
-              id: protectionVariantId,
-              quantity: 1
-            });
-          }
 
           // Shopify displays newly-added lines in reverse insertion order.
           // Bonus goes in before the paid line so the paid cinnamon appears

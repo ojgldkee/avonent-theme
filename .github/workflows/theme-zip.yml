@@ -5,6 +5,9 @@ on:
     branches:
       - main
       - shopify-editor-sections-subscriptions
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:

@@ -37,7 +37,9 @@
     {% when 'image' %}
       {% if s.image != blank %}
         {% if s.link != blank %}<a href="{{ s.link }}">{% endif %}
-        {{ s.image | image_url: width: 900 | image_tag: class: 'avonent-drawer-block__image', loading: 'lazy', widths: '300,450,600,900', alt: s.alt }}
+        <div style="overflow:hidden;border-radius:{{ s.radius }}px;">
+          {{ s.image | image_url: width: 900 | image_tag: class: 'avonent-drawer-block__image', loading: 'lazy', widths: '300,450,600,900', alt: s.alt }}
+        </div>
         {% if s.link != blank %}</a>{% endif %}
       {% endif %}
     {% when 'trust' %}

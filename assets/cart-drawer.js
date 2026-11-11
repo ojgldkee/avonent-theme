@@ -54,7 +54,6 @@ class CartDrawerComponent extends Component {
     document.removeEventListener(StandardEvents.cartLinesUpdate, this.#handleCartLinesUpdate);
     this.#themeDrawer?.removeEventListener(DrawerOpenEvent.eventName, this.#handleDrawerOpen);
     this.removeEventListener('click', this.#handleEnhancementClick);
-
   }
 
   #handleDrawerOpen = () => {
@@ -93,7 +92,7 @@ class CartDrawerComponent extends Component {
         const openAndSettle = () => {
           if (!this.#themeDrawer?.isOpen) this.#themeDrawer?.open();
           settle();
-              };
+        };
 
         if (sourceModal?.open) {
           sourceModal.addEventListener('close', openAndSettle, { once: true });
@@ -117,7 +116,7 @@ class CartDrawerComponent extends Component {
     this.#setShippingProtection(enabled);
   };
 
-  async #setShippingProtection(enabled, automatic = false, knownLineKey = '') {
+  async #setShippingProtection(enabled, knownLineKey = '') {
     if (!this.#protectionVariantId || this.#protectionMutationPending) return;
 
     const panel = this.querySelector('[data-avonent-protection]');
