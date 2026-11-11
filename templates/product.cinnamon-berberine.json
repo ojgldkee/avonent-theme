@@ -19,7 +19,11 @@
         "bonus_product": "ceylon-cinnamon-bonus-bottle",
         "ebook_product": "the-metabolic-balance-blueprint-e-book",
         "accent_color": "#A84F1B",
-        "deep_color": "#7D3612"
+        "deep_color": "#7D3612",
+        "show_trust_image": true,
+        "show_sticky_cart": true,
+        "sticky_title": "Ceylon Cinnamon + Berberine HCl",
+        "sticky_button_text": "Add to Cart"
       },
       "blocks": {
         "hero": {

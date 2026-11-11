@@ -1347,16 +1347,16 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </details>
     </div>
 
+    {% if editor.settings.show_trust_image and av_cb_trust_image != blank %}
     <div class="av-cb__trust-image-section" style="margin-top:10px;">
       {% if av_cb_trust_image != blank %}
         <span style="display:block;width:100%;">{{ av_cb_trust_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 900px) 1200px, calc(100vw - 22px)', alt: av_cb_trust_image_alt, style: 'display:block;width:100%;height:auto;border-radius:18px;' }}</span>
-      {% else %}
-        <img width="1600" height="900" src="https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-why-trust-avonent.png?v=1793242624" alt="{{ av_cb_trust_image_alt | escape }}" loading="lazy" style="display:block;width:100%;height:auto;border-radius:18px;">
       {% endif %}
     </div>
-
+    {% endif %}
 
   </div>
+{% if editor.settings.show_sticky_cart %}
 <div class="av-cb__sticky" aria-label="Quick add to cart">
     <span class="av-cb__sticky-img">
       {% if av_cb_product.featured_image %}
@@ -1364,23 +1364,19 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       {% endif %}
     </span>
     <span class="av-cb__sticky-copy">
-      <span class="av-cb__sticky-title">Ceylon Cinnamon + Berberine HCl</span>
+      <span class="av-cb__sticky-title">{{ editor.settings.sticky_title | default: av_cb_product.title | escape }}</span>
       <span class="av-cb__sticky-price" data-av-cb-sticky-price>{{ av_cb_subscription_unit_price | money }}</span>
     </span>
-    <button class="av-cb__sticky-add" type="button" data-av-cb-sticky-add>Add to Cart</button>
+    <button class="av-cb__sticky-add" type="button" data-av-cb-sticky-add>{{ editor.settings.sticky_button_text | default: 'Add to Cart' | escape }}</button>
   </div>
-
-
+{% endif %}
 
   <script>
     (() => {
       const initialize = () => {
       const root = document.querySelector('[data-av-cb]');
       document.documentElement.classList.add('av-cb-cinnamon-page');
-      const headerLogo = document.querySelector('a.header-logo');
-      if (headerLogo && !headerLogo.querySelector('.av-cb-header-logo')) {
-        headerLogo.innerHTML = '<span class="av-cb-header-logo" aria-label="Avonent"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="24" r="20.5" stroke="currentColor" stroke-width="2.8"/><path d="M26.8 8.8 15.9 25h8.1l-2.7 14.2L33.5 21h-8.2l1.5-12.2Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/></svg><span>Avonent</span></span>';
-      }
+      // Native Shopify Header controls the logo and navigation.
       // Announcement content is edited through Shopify header settings.
       // Shopify header navigation is configured in the header editor.
       if (!root) return;
