@@ -146,7 +146,7 @@
               {% endif %}
             {% endcapture %}
 
-            {% assign cart_drawer_title = 'content.cart_title' | t %}
+            {% assign cart_drawer_title = drawer_cfg.cart_title | default: 'content.cart_title' %}
 
             {% render 'theme-drawer-header',
               title: cart_drawer_title,
@@ -216,17 +216,17 @@
 
                       <div class="avonent-shipping-protection__copy">
                         <div class="avonent-shipping-protection__heading">
-                          <strong>Shipping Protection</strong>
+                          <strong>{{ drawer_cfg.protection_title | escape }}</strong>
                           <span>{{ protection_variant.price | money }}</span>
                         </div>
-                        <p>Protect your order from loss, damage, or theft in transit.</p>
+                        <p>{{ drawer_cfg.protection_description | escape }}</p>
                       </div>
 
                       <button
                         type="button"
                         class="avonent-shipping-protection__toggle"
                         role="switch"
-                        aria-label="Add shipping protection"
+                        aria-label="{{ drawer_cfg.protection_title | escape }}"
                         aria-checked="{% if protection_line_key != blank %}true{% else %}false{% endif %}"
                         data-avonent-protection-toggle
                       >
