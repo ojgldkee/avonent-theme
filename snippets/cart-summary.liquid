@@ -314,7 +314,7 @@
     assign avonent_payment_types = shop.enabled_payment_types
   %}
 
-  {% unless is_cart_drawer and drawer_settings.show_payment_icons == false %}
+  {% unless suppress_payment_icons or is_cart_drawer and drawer_settings.show_payment_icons == false %}
   <div class="avonent-cart-payment-icons" aria-label="Accepted payment methods">
     {% for type in avonent_payment_types %}
       <span class="avonent-cart-payment-icon">

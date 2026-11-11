@@ -24,6 +24,12 @@
   endfor
 
   assign regular_item_count = cart.item_count | minus: protection_quantity
+  assign drawer_has_payment_block = false
+  for customizable_block in drawer_section.blocks
+    if customizable_block.type == 'payments'
+      assign drawer_has_payment_block = true
+    endif
+  endfor
 -%}
 
 {%- if settings.cart_type == 'drawer' and template.name != 'cart' -%}
@@ -237,7 +243,8 @@
 
                   {% render 'cart-summary',
                     section_id: 'cart-drawer-section',
-                    drawer_settings: drawer_cfg
+                    drawer_settings: drawer_cfg,
+                    suppress_payment_icons: drawer_has_payment_block
                   %}
                   {% for block in drawer_section.blocks %}
                     {% if block.settings.placement == 'after_checkout' %}
@@ -297,6 +304,12 @@
   }
   #cart-drawer .avonent-drawer-block__announcement {background:var(--av-block-bg,#fff5ec);padding:12px;border-radius:10px}
   #cart-drawer .avonent-drawer-block__image {display:block;width:100%;height:auto}
+  #cart-drawer .avonent-drawer-block__payments {text-align:center}
+  #cart-drawer .avonent-drawer-block__payments-title {font-size:12px;margin:0 0 10px;opacity:.78}
+  #cart-drawer .avonent-drawer-block__payments > img {max-width:100%;height:auto}
+  #cart-drawer .avonent-drawer-block__payment-icons {display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:5px}
+  #cart-drawer .avonent-drawer-block__payment-icons span {display:grid;place-items:center;background:#fff;border:1px solid #e2e2e2;border-radius:5px;width:45px;height:30px;overflow:hidden}
+  #cart-drawer .avonent-drawer-block__payment-icons svg {width:39px;max-height:24px}
   #cart-drawer .avonent-drawer-block__trust {display:flex;justify-content:space-around;gap:10px;flex-wrap:wrap;font-size:12px;text-align:center}
   #cart-drawer .avonent-drawer-block__upsell {display:flex;align-items:center;gap:12px;border:1px solid #eee6df;border-radius:12px;padding:12px}
   #cart-drawer .avonent-drawer-block__upsell img {width:70px;height:70px;object-fit:cover;border-radius:8px}
