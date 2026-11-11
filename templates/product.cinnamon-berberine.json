@@ -66,9 +66,9 @@
           "settings": {
             "guarantee_highlight": "Less than 1%",
             "guarantee_color": "#A84F1B",
-            "stock_title": "",
-            "stock_text": "",
-            "low_stock_line": "",
+            "stock_title": "WARNING: Low Stock Notice",
+            "stock_text": "Inventory can move quickly during promotions. If Avonent fits your routine, ordering while stock is available can help avoid interruptions.",
+            "low_stock_line": "Low Stock – Selling Fast",
             "guarantee_heading": "90-Day Money-Back Guarantee",
             "guarantee_body": "of customers use our 90-Day Money-Back Guarantee.",
             "acc_1_title": "Clinically Supported Benefits",
