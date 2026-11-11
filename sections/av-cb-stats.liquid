@@ -1,0 +1,129 @@
+{% render 'av-cb-stats', product: product, editor: section %}
+{% schema %}
+{
+  "name": "Product stats",
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "stats_heading",
+      "label": "Stats heading"
+    },
+    {
+      "type": "image_picker",
+      "id": "stats_bg",
+      "label": "Stats bg"
+    },
+    {
+      "type": "color",
+      "id": "stats_overlay_color",
+      "label": "Stats overlay color"
+    },
+    {
+      "type": "textarea",
+      "id": "stats_overlay_opacity",
+      "label": "Stats overlay opacity"
+    },
+    {
+      "type": "textarea",
+      "id": "stats_duration",
+      "label": "Stats duration"
+    },
+    {
+      "type": "textarea",
+      "id": "stat_1_start",
+      "label": "Stat 1 start"
+    },
+    {
+      "type": "textarea",
+      "id": "stat_1_end",
+      "label": "Stat 1 end"
+    },
+    {
+      "type": "textarea",
+      "id": "stat_1_label",
+      "label": "Stat 1 label"
+    },
+    {
+      "type": "textarea",
+      "id": "stat_2_start",
+      "label": "Stat 2 start"
+    },
+    {
+      "type": "textarea",
+      "id": "stat_2_end",
+      "label": "Stat 2 end"
+    },
+    {
+      "type": "textarea",
+      "id": "stat_2_label",
+      "label": "Stat 2 label"
+    },
+    {
+      "type": "textarea",
+      "id": "stat_3_start",
+      "label": "Stat 3 start"
+    },
+    {
+      "type": "textarea",
+      "id": "stat_3_end",
+      "label": "Stat 3 end"
+    },
+    {
+      "type": "textarea",
+      "id": "stat_3_label",
+      "label": "Stat 3 label"
+    },
+    {
+      "type": "textarea",
+      "id": "stat_4_start",
+      "label": "Stat 4 start"
+    },
+    {
+      "type": "textarea",
+      "id": "stat_4_end",
+      "label": "Stat 4 end"
+    },
+    {
+      "type": "textarea",
+      "id": "stat_4_label",
+      "label": "Stat 4 label"
+    },
+    {
+      "type": "textarea",
+      "id": "stats_cta",
+      "label": "Stats cta"
+    },
+    {
+      "type": "textarea",
+      "id": "stats_guarantee",
+      "label": "Stats guarantee"
+    },
+    {
+      "type": "image_picker",
+      "id": "stats_guarantee_icon",
+      "label": "Stats guarantee icon"
+    },
+    {
+      "type": "color",
+      "id": "stats_text_color",
+      "label": "Stats text color"
+    },
+    {
+      "type": "checkbox",
+      "id": "stats_show",
+      "label": "Stats show",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product stats"
+    }
+  ]
+}
+{% endschema %}

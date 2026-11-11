@@ -1,0 +1,83 @@
+{% render 'av-cb-carousel', product: product, editor: section %}
+{% schema %}
+{
+  "name": "Product carousel",
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "carousel_heading",
+      "label": "Carousel heading"
+    },
+    {
+      "type": "image_picker",
+      "id": "carousel_1_image",
+      "label": "Carousel 1 image"
+    },
+    {
+      "type": "textarea",
+      "id": "carousel_1_title",
+      "label": "Carousel 1 title"
+    },
+    {
+      "type": "textarea",
+      "id": "carousel_1_body",
+      "label": "Carousel 1 body"
+    },
+    {
+      "type": "image_picker",
+      "id": "carousel_2_image",
+      "label": "Carousel 2 image"
+    },
+    {
+      "type": "textarea",
+      "id": "carousel_2_title",
+      "label": "Carousel 2 title"
+    },
+    {
+      "type": "textarea",
+      "id": "carousel_2_body",
+      "label": "Carousel 2 body"
+    },
+    {
+      "type": "image_picker",
+      "id": "carousel_3_image",
+      "label": "Carousel 3 image"
+    },
+    {
+      "type": "textarea",
+      "id": "carousel_3_title",
+      "label": "Carousel 3 title"
+    },
+    {
+      "type": "textarea",
+      "id": "carousel_3_body",
+      "label": "Carousel 3 body"
+    },
+    {
+      "type": "image_picker",
+      "id": "carousel_4_image",
+      "label": "Carousel 4 image"
+    },
+    {
+      "type": "textarea",
+      "id": "carousel_4_title",
+      "label": "Carousel 4 title"
+    },
+    {
+      "type": "textarea",
+      "id": "carousel_4_body",
+      "label": "Carousel 4 body"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product carousel"
+    }
+  ]
+}
+{% endschema %}

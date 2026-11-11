@@ -1,0 +1,91 @@
+{% render 'av-cb-reviews', product: product, editor: section %}
+{% schema %}
+{
+  "name": "Product reviews",
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "reviews_heading",
+      "label": "Reviews heading",
+      "default": "Real Stories, Real Results"
+    },
+    {
+      "type": "textarea",
+      "id": "reviews_intro",
+      "label": "Reviews introduction",
+      "default": "Honest experiences from Avonent customers."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product reviews"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "photo",
+          "label": "Customer photo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Customer name"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Review title"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Customer review"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "rating_display",
+          "label": "Displayed rating",
+          "default": "5.0"
+        },
+        {
+          "type": "text",
+          "id": "tag_1",
+          "label": "Review tag 1"
+        },
+        {
+          "type": "text",
+          "id": "tag_2",
+          "label": "Review tag 2"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verified purchase",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "max_blocks": 30
+}
+{% endschema %}

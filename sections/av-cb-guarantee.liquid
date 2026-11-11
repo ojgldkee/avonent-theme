@@ -1,0 +1,59 @@
+{% render 'av-cb-guarantee', product: product, editor: section %}
+{% schema %}
+{
+  "name": "Product guarantee",
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Bottom image — EDIT HERE"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "FEEL THE DIFFERENCE"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Guarantee"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body text",
+      "default": "Try Avonent for 90 days. If it is not right for you, contact us within 90 days and we will help with the next steps under our refund policy."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Try Risk-Free Today"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#FFF4EC"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent",
+      "default": "#A84F1B"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product guarantee"
+    }
+  ]
+}
+{% endschema %}

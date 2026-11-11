@@ -1,0 +1,137 @@
+{% render 'av-cb-comparison', product: product, editor: section %}
+{% schema %}
+{
+  "name": "Product comparison",
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "compare_price",
+      "label": "Compare price"
+    },
+    {
+      "type": "textarea",
+      "id": "compare_heading",
+      "label": "Compare heading"
+    },
+    {
+      "type": "textarea",
+      "id": "compare_subheading",
+      "label": "Compare subheading"
+    },
+    {
+      "type": "textarea",
+      "id": "compare_cta",
+      "label": "Compare cta"
+    },
+    {
+      "type": "textarea",
+      "id": "compare_guarantee",
+      "label": "Compare guarantee"
+    },
+    {
+      "type": "image_picker",
+      "id": "ours_image",
+      "label": "Avonent overlapping image"
+    },
+    {
+      "type": "image_picker",
+      "id": "other_image",
+      "label": "Other brand overlapping image"
+    },
+    {
+      "type": "text",
+      "id": "ours_name",
+      "label": "Avonent column heading",
+      "default": "Avonent"
+    },
+    {
+      "type": "text",
+      "id": "other_name",
+      "label": "Other column heading",
+      "default": "Other brands"
+    },
+    {
+      "type": "text",
+      "id": "ours_1",
+      "label": "Avonent benefit 1",
+      "default": "Independently Lab Tested"
+    },
+    {
+      "type": "text",
+      "id": "other_1",
+      "label": "Other brand point 1",
+      "default": "No Verified Testing"
+    },
+    {
+      "type": "text",
+      "id": "ours_2",
+      "label": "Avonent benefit 2",
+      "default": "No Coumarin — True Ceylon"
+    },
+    {
+      "type": "text",
+      "id": "other_2",
+      "label": "Other brand point 2",
+      "default": "Cheap Cassia, Higher in Coumarin"
+    },
+    {
+      "type": "text",
+      "id": "ours_3",
+      "label": "Avonent benefit 3",
+      "default": "Full-Strength 12:1 Ceylon Extract"
+    },
+    {
+      "type": "text",
+      "id": "other_3",
+      "label": "Other brand point 3",
+      "default": "Weak Low-Dose Formulas"
+    },
+    {
+      "type": "text",
+      "id": "ours_4",
+      "label": "Avonent benefit 4",
+      "default": "400 mg Berberine HCl Included"
+    },
+    {
+      "type": "text",
+      "id": "other_4",
+      "label": "Other brand point 4",
+      "default": "Berberine Often Not Included"
+    },
+    {
+      "type": "text",
+      "id": "ours_5",
+      "label": "Avonent benefit 5",
+      "default": "MCT Oil Softgel Delivery"
+    },
+    {
+      "type": "text",
+      "id": "other_5",
+      "label": "Other brand point 5",
+      "default": "Basic Dry-Powder Capsules"
+    },
+    {
+      "type": "text",
+      "id": "ours_6",
+      "label": "Avonent benefit 6",
+      "default": "Easy-to-Swallow Softgels"
+    },
+    {
+      "type": "text",
+      "id": "other_6",
+      "label": "Other brand point 6",
+      "default": "Hard-to-Swallow Capsules"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product comparison"
+    }
+  ]
+}
+{% endschema %}
