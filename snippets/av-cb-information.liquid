@@ -1303,7 +1303,13 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </div>
     </div>
   </section>
-
+  {% for app_block in editor.blocks %}
+    {% if app_block.type == '@app' %}
+      <div class="av-cb__wrap av-cb__app-block" {{ app_block.shopify_attributes }}>
+        {% render app_block %}
+      </div>
+    {% endif %}
+  {% endfor %}
 
   <div class="av-cb__top-stack">
     {% if av_cb_show_guarantee %}
