@@ -24,7 +24,13 @@
             "timer_minutes": 120,
             "background_color": "#C86F3A",
             "text_color": "#FFFFFF",
-            "bar_height": 52
+            "bar_height": 52,
+            "home_background": "#02C6EA",
+            "home_text_color": "#FFFFFF",
+            "cinnamon_background": "#A84F1B",
+            "cinnamon_text_color": "#FFFFFF",
+            "garlic_background": "#02C6EA",
+            "garlic_text_color": "#FFFFFF"
           },
           "blocks": {}
         }
