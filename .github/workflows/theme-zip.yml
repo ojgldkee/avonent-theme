@@ -1,0 +1,36 @@
+name: Build Shopify theme ZIP
+
+on:
+  push:
+    branches:
+      - main
+      - shopify-editor-sections-subscriptions
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out theme
+        uses: actions/checkout@v4
+      - name: Package only Shopify theme files
+        shell: bash
+        run: |
+          set -euo pipefail
+          for directory in assets blocks config layout locales sections snippets templates; do
+            test -d "$directory"
+          done
+          zip -qr avonent-theme.zip assets blocks config layout locales sections snippets templates
+          unzip -Z1 avonent-theme.zip | grep -Fx 'templates/product.cinnamon-berberine.json'
+          unzip -Z1 avonent-theme.zip | grep -Fx 'sections/image.liquid'
+          unzip -tq avonent-theme.zip
+      - name: Upload Shopify theme ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: avonent-shopify-theme
+          path: avonent-theme.zip
+          if-no-files-found: error
+          retention-days: 30

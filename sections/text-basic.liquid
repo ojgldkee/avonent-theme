@@ -1,0 +1,50 @@
+<style>
+  #shopify-section-{{ section.id }} .av-text {
+    background:{{ section.settings.background }};
+    color:{{ section.settings.text_color }};
+    padding:{{ section.settings.padding }}px 16px;
+    text-align:{{ section.settings.alignment }};
+  }
+  #shopify-section-{{ section.id }} .av-text__inner {
+    max-width:{{ section.settings.max_width }}px;margin:0 auto;
+  }
+  #shopify-section-{{ section.id }} .av-text h2 {
+    font-size:clamp(26px,3.2vw,42px);line-height:1.12;margin:0 0 18px;
+    color:inherit;
+  }
+  #shopify-section-{{ section.id }} .av-text__body {font-size:16px;line-height:1.65}
+  #shopify-section-{{ section.id }} .av-text__button {
+    margin-top:20px;display:inline-block;padding:13px 24px;border-radius:12px;
+    text-decoration:none;background:{{ section.settings.accent }};color:#fff;font-weight:750
+  }
+</style>
+{% if section.settings.heading != blank or section.settings.body != blank or request.design_mode %}
+  <div class="av-text">
+    <div class="av-text__inner">
+      {% if section.settings.heading != blank %}<h2>{{ section.settings.heading | escape }}</h2>{% endif %}
+      {% if section.settings.body != blank %}<div class="av-text__body rte">{{ section.settings.body }}</div>{% endif %}
+      {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+        <a class="av-text__button" href="{{ section.settings.button_link }}">{{ section.settings.button_text | escape }}</a>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+{% schema %}
+{
+  "name":"Text",
+  "settings":[
+    {"type":"text","id":"heading","label":"Heading"},
+    {"type":"richtext","id":"body","label":"Text"},
+    {"type":"text","id":"button_text","label":"Button text"},
+    {"type":"url","id":"button_link","label":"Button link"},
+    {"type":"select","id":"alignment","label":"Alignment","options":[
+      {"value":"left","label":"Left"},{"value":"center","label":"Center"},{"value":"right","label":"Right"}],"default":"center"},
+    {"type":"range","id":"max_width","label":"Content width","min":400,"max":1200,"step":20,"unit":"px","default":800},
+    {"type":"range","id":"padding","label":"Top / bottom spacing","min":0,"max":120,"step":4,"unit":"px","default":48},
+    {"type":"color","id":"background","label":"Background","default":"#FFFFFF"},
+    {"type":"color","id":"text_color","label":"Text color","default":"#171513"},
+    {"type":"color","id":"accent","label":"Accent color","default":"#A84F1B"}
+  ],
+  "presets":[{"name":"Text","category":"Text"}]
+}
+{% endschema %}
