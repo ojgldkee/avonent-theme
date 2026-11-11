@@ -28,13 +28,27 @@
             "bundle_3_badge": "Free Shipping + E-Book",
             "bundle_1_title": "",
             "bundle_1_subtitle": "",
-            "bundle_2_title": "",
+            "bundle_2_title": "Buy 2 Get 1 FREE",
             "bundle_2_subtitle": "",
-            "bundle_3_title": "",
+            "bundle_3_title": "Buy 3 Get 2 FREE",
             "bundle_3_subtitle": "",
             "add_to_cart_text": "",
             "refill_text": "",
-            "cancel_text": ""
+            "cancel_text": "",
+            "best_badge": "Best Seller",
+            "choice_badge": "#1 Choice for Doctors & Practitioners",
+            "show_best_badge": true,
+            "show_choice_badge": true,
+            "show_rating": true,
+            "show_sold": true,
+            "show_sale_badge": true,
+            "subscribe_label": "Subscribe & Save",
+            "one_time_label": "One-Time Purchase",
+            "shipping_note": "$4.95 Shipping",
+            "switch_label": "Switch back to Subscribe & Save",
+            "show_delivery": true,
+            "delivery_label": "Order now for delivery by:",
+            "delivery_days": 5
           }
         },
         "results": {
@@ -231,20 +245,26 @@
         "details": {
           "type": "details",
           "settings": {
-            "guarantee_highlight": "",
-            "guarantee_color": "",
+            "guarantee_highlight": "Less than 1%",
+            "guarantee_color": "#A84F1B",
             "stock_title": "",
             "stock_text": "",
             "low_stock_line": "",
-            "guarantee_heading": "",
-            "guarantee_body": "",
+            "guarantee_heading": "90-Day Money-Back Guarantee",
+            "guarantee_body": "of customers use our 90-Day Money-Back Guarantee.",
             "acc_1_title": "Clinically Supported Benefits",
             "acc_1_body": "<strong>Two researched ingredients. One focused daily formula.</strong><br><br>• <strong>Healthy blood sugar:</strong> Ceylon cinnamon and Berberine HCl are studied for their roles in healthy glucose metabolism.*<br>• <strong>Healthy insulin response:</strong> Supports normal insulin sensitivity and the way your body handles glucose.*<br>• <strong>Metabolic balance:</strong> Supports healthy metabolic function and cellular energy pathways.*<br>• <strong>Antioxidant support:</strong> Ceylon cinnamon naturally contains polyphenols that help support oxidative balance.*",
             "acc_2_title": "Key Ingredients",
             "acc_2_body": "🌿 <strong>True Ceylon Cinnamon — Cinnamomum verum</strong><br>• <strong>Harvested in Sri Lanka</strong> — the traditional home of genuine Ceylon cinnamon.<br>• <strong>12:1 concentrated extract</strong> — 1,200 mg per full daily serving.<br>• <strong>14,400 mg raw-cinnamon equivalent</strong> per full daily serving.<br>• <strong>Not common Cassia</strong> — true Ceylon is naturally much lower in coumarin than Cassia.<br><br><strong>Berberine HCl — 400 mg per daily serving</strong><br>• <strong>Supports healthy glucose metabolism</strong> and insulin sensitivity.*<br>• Adds a <strong>second researched ingredient</strong> for broader metabolic support.*<br><br><strong>MCT Oil Softgel Delivery</strong><br>• A <strong>smooth oil-based softgel format</strong> with no loose cinnamon powder or gritty drink mix.",
             "acc_3_title": "How It Works",
             "acc_3_body": "<strong>Built differently from basic cinnamon capsules.</strong><br><br><strong>1. Start with genuine Ceylon.</strong> We use <strong>Cinnamomum verum harvested in Sri Lanka</strong> — not generic Cassia powder.<br><br><strong>2. Concentrate the cinnamon.</strong> A <strong>12:1 extract</strong> provides a <strong>14,400 mg raw-cinnamon equivalent</strong> per full daily serving.<br><br><strong>3. Add Berberine HCl.</strong> <strong>400 mg per daily serving</strong> complements Ceylon cinnamon with another researched ingredient for healthy glucose and metabolic support.*<br><br><strong>4. Use an MCT-oil softgel.</strong> A clean, easy-to-take format without stirring cinnamon into drinks or relying on dry powder capsules.",
-            "trust_image_alt": ""
+            "trust_image_alt": "",
+            "guarantee_image_url": "https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-90-day-money-back-guarantee.png?v=1793736254",
+            "show_guarantee": true,
+            "show_stock_notice": true,
+            "show_low_stock_line": true,
+            "stock_color": "#D62828",
+            "stock_background": "#FFF5F5"
           }
         },
         "review_1": {
@@ -357,7 +377,9 @@
         "trust_image": "shopify://shop_images/1FA0CA01-7E0B-48B4-BA27-C66E6A6F100B.png",
         "trust_image_alt": "Why Trust Avonent",
         "bonus_product": "ceylon-cinnamon-bonus-bottle",
-        "ebook_product": "the-metabolic-balance-blueprint-e-book"
+        "ebook_product": "the-metabolic-balance-blueprint-e-book",
+        "accent_color": "#A84F1B",
+        "deep_color": "#7D3612"
       }
     }
   },

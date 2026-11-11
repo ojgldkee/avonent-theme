@@ -149,8 +149,7 @@
   if (reviewHead) {
     const h2 = reviewHead.querySelector('h2');
     const p = reviewHead.querySelector('p');
-    if (h2) h2.textContent = 'Real Stories, Real Results';
-    if (p) p.textContent = 'Honest experiences from Avonent customers.';
+    // Shopify section settings provide review heading and introduction.
   }
 
   const benefits = root.querySelector('.av-cb__benefits-section');
@@ -243,6 +242,22 @@
   "name": "Product page",
   "settings": [
     {
+      "type": "header",
+      "content": "Product colors"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#A84F1B"
+    },
+    {
+      "type": "color",
+      "id": "deep_color",
+      "label": "Dark accent",
+      "default": "#7D3612"
+    },
+    {
       "type": "text",
       "id": "reviews_heading",
       "label": "Reviews heading",
@@ -294,6 +309,106 @@
       "name": "Hero",
       "limit": 1,
       "settings": [
+        {
+          "type": "header",
+          "content": "Badges and social proof"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_best_badge",
+          "label": "Show first badge",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "best_badge",
+          "label": "First badge",
+          "default": "Best Seller"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_choice_badge",
+          "label": "Show second badge",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "choice_badge",
+          "label": "Second badge",
+          "default": "#1 Choice for Doctors & Practitioners"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_rating",
+          "label": "Show rating",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sold",
+          "label": "Show percent sold",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sale_badge",
+          "label": "Show sale badge",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Purchase options"
+        },
+        {
+          "type": "text",
+          "id": "subscribe_label",
+          "label": "Subscription heading",
+          "default": "Subscribe & Save"
+        },
+        {
+          "type": "text",
+          "id": "one_time_label",
+          "label": "One-time heading",
+          "default": "One-Time Purchase"
+        },
+        {
+          "type": "text",
+          "id": "shipping_note",
+          "label": "One-time shipping note",
+          "default": "$4.95 Shipping"
+        },
+        {
+          "type": "text",
+          "id": "switch_label",
+          "label": "Return to subscription",
+          "default": "Switch back to Subscribe & Save"
+        },
+        {
+          "type": "header",
+          "content": "Delivery estimate"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_delivery",
+          "label": "Show delivery date",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "delivery_label",
+          "label": "Delivery label",
+          "default": "Estimated delivery by:"
+        },
+        {
+          "type": "range",
+          "id": "delivery_days",
+          "label": "Days until delivery",
+          "min": 1,
+          "max": 21,
+          "step": 1,
+          "unit": "d",
+          "default": 5
+        },
         {
           "type": "image_picker",
           "id": "hero_image",
@@ -1310,6 +1425,45 @@
       "name": "Details",
       "limit": 1,
       "settings": [
+        {
+          "type": "header",
+          "content": "Guarantee and stock"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_guarantee",
+          "label": "Show guarantee",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "guarantee_image_url",
+          "label": "Guarantee image URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_stock_notice",
+          "label": "Show stock warning",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_low_stock_line",
+          "label": "Show low-stock line",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "stock_color",
+          "label": "Warning color",
+          "default": "#D62828"
+        },
+        {
+          "type": "color",
+          "id": "stock_background",
+          "label": "Warning background",
+          "default": "#FFF5F5"
+        },
         {
           "type": "image_picker",
           "id": "guarantee_image",
