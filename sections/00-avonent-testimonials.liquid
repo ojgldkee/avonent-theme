@@ -17,7 +17,7 @@
 >
   <div class="avonent-testimonials__container">
     <h2 class="avonent-testimonials__heading">
-      <span>Real Stories,</span> <span class="avonent-testimonials__heading-accent">Real Results</span>
+      {{ section.settings.heading | escape }}
     </h2>
 
     {% if section.settings.subheading != blank %}
@@ -29,7 +29,7 @@
         {% for block in section.blocks %}
           <article class="avonent-testimonial-card" data-av-testimonial-card {{ block.shopify_attributes }}>
             <div class="avonent-testimonial-card__rating-row">
-              <strong class="avonent-testimonial-card__rating-number">5.0</strong>
+              <strong class="avonent-testimonial-card__rating-number">{{ block.settings.rating }}.0</strong>
               <div class="avonent-testimonial-card__stars" aria-label="{{ block.settings.rating }} out of 5 stars">
                 {% for i in (1..5) %}
                   <span class="{% if i > block.settings.rating %}is-empty{% endif %}" aria-hidden="true">★</span>
