@@ -1,4 +1,243 @@
 {% render 'av-cb-reviews', product: product, editor: section %}
+<style>
+/* Cinnamon page: review compactness + controls. Scoped to this section only. */
+#shopify-section-{{ section.id }} .av-cb__reviews{padding:30px 0 28px}
+#shopify-section-{{ section.id }} .av-cb__reviews-head>span{font-size:26px}
+#shopify-section-{{ section.id }} .av-cb__reviews-head h2{font-size:clamp(28px,4vw,38px);margin:10px 0 8px}
+#shopify-section-{{ section.id }} .av-cb__reviews-head p{font-size:15px;margin:0 0 10px}
+#shopify-section-{{ section.id }} .av-cb__review-track{align-items:flex-start;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:10px}
+#shopify-section-{{ section.id }} .av-cb__review-track::-webkit-scrollbar{display:none}
+#shopify-section-{{ section.id }} .av-cb__review-card{padding:20px;align-self:flex-start}
+#shopify-section-{{ section.id }} .av-cb__review-rating{gap:8px}
+#shopify-section-{{ section.id }} .av-cb__review-score{font-size:17px}
+#shopify-section-{{ section.id }} .av-cb__review-stars{font-size:20px}
+#shopify-section-{{ section.id }} .av-cb__review-card h3{font-size:19px;line-height:1.25;margin:14px 0 9px}
+#shopify-section-{{ section.id }} .av-cb__review-card p{font-size:14.5px;line-height:1.48;margin:0}
+#shopify-section-{{ section.id }} .av-cb__review-card footer{margin-top:18px;padding-top:17px;font-size:12.5px}
+#shopify-section-{{ section.id }} .av-cb__review-tags{gap:9px;margin-top:14px}
+#shopify-section-{{ section.id }} .av-cb__review-tag{min-height:32px;padding:6px 9px;font-size:11px}
+#shopify-section-{{ section.id }} .av-cb__review-controls{display:flex;flex-direction:column;align-items:center;gap:14px;margin:14px 0 0}
+#shopify-section-{{ section.id }} .av-cb__review-dots{display:flex;align-items:center;justify-content:center;gap:9px}
+#shopify-section-{{ section.id }} .av-cb__review-dot{width:10px;height:10px;padding:0;border:0;border-radius:999px;background:#d6d3d0;cursor:pointer;transition:.2s ease}
+#shopify-section-{{ section.id }} .av-cb__review-dot.is-active{width:44px;background:#A84F1B}
+#shopify-section-{{ section.id }} .av-cb__review-arrows{display:flex;gap:12px}
+#shopify-section-{{ section.id }} .av-cb__review-arrow{width:46px;height:46px;border:1px solid #e5cbbb;border-radius:50%;background:#fff7f2;color:#A84F1B;display:grid;place-items:center;cursor:pointer}
+#shopify-section-{{ section.id }} .av-cb__review-arrow svg{width:21px;height:21px}
+
+/* Auto-moving customer photo strip above reviews */
+#shopify-section-{{ section.id }} .av-cb__photo-track{
+  display:block!important;
+  gap:0!important;
+  overflow:hidden!important;
+  scroll-snap-type:none!important;
+  scrollbar-width:none!important;
+  -ms-overflow-style:none!important;
+  padding:10px 0 16px!important;
+  pointer-events:none!important;
+  touch-action:pan-y!important;
+}
+#shopify-section-{{ section.id }} .av-cb__photo-track::-webkit-scrollbar{display:none!important}
+#shopify-section-{{ section.id }} .av-cb__photo-marquee-inner{
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:max-content!important;
+  will-change:transform!important;
+  transform:translate3d(0,0,0);
+}
+#shopify-section-{{ section.id }} .av-cb__photo-track figure{
+  flex:0 0 96px!important;
+  width:96px!important;
+  height:96px!important;
+  aspect-ratio:1/1!important;
+  border-radius:9px!important;
+  scroll-snap-align:none!important;
+}
+#shopify-section-{{ section.id }} .av-cb__photo-track img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+}
+@media(max-width:600px){
+  #shopify-section-{{ section.id }} .av-cb__review-card{flex:0 0 100%;padding:17px}
+  #shopify-section-{{ section.id }} .av-cb__review-card h3{font-size:19px;margin:15px 0 9px}
+  #shopify-section-{{ section.id }} .av-cb__review-card p{font-size:13.25px;line-height:1.5}
+  #shopify-section-{{ section.id }} .av-cb__review-card footer{padding-top:16px}
+  #shopify-section-{{ section.id }} .av-cb__review-tags{margin-top:13px}
+  #shopify-section-{{ section.id }} .av-cb__reviews{padding:24px 0 24px}
+  #shopify-section-{{ section.id }} .av-cb__photo-track{padding:8px 0 14px!important}
+  #shopify-section-{{ section.id }} .av-cb__photo-marquee-inner{gap:8px!important}
+  #shopify-section-{{ section.id }} .av-cb__photo-track figure{flex-basis:82px!important;width:82px!important;height:82px!important;aspect-ratio:1/1!important;border-radius:8px!important}
+}
+</style>
+<script>
+(() => {
+  const host = document.getElementById('shopify-section-{{ section.id }}');
+  if (!host) return;
+  const root = host.querySelector('[data-av-cb]');
+  if (!root) return;
+
+  const reviews = root.querySelector('.av-cb__reviews');
+
+  const photoTrack = reviews?.querySelector('.av-cb__photo-track');
+  if (photoTrack && !photoTrack.dataset.avCbPhotoAutoReady) {
+    photoTrack.dataset.avCbPhotoAutoReady = 'true';
+    photoTrack.removeAttribute('tabindex');
+
+    const originals = Array.from(photoTrack.querySelectorAll('figure')).slice(0, 10);
+    if (originals.length > 1) {
+      const inner = document.createElement('div');
+      inner.className = 'av-cb__photo-marquee-inner';
+
+      originals.forEach((figure) => inner.appendChild(figure));
+
+      for (let repeat = 0; repeat < 3; repeat += 1) {
+        originals.forEach((figure) => {
+          const clone = figure.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          inner.appendChild(clone);
+        });
+      }
+
+      photoTrack.appendChild(inner);
+
+      let offset = 0;
+      let loopWidth = 0;
+      let lastTime = 0;
+      const speed = 22;
+
+      const measure = () => {
+        const all = inner.querySelectorAll('figure');
+        const first = all[0];
+        const firstRepeat = all[originals.length];
+        if (first && firstRepeat) {
+          loopWidth = firstRepeat.offsetLeft - first.offsetLeft;
+        }
+      };
+
+      const animate = (time) => {
+        if (!lastTime) lastTime = time;
+        const delta = Math.min((time - lastTime) / 1000, 0.05);
+        lastTime = time;
+
+        if (!document.hidden && loopWidth > 0) {
+          offset += speed * delta;
+          if (offset >= loopWidth) offset -= loopWidth;
+          inner.style.transform = 'translate3d(' + (-offset) + 'px,0,0)';
+        }
+
+        requestAnimationFrame(animate);
+      };
+
+      requestAnimationFrame(() => {
+        measure();
+        requestAnimationFrame(animate);
+      });
+
+      window.addEventListener('resize', () => {
+        measure();
+        if (loopWidth > 0) offset %= loopWidth;
+      }, {passive:true});
+
+      document.addEventListener('visibilitychange', () => {
+        lastTime = 0;
+      }, {passive:true});
+    }
+  }
+
+  const reviewHead = reviews?.querySelector('.av-cb__reviews-head');
+  if (reviewHead) {
+    const h2 = reviewHead.querySelector('h2');
+    const p = reviewHead.querySelector('p');
+    // Shopify section settings provide review heading and introduction.
+  }
+
+  const benefits = root.querySelector('.av-cb__benefits-section');
+  const science = root.querySelector('.av-cb__science-section');
+  if (reviews && benefits && science && benefits.previousElementSibling !== reviews) {
+    science.parentNode.insertBefore(benefits, science);
+  }
+
+  const track = reviews?.querySelector('.av-cb__review-track');
+  if (!track) return;
+  const cards = Array.from(track.querySelectorAll('.av-cb__review-card'));
+  if (!cards.length) return;
+
+  let controls = reviews.querySelector('.av-cb__review-controls');
+  if (!controls) {
+    controls = document.createElement('div');
+    controls.className = 'av-cb__review-controls';
+    controls.innerHTML = '<div class="av-cb__review-dots" aria-label="Choose customer review"></div><div class="av-cb__review-arrows"><button class="av-cb__review-arrow" type="button" data-av-cb-live-review-prev aria-label="Previous review"><svg viewBox="0 0 24 24" fill="none"><path d="m14.5 6-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="av-cb__review-arrow" type="button" data-av-cb-live-review-next aria-label="Next review"><svg viewBox="0 0 24 24" fill="none"><path d="m9.5 6 6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>';
+    track.insertAdjacentElement('afterend', controls);
+  }
+
+  const dotsBox = controls.querySelector('.av-cb__review-dots');
+  if (dotsBox && !dotsBox.children.length) {
+    cards.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'av-cb__review-dot' + (i === 0 ? ' is-active' : '');
+      dot.setAttribute('aria-label', 'Go to review ' + (i + 1));
+      dot.dataset.reviewIndex = String(i);
+      dotsBox.appendChild(dot);
+    });
+  }
+
+  const dots = Array.from(controls.querySelectorAll('.av-cb__review-dot'));
+  const prev = controls.querySelector('[data-av-cb-review-prev], [data-av-cb-live-review-prev]');
+  const next = controls.querySelector('[data-av-cb-review-next], [data-av-cb-live-review-next]');
+
+  const setActive = index => dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
+  const currentIndex = () => {
+    const left = track.getBoundingClientRect().left;
+    let best = 0, distance = Infinity;
+    cards.forEach((card, i) => {
+      const d = Math.abs(card.getBoundingClientRect().left - left);
+      if (d < distance) { distance = d; best = i; }
+    });
+    return best;
+  };
+  const goTo = raw => {
+    const index = ((raw % cards.length) + cards.length) % cards.length;
+    track.scrollTo({left: cards[index].offsetLeft - track.offsetLeft, behavior:'smooth'});
+    setActive(index);
+  };
+
+  if (!controls.dataset.avCbReady) {
+    controls.dataset.avCbReady = 'true';
+    prev?.addEventListener('click', () => goTo(currentIndex() - 1));
+    next?.addEventListener('click', () => goTo(currentIndex() + 1));
+    dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+    let timer;
+    track.addEventListener('scroll', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => setActive(currentIndex()), 70);
+    }, {passive:true});
+  }
+})();
+</script>
+
+
+<style>
+  .av-cb__post-risk-read-more-wrap{
+    display:flex!important;
+    justify-content:center!important;
+    align-items:center!important;
+    width:100%!important;
+    text-align:center!important;
+  }
+  .av-cb__post-risk-read-more{
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    color:#111!important;
+    text-align:center!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+</style>
+
+
 {% schema %}
 {
   "name": "Product reviews",

@@ -669,12 +669,8 @@
         if content_block.settings.guarantee_color != blank
           assign av_cb_guarantee_color = content_block.settings.guarantee_color
         endif
-        if content_block.settings.stock_title != blank
-          assign av_cb_stock_title = content_block.settings.stock_title
-        endif
-        if content_block.settings.stock_text != blank
-          assign av_cb_stock_text = content_block.settings.stock_text
-        endif
+        assign av_cb_stock_title = content_block.settings.stock_title
+        assign av_cb_stock_text = content_block.settings.stock_text
         if content_block.settings.low_stock_line != blank
           assign av_cb_low_stock_line = content_block.settings.low_stock_line
         endif
@@ -1386,23 +1382,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         headerLogo.innerHTML = '<span class="av-cb-header-logo" aria-label="Avonent"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="24" r="20.5" stroke="currentColor" stroke-width="2.8"/><path d="M26.8 8.8 15.9 25h8.1l-2.7 14.2L33.5 21h-8.2l1.5-12.2Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/></svg><span>Avonent</span></span>';
       }
       // Announcement content is edited through Shopify header settings.
-      const cinnamonContactUrl = {% if pages['contact'] != blank %}{{ pages['contact'].url | json }}{% else %}"/pages/contact"{% endif %};
-      const cinnamonTrackUrl = {% if pages['track-your-order'] != blank %}{{ pages['track-your-order'].url | json }}{% else %}"/pages/track-your-order"{% endif %};
-      const cinnamonMenuLinks = [
-        { label: 'Shop Ceylon Cinnamon', href: '#av-cb-top' },
-        { label: 'Contact', href: cinnamonContactUrl },
-        { label: 'Track Order', href: cinnamonTrackUrl }
-      ];
-      document.querySelectorAll('.header-drawer .menu-drawer__menu.has-submenu').forEach((menu) => {
-        menu.innerHTML = cinnamonMenuLinks.map((item, index) => `
-          <li style="--menu-drawer-animation-index: ${index + 1};" class="menu-drawer__list-item--flat">
-            <a href="${item.href}" class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element">
-              <span class="menu-drawer__menu-item-text wrap-text">${item.label}</span>
-            </a>
-          </li>
-        `).join('');
-      });
-
+      // Shopify header navigation is configured in the header editor.
       if (!root) return;
 
       const fiveReasons = document.querySelector('[data-av-cb-five-reasons]');
