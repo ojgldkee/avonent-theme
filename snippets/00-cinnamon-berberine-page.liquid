@@ -740,7 +740,7 @@
   endif
 %}
 
-<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="{{ av_cb_bonus_variant.id }}" data-ebook-variant-id="{{ av_cb_ebook_variant.id }}">
+<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="{{ av_cb_bonus_variant.id }}" data-ebook-variant-id="{{ av_cb_ebook_variant.id }}" data-subscription-label="{{ av_cb_subscribe_label | escape }}" data-one-time-label="{{ av_cb_one_time_label | escape }}" data-shipping-note="{{ av_cb_shipping_note | escape }}" data-switch-label="{{ av_cb_switch_label | escape }}" data-delivery-days="{{ av_cb_delivery_days }}" style="--blue:{{ av_cb_accent_color }};--deep:{{ av_cb_deep_color }}">
   <style>
     .av-cb{--blue:#A84F1B;--deep:#7D3612;--ink:#171513;--muted:#645C57;--line:#E7D2C4;--soft:#FFF4EC;--soft2:#FFFBF7;background:#fff;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}.av-cb,.av-cb button,.av-cb input,.av-cb select,.av-cb textarea,.av-cb summary{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif!important}
     .av-cb-header-logo{display:inline-flex;align-items:center;gap:7px;color:#A84F1B;line-height:1;text-decoration:none!important}
@@ -1075,7 +1075,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
   </style>
 
-  <section class="av-cb__hero" id="av-cb-top">
+  <section class="av-cb__hero" id="av-cb-top" {% if av_cb_hero_block %}{{ av_cb_hero_block.shopify_attributes }}{% endif %}>
     <div class="av-cb__wrap av-cb__hero-grid">
       <div class="av-cb__media">
         {% if av_cb_product.images.size > 0 %}
@@ -1119,45 +1119,50 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </div>
 
       <div>
-        <div class="av-cb__hero-badges" aria-label="Product highlights">
-          <span class="av-cb__hero-badge av-cb__hero-badge--best">Best Seller</span>
-          <span class="av-cb__hero-badge av-cb__hero-badge--choice">#1 Choice for Doctors &amp; Practitioners</span>
-        </div>
+        {% if av_cb_show_best_badge or av_cb_show_choice_badge %}
+          <div class="av-cb__hero-badges" aria-label="Product highlights">
+            {% if av_cb_show_best_badge %}<span class="av-cb__hero-badge av-cb__hero-badge--best">{{ av_cb_best_badge | escape }}</span>{% endif %}
+            {% if av_cb_show_choice_badge %}<span class="av-cb__hero-badge av-cb__hero-badge--choice">{{ av_cb_choice_badge | escape }}</span>{% endif %}
+          </div>
+        {% endif %}
 
+        {% if av_cb_show_rating %}
         <div class="av-cb__rating">
           <span class="av-cb__stars" aria-hidden="true">★★★★★</span>
-          <span class="av-cb__rating-text">{{ av_cb_rating_text }}</span>
+          <span class="av-cb__rating-text">{{ av_cb_rating_text | escape }}</span>
         </div>
+        {% endif %}
 
         <h1 class="av-cb__title">{{ av_cb_display_title }}</h1>
 
         <div class="av-cb__benefits">
           {% assign av_cb_benefits = av_cb_benefit_1 | append: '||' | append: av_cb_benefit_2 | append: '||' | append: av_cb_benefit_3 | append: '||' | append: av_cb_benefit_4 | split: '||' %}
           {% for benefit in av_cb_benefits %}
-            <div class="av-cb__benefit">
+            {% if benefit != blank %}<div class="av-cb__benefit">
               <span class="av-cb__benefit-check" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="m4.2 10.2 3.4 3.4 8.2-8.2" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              <span>{{ benefit }}</span>
-            </div>
+              <span>{{ benefit | escape }}</span>
+            </div>{% endif %}
           {% endfor %}
         </div>
 
-        <div class="av-cb__sold" data-av-cb-sold data-sold-start="12" data-sold-target="{{ av_cb_sold_percent }}" style="--sold: {{ av_cb_sold_percent }}%;">
+        {% if av_cb_show_sold %}<div class="av-cb__sold" data-av-cb-sold data-sold-start="12" data-sold-target="{{ av_cb_sold_percent }}" style="--sold: {{ av_cb_sold_percent }}%;">
           <div class="av-cb__sold-row">
             <div class="av-cb__sold-track" aria-hidden="true"><div class="av-cb__sold-fill" data-av-cb-sold-fill></div></div>
             <div class="av-cb__sold-text" data-av-cb-sold-text>{{ av_cb_sold_percent }}% Sold</div>
           </div>
         </div>
 
+        {% endif %}
         <div class="av-cb__pricing av-cb__pricing--purchase-mode">
-          <span class="av-cb__purchase-heading" data-av-cb-purchase-heading>{% if av_cb_subscription != blank %}Subscribe &amp; Save{% else %}One-Time Purchase{% endif %}</span>
+          <span class="av-cb__purchase-heading" data-av-cb-purchase-heading>{% if av_cb_subscription != blank %}{{ av_cb_subscribe_label | escape }}{% else %}{{ av_cb_one_time_label | escape }}{% endif %}</span>
           <span class="av-cb__pricing-values">
             <span class="av-cb__sale-price" data-av-cb-price>{{ av_cb_subscription_unit_price | money }}</span>
             <span class="av-cb__compare-price" data-av-cb-compare-price{% if av_cb_subscription == blank and av_cb_one_time_compare_unit == 0 %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_one_time_unit_price | money }}{% elsif av_cb_one_time_compare_unit > 0 %}{{ av_cb_one_time_compare_unit | money }}{% endif %}</span>
-            <span class="av-cb__sale-badge">{{ av_cb_sale_badge }}</span>
+            {% if av_cb_show_sale_badge and av_cb_sale_badge != blank %}<span class="av-cb__sale-badge">{{ av_cb_sale_badge | escape }}</span>{% endif %}
           </span>
         </div>
 
-        <div class="av-cb__low-stock-line"><span>{{ av_cb_low_stock_line }}</span></div>
+        {% if av_cb_show_low_stock_line and av_cb_low_stock_line != blank %}<div class="av-cb__low-stock-line"><span>{{ av_cb_low_stock_line | escape }}</span></div>{% endif %}
 
         <product-form-component
           data-section-id="{{ editor.id }}"
@@ -1203,6 +1208,9 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 {% assign av_cb_bundle_savings_pct = av_cb_bundle_savings_amount | times: 100.0 | divided_by: av_cb_bundle_subscription_compare | round %}
               {% endif %}
               {% assign av_cb_bundle_savings_text = 'You save ' | append: av_cb_bundle_savings_pct | append: '%' %}
+              {% if av_cb_bundle_subtitle != blank %}
+                {% assign av_cb_bundle_savings_text = av_cb_bundle_subtitle %}
+              {% endif %}
               {% assign av_cb_bundle_one_time_total = av_cb_one_time_unit_price | times: qty %}
               {% assign av_cb_bundle_one_time_compare_total = av_cb_one_time_compare_unit | times: qty %}
               <button class="av-cb__bundle{% if qty == 1 %} is-active{% endif %}" type="button" data-av-cb-bundle="{{ qty }}" data-subscription-price="{{ av_cb_bundle_sub_total }}" data-subscription-compare="{{ av_cb_bundle_subscription_compare }}" data-one-time-price="{{ av_cb_bundle_one_time_total }}" data-one-time-compare="{{ av_cb_bundle_one_time_compare_total }}">
@@ -1216,7 +1224,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                   {% endif %}
                 </span>
                 <span class="av-cb__bundle-copy">
-                  <strong data-av-cb-bundle-title data-one-time-title="{% if qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2{% else %}Buy 3{% endif %}" data-subscription-title="{% if qty == 1 %}Buy 1{% elsif qty == 2 and av_cb_bonus_variant != blank %}Buy 2 Get 1 FREE{% elsif qty == 3 and av_cb_bonus_variant != blank %}Buy 3 Get 2 FREE{% else %}Buy {{ qty }}{% endif %}">{% if qty == 1 %}Buy 1{% elsif qty == 2 and av_cb_bonus_variant != blank %}Buy 2 Get 1 FREE{% elsif qty == 3 and av_cb_bonus_variant != blank %}Buy 3 Get 2 FREE{% else %}Buy {{ qty }}{% endif %}</strong>
+                  <strong data-av-cb-bundle-title data-one-time-title="Buy {{ qty }}" data-subscription-title="{{ av_cb_bundle_title | escape }}">{{ av_cb_bundle_title | escape }}</strong>
                   <span data-av-cb-bundle-subtitle data-one-time-subtitle="" data-subscription-subtitle="{{ av_cb_bundle_savings_text }}">{{ av_cb_bundle_savings_text }}</span>
                 </span>
                 <span class="av-cb__bundle-price">
@@ -1242,13 +1250,15 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             {% endfor %}
           </div>
 
+          {% if av_cb_show_delivery %}
           <div class="av-cb__delivery-estimate" aria-live="polite">
             <span class="av-cb__delivery-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
-            <span>Order now for delivery by: <strong data-av-cb-delivery-date></strong></span>
+            <span>{{ av_cb_delivery_label | escape }} <strong data-av-cb-delivery-date></strong></span>
           </div>
 
+          {% endif %}
           <button class="av-cb__buy" type="submit" {% unless av_cb_variant.available %}disabled{% endunless %}>
             {% if av_cb_variant.available %}
               <span class="av-cb__buy-mainline">
@@ -1282,7 +1292,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
         {% if av_cb_subscription != blank %}
           <button class="av-cb__purchase-toggle" type="button" data-av-cb-purchase-toggle aria-pressed="false">
-            <span data-av-cb-purchase-toggle-text>One-Time Purchase <strong data-av-cb-one-time-toggle-price>{{ av_cb_one_time_unit_price | money }}</strong> + $4.95 Shipping</span>
+            <span data-av-cb-purchase-toggle-text>{{ av_cb_one_time_label | escape }} <strong data-av-cb-one-time-toggle-price>{{ av_cb_one_time_unit_price | money }}</strong> · {{ av_cb_shipping_note | escape }}</span>
           </button>
         {% endif %}
       </div>
@@ -1291,15 +1301,14 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
 
   <div class="av-cb__top-stack">
-    <div class="av-cb__guarantee-card" style="--guarantee-highlight: {{ av_cb_guarantee_color }}; --guarantee-text: #171717;">
+    {% if av_cb_show_guarantee %}
+    <div class="av-cb__guarantee-card" style="--guarantee-highlight: {{ av_cb_guarantee_color }}; --guarantee-text: #171717;" {% if av_cb_details_block %}{{ av_cb_details_block.shopify_attributes }}{% endif %}>
       <div class="av-cb__guarantee-image">
-        <img
-          src="https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-90-day-money-back-guarantee.png?v=1793736254"
-          width="240"
-          height="240"
-          loading="lazy"
-          alt="90-Day Money-Back Guarantee"
-        >
+        {% if av_cb_guarantee_image != blank %}
+          {{ av_cb_guarantee_image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120,180,240', alt: av_cb_guarantee_heading }}
+        {% elsif av_cb_guarantee_image_url != blank %}
+          <img src="{{ av_cb_guarantee_image_url | escape }}" width="240" height="240" loading="lazy" alt="{{ av_cb_guarantee_heading | escape }}">
+        {% endif %}
       </div>
       <div class="av-cb__guarantee-copy">
         <h3>{{ av_cb_guarantee_heading }}</h3>
@@ -1307,13 +1316,16 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </div>
     </div>
 
-    <div class="av-cb__low-stock" style="--low-stock: #D62828; --low-stock-bg: #FFF5F5;">
+    {% endif %}
+    {% if av_cb_show_stock_notice %}
+    <div class="av-cb__low-stock" style="--low-stock: {{ av_cb_stock_color }}; --low-stock-bg: {{ av_cb_stock_background }};">
       <div class="av-cb__low-stock-icon" aria-hidden="true">!</div>
       <div>
         <h3>{{ av_cb_stock_title }}</h3>
-        <p>{{ av_cb_stock_text }}</p>
+        <p>{{ av_cb_stock_text | escape }}</p>
       </div>
     </div>
+    {% endif %}
 
     <div class="av-cb__accordion-list" data-av-cb-accordion-list>
       <details class="av-cb__accordion">
