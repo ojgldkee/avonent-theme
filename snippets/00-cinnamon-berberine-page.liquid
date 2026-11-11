@@ -1117,19 +1117,21 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 {% assign av_cb_bundle_title = av_cb_bundle_3_title %}
                 {% assign av_cb_bundle_subtitle = av_cb_bundle_3_subtitle %}
               {% endif %}
-              {% if qty == 1 %}
-                {% assign av_cb_bundle_sub_total = 2999 %}
-                {% assign av_cb_bundle_subscription_compare = av_cb_one_time_unit_price %}
-                {% assign av_cb_bundle_savings_text = 'You save 50%' %}
-              {% elsif qty == 2 %}
-                {% assign av_cb_bundle_sub_total = 5999 %}
-                {% assign av_cb_bundle_subscription_compare = av_cb_one_time_unit_price | times: 3 %}
-                {% assign av_cb_bundle_savings_text = 'You save 67%' %}
-              {% else %}
-                {% assign av_cb_bundle_sub_total = 8999 %}
-                {% assign av_cb_bundle_subscription_compare = av_cb_one_time_unit_price | times: 5 %}
-                {% assign av_cb_bundle_savings_text = 'You save 70%' %}
+              {% comment %}
+                Prices come from the first allocated Shopify subscription selling plan.
+                For bigger introductory bundles, the 2/3 paid units remain the
+                chargeable units; bonus items are a separate first-order gift.
+              {% endcomment %}
+              {% assign av_cb_bonus_units = qty | minus: 1 %}
+              {% assign av_cb_total_intro_units = qty | plus: av_cb_bonus_units %}
+              {% assign av_cb_bundle_sub_total = av_cb_subscription_unit_price | times: qty %}
+              {% assign av_cb_bundle_subscription_compare = av_cb_one_time_unit_price | times: av_cb_total_intro_units %}
+              {% assign av_cb_bundle_savings_amount = av_cb_bundle_subscription_compare | minus: av_cb_bundle_sub_total %}
+              {% assign av_cb_bundle_savings_pct = 0 %}
+              {% if av_cb_bundle_subscription_compare > 0 %}
+                {% assign av_cb_bundle_savings_pct = av_cb_bundle_savings_amount | times: 100.0 | divided_by: av_cb_bundle_subscription_compare | round %}
               {% endif %}
+              {% assign av_cb_bundle_savings_text = 'You save ' | append: av_cb_bundle_savings_pct | append: '%' %}
               {% assign av_cb_bundle_one_time_total = av_cb_one_time_unit_price | times: qty %}
               {% assign av_cb_bundle_one_time_compare_total = av_cb_one_time_compare_unit | times: qty %}
               <button class="av-cb__bundle{% if qty == 1 %} is-active{% endif %}" type="button" data-av-cb-bundle="{{ qty }}" data-subscription-price="{{ av_cb_bundle_sub_total }}" data-subscription-compare="{{ av_cb_bundle_subscription_compare }}" data-one-time-price="{{ av_cb_bundle_one_time_total }}" data-one-time-compare="{{ av_cb_bundle_one_time_compare_total }}">
