@@ -656,11 +656,13 @@
   assign av_cb_guarantee_body = 'of customers use our 90-Day Money-Back Guarantee.'
   assign av_cb_stats_guarantee = '90-Day Money-Back Guarantee'
   assign av_cb_compare_guarantee = '90-Day Money-Back Guarantee'
-  assign av_cb_protection_product = all_products['shipping-protection']
-  assign av_cb_protection_variant = av_cb_protection_product.selected_or_first_available_variant
+  assign av_cb_bonus_product = editor.settings.bonus_product
+  assign av_cb_bonus_variant = av_cb_bonus_product.selected_or_first_available_variant
+  assign av_cb_ebook_product = editor.settings.ebook_product
+  assign av_cb_ebook_variant = av_cb_ebook_product.selected_or_first_available_variant
 %}
 
-<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="57944860229798" data-ebook-variant-id="57944928780454" data-protection-variant-id="{{ av_cb_protection_variant.id }}">
+<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="{{ av_cb_bonus_variant.id }}" data-ebook-variant-id="{{ av_cb_ebook_variant.id }}">
   <style>
     .av-cb{--blue:#A84F1B;--deep:#7D3612;--ink:#171513;--muted:#645C57;--line:#E7D2C4;--soft:#FFF4EC;--soft2:#FFFBF7;background:#fff;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}.av-cb,.av-cb button,.av-cb input,.av-cb select,.av-cb textarea,.av-cb summary{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif!important}
     html.av-cb-cinnamon-page .avonent-sale-bar__inner{--av-sale-bg:#A84F1B!important;--av-sale-color:#fff!important;background:#A84F1B!important;color:#fff!important}
@@ -1122,7 +1124,10 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 For bigger introductory bundles, the 2/3 paid units remain the
                 chargeable units; bonus items are a separate first-order gift.
               {% endcomment %}
-              {% assign av_cb_bonus_units = qty | minus: 1 %}
+              {% assign av_cb_bonus_units = 0 %}
+              {% if av_cb_bonus_variant != blank %}
+                {% assign av_cb_bonus_units = qty | minus: 1 %}
+              {% endif %}
               {% assign av_cb_total_intro_units = qty | plus: av_cb_bonus_units %}
               {% assign av_cb_bundle_sub_total = av_cb_subscription_unit_price | times: qty %}
               {% assign av_cb_bundle_subscription_compare = av_cb_one_time_unit_price | times: av_cb_total_intro_units %}
@@ -1145,7 +1150,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                   {% endif %}
                 </span>
                 <span class="av-cb__bundle-copy">
-                  <strong data-av-cb-bundle-title data-one-time-title="{% if qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2{% else %}Buy 3{% endif %}" data-subscription-title="{% if qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2 Get 1 FREE{% else %}Buy 3 Get 2 FREE{% endif %}">{% if qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2 Get 1 FREE{% else %}Buy 3 Get 2 FREE{% endif %}</strong>
+                  <strong data-av-cb-bundle-title data-one-time-title="{% if qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2{% else %}Buy 3{% endif %}" data-subscription-title="{% if qty == 1 %}Buy 1{% elsif qty == 2 and av_cb_bonus_variant != blank %}Buy 2 Get 1 FREE{% elsif qty == 3 and av_cb_bonus_variant != blank %}Buy 3 Get 2 FREE{% else %}Buy {{ qty }}{% endif %}">{% if qty == 1 %}Buy 1{% elsif qty == 2 and av_cb_bonus_variant != blank %}Buy 2 Get 1 FREE{% elsif qty == 3 and av_cb_bonus_variant != blank %}Buy 3 Get 2 FREE{% else %}Buy {{ qty }}{% endif %}</strong>
                   <span data-av-cb-bundle-subtitle data-one-time-subtitle="" data-subscription-subtitle="{{ av_cb_bundle_savings_text }}">{{ av_cb_bundle_savings_text }}</span>
                 </span>
                 <span class="av-cb__bundle-price">
@@ -2032,7 +2037,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
         const isSubscription = purchaseMode === 'subscription' && sellingPlanInput && !sellingPlanInput.disabled;
         const values = valuesFor(selectedBundle());
-        const bonusQty = isSubscription ? (values.qty === 2 ? 1 : (values.qty === 3 ? 2 : 0)) : 0;
+        const bonusQty = isSubscription && bonusVariantId ? (values.qty === 2 ? 1 : (values.qty === 3 ? 2 : 0)) : 0;
 
         const submitButton = productForm.querySelector('button[type="submit"]');
         const variantId = Number(variantInput?.value || 0);

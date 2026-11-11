@@ -26,7 +26,7 @@ This repository is currently a **Horizon-derived theme** customized for Avonent.
 
 ## Still required before professional release
 - Refactor the 190KB Cinnamon product snippet into native, independent Shopify sections.
-- Replace store-specific variant/product IDs and auto-gift logic with merchant settings and compatible discount configuration.
+- Bonus bottle and e-book variant IDs have been replaced with Shopify product pickers. The Avonent Cinnamon template preselects its own products. Other merchants must configure their products and matching real discounts; the theme does not automatically create gift discounts. Other store-specific handles and assumptions still require a separate audit.
 - Add liquid defaults and accessible, truthful disclosure logic for selling plans across products.
 - Integrate review apps instead of hard-coded testimonials; do not ship fabricated reviews, sold percentages, or unverified health claims as defaults.
 - Implement full mobile/desktop browser testing and automated visual regression.
