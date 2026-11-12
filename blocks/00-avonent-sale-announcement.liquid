@@ -13,6 +13,9 @@
     if block.settings.home_subheading != blank
       assign av_sale_subheading = block.settings.home_subheading
     endif
+  elsif template.suffix == 'soursop' or product.handle == 'soursop-softgels'
+    assign av_sale_background = '#557D4B'
+    assign av_sale_text_color = '#FFFFFF'
   elsif template.suffix == 'cinnamon-berberine'
     assign av_sale_background = block.settings.cinnamon_background | default: av_sale_background
     assign av_sale_text_color = block.settings.cinnamon_text_color | default: av_sale_text_color
@@ -22,9 +25,6 @@
     if block.settings.cinnamon_subheading != blank
       assign av_sale_subheading = block.settings.cinnamon_subheading
     endif
-  elsif template.suffix == 'soursop' or product.handle == 'soursop-softgels'
-    assign av_sale_background = '#557D4B'
-    assign av_sale_text_color = '#FFFFFF'
   elsif template.suffix == 'garlic' or template.suffix == 'aged-garlic'
     assign av_sale_background = block.settings.garlic_background | default: av_sale_background
     assign av_sale_text_color = block.settings.garlic_text_color | default: av_sale_text_color
