@@ -1,0 +1,178 @@
+/*
+ * Avonent Soursop Color Palette
+ * Applies ONLY to the product template suffix "soursop".
+ * Color-only overrides; no changes to content, sections, placement or cart logic.
+ * Mid green #557D4B, deep green #355A38, soft green #EFF6EA.
+ */
+
+/* Soursop-only overrides for inline, editor-defined color variables. */
+body.av-soursop-page .av-cb {
+  --blue: #557D4B !important;
+  --deep: #355A38 !important;
+  --line: #DBE8D4 !important;
+  --soft: #EFF6EA !important;
+  --soft2: #F7FBF4 !important;
+}
+body.av-soursop-page .av-cb__benefits-section {
+  --benefits-bg: #355A38 !important;
+}
+body.av-soursop-page .av-cb__science-section {
+  --science-bg: #F6FAF3 !important;
+  --science-accent: #557D4B !important;
+}
+body.av-soursop-page .av-cb__stats-section {
+  --stats-overlay: #355A38 !important;
+}
+body.av-soursop-page .av-cb__risk-section {
+  --risk-bg: #EFF6EA !important;
+  --risk-accent: #557D4B !important;
+}
+body.av-soursop-page .av-cb__five-reasons {
+  --five-bg: #EFF6EA !important;
+  --five-accent: #557D4B !important;
+}
+body.av-soursop-page .av-cb__guarantee-card {
+  --guarantee-highlight: #557D4B !important;
+}
+/* The shared cart drawer must stay unchanged on every other page. */
+body.av-soursop-page #cart-drawer .avonent-cart-drawer {
+  --av-drawer-accent: #557D4B !important;
+}
+body.av-soursop-page #cart-drawer .avonent-drawer-block__announcement {
+  --av-block-bg: #EFF6EA !important;
+}
+body.av-soursop-page #cart-drawer .avonent-drawer-block__progress > span {
+  --av-progress: #557D4B !important;
+  background: #557D4B !important;
+}
+body.av-soursop-page #cart-drawer .avonent-cart-reservation {
+  background: linear-gradient(135deg, #557D4B, #42693D) !important;
+}
+body.av-soursop-page #cart-drawer .cart-drawer__summary .avonent-cart-checkout {
+  background: #557D4B !important;
+  border-color: #557D4B !important;
+}
+/* Review controls are styled in their own section stylesheet. */
+body.av-soursop-page .av-cb__review-dot.is-active {
+  background: #557D4B !important;
+}
+body.av-soursop-page .av-cb__review-arrow {
+  border-color: #CEDFC7 !important;
+  background: #F3F8EF !important;
+  color: #557D4B !important;
+}
+body.av-soursop-page .av-stories__card {
+  border-color: #DBE8D4 !important;
+}
+
+/* Existing cinnamon-colored product styles, recolored only for soursop. */
+body.av-soursop-page .av-cb { --blue:#557D4B !important; --deep:#355A38 !important; --line:#DBE8D4 !important; --soft:#EFF6EA !important; }
+body.av-soursop-page .av-cb-header-logo { color:#557D4B !important; }
+body.av-soursop-page .av-cb__hero { background:linear-gradient(180deg,#fff 0%,#F6FAF3 100%) !important; }
+body.av-soursop-page .av-cb__gallery-thumb.is-active { box-shadow:0 0 0 1px rgba(85,125,75,.12) !important; }
+body.av-soursop-page .av-cb__bundle:hover,
+body.av-soursop-page .av-cb__bundle.is-active { box-shadow:0 0 0 2px rgba(85,125,75,.12) !important; }
+body.av-soursop-page .av-cb__hero-badge--best { background:#648C50 !important; }
+body.av-soursop-page .av-cb__benefit-check { box-shadow:0 2px 7px rgba(85,125,75,.18) !important; }
+body.av-soursop-page .av-cb__pricing--purchase-mode { border-top:1px solid #E5EEE0 !important; border-bottom:1px solid #E5EEE0 !important; }
+body.av-soursop-page .av-cb__low-stock-line:before,
+body.av-soursop-page .av-cb__low-stock-line:after { background:#CBDFC3 !important; }
+body.av-soursop-page .av-cb__bundle { border:1.5px solid #D5E6CD !important; }
+body.av-soursop-page .av-cb__bundle:hover,
+body.av-soursop-page .av-cb__bundle.is-active { box-shadow:0 0 0 2px rgba(85,125,75,.10) !important; }
+body.av-soursop-page .av-cb__bundle.is-active { background:#F6FAF3 !important; }
+body.av-soursop-page .av-cb__bundle-thumb { background:#EFF6EA !important; border:1px solid #D7E7D0 !important; }
+body.av-soursop-page .av-cb__bundle-unlock { border-top:1px solid #E5EEE0 !important; }
+body.av-soursop-page .av-cb__bundle-unlock-title { color:#355A38 !important; }
+body.av-soursop-page .av-cb__bundle-unlock-row+.av-cb__bundle-unlock-row { border-top:1px solid #E6F0E1 !important; }
+body.av-soursop-page .av-cb__bundle-unlock-check { background:#557D4B !important; }
+body.av-soursop-page .av-cb__buy { box-shadow:0 10px 24px rgba(53,90,56,.18) !important; }
+body.av-soursop-page .av-cb__section--blue .av-cb__head p { color:#EAF4E4 !important; }
+body.av-soursop-page .av-cb__section--blue .av-cb__eyebrow { color:#BBD9AD !important; }
+body.av-soursop-page .av-cb__compare-card--av { background:#5F8A52 !important; border-color:#98B98C !important; }
+body.av-soursop-page .av-cb__compare-card--av .av-cb__check { background:#BBD9AD !important; }
+body.av-soursop-page .av-cb__edu--ceylon { border-color:#D6E8CB !important; }
+body.av-soursop-page .av-cb__sticky { border:1px solid #DEEBDD !important; }
+body.av-soursop-page .av-cb__sticky-img { background:#F0F7EC !important; border:1px solid #D7E7D0 !important; }
+body.av-soursop-page .av-cb__guarantee-card { background:#F7FBF4 !important; box-shadow:0 8px 24px rgba(53,90,56,.06) !important; }
+body.av-soursop-page .av-cb__guarantee-seal { box-shadow:inset 0 0 0 4px #EFF6EA !important; }
+body.av-soursop-page .av-cb__stats-section { background-image:var(--stats-bg,linear-gradient(145deg,#355A38,#557D4B)) !important; }
+body.av-soursop-page .av-cb__stats-section:before { background:linear-gradient(90deg,color-mix(in srgb,var(--stats-overlay,#355A38) 92%,transparent) 0%,color-mix(in srgb,var(--stats-overlay,#355A38) 80%,transparent) 54%,color-mix(in srgb,var(--stats-overlay,#355A38) 62%,transparent) 100%) !important; }
+body.av-soursop-page .av-cb__stats-cta { color:#355A38 !important; }
+body.av-soursop-page .av-cb__carousel-media { background:linear-gradient(145deg,#EAF3E5,#D9E9D1) !important; }
+body.av-soursop-page .av-cb__carousel-dot { background:#D9E6D2 !important; }
+body.av-soursop-page .av-cb__carousel-arrow { border:1px solid #CEDFC7 !important; background:#F0F7EC !important; }
+body.av-soursop-page .av-cb__carousel-arrow:hover { background:#E1EDD9 !important; }
+body.av-soursop-page .av-cb__science-section { background:var(--science-bg,#F6FAF3) !important; }
+body.av-soursop-page .av-cb__science-head h2 em { color:var(--science-accent,#557D4B) !important; }
+body.av-soursop-page .av-cb__science-thumb { background:#EFF5EB !important; color:var(--science-accent,#557D4B) !important; }
+body.av-soursop-page .av-cb__science-card[open] { border-color:var(--science-accent,#557D4B) !important; box-shadow:0 12px 30px rgba(85,125,75,.09) !important; }
+body.av-soursop-page .av-cb__science-cta { background:var(--science-accent,#557D4B) !important; }
+body.av-soursop-page .av-cb__science-guarantee svg { color:var(--science-accent,#557D4B) !important; }
+body.av-soursop-page .av-cb__science-ticker { border-top:1px solid #E4EBE0 !important; border-bottom:1px solid #E4EBE0 !important; }
+body.av-soursop-page .av-cb__science-ticker-icon { border:1.5px solid var(--science-accent,#557D4B) !important; color:var(--science-accent,#557D4B) !important; }
+body.av-soursop-page .av-cb__timeline:before { background:repeating-linear-gradient(to bottom,#406B3C 0 7px,transparent 7px 14px) !important; }
+body.av-soursop-page .av-cb__timeline-dot { border:8px solid #406B3C !important; background:#75995B !important; }
+body.av-soursop-page .av-cb__timeline-title { color:#557D4B !important; }
+body.av-soursop-page .av-cb__timeline-calendar { color:#557D4B !important; }
+body.av-soursop-page .av-cb__timeline-box { background:#E8F1E3 !important; border:3px solid #557D4B !important; box-shadow:0 6px 16px rgba(53,90,56,.05) !important; }
+body.av-soursop-page .av-cb__timeline-box:before { border-right:17px solid #557D4B !important; }
+body.av-soursop-page .av-cb__timeline-box:after { border-right:13px solid #E8F1E3 !important; }
+body.av-soursop-page .av-cb__compare-section { background:#557D4B !important; }
+body.av-soursop-page .av-cb__compare-col--ours { background:#355A38 !important; }
+body.av-soursop-page .av-cb__compare-col:not(.av-cb__compare-col--ours) .av-cb__compare-brand { border-bottom:1px solid #E3EDDE !important; }
+body.av-soursop-page .av-cb__compare-generic-icon { background:#EAF2E5 !important; }
+body.av-soursop-page .av-cb__compare-col:not(.av-cb__compare-col--ours) .av-cb__compare-row { border-bottom:1px solid #E3EDDE !important; }
+body.av-soursop-page .av-cb__compare-check { color:#355A38 !important; }
+body.av-soursop-page .av-cb__compare-point i { color:#557D4B !important; }
+body.av-soursop-page .av-cb__compare-cta { color:#355A38 !important; }
+body.av-soursop-page .av-cb__risk-section { background:var(--risk-bg,#EFF6EA) !important; }
+body.av-soursop-page .av-cb__risk-seal { background:var(--risk-accent,#557D4B) !important; box-shadow:0 12px 30px rgba(53,90,56,.14) !important; }
+body.av-soursop-page .av-cb__risk-seal-top,
+body.av-soursop-page .av-cb__risk-seal-bottom { color:var(--risk-accent,#557D4B) !important; }
+body.av-soursop-page .av-cb__risk-eyebrow { color:var(--risk-accent,#557D4B) !important; }
+body.av-soursop-page .av-cb__risk-button { color:var(--risk-accent,#557D4B) !important; }
+body.av-soursop-page .av-cb__five-reasons { background:var(--five-bg,#EFF6EA) !important; }
+body.av-soursop-page .av-cb__five-reasons-badge { background:var(--five-accent,#557D4B) !important; }
+body.av-soursop-page .av-cb__five-reason-card { border:1.5px solid color-mix(in srgb,var(--five-accent,#557D4B) 80%,#fff) !important; }
+body.av-soursop-page .av-cb__five-reason-image { background:#DFEBD9 !important; }
+body.av-soursop-page .av-cb__five-reason-placeholder { background:linear-gradient(135deg,#D6E5CF,#F6FAF3) !important; color:var(--five-accent,#557D4B) !important; }
+body.av-soursop-page .av-cb__five-reason-label { background:var(--five-accent,#557D4B) !important; }
+body.av-soursop-page .av-cb__five-reasons-dot.is-active { background:var(--five-accent,#557D4B) !important; }
+body.av-soursop-page .av-cb__five-reasons-cta { background:var(--five-accent,#557D4B) !important; }
+body.av-soursop-page .av-cb__five-reasons-guarantee svg { color:var(--five-accent,#557D4B) !important; }
+body.av-soursop-page .av-cb__post-risk-stars,
+body.av-soursop-page .av-cb__post-risk-review-rating span { color:#75995B !important; }
+body.av-soursop-page .av-cb__post-risk-tags span { border:1.5px solid #75995B !important; }
+body.av-soursop-page .av-cb__post-risk-read-more { border:1.5px solid #75995B !important; }
+body.av-soursop-page .av-cb__post-risk-read-more:hover { background:#F0F7EC !important; }
+body.av-soursop-page .av-cb__faq-item { border:1px solid #E5EEE0 !important; background:#F7FBF4 !important; }
+body.av-soursop-page .av-cb__faq-plus:before,
+body.av-soursop-page .av-cb__faq-plus:after { background:#557D4B !important; }
+body.av-soursop-page .av-cb__benefits-section { background:var(--benefits-bg,#557D4B) !important; }
+body.av-soursop-page .av-cb__comparison-card--ours { background:#406B3C !important; border-color:#406B3C !important; }
+body.av-soursop-page .av-cb__review-stars { color:#557D4B !important; }
+body.av-soursop-page .av-cb__review-card footer span { color:#557D4B !important; }
+body.av-soursop-page .av-cb__review-tag { background:#F6FAF3 !important; }
+
+/* Shared cart drawer colors, scoped to the soursop product page. */
+body.av-soursop-page #cart-drawer .avonent-drawer-block__progress { background:#E4EDDF !important; }
+body.av-soursop-page #cart-drawer .avonent-drawer-block__progress > span { background:var(--av-progress,var(--av-drawer-accent,#557D4B)) !important; }
+body.av-soursop-page #cart-drawer .avonent-drawer-block__announcement { background:var(--av-block-bg,#EDF5E8) !important; }
+body.av-soursop-page #cart-drawer .cart-drawer__summary .avonent-cart-checkout { background:var(--av-drawer-accent,#557D4B) !important; border-color:var(--av-drawer-accent,#557D4B) !important; }
+body.av-soursop-page #cart-drawer .avonent-drawer-block__upsell { border:1px solid #E4EDDF !important; }
+body.av-soursop-page #cart-drawer .avonent-drawer-block__upsell a { color:var(--av-drawer-accent,#557D4B) !important; }
+body.av-soursop-page #cart-drawer
+    .theme-drawer__badge { background:
+      #F0F7EC !important; color:
+      #355A38 !important; }
+body.av-soursop-page #cart-drawer
+    .theme-drawer__close-button:hover { background:
+      #F0F7EC !important; color:
+      #557D4B !important; }
+body.av-soursop-page #cart-drawer .avonent-cart-reservation { background: linear-gradient(135deg, #557D4B, #42693D) !important; }
+body.av-soursop-page #cart-drawer .avonent-shipping-protection { background: linear-gradient(135deg, #F7FBF4, #F0F7EC) !important; }
+body.av-soursop-page #cart-drawer .avonent-shipping-protection__icon { color: #557D4B !important; }
+body.av-soursop-page #cart-drawer .avonent-shipping-protection__heading span { color: #355A38 !important; }
+body.av-soursop-page #cart-drawer .avonent-shipping-protection__toggle[aria-checked='true'] { background: #557D4B !important; }
+body.av-soursop-page #cart-drawer .avonent-cart-line__savings { color: #355A38 !important; }
