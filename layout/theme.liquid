@@ -86,9 +86,12 @@ html.av-cb-cinnamon-page #header-component header-actions{gap:0}
     {% endif %}
 
     {{ content_for_header }}
+    {% if template.name == 'product' and template.suffix == 'soursop' %}
+      {{ 'avonent-soursop-colors.css' | asset_url | stylesheet_tag }}
+    {% endif %}
   </head>
 
-  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}{% if template.name == 'product' and template.suffix == 'soursop' %} av-soursop-page{% endif %}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
 
     {% render 'chat-drawer' %}
