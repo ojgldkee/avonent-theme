@@ -257,6 +257,44 @@ html.av-cb-cinnamon-page #header-component header-actions{gap:0}
       <script src="{{ 'avonent-moringa-overrides.js' | asset_url }}" defer></script>
       <script src="{{ 'avonent-real-stories-polish.js' | asset_url }}" defer></script>
     {% endif %}
+    {% comment %} AVONENT_SOURSOP_QUESTIONS_STYLE_ONLY: exact-text visual change only {% endcomment %}
+    <script>
+      (() => {
+        const normalize = (el) => (el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim();
+        const questionOne = 'Have cancer? Has chemo weakened your immune system?';
+        const questionTwo = 'Constantly afraid the cancer will return?';
+
+        function formatSoursopQuestions() {
+          const main = document.getElementById('MainContent');
+          if (!main) return;
+
+          const elements = Array.from(main.querySelectorAll('p, div, span, h1, h2, h3, h4, h5, h6'));
+          const fullText = questionOne + ' ' + questionTwo;
+          const matches = (text) => elements.filter((el) =>
+            normalize(el) === text && !Array.from(el.children).some((child) => normalize(child) === text)
+          );
+          const whole = matches(fullText);
+          const parts = [...matches(questionOne), ...matches(questionTwo)];
+          if (!whole.length && !(matches(questionOne).length && matches(questionTwo).length)) return;
+
+          elements
+            .filter((el) => normalize(el) === 'Soursop Leaf, Made Simple')
+            .filter((el) => !Array.from(el.children).some((child) => normalize(child) === 'Soursop Leaf, Made Simple'))
+            .forEach((el) => el.style.setProperty('display', 'none', 'important'));
+
+          (whole.length ? whole : parts).forEach((el) => {
+            el.style.setProperty('font-weight', '700', 'important');
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', formatSoursopQuestions, { once: true });
+        } else {
+          formatSoursopQuestions();
+        }
+        document.addEventListener('shopify:section:load', formatSoursopQuestions);
+      })();
+    </script>
   </body>
 </html>
 
