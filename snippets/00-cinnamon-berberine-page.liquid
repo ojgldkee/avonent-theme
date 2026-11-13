@@ -829,7 +829,7 @@
   assign av_cb_protection_variant = av_cb_protection_product.selected_or_first_available_variant
 %}
 
-<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="57944860229798" data-ebook-variant-id="{% if av_cb_product.template_suffix == 'soursop' %}58170079510694{% else %}57944928780454{% endif %}" data-protection-variant-id="{{ av_cb_protection_variant.id }}">
+<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="{% if av_cb_product.template_suffix == 'soursop' %}58243205922982{% else %}57944860229798{% endif %}" data-ebook-variant-id="{% if av_cb_product.template_suffix == 'soursop' %}58170079510694{% else %}57944928780454{% endif %}" data-protection-variant-id="{{ av_cb_protection_variant.id }}">
   <style>
     .av-cb{--blue:#A84F1B;--deep:#7D3612;--ink:#171513;--muted:#645C57;--line:#E7D2C4;--soft:#FFF4EC;--soft2:#FFFBF7;background:#fff;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}.av-cb,.av-cb button,.av-cb input,.av-cb select,.av-cb textarea,.av-cb summary{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif!important}
     html.av-cb-cinnamon-page .avonent-sale-bar__inner{--av-sale-bg:#A84F1B!important;--av-sale-color:#fff!important;background:#A84F1B!important;color:#fff!important}
@@ -2511,7 +2511,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
         const isSubscription = purchaseMode === 'subscription' && sellingPlanInput && !sellingPlanInput.disabled;
         const values = valuesFor(selectedBundle());
-        const bonusQty = isSubscription && (isSoursopProduct || bonusVariantId) ? (values.qty === 2 ? 1 : (values.qty === 3 ? 2 : 0)) : 0;
+        const bonusQty = isSubscription && bonusVariantId ? (values.qty === 2 ? 1 : (values.qty === 3 ? 2 : 0)) : 0;
 
         const submitButton = productForm.querySelector('button[type="submit"]');
         const variantId = Number(variantInput?.value || 0);
@@ -2549,11 +2549,11 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           }
 
           // Shopify displays newly-added lines in reverse insertion order.
-          // Bonus goes in before the paid line so the paid cinnamon appears
-          // above the $0 bonus in the drawer.
+          // Bonus goes in before the paid line so the paid product appears
+          // above its one-time, discounted bonus bottle in the drawer.
           if (bonusQty > 0) {
             items.push({
-              id: isSoursopProduct ? variantId : bonusVariantId,
+              id: bonusVariantId,
               quantity: bonusQty,
               properties: { '_Avonent bonus': 'First order free bottle' }
             });
