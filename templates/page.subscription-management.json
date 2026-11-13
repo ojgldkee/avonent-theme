@@ -2,50 +2,43 @@
   "sections": {
     "main": {
       "type": "subscription-management",
-      "settings": {},
+      "settings": {
+        "eyebrow": "YOUR SUBSCRIPTION",
+        "heading": "Need a break?",
+        "intro": "<p>You can change your next delivery without ending your subscription. Choose what works best for you.</p>",
+        "button_text": "Manage my subscription",
+        "instructions": "Change your schedule, pause, or cancel in the customer portal.",
+        "options_heading": "A few ways to take a break",
+        "cancel_heading": "Still want to cancel?",
+        "cancel_note": "You can cancel through the same customer portal. We won't make you contact support to do it."
+      },
       "blocks": {
-        "edit": {
+        "skip": {
           "type": "info",
           "settings": {
-            "heading": "Manage deliveries",
-            "body": "Skip a shipment, change your next order date, or update your delivery frequency."
+            "heading": "Skip a delivery",
+            "body": "Still have enough? Skip your next shipment."
           }
         },
-        "account": {
+        "date": {
           "type": "info",
           "settings": {
-            "heading": "Manage your account",
-            "body": "Update subscription products, payment details, or delivery address in our secure portal."
+            "heading": "Move your next order",
+            "body": "Pick a later date or space out your refills."
           }
         },
-        "cancel": {
+        "pause": {
           "type": "info",
           "settings": {
-            "heading": "Cancel or pause",
-            "body": "You can pause or cancel your subscription using the provider's cancellation option."
-          }
-        },
-        "faq1": {
-          "type": "faq",
-          "settings": {
-            "question": "How do I access my subscription?",
-            "answer": "<p>Use the secure link sent to your email after subscribing, or open the portal using the button above once your store has configured it.</p>"
-          }
-        },
-        "faq2": {
-          "type": "faq",
-          "settings": {
-            "question": "Can I cancel?",
-            "answer": "<p>Yes. Your subscription app provides a cancellation flow and confirmation. Contact support if you need assistance.</p>"
+            "heading": "Pause deliveries",
+            "body": "Take some time off and restart when you're ready."
           }
         }
       },
       "block_order": [
-        "edit",
-        "account",
-        "cancel",
-        "faq1",
-        "faq2"
+        "skip",
+        "date",
+        "pause"
       ]
     }
   },
