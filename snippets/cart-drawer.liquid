@@ -190,6 +190,53 @@
                     context: 'drawer'
                   %}
 
+                  {% comment %}
+                    Soursop-only cart reassurance; no changes to the cinnamon cart
+                    or to the subscription / discount logic.
+                  {% endcomment %}
+                  {% assign av_soursop_in_cart = false %}
+                  {% for av_cart_item in cart.items %}
+                    {% if av_cart_item.product.handle == 'soursop-softgels' %}
+                      {% assign av_soursop_in_cart = true %}
+                      {% break %}
+                    {% endif %}
+                  {% endfor %}
+                  {% if av_soursop_in_cart %}
+                    <section class="av-cart-soursop-assurance" aria-label="Why choose Avonent Soursop">
+                      <div class="av-cart-soursop-benefits">
+                        <div class="av-cart-soursop-benefit">
+                          <span class="av-cart-soursop-benefit__icon av-cart-soursop-benefit__icon--dose" aria-hidden="true">1K</span>
+                          <strong>1,000 mg<br>per serving</strong>
+                        </div>
+                        <div class="av-cart-soursop-benefit">
+                          <span class="av-cart-soursop-benefit__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none"><path d="m12 2 8 4v6c0 5-3.4 8-8 10-4.6-2-8-5-8-10V6l8-4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m8 12 2.5 2.5L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          <strong>Third-party<br>lab verified</strong>
+                        </div>
+                        <div class="av-cart-soursop-benefit">
+                          <span class="av-cart-soursop-benefit__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M20 3c-11 0-17 5-17 13a5 5 0 0 0 5 5c8 0 13-6 12-18Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M5 19c4-6 8-9 13-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                          </span>
+                          <strong>Made with<br>real soursop leaf</strong>
+                        </div>
+                        <div class="av-cart-soursop-benefit">
+                          <span class="av-cart-soursop-benefit__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M8.7 4.6a5.2 5.2 0 0 1 7.4 0l3.3 3.3a5.2 5.2 0 0 1-7.4 7.4L8.7 12a5.2 5.2 0 0 1 0-7.4Z" stroke="currentColor" stroke-width="1.8"/><path d="m10.4 13.7-5 5a3.6 3.6 0 0 1-5.1-5.1l5-5" transform="translate(2 0)" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                          </span>
+                          <strong>No bitter tea.<br>Just 2 softgels.</strong>
+                        </div>
+                      </div>
+                      <div class="av-cart-soursop-guarantee">
+                        <img src="https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-90-day-money-back-guarantee.png?v=1793736254" width="52" height="52" loading="lazy" alt="90-day money-back guarantee">
+                        <div>
+                          <strong>90-Day Money-Back Guarantee</strong>
+                          <p><b>Less than 1%</b> of customers use our 90-Day Money-Back Guarantee.</p>
+                        </div>
+                      </div>
+                    </section>
+                  {% endif %}
+
                 </scroll-hint>
 
                 {% for block in drawer_section.blocks %}
@@ -1393,3 +1440,87 @@
   }
 
 {% endstylesheet %}
+
+<style>
+  /* Soursop cart only; adds a small amount of air below the subtotal divider. */
+  #cart-drawer:has(.av-cart-soursop-assurance) .cart-drawer__summary .cart-totals__original-container {
+    padding-top: 14px !important;
+  }
+  #cart-drawer .av-cart-soursop-assurance {
+    margin: 15px 0 19px;
+    padding: 0 2px;
+  }
+  #cart-drawer .av-cart-soursop-benefits {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  #cart-drawer .av-cart-soursop-benefit {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+    min-height: 65px;
+    padding: 10px 9px;
+    border: 1px solid #dbe8d4;
+    border-radius: 11px;
+    background: #fff;
+  }
+  #cart-drawer .av-cart-soursop-benefit__icon {
+    flex: 0 0 38px;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 40px;
+    border-radius: 8px;
+    background: #eff6ea;
+    color: #557d4b;
+    font-size: 15px;
+    font-weight: 800;
+  }
+  #cart-drawer .av-cart-soursop-benefit__icon svg {
+    width: 23px;
+    height: 23px;
+  }
+  #cart-drawer .av-cart-soursop-benefit strong {
+    color: #2e4430;
+    font-size: 12px;
+    font-weight: 750;
+    line-height: 1.35;
+    letter-spacing: -.01em;
+  }
+  #cart-drawer .av-cart-soursop-guarantee {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    margin-top: 12px;
+    border: 1px solid #d5e5cf;
+    border-radius: 12px;
+    background: #f6faf3;
+  }
+  #cart-drawer .av-cart-soursop-guarantee img {
+    flex: 0 0 52px;
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+  }
+  #cart-drawer .av-cart-soursop-guarantee strong {
+    color: #355a38;
+    font-size: 13px;
+    font-weight: 750;
+    line-height: 1.3;
+  }
+  #cart-drawer .av-cart-soursop-guarantee p {
+    margin: 4px 0 0;
+    color: #596269;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  #cart-drawer .av-cart-soursop-guarantee b { color: #355a38; }
+  @media(max-width: 360px) {
+    #cart-drawer .av-cart-soursop-benefit { gap: 7px; padding: 9px 6px; }
+    #cart-drawer .av-cart-soursop-benefit__icon { flex-basis: 33px; width: 33px; }
+    #cart-drawer .av-cart-soursop-benefit strong { font-size: 11px; }
+  }
+</style>
