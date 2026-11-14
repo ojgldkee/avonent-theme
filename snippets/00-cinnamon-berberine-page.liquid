@@ -1965,6 +1965,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
   {% endunless %}
 
 
+  {% unless av_cb_product.template_suffix == 'soursop' %}
   <section class="av-cb__journey">
     <div class="av-cb__journey-wrap">
       <header class="av-cb__journey-head">
@@ -1998,6 +1999,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     </div>
   </section>
 
+  {% endunless %}
 <section class="av-cb__compare-section"><div class="av-cb__compare-wrap"><header class="av-cb__compare-head"><h2>{{ av_cb_compare_heading }}</h2><p>{{ av_cb_compare_subheading }}</p></header>{% for comparison in editor.blocks %}{% if comparison.type == 'compare' %}<div class="av-cb__comparison">
 {% for side in (1..2) %}<article class="av-cb__comparison-card{% if side == 1 %} av-cb__comparison-card--ours{% endif %}">{% if side == 1 %}{% assign column_image = comparison.settings.ours_image | default: av_cb_product.featured_image %}{% assign column_name = comparison.settings.ours_name %}{% else %}{% assign column_image = comparison.settings.other_image %}{% assign column_name = comparison.settings.other_name %}{% endif %}<div class="av-cb__comparison-image">{% if column_image != blank %}{{ column_image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '180,300,500', alt: column_name }}{% else %}<svg viewBox="0 0 48 48" width="80" height="80" fill="none" aria-hidden="true"><rect x="13" y="7" width="22" height="34" rx="11" stroke="currentColor" stroke-width="2"/><path d="M13 24h22" stroke="currentColor" stroke-width="2"/></svg>{% endif %}</div><h3>{{ column_name | escape }}</h3>{% for i in (1..6) %}{% if side == 1 %}{% assign row_key = 'ours_' | append: i %}{% else %}{% assign row_key = 'other_' | append: i %}{% endif %}<div class="av-cb__comparison-row"><span class="av-cb__comparison-icon" aria-hidden="true">{% if side == 1 %}<svg viewBox="0 0 512 512"><path d="M173.9 439.4 7.5 273c-10-10-10-26.2 0-36.2l36.2-36.2c10-10 26.2-10 36.2 0L192 312.7 432.1 72.6c10-10 26.2-10 36.2 0l36.2 36.2c10 10 10 26.2 0 36.2L210.1 439.4c-10 10-26.2 10-36.2 0Z"/></svg>{% else %}<svg viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3l105.4 105.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256l105.3-105.4Z"/></svg>{% endif %}</span><span>{{ comparison.settings[row_key] | escape }}</span></div>{% endfor %}</article>{% endfor %}</div>{% endif %}{% endfor %}<a class="av-cb__compare-cta" href="#av-cb-top">{{ av_cb_compare_cta }}</a><div class="av-cb__compare-guarantee">{{ av_cb_compare_guarantee }}</div></div></section>
 
