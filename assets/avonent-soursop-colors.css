@@ -177,3 +177,7 @@ body.av-soursop-page #cart-drawer .avonent-shipping-protection__icon { color: #5
 body.av-soursop-page #cart-drawer .avonent-shipping-protection__heading span { color: #355A38 !important; }
 body.av-soursop-page #cart-drawer .avonent-shipping-protection__toggle[aria-checked='true'] { background: #557D4B !important; }
 body.av-soursop-page #cart-drawer .avonent-cart-line__savings { color: #355A38 !important; }
+
+/* Remove the unsupported week-by-week results timeline from Soursop only.
+   Fallback for older shared product-page renderers that still output it. */
+body.av-soursop-page .av-cb__journey { display: none !important; }
