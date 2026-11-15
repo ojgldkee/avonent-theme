@@ -192,6 +192,8 @@
   assign av_cb_risk_bg = '#FFF4EC'
   assign av_cb_risk_accent = '#A84F1B'
   assign av_cb_faq_heading = av_cb_product.metafields.custom.av_cb_faq_heading.value | default: 'Frequently Asked Questions'
+  assign av_cb_faq_dynamic_enabled = false
+  assign av_cb_faq_block = blank
   assign av_cb_faq_1_q = av_cb_product.metafields.custom.av_cb_faq_1_q.value
   assign av_cb_faq_1_a = av_cb_product.metafields.custom.av_cb_faq_1_a.value
   assign av_cb_faq_2_q = av_cb_product.metafields.custom.av_cb_faq_2_q.value
@@ -705,6 +707,10 @@
           assign av_cb_risk_accent = content_block.settings.accent
         endif
       when 'faq'
+        assign av_cb_faq_block = content_block
+        if content_block.settings.use_draggable_faq == true
+          assign av_cb_faq_dynamic_enabled = true
+        endif
         if content_block.settings.faq_heading != blank
           assign av_cb_faq_heading = content_block.settings.faq_heading
         endif
@@ -2225,8 +2231,22 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
   <section id="av-cb-faq" class="av-cb__faq-section" data-av-cb-faq>
     <div class="av-cb__faq-wrap">
-      <h2 class="av-cb__faq-heading">{{ av_cb_faq_heading }}</h2>
+      <h2 class="av-cb__faq-heading"{% if av_cb_faq_block != blank %} {{ av_cb_faq_block.shopify_attributes }}{% endif %}>{{ av_cb_faq_heading }}</h2>
       <div class="av-cb__faq-list">
+        {% if av_cb_faq_dynamic_enabled %}
+          {% for faq_block in editor.blocks %}
+            {% if faq_block.type == 'faq_item' %}
+              {% assign faq_question = faq_block.settings.heading | strip %}
+              {% assign faq_answer_plain = faq_block.settings.answer | strip_html | strip %}
+              {% if faq_block.settings.show_item != false and faq_question != blank and faq_answer_plain != blank %}
+                <details class="av-cb__faq-item" {{ faq_block.shopify_attributes }}>
+                  <summary><span>{{ faq_question | escape }}</span><span class="av-cb__faq-plus" aria-hidden="true"></span></summary>
+                  <div class="av-cb__faq-answer rte">{{ faq_block.settings.answer }}</div>
+                </details>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        {% else %}
         {% for i in (1..6) %}
           {% case i %}
             {% when 1 %}{% assign faq_q = av_cb_faq_1_q %}{% assign faq_a = av_cb_faq_1_a %}
@@ -2243,6 +2263,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             </details>
           {% endif %}
         {% endfor %}
+        {% endif %}
       </div>
     </div>
   </section>
