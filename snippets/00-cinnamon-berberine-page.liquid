@@ -745,6 +745,7 @@
           assign av_cb_faq_6_a = content_block.settings.faq_6_a
         endif
       when 'details'
+        assign av_cb_details_block = content_block
         if content_block.settings.guarantee_image != blank
           assign av_cb_guarantee_image = content_block.settings.guarantee_image
         endif
@@ -1582,18 +1583,18 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </div>
     </div>
 
-    <div class="av-cb__accordion-list" data-av-cb-accordion-list>
+    <div class="av-cb__accordion-list" data-av-cb-accordion-list{% if av_cb_details_block != blank %} {{ av_cb_details_block.shopify_attributes }}{% endif %}>
       <details class="av-cb__accordion">
         <summary><span>{{ av_cb_acc_1_title }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
-        <div class="av-cb__accordion-body rte">{{ av_cb_acc_1_body | newline_to_br }}</div>
+        <div class="av-cb__accordion-body rte">{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_acc_1_body }}{% else %}{{ av_cb_acc_1_body | newline_to_br }}{% endif %}</div>
       </details>
       <details class="av-cb__accordion">
         <summary><span>{{ av_cb_acc_2_title }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
-        <div class="av-cb__accordion-body rte">{{ av_cb_acc_2_body | newline_to_br }}</div>
+        <div class="av-cb__accordion-body rte">{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_acc_2_body }}{% else %}{{ av_cb_acc_2_body | newline_to_br }}{% endif %}</div>
       </details>
       <details class="av-cb__accordion">
         <summary><span>{{ av_cb_acc_3_title }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
-        <div class="av-cb__accordion-body rte">{{ av_cb_acc_3_body | newline_to_br }}</div>
+        <div class="av-cb__accordion-body rte">{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_acc_3_body }}{% else %}{{ av_cb_acc_3_body | newline_to_br }}{% endif %}</div>
       </details>
     </div>
 
