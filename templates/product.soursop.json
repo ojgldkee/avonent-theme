@@ -272,18 +272,7 @@
           "type": "faq",
           "settings": {
             "faq_heading": "Frequently Asked Questions",
-            "faq_1_q": "What makes Avonent Soursop different?",
-            "faq_1_a": "Our soursop comes from Jamaica and goes through a 365-day fermentation process before it reaches your bottle.",
-            "faq_2_q": "What's in each serving?",
-            "faq_2_a": "Two softgels provide 1,000 mg of soursop leaf. The formula contains soursop leaf and a vegetable softgel, with no added sweeteners, flavors, or preservatives.",
-            "faq_3_q": "How do I take it?",
-            "faq_3_a": "Take two softgels daily with water, following the directions on your bottle. There's no tea to brew or liquid to measure.",
-            "faq_4_q": "Will I have to taste bitter soursop?",
-            "faq_4_a": "No bitter drink to swallow. The soursop leaf is inside a vegetable softgel.",
-            "faq_5_q": "Where are your soursop leaves grown?",
-            "faq_5_a": "We source our soursop leaves from Jamaica.",
-            "faq_6_q": "How long does one bottle last?",
-            "faq_6_a": "Each bottle is a 30-day supply when taken as directed at two softgels per day."
+            "use_draggable_faq": true
           }
         },
         "details": {
@@ -395,6 +384,30 @@
             "tag_2": "Peace of Mind",
             "verified": true
           }
+        },
+        "faq_item_medication": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "Should I stop my medication?",
+            "answer": "<p>No. If you're on prescription medication, we recommend speaking with your doctor before making any changes. These capsules are designed to support your body naturally, not replace medical treatment.</p>",
+            "show_item": true
+          }
+        },
+        "faq_item_supplements": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "Can I take it with other supplements?",
+            "answer": "<p>Yes. Avonent Soursop Leaf can be used alongside your existing supplement routine. Just check with your doctor if you’re taking blood pressure medications, diabetes medications, or blood thinners.</p>",
+            "show_item": true
+          }
+        },
+        "faq_item_guarantee": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "What if it doesn’t work for me?",
+            "answer": "<p>We stand behind our formula with a 90-day money-back guarantee. Try it for yourself, and if you’re not satisfied, simply email us within 90 days for a full refund. No complicated returns, no endless questions, and no hassle. Your purchase is protected.</p>",
+            "show_item": true
+          }
         }
       },
       "block_order": [
@@ -411,6 +424,9 @@
         "five_reasons",
         "risk_free",
         "faq",
+        "faq_item_medication",
+        "faq_item_supplements",
+        "faq_item_guarantee",
         "details",
         "trust_image",
         "review_1",
