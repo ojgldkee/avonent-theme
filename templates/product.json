@@ -1,0 +1,498 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product-information",
+      "blocks": {
+        "media-gallery": {
+          "type": "_product-media-gallery",
+          "static": true,
+          "settings": {
+            "media_presentation": "grid",
+            "media_columns": "two",
+            "image_gap": 4,
+            "large_first_image": false,
+            "icons_style": "arrow",
+            "slideshow_controls_style": "counter",
+            "slideshow_mobile_controls_style": "dots",
+            "thumbnail_position": "right",
+            "thumbnail_width": 44,
+            "thumbnail_radius": 0,
+            "aspect_ratio": "adapt",
+            "constrain_to_viewport": true,
+            "media_fit": "contain",
+            "media_radius": 0,
+            "extend_media": false,
+            "zoom": true,
+            "video_loop": false,
+            "hide_variants": true,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "product-details": {
+          "type": "_product-details",
+          "static": true,
+          "settings": {
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "details_position": "flex-start",
+            "gap": 6,
+            "sticky_details_desktop": true,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 6,
+            "padding-block-end": 6,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "00_avonent_rating_WtAFCr": {
+              "type": "00-avonent-rating",
+              "name": "Avonent Rating",
+              "settings": {
+                "rating": "4.9",
+                "review_text": "Thousands of 5-Star Reviews",
+                "show_stars": true,
+                "show_rating_number": true,
+                "link": "",
+                "star_color": "#02c6ea",
+                "text_color": "#111111",
+                "star_size": 15,
+                "text_size": 13,
+                "gap": 8,
+                "spacing_top": 0,
+                "spacing_bottom": 0
+              },
+              "blocks": {}
+            },
+            "group_icgrde": {
+              "type": "group",
+              "name": "t:names.header",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "background_media": "none",
+                "background_color": "",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "text_xpVMaM": {
+                  "type": "text",
+                  "name": "t:names.title",
+                  "settings": {
+                    "text": "<h1>{{ closest.product.title }}</h1>",
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h3",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "text_color": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_xpVMaM"
+              ]
+            },
+            "00_avonent_benefits_grid_LMhtjk": {
+              "type": "00-avonent-benefits-grid",
+              "name": "Avonent Benefits Grid",
+              "settings": {
+                "benefit_1_enabled": true,
+                "benefit_1_text": "Daily Energy",
+                "benefit_1_icon": "bolt",
+                "benefit_2_enabled": true,
+                "benefit_2_text": "Immune Support",
+                "benefit_2_icon": "shield_check",
+                "benefit_3_enabled": true,
+                "benefit_3_text": "Digestive Wellness",
+                "benefit_3_icon": "gut",
+                "benefit_4_enabled": true,
+                "benefit_4_text": "Heart Wellness",
+                "benefit_4_icon": "heart",
+                "benefit_5_enabled": true,
+                "benefit_5_text": "Metabolic Support",
+                "benefit_5_icon": "activity",
+                "benefit_6_enabled": true,
+                "benefit_6_text": "Daily Wellness",
+                "benefit_6_icon": "sparkle",
+                "benefit_7_enabled": false,
+                "benefit_7_text": "Calm & Focus",
+                "benefit_7_icon": "brain",
+                "benefit_8_enabled": false,
+                "benefit_8_text": "Rest & Recovery",
+                "benefit_8_icon": "moon",
+                "icon_color": "#02c6ea",
+                "text_color": "#111111",
+                "background_color": "#f7fcfd",
+                "columns_desktop": "2",
+                "columns_mobile": "2",
+                "icon_size": 17,
+                "text_size": 12,
+                "column_gap": 16,
+                "row_gap": 11,
+                "corner_radius": 12,
+                "spacing_top": 4,
+                "spacing_bottom": 4,
+                "padding_y": 12,
+                "padding_x": 12
+              },
+              "blocks": {}
+            },
+            "00_avonent_stock_meter_Lcqd6Q": {
+              "type": "00-avonent-stock-meter",
+              "name": "Avonent Stock Meter",
+              "settings": {
+                "sold_percent": 93,
+                "sold_text": "Sold",
+                "fill_color": "#02c6ea",
+                "track_color": "#dceef3",
+                "text_color": "#111111",
+                "bar_height": 8,
+                "corner_radius": 10,
+                "spacing_top": 4,
+                "spacing_bottom": 4
+              },
+              "blocks": {}
+            },
+            "00_avonent_price_offer_4q4mwM": {
+              "type": "00-avonent-price-offer",
+              "name": "Avonent Price Offer",
+              "settings": {
+                "one_time_label": "One-Time Purchase",
+                "subscription_label": "Subscribe & Save",
+                "default_purchase_type": "one_time",
+                "show_subscription_helper": true,
+                "subscription_helper": "Recurring delivery · Cancel anytime",
+                "show_sale_badge": true,
+                "sale_name": "SUMMER SALE",
+                "show_savings_amount": true,
+                "show_savings_percent": false,
+                "accent_color": "#02C6EA",
+                "text_color": "#111111",
+                "muted_text_color": "#667177",
+                "border_color": "#DCE6E9",
+                "background_color": "#FFFFFF",
+                "sale_badge_background": "#02C6EA",
+                "sale_badge_text_color": "#FFFFFF",
+                "corner_radius": 0,
+                "spacing_top": 2,
+                "spacing_bottom": 3
+              },
+              "blocks": {}
+            },
+            "divider_VJhene": {
+              "type": "_divider",
+              "name": "t:names.divider",
+              "settings": {
+                "thickness": 1,
+                "corner_radius": "square",
+                "divider_color": "{{ settings.color_palette.color3 }}",
+                "width_percent": 100,
+                "padding-block-start": 0,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
+            "variant_picker_R3rGDr": {
+              "type": "variant-picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": false,
+                "option_label_text_color": "",
+                "variant_style_class": "default",
+                "custom_variant_background": "{{ settings.color_palette.background }}",
+                "custom_variant_text": "{{ settings.color_palette.foreground }}",
+                "custom_variant_border": "{{ settings.color_palette.foreground }}",
+                "selected_variant_style_class": "default",
+                "custom_selected_variant_background": "{{ settings.color_palette.foreground }}",
+                "custom_selected_variant_text": "{{ settings.color_palette.background }}",
+                "custom_selected_variant_border": "{{ settings.color_palette.foreground }}",
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "00_avonent_bundle_selector_default": {
+              "type": "00-avonent-bundle-selector",
+              "name": "Avonent Bundle Selector",
+              "settings": {
+                "default_bundle": "2",
+                "show_images": true,
+                "bundle_1_enabled": true,
+                "bundle_1_title": "Buy 1",
+                "bundle_1_subtitle": "Starter",
+                "bundle_1_variant": "",
+                "bundle_1_quantity": 1,
+                "bundle_1_badge": "",
+                "bundle_1_savings_text": "",
+                "bundle_2_enabled": true,
+                "bundle_2_title": "Buy 2",
+                "bundle_2_subtitle": "Best Seller",
+                "bundle_2_variant": "",
+                "bundle_2_quantity": 2,
+                "bundle_2_badge": "Most Popular",
+                "bundle_2_savings_text": "",
+                "bundle_3_enabled": true,
+                "bundle_3_title": "Buy 3",
+                "bundle_3_subtitle": "Best Value",
+                "bundle_3_variant": "",
+                "bundle_3_quantity": 3,
+                "bundle_3_badge": "Best Value",
+                "bundle_3_savings_text": "",
+                "bundle_4_enabled": false,
+                "bundle_4_title": "Buy 4",
+                "bundle_4_subtitle": "Stock Up",
+                "bundle_4_variant": "",
+                "bundle_4_quantity": 4,
+                "bundle_4_badge": "",
+                "bundle_4_savings_text": "",
+                "accent_color": "#02c6ea",
+                "selected_background": "#f2fbfd",
+                "card_background": "#ffffff",
+                "border_color": "#dde8eb",
+                "text_color": "#111111",
+                "muted_text_color": "#6f7b80",
+                "card_radius": 12,
+                "card_gap": 10,
+                "spacing_top": 4,
+                "spacing_bottom": 2
+              },
+              "blocks": {}
+            },
+            "00_avonent_delivery_estimate_default": {
+              "type": "00-avonent-delivery-estimate",
+              "name": "Avonent Delivery Estimate",
+              "settings": {
+                "prefix": "Order today for delivery by",
+                "delivery_days": 4,
+                "skip_weekends": true,
+                "fallback_date_text": "Soon",
+                "separator": "·",
+                "shipping_text": "Ships from USA",
+                "show_flag": true,
+                "show_status_dot": true,
+                "accent_color": "#02c6ea",
+                "text_color": "#111111",
+                "muted_text_color": "#748086",
+                "divider_color": "#d8e5e9",
+                "background_color": "#ffffff",
+                "text_size": 12,
+                "corner_radius": 0,
+                "padding_y": 10,
+                "padding_x": 4,
+                "spacing_top": 3,
+                "spacing_bottom": 3
+              },
+              "blocks": {}
+            },
+            "buy_buttons_eYQEYi": {
+              "type": "buy-buttons",
+              "settings": {
+                "stacking": true,
+                "text_color": "",
+                "show_pickup_availability": false,
+                "gift_card_form": true,
+                "recipient_button_style": "default",
+                "recipient_button_background": "{{ settings.color_palette.background }}",
+                "recipient_button_text": "{{ settings.color_palette.foreground }}",
+                "recipient_button_border": "{{ settings.color_palette.foreground }}",
+                "selected_recipient_button_style": "default",
+                "selected_recipient_button_background": "{{ settings.color_palette.foreground }}",
+                "selected_recipient_button_text": "{{ settings.color_palette.background }}",
+                "selected_recipient_button_border": "{{ settings.color_palette.foreground }}",
+                "input_style": "default",
+                "input_background_color": "{{ settings.color_palette.background }}",
+                "input_text_color": "{{ settings.color_palette.foreground }}",
+                "input_border_color": "{{ settings.color_palette.foreground }}",
+                "border_width": 1,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "quantity": {
+                  "type": "quantity",
+                  "static": true,
+                  "settings": {
+                    "input_style": "default",
+                    "input_background_color": "{{ settings.color_palette.background }}",
+                    "input_text_color": "{{ settings.color_palette.foreground }}",
+                    "input_border_color": "{{ settings.color_palette.foreground }}",
+                    "border_width": 1,
+                    "border_radius": 0
+                  },
+                  "blocks": {}
+                },
+                "add-to-cart": {
+                  "type": "add-to-cart",
+                  "static": true,
+                  "settings": {
+                    "style_class": "button",
+                    "custom_button_background": "{{ settings.color_palette.foreground }}",
+                    "custom_button_text": "{{ settings.color_palette.background }}",
+                    "custom_button_border": "{{ settings.color_palette.background }}"
+                  },
+                  "blocks": {}
+                },
+                "accelerated-checkout": {
+                  "type": "accelerated-checkout",
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                }
+              },
+              "block_order": []
+            },
+            "payment_icons_8y3yUJ": {
+              "type": "payment-icons",
+              "name": "t:names.payment_icons",
+              "settings": {
+                "horizontal_alignment": "flex-start",
+                "gap": 10,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "00_avonent_accordion_default": {
+              "type": "00-avonent-accordion",
+              "name": "Avonent Accordion",
+              "settings": {
+                "open_first": false,
+                "item_1_enabled": true,
+                "item_1_title": "Description",
+                "item_1_content": "<p>Add your product description here.</p>",
+                "item_2_enabled": true,
+                "item_2_title": "Benefits",
+                "item_2_content": "<p>Add the main benefits of this product here.</p>",
+                "item_3_enabled": true,
+                "item_3_title": "Recommended Use",
+                "item_3_content": "<p>Add the recommended use and serving instructions here.</p>",
+                "item_4_enabled": true,
+                "item_4_title": "Do You Offer a Guarantee?",
+                "item_4_content": "<p>Yes! All Avonent orders are backed by our 30-day satisfaction guarantee.</p><p>If you're not completely satisfied, contact our support team and we'll review your order and help make it right according to our refund policy.</p>",
+                "item_5_enabled": false,
+                "item_5_title": "Ingredients",
+                "item_5_content": "<p>Add ingredient information here.</p>",
+                "item_6_enabled": false,
+                "item_6_title": "Shipping",
+                "item_6_content": "<p>Add shipping information here.</p>",
+                "text_color": "#111111",
+                "muted_text_color": "#444444",
+                "border_color": "#e1e5e7",
+                "background_color": "#ffffff",
+                "accent_color": "#02c6ea",
+                "title_size": 14,
+                "body_size": 13,
+                "corner_radius": 6,
+                "spacing_top": 8,
+                "spacing_bottom": 8
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "00_avonent_rating_WtAFCr",
+            "group_icgrde",
+            "00_avonent_benefits_grid_LMhtjk",
+            "00_avonent_stock_meter_Lcqd6Q",
+            "00_avonent_price_offer_4q4mwM",
+            "divider_VJhene",
+            "variant_picker_R3rGDr",
+            "00_avonent_bundle_selector_default",
+            "00_avonent_delivery_estimate_default",
+            "buy_buttons_eYQEYi",
+            "payment_icons_8y3yUJ",
+            "00_avonent_accordion_default"
+          ]
+        }
+      },
+      "settings": {
+        "content_width": "content-center-aligned",
+        "desktop_media_position": "left",
+        "equal_columns": true,
+        "limit_details_width": false,
+        "gap": 32,
+        "enable_sticky_add_to_cart": true,
+        "background_color": "",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
