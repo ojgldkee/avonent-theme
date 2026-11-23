@@ -23,7 +23,33 @@
 <div class="cart-totals">
   {% # We need to keep this node in place to allow morphing to work properly # %}
   <div class="cart-totals__original-container cart-primary-typography">
-    {%- if cart.cart_level_discount_applications.size > 0 -%}
+    {%- liquid
+      assign av_walnut_drawer = false
+      if is_cart_drawer
+        for line in cart.items
+          if line.product.handle == 'black-walnut-drops' or line.variant_id == 68655263613088
+            assign av_walnut_drawer = true
+            break
+          endif
+        endfor
+      endif
+    -%}
+    {%- if av_walnut_drawer -%}
+      {%- liquid
+        assign av_bundle_subtotal = 0
+        for line in cart.items
+          assign av_reference_unit = line.variant.price | at_least: line.original_price
+          if line.variant_id == 68655263613088 and line.final_line_price == 0
+            assign av_reference_unit = all_products['natures-forgotten-remedies'].price | default: 2499
+          endif
+          assign av_reference_line = av_reference_unit | times: line.quantity
+          assign av_bundle_subtotal = av_bundle_subtotal | plus: av_reference_line
+        endfor
+        assign av_bundle_savings = av_bundle_subtotal | minus: cart.total_price
+      -%}
+      <span class="cart-totals__item"><span>Subtotal</span><span>{{ av_bundle_subtotal | money }}</span></span>
+      <span class="cart-totals__item" style="color:#355A38"><span>Bundle savings</span><span>−{{ av_bundle_savings | money }}</span></span>
+    {%- elsif cart.cart_level_discount_applications.size > 0 -%}
       <span class="cart-totals__item cart-totals__original">
         <span class="cart-totals__original-label">{{ 'content.cart_subtotal' | t }}</span>
         <span
