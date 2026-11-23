@@ -1554,7 +1554,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                       {% else %}
                         <span class="av-cb__bundle-unlock-row">
                           <span class="av-cb__bundle-unlock-check" aria-hidden="true">✓</span>
-                          <span class="av-cb__bundle-unlock-copy">FREE E-Book <strong>($24.99 Value)</strong><small>{% if template.suffix == 'black-walnut-2' %}Nature’s Forgotten Remedies{% else %}Digital metabolic-support guide{% endif %}</small></span>
+                          <span class="av-cb__bundle-unlock-copy">FREE E-Book <strong>($24.99 Value)</strong><small>{% if template.suffix == 'black-walnut-2' %}{{ all_products['natures-forgotten-remedies'].title | default: 'Natures Forgotten Remedies' | escape }}{% else %}Digital metabolic-support guide{% endif %}</small></span>
                         </span>
                       {% endif %}
                     {% endif %}
