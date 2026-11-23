@@ -376,7 +376,7 @@
         "subscription_delivery_description": {
           "subscription_delivery_frequency": {
             "month": {
-              "one": "per delivery"
+              "one": " "
             }
           }
         }
@@ -385,7 +385,7 @@
         "title": "Payment (Step 3/3)"
       },
       "order_summary": {
-        "recurring_subtotal_label": "30-Day Guarantee"
+        "recurring_subtotal_label": "90-Day Money-Back Guarantee · Recurring subtotal"
       }
     }
   }
