@@ -143,6 +143,37 @@
 
           <tbody role="rowgroup">
             {% for item in cart.items %}
+              {% liquid
+                assign walnut_title = ''
+                assign walnut_kind = ''
+                assign walnut_bonus_qty = 0
+                if item.product.handle == 'black-walnut-drops'
+                  if item.selling_plan_allocation
+                    case item.properties['_Avonent bundle']
+                      when 'Buy 2 Get 1 Free'
+                        assign walnut_title = 'Buy 2 Get 1 Free'
+                        assign walnut_bonus_qty = item.quantity | divided_by: 2
+                      when 'Buy 3 Get 2 Free'
+                        assign walnut_title = 'Buy 3 Get 2 Free'
+                        assign walnut_bonus_qty = item.quantity | divided_by: 3 | times: 2
+                    endcase
+                    if walnut_title != blank
+                      assign walnut_kind = 'bundle'
+                    endif
+                  elsif item.properties['_Avonent bonus'] == 'First order free bottle'
+                    assign walnut_kind = 'bonus'
+                    if item.final_line_price == 0
+                      assign walnut_title = 'FREE Bonus Bottle'
+                      if item.quantity > 1
+                        assign walnut_title = 'FREE Bonus Bottles'
+                      endif
+                    endif
+                  endif
+                elsif item.variant_id == 68655263613088
+                  assign walnut_kind = 'ebook'
+                  assign walnut_title = 'Nature’s Forgotten Remedies'
+                endif
+              %}
               {% unless item.product.handle == 'ebook-garlic' and item.properties._avonent_garlic_gift == 'buy3' %}
               <tr
                 id="CartItem-{{ item.key }}"
@@ -151,7 +182,13 @@
                 ref="cartItemRows[]"
                 data-parent-key="{{ item.parent_relationship.parent.key }}"
                 data-key="{{ item.key }}"
-                data-product-handle="{{ item.product.handle }}" data-av-ebook="{% if item.variant_id == 58170079510694 or item.variant_id == 58243205922982 or item.variant_id == 68655263613088 %}true{% else %}false{% endif %}"
+                {% if walnut_kind != blank %}
+                  data-av-walnut-kind="{{ walnut_kind }}"
+                  data-av-walnut-quantity="{{ item.quantity }}"
+                  data-av-walnut-bonus-quantity="{{ walnut_bonus_qty }}"
+                  {% if walnut_title == 'Buy 3 Get 2 Free' and item.quantity >= 3 %}data-av-walnut-earns-ebook{% endif %}
+                {% endif %}
+                data-product-handle="{{ item.product.handle }}" data-av-ebook="{% if item.variant_id == 58170079510694 or item.variant_id == 58243205922982 %}true{% else %}false{% endif %}"
               >
                 <td
                   class="cart-items__media"
@@ -199,12 +236,16 @@
                     <div class="cart-items__title-row">
                       <a
                         href="{{ item.url }}"
-                        class="cart-items__title{% if context == 'drawer' and item.product.handle == 'black-walnut-drops' and item.properties['_Avonent bundle'] != blank %} avonent-walnut-offer-title{% endif %}"
+                        class="cart-items__title{% if context == 'drawer' and walnut_kind == 'bundle' %} avonent-walnut-offer-title{% endif %}"
                         {% if item.parent_relationship.parent != null %}
                           aria-label="{{ 'accessibility.nested_product' | t: product_title: item.product.title, parent_title: item.parent_relationship.parent.title | escape }}"
                         {% endif %}
                       >
-                        {% if context == 'drawer' and item.product.handle == 'black-walnut-drops' and item.properties['_Avonent bundle'] != blank %}{{ item.properties['_Avonent bundle'] | escape }}{% elsif context == 'drawer' and item.product.handle == 'black-walnut-drops' and item.properties['_Avonent bonus'] == 'First order free bottle' and item.final_line_price == 0 %}FREE Bonus Bottle{% else %}{{- item.product.title -}}{% endif %}
+                        {%- if walnut_title != blank and context == 'drawer' or walnut_kind == 'ebook' -%}
+                          {{- walnut_title | escape -}}
+                        {%- else -%}
+                          {{- item.product.title -}}
+                        {%- endif -%}
                       </a>
                       {% render 'cart-disclosure-tooltip',
                         product: item.product,
@@ -259,7 +300,7 @@
                   </div>
 
                   <div class="cart-items__variants-wrapper">
-                    {%- unless context == 'drawer' and item.product.handle == 'ceylon-cinnamon-berberine-capsules' -%}
+                    {%- unless context == 'drawer' and item.product.handle == 'ceylon-cinnamon-berberine-capsules' or context == 'drawer' and item.product.handle == 'black-walnut-drops' -%}
                     {%- if item.product.has_only_default_variant == false
                       or item.properties.size != 0
                       or item.selling_plan_allocation != null
@@ -327,8 +368,12 @@
                   </div>
 
                   <div class="cart-items__unit-price-wrapper">
-                    {%- if context == 'drawer' and item.variant_id == 58170079510694 or item.variant_id == 58243205922982 or item.variant_id == 68655263613088 -%}
-                      <div class="avonent-ebook-cart-price">{% if item.final_line_price == 0 %}<strong>Free</strong> <s>{% if item.variant_id == 68655263613088 %}{{ item.variant.compare_at_price | money }}{% elsif item.variant_id == 58243205922982 %}{{ item.original_line_price | money }}{% else %}{{ item.original_price | money }}{% endif %}</s>{% else %}{{ item.final_price | money }}{% endif %}</div>
+                    {%- if walnut_kind == 'ebook' and item.final_line_price == 0 -%}
+                      <div class="avonent-ebook-cart-price"><strong>FREE</strong> <s>{{ 2499 | money }}</s> value</div>
+                    {%- elsif context == 'drawer' and walnut_kind == 'bonus' and item.final_line_price == 0 -%}
+                      <span class="avonent-ebook-cart-price"><strong>FREE</strong></span>
+                    {%- elsif context == 'drawer' and item.variant_id == 58170079510694 or item.variant_id == 58243205922982 -%}
+                      <div class="avonent-ebook-cart-price">{% if item.final_line_price == 0 %}<strong>Free</strong> <s>{% if item.variant_id == 58243205922982 %}{{ item.original_line_price | money }}{% else %}{{ item.original_price | money }}{% endif %}</s>{% else %}{{ item.final_price | money }}{% endif %}</div>
                     {%- elsif context == 'drawer' and item.product.handle == 'soursop-softgels' -%}
                       {%- liquid
                         assign av_pack_count = item.quantity
@@ -420,6 +465,9 @@
                     | default: true, allow_false: true
                   %}
                   <div class="cart-items__quantity-controls">
+                    {% if walnut_kind == 'bundle' or walnut_kind == 'bonus' or walnut_kind == 'ebook' %}
+                      <span class="avonent-walnut-cart-quantity">Qty {{ item.quantity }}</span>
+                    {% else %}
                     {% render 'volume-pricing-info',
                       variant: item.variant,
                       unique_id: item.index,
@@ -434,6 +482,7 @@
                       class: 'cart-primary-typography',
                       can_update_quantity: can_update_quantity
                     %}
+                    {% endif %}
 
                     <button
                       class="button cart-items__remove"
@@ -441,7 +490,7 @@
                       aria-label="{{ 'accessibility.remove_item' | t: title: item.title | escape }}"
                       on:click="/onLineItemRemove/{{ item.index | plus: 1 }}"
                       {% assign can_remove = item.instructions.can_remove | default: true, allow_false: true %}
-                      {% if can_remove == false %}
+                      {% if can_remove == false or walnut_kind == 'bonus' or walnut_kind == 'ebook' %}
                         hidden
                       {% endif %}
                     >
@@ -820,6 +869,18 @@
 
   .cart-items__details a {
     text-decoration: none;
+  }
+
+  #cart-drawer .avonent-walnut-offer-title {
+    color: #234d22;
+    font-size: 1.05rem;
+    font-weight: 850;
+    letter-spacing: -.015em;
+  }
+
+  .avonent-walnut-cart-quantity {
+    font-size: .875rem;
+    white-space: nowrap;
   }
 
   .cart-items__title-row {
@@ -1217,7 +1278,6 @@
 
     #cart-drawer tr.cart-items__table-row--full-width-variants[data-av-ebook="true"] { grid-template-areas:"media details empty" "media variants variants" "media quantity quantity" "media unit_price unit_price" "media error error" !important; }
     #cart-drawer tr.cart-items__table-row--full-width-variants[data-av-ebook="true"] .cart-items__unit-price-wrapper { justify-self:end !important; margin-top:8px !important; }
-    #cart-drawer .avonent-walnut-offer-title { color:#234D22!important; font-weight:850!important; letter-spacing:-.015em!important; }
     #cart-drawer .avonent-ebook-cart-price strong { color:#355A38; }
     #cart-drawer .avonent-ebook-cart-price s { color:#645c57; font-weight:400; }
 

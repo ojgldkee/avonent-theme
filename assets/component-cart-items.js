@@ -221,12 +221,16 @@ export class CartItemsComponent extends createViewEventElement(Component) {
       }
     });
 
+    const cartRow = this.refs.cartItemRows[line - 1];
+    const walnutBundleRemoved = quantity === 0 && cartRow?.dataset.avWalnutKind === 'bundle';
     const body = JSON.stringify({
-      line: line,
-      quantity: quantity,
+      ...(walnutBundleRemoved ? { updates: this.#walnutBundleRemoval(cartRow) } : { line, quantity }),
       sections: Array.from(sectionsToUpdate).join(','),
       sections_url: window.location.pathname,
     });
+    const cartEndpoint = walnutBundleRemoved
+      ? `${window.Shopify?.routes?.root || '/'}cart/update.js`
+      : Theme.routes.cart_change_url;
 
     cartTotal?.shimmer();
 
@@ -241,7 +245,7 @@ export class CartItemsComponent extends createViewEventElement(Component) {
       })
     );
 
-    fetch(`${Theme.routes.cart_change_url}`, fetchConfig('json', { body }))
+    fetch(cartEndpoint, fetchConfig('json', { body }))
       .then((response) => {
         return response.text();
       })
@@ -300,6 +304,30 @@ export class CartItemsComponent extends createViewEventElement(Component) {
         this.#enableCartItems();
         cartPerformance.measureFromMarker(cartPerformaceUpdateMarker);
       });
+  }
+
+  /** Builds a single cart update for the paid bundle and its first-order gifts. */
+  #walnutBundleRemoval(removedRow) {
+    const updates = { [removedRow.dataset.key]: 0 };
+    const remainingBundles = this.refs.cartItemRows.filter(row =>
+      row !== removedRow && row.dataset.avWalnutKind === 'bundle'
+    );
+    let bonusRemaining = remainingBundles.reduce(
+      (total, row) => total + Number(row.dataset.avWalnutBonusQuantity), 0
+    );
+    let ebookRemaining = remainingBundles.some(row => row.hasAttribute('data-av-walnut-earns-ebook')) ? 1 : 0;
+
+    for (const row of this.refs.cartItemRows) {
+      const quantity = Number(row.dataset.avWalnutQuantity);
+      if (row.dataset.avWalnutKind === 'bonus') {
+        updates[row.dataset.key] = Math.min(bonusRemaining, quantity);
+        bonusRemaining -= updates[row.dataset.key];
+      } else if (row.dataset.avWalnutKind === 'ebook') {
+        updates[row.dataset.key] = Math.min(ebookRemaining, quantity);
+        ebookRemaining -= updates[row.dataset.key];
+      }
+    }
+    return updates;
   }
 
   /**

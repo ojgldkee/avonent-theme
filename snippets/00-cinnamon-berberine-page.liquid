@@ -839,6 +839,16 @@
   if template.suffix == 'black-walnut-2'
     assign av_cb_walnut_single_bottle = av_cb_product.variants | where: 'title', '1 bottle' | first
   endif
+  assign av_cb_initial_qty = 1
+  assign av_cb_initial_price = av_cb_subscription_unit_price
+  assign av_cb_initial_subscription_compare = av_cb_one_time_unit_price
+  if template.suffix == 'black-walnut-2' and av_cb_subscription_plan_id != blank
+    assign av_cb_initial_qty = 2
+    assign av_cb_initial_price = av_cb_subscription_unit_price | times: av_cb_initial_qty
+    assign av_cb_initial_subscription_compare = av_cb_one_time_unit_price | times: 3
+  elsif av_cb_product.template_suffix == 'soursop'
+    assign av_cb_initial_qty = 2
+  endif
 %}
 
 <div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="{% if template.suffix == 'black-walnut-2' %}{{ av_cb_walnut_single_bottle.id }}{% elsif av_cb_product.template_suffix == 'soursop' %}58243205922982{% else %}57944860229798{% endif %}" data-ebook-variant-id="{% if template.suffix == 'black-walnut-2' %}68655263613088{% elsif av_cb_product.template_suffix == 'soursop' %}58170079510694{% else %}57944928780454{% endif %}" data-protection-variant-id="{{ av_cb_protection_variant.id }}">
@@ -1432,8 +1442,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         <div class="av-cb__pricing av-cb__pricing--purchase-mode">
           <span class="av-cb__purchase-heading" data-av-cb-purchase-heading data-one-time-heading="{{ av_cb_one_time_heading | escape }}" data-subscription-heading="{{ av_cb_subscription_heading | escape }}">{% if av_cb_subscription != blank %}{{ av_cb_subscription_heading | escape }}{% else %}{{ av_cb_one_time_heading | escape }}{% endif %}</span>
           <span class="av-cb__pricing-values">
-            <span class="av-cb__sale-price" data-av-cb-price>{{ av_cb_subscription_unit_price | money }}</span>
-            <span class="av-cb__compare-price" data-av-cb-compare-price{% if av_cb_subscription == blank and av_cb_one_time_compare_unit == 0 %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_one_time_unit_price | money }}{% elsif av_cb_one_time_compare_unit > 0 %}{{ av_cb_one_time_compare_unit | money }}{% endif %}</span>
+            <span class="av-cb__sale-price" data-av-cb-price>{{ av_cb_initial_price | money }}</span>
+            <span class="av-cb__compare-price" data-av-cb-compare-price{% if av_cb_subscription == blank and av_cb_one_time_compare_unit == 0 %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_initial_subscription_compare | money }}{% elsif av_cb_one_time_compare_unit > 0 %}{{ av_cb_one_time_compare_unit | money }}{% endif %}</span>
             {% unless template.suffix == 'black-walnut-2' %}
             <span class="av-cb__sale-badge">{{ av_cb_sale_badge }}</span>
             {% endunless %}
@@ -1489,14 +1499,14 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 {% assign av_cb_bundle_subscription_compare = av_cb_one_time_unit_price | times: av_cb_soursop_intro_units %}
               {% elsif template.suffix == 'black-walnut-2' %}
                 {% assign av_cb_bundle_sub_total = av_cb_subscription_unit_price | times: qty %}
-                {% if qty == 1 and av_cb_bundle_subscription_compare > av_cb_bundle_sub_total %}
+                {% if av_cb_bundle_subscription_compare > av_cb_bundle_sub_total %}
                   {% assign av_cb_bundle_savings_percent = av_cb_bundle_subscription_compare | minus: av_cb_bundle_sub_total | times: 100.0 | divided_by: av_cb_bundle_subscription_compare | round %}
                   {% assign av_cb_bundle_savings_text = 'You save ' | append: av_cb_bundle_savings_percent | append: '%' %}
                 {% endif %}
               {% endif %}
               {% assign av_cb_bundle_one_time_total = av_cb_one_time_unit_price | times: qty %}
               {% assign av_cb_bundle_one_time_compare_total = av_cb_one_time_compare_unit | times: qty %}
-              <button class="av-cb__bundle{% if av_cb_product.template_suffix == 'soursop' %}{% if qty == 2 %} is-active{% endif %}{% elsif template.suffix == 'black-walnut-2' %}{% if qty == 2 %} is-active{% endif %}{% elsif qty == 1 %} is-active{% endif %}" type="button"{% if av_cb_product.template_suffix == 'soursop' %} aria-pressed="{% if qty == 2 %}true{% else %}false{% endif %}"{% endif %} data-av-cb-bundle="{{ qty }}" data-subscription-price="{{ av_cb_bundle_sub_total }}" data-subscription-compare="{{ av_cb_bundle_subscription_compare }}" data-one-time-price="{{ av_cb_bundle_one_time_total }}" data-one-time-compare="{{ av_cb_bundle_one_time_compare_total }}">
+              <button class="av-cb__bundle{% if qty == av_cb_initial_qty %} is-active{% endif %}" type="button"{% if av_cb_product.template_suffix == 'soursop' or template.suffix == 'black-walnut-2' %} aria-pressed="{% if qty == av_cb_initial_qty %}true{% else %}false{% endif %}"{% endif %} data-av-cb-bundle="{{ qty }}" data-subscription-price="{{ av_cb_bundle_sub_total }}" data-subscription-compare="{{ av_cb_bundle_subscription_compare }}" data-one-time-price="{{ av_cb_bundle_one_time_total }}" data-one-time-compare="{{ av_cb_bundle_one_time_compare_total }}">
                 {% if qty == 2 and av_cb_bundle_2_badge != blank %}<span class="av-cb__badge" data-av-cb-subscription-perk>{{ av_cb_bundle_2_badge }}</span>{% endif %}
                 {% if qty == 3 and av_cb_bundle_3_badge != blank %}<span class="av-cb__badge" data-av-cb-subscription-perk>{{ av_cb_bundle_3_badge }}</span>{% endif %}
                 <span class="av-cb__bundle-thumb">
@@ -1542,7 +1552,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                       {% else %}
                         <span class="av-cb__bundle-unlock-row">
                           <span class="av-cb__bundle-unlock-check" aria-hidden="true">✓</span>
-                          <span class="av-cb__bundle-unlock-copy">FREE E-Book <strong>($24.99 Value)</strong><small>{% if template.suffix == 'black-walnut-2' %}Nature’s Forgotten Remedies digital herbal guide{% else %}Digital metabolic-support guide{% endif %}</small></span>
+                          <span class="av-cb__bundle-unlock-copy">FREE E-Book <strong>($24.99 Value)</strong><small>{% if template.suffix == 'black-walnut-2' %}Nature’s Forgotten Remedies{% else %}Digital metabolic-support guide{% endif %}</small></span>
                         </span>
                       {% endif %}
                     {% endif %}
@@ -1564,8 +1574,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
               <span class="av-cb__buy-mainline">
                 <span>{{ av_cb_add_to_cart_text }}</span>
                 <span class="av-cb__buy-divider" aria-hidden="true">|</span>
-                <span class="av-cb__buy-price" data-av-cb-button-price>{{ av_cb_subscription_unit_price | money }}</span>
-                <s class="av-cb__buy-compare" data-av-cb-button-compare{% if av_cb_subscription == blank and av_cb_one_time_compare_unit == 0 %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_one_time_unit_price | money }}{% elsif av_cb_one_time_compare_unit > 0 %}{{ av_cb_one_time_compare_unit | money }}{% endif %}</s>
+                <span class="av-cb__buy-price" data-av-cb-button-price>{{ av_cb_initial_price | money }}</span>
+                <s class="av-cb__buy-compare" data-av-cb-button-compare{% if av_cb_subscription == blank and av_cb_one_time_compare_unit == 0 %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_initial_subscription_compare | money }}{% elsif av_cb_one_time_compare_unit > 0 %}{{ av_cb_one_time_compare_unit | money }}{% endif %}</s>
               </span>
             {% else %}
               <span class="av-cb__buy-mainline">Currently Unavailable</span>
@@ -2485,7 +2495,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     </span>
     <span class="av-cb__sticky-copy">
       <span class="av-cb__sticky-title">{% if template.suffix == 'black-walnut-2' %}{{ av_cb_product.title | escape }}{% elsif av_cb_product.handle == 'soursop-softgels' %}{{ av_cb_display_title | escape }}{% else %}Ceylon Cinnamon + Berberine HCl{% endif %}</span>
-      <span class="av-cb__sticky-price" data-av-cb-sticky-price>{{ av_cb_subscription_unit_price | money }}</span>
+      <span class="av-cb__sticky-price" data-av-cb-sticky-price>{{ av_cb_initial_price | money }}</span>
     </span>
     <button class="av-cb__sticky-add" type="button" data-av-cb-sticky-add>Add to Cart</button>
   </div>
@@ -2595,6 +2605,9 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       {% if template.suffix == 'black-walnut-2' %}
       const hasSubscriptionPlan = Boolean(root.dataset.subscriptionPlanId);
       const cartFetch = window.fetch.bind(window);
+      const walnutHandle = {{ av_cb_product.handle | json }};
+      const isWalnutSubscription = item => item.handle === walnutHandle && Boolean(item.selling_plan_allocation);
+      const isWalnutBonus = item => item.handle === walnutHandle && item.properties?.['_Avonent bonus'] === 'First order free bottle';
       {% else %}
       const sellingPlanInput = root.querySelector('[data-av-cb-selling-plan]');
       const hasSubscriptionPlan = Boolean(sellingPlanInput);
@@ -2658,7 +2671,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
         bundleButtons.forEach((btn) => {
           const values = valuesFor(btn);
-          if (isSoursopProduct) btn.setAttribute('aria-pressed', String(btn.classList.contains('is-active')));
+          if (btn.hasAttribute('aria-pressed')) btn.setAttribute('aria-pressed', String(btn.classList.contains('is-active')));
           const priceEl = btn.querySelector('[data-av-cb-bundle-price]');
           const compareEl = btn.querySelector('[data-av-cb-bundle-compare]');
           const titleEl = btn.querySelector('[data-av-cb-bundle-title]');
@@ -2811,6 +2824,9 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             credentials: 'same-origin',
             cache: 'no-store'
           });
+          {% if template.suffix == 'black-walnut-2' %}
+          if (!currentCartResponse.ok) throw new Error('Your cart could not be loaded. Please try again.');
+          {% endif %}
           const currentCart = currentCartResponse.ok ? await currentCartResponse.json() : { items: [] };
 
           const isProtection = (item) =>
@@ -2830,6 +2846,18 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           {% endif %}
 
           const items = [];
+          {% if template.suffix == 'black-walnut-2' %}
+          const offer = ['Buy 1', 'Buy 2 Get 1 Free', 'Buy 3 Get 2 Free'][values.qty - 1];
+          const paidOffer = item => item.properties?.['_Avonent bundle'] || 'Buy 1';
+          const sameOffer = isSubscription && currentCart.items.some(item =>
+            isWalnutSubscription(item) && paidOffer(item) === offer &&
+            String(item.selling_plan_allocation.selling_plan.id) === String(sellingPlanId) &&
+            item.quantity >= values.qty
+          );
+          const existingBonusQty = currentCart.items
+            .filter(item => isWalnutBonus(item) && item.properties?.['_Avonent offer'] === offer)
+            .reduce((quantity, item) => quantity + item.quantity, 0);
+          {% endif %}
 
           // Add protection in the SAME request so opening the drawer never
           // causes a second protection add and visible cart refresh.
@@ -2843,6 +2871,15 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           // Shopify displays newly-added lines in reverse insertion order.
           // Bonus goes in before the paid line so the paid cinnamon appears
           // above the $0 bonus in the drawer.
+          {% if template.suffix == 'black-walnut-2' %}
+          if (bonusQty > existingBonusQty) {
+            items.push({
+              id: bonusVariantId,
+              quantity: bonusQty - existingBonusQty,
+              properties: { '_Avonent bonus': 'First order free bottle', '_Avonent offer': offer }
+            });
+          }
+          {% else %}
           if (bonusQty > 0) {
             items.push({
               id: bonusVariantId,
@@ -2850,12 +2887,10 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
               properties: { '_Avonent bonus': 'First order free bottle' }
             });
           }
+          {% endif %}
 
-          // Shopify's product-specific BXGY discount reduces the e-book to $0.
-          // Soursop: Buy 3 one-time or subscription. Cinnamon: subscription only.
           const ebookVariantId = Number(root.dataset.ebookVariantId || 0);
-          const alreadyHasEbook = Array.isArray(currentCart.items) &&
-            currentCart.items.some(item => Number(item.variant_id) === ebookVariantId);
+          const alreadyHasEbook = {% unless template.suffix == 'black-walnut-2' %}isSoursopProduct && {% endunless %}currentCart.items?.some(item => Number(item.variant_id) === ebookVariantId);
           const qualifiesForEbook = values.qty === 3 && (isSoursopProduct || isSubscription);
           if (qualifiesForEbook && ebookVariantId && !alreadyHasEbook) {
             items.push({
@@ -2876,15 +2911,17 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
               paidItem.properties = {
                 '_Avonent bundle': values.qty === 2 ? 'Buy 2 Get 1 Free' : 'Buy 3 Get 2 Free'
               };
-              {% if template.suffix == 'black-walnut-2' %}
-              // Keep the first-order e-book on the order for fulfillment.
-              if (values.qty === 3) paidItem.properties['_Avonent gift'] = 'Buy 3 first-order e-book';
-              {% endif %}
             }
           }
 
+          {% if template.suffix == 'black-walnut-2' %}
+          if (!sameOffer) items.push(paidItem);
+          {% else %}
           items.push(paidItem);
+          {% endif %}
 
+          let result = {};
+          if (items.length) {
           const response = await cartFetch('/cart/add.js', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -2896,9 +2933,10 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             })
           });
 
-          const result = await response.json().catch(() => ({}));
+          result = await response.json().catch(() => ({}));
           if (!response.ok || result.status || result.errors) {
             throw new Error(result.description || result.message || 'Unable to add to cart.');
+          }
           }
 
           const finalCartResponse = await cartFetch('/cart.js', {
@@ -2906,10 +2944,48 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             credentials: 'same-origin',
             cache: 'no-store'
           });
-          const finalCart = finalCartResponse.ok ? await finalCartResponse.json() : null;
+          let finalCart = finalCartResponse.ok ? await finalCartResponse.json() : null;
 
           let drawerHtml = result.sections?.['cart-drawer-section'] || '';
           {% if template.suffix == 'black-walnut-2' %}
+          if (isSubscription && finalCart?.items) {
+            const updates = {};
+            let paidRemaining = values.qty;
+            let bonusRemaining = bonusQty;
+            let giftRemaining = qualifiesForEbook ? 1 : 0;
+            for (const item of finalCart.items) {
+              let quantity = item.quantity;
+              if (isWalnutSubscription(item)) {
+                const matches = paidOffer(item) === offer &&
+                  String(item.selling_plan_allocation.selling_plan.id) === String(sellingPlanId);
+                quantity = matches ? Math.min(quantity, paidRemaining) : 0;
+                paidRemaining -= quantity;
+              } else if (isWalnutBonus(item)) {
+                quantity = item.properties?.['_Avonent offer'] === offer ? Math.min(quantity, bonusRemaining) : 0;
+                bonusRemaining -= quantity;
+              } else if (Number(item.variant_id) === ebookVariantId) {
+                quantity = Math.min(quantity, giftRemaining);
+                giftRemaining -= quantity;
+              }
+              if (quantity !== item.quantity) updates[item.key] = quantity;
+            }
+
+            if (Object.keys(updates).length) {
+              const response = await cartFetch('/cart/update.js', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify({ updates, sections: 'cart-drawer-section', sections_url: window.location.pathname })
+              });
+              const updated = await response.json();
+              if (!response.ok || updated.errors || updated.status) {
+                throw new Error(updated.description || updated.message || 'Unable to change your bundle.');
+              }
+              finalCart = updated;
+              drawerHtml = updated.sections?.['cart-drawer-section'] || '';
+            }
+          }
+
           const confirmedSubscription = finalCart?.items?.some((item) =>
             Number(item.variant_id) === paidItem.id &&
             String(item.selling_plan_allocation?.selling_plan?.id) === String(sellingPlanId) &&
@@ -2919,6 +2995,17 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           );
           if (!finalCart?.item_count || (isSubscription && !confirmedSubscription)) {
             throw new Error('The cart could not confirm this purchase option. Check your cart before trying again.');
+          }
+
+          if (isSubscription) {
+            const freeBottleCount = finalCart.items
+              .filter(item => isWalnutBonus(item) && item.final_line_price === 0)
+              .reduce((quantity, item) => quantity + item.quantity, 0);
+            const gifts = finalCart.items.filter(item => Number(item.variant_id) === ebookVariantId);
+            if (freeBottleCount !== bonusQty ||
+                (qualifiesForEbook ? gifts.length !== 1 || gifts[0].quantity !== 1 || gifts[0].final_line_price !== 0 : gifts.length !== 0)) {
+              throw new Error('The cart could not confirm the free items for this bundle. Please check your cart.');
+            }
           }
 
           if (startsNewCart) {

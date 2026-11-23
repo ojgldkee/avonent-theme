@@ -643,5 +643,448 @@
 
 
    .avonent-health-gallery {width:100%;overflow:hidden;background:var(--av-gallery-bg,#F7FBFD);padding:clamp(30px,4vw,54px) 0 clamp(42px,5vw,65px);color:#102A41;}
-  .avonent-h
-[truncated 17388 characters]
+  .avonent-health-gallery *{box-sizing:border-box}
+  .avonent-health-gallery__inner{width:min(100% - 52px,1220px);margin:0 auto}
+  .avonent-health-gallery__head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:16px}
+  .avonent-health-gallery__copy{min-width:0}
+  .avonent-health-gallery__eyebrow{margin:0 0 10px;font-size:12px;font-weight:700;letter-spacing:.12em;color:#0A8EB2;text-transform:uppercase}
+  .avonent-health-gallery__head h2{margin:0;color:#0A2942;font-size:clamp(37px,4.6vw,62px);font-weight:770;letter-spacing:-.048em;line-height:1.06;text-wrap:balance}
+  .avonent-health-gallery__head h2 .avonent-health-gallery__intro,.avonent-health-gallery__head h2 .avonent-health-gallery__accent{display:block;white-space:nowrap}
+  .avonent-health-gallery__head h2 .avonent-health-gallery__accent{color:#02C6EA;}
+  .avonent-health-gallery__description{margin:8px 0 0;color:#466175;font-size:clamp(17px,2vw,23px);line-height:1.4;max-width:650px}
+  .avonent-health-gallery__controls{display:flex;align-items:center;gap:10px;flex:none;padding-bottom:6px}
+  .avonent-health-gallery__arrow{display:inline-flex;align-items:center;justify-content:center;width:47px;height:47px;border-radius:50%;background:#fff;border:1px solid #B9D9E7;color:#0A314A;cursor:pointer;transition:transform .15s cubic-bezier(.16,1,.3,1),background-color .15s cubic-bezier(.16,1,.3,1)}
+  .avonent-health-gallery__arrow:hover:not(:disabled){background:#C7F5FF}
+  .avonent-health-gallery__arrow:active:not(:disabled){transform:scale(.93)}
+  .avonent-health-gallery__arrow:disabled{opacity:.4;cursor:default}
+  .avonent-health-gallery__arrow:focus-visible{outline:3px solid #02C6EA;outline-offset:2px}
+  .avonent-health-gallery__rail{display:flex;align-items:stretch;gap:18px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-padding-left:0;scroll-behavior:smooth;overscroll-behavior-inline:contain;scrollbar-width:none;padding:0 0 10px;touch-action:pan-x pan-y}
+  .avonent-health-gallery__rail::-webkit-scrollbar{display:none}
+  .avonent-health-gallery__slide{flex:0 0 clamp(310px,42%,530px);scroll-snap-align:start;scroll-snap-stop:always;min-width:0;background:#D9F2F9;border-radius:17px;overflow:hidden;box-shadow:0 7px 24px rgba(6,62,99,.07);border:1px solid #D6EBF4}
+  .avonent-health-gallery__image,.avonent-health-gallery__placeholder{display:block;width:100%;height:auto;aspect-ratio:1.27/1;object-fit:cover}
+  .avonent-health-gallery__placeholder{background:linear-gradient(135deg,#DAF6FF,#C8EDF7)}
+  .avonent-health-gallery__placeholder svg{width:100%;height:100%}
+  .avonent-health-gallery__caption{padding:17px 22px 20px;color:#15354C;font-size:16px;font-weight:710}
+  .avonent-health-gallery__pagination{display:flex;align-items:center;justify-content:center;gap:2px;margin-top:9px}
+  .avonent-health-gallery__dot{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;padding:0;border:0;border-radius:999px;background:transparent;color:inherit;cursor:pointer;appearance:none;-webkit-tap-highlight-color:transparent}
+  .avonent-health-gallery__dot::after{content:"";display:block;width:9px;height:9px;border-radius:999px;background:#B6C9D2;transition:width .2s ease,background-color .2s ease}
+  .avonent-health-gallery__dot.is-active::after{width:30px;background:#02C6EA}
+  .avonent-health-gallery__dot:focus-visible{outline:2px solid #048BB2;outline-offset:-5px}
+  @media(prefers-reduced-motion:reduce){.avonent-health-gallery__dot::after{transition:none}}
+  @media(max-width:749px){
+    .avonent-health-gallery{padding:28px 0 47px}
+    .avonent-health-gallery__inner{width:min(100% - 36px,600px)}
+    .avonent-health-gallery__head{align-items:flex-end;gap:8px;margin-bottom:13px}
+    .avonent-health-gallery__head h2{font-size:clamp(27px,8vw,36px);letter-spacing:-.045em}
+    .avonent-health-gallery__description{font-size:16px;line-height:1.43;margin-top:7px}
+    .avonent-health-gallery__controls{gap:7px}
+    .avonent-health-gallery__arrow{width:38px;height:38px}
+    .avonent-health-gallery__arrow svg{width:20px;height:20px}
+    .avonent-health-gallery__rail{gap:12px}
+    .avonent-health-gallery__slide{flex:0 0 min(83vw,420px);border-radius:13px}
+    .avonent-health-gallery__image,.avonent-health-gallery__placeholder{aspect-ratio:1.02/1}
+    .avonent-health-gallery__caption{font-size:14px;padding:14px}
+  }
+  @media(prefers-reduced-motion:reduce){.avonent-health-gallery__rail{scroll-behavior:auto}.avonent-health-gallery__arrow{transition:none}}
+
+  /* Product carousel: storefront cards with editable Shopify blocks. */
+  .avonent-health-gallery__slide.avonent-health-gallery__product{display:flex;flex-direction:column;background:#fff;border:1px solid #DCEBF2;border-radius:18px;box-shadow:0 12px 38px rgba(4,44,73,.10);overflow:hidden}
+  .avonent-health-gallery__product .avonent-health-gallery__media-link{display:block;overflow:hidden;background:#E7F5F8;line-height:0}
+  .avonent-health-gallery__product .avonent-health-gallery__image{width:100%;height:auto;aspect-ratio:1.18/1;object-fit:cover}
+  .avonent-health-gallery__pack-art{display:block;width:100%;height:auto;aspect-ratio:1.18/1;object-fit:cover}
+  .avonent-health-gallery__product-body{display:flex;flex-direction:column;align-items:stretch;flex:1;padding:22px 24px 24px}
+  .avonent-health-gallery__rating{display:flex;align-items:center;flex-wrap:wrap;gap:12px;color:#183C51;font-size:15px;line-height:1.25;margin:0 0 14px}
+  .avonent-health-gallery__rating strong{color:#073754;font-weight:800}
+  .avonent-health-gallery__stars{display:inline-flex;align-items:center;gap:2px;color:#E8A200}
+  .avonent-health-gallery__stars svg{display:block;width:16px;height:16px;flex:none}
+  .avonent-health-gallery__product-title{font-family:var(--font-heading--family);font-size:clamp(22px,2.2vw,29px);font-weight:760;letter-spacing:-.028em;line-height:1.16;color:#092D46;margin:0}
+  .avonent-health-gallery__product-description{color:#4A6170;font-size:16px;line-height:1.5;margin:11px 0 18px;min-height:48px}
+  .avonent-health-gallery__product-price{color:#092D46;font-size:24px;font-weight:820;margin-top:auto}
+  .avonent-health-gallery__product-cta,.avonent-health-gallery__product-cta:visited{display:flex;align-items:center;justify-content:center;gap:10px;min-height:45px;margin-top:18px;padding:9px 16px;border:1.5px solid #078EB3;border-radius:8px;background:#02C6EA;color:#052D42!important;-webkit-text-fill-color:#052D42;font-size:16px;font-weight:760;line-height:1.25;text-decoration:none!important;transition:background-color .15s cubic-bezier(.16,1,.3,1),transform .15s cubic-bezier(.16,1,.3,1)}
+  .avonent-health-gallery__product-cta:hover{background:#7AE5F5}
+  .avonent-health-gallery__product-cta:active{transform:scale(.97)}
+  .avonent-health-gallery__product-cta:focus-visible{outline:3px solid #075A7A;outline-offset:3px}
+  .avonent-health-gallery__product .avonent-health-gallery__media-link:focus-visible{outline:3px solid #075A7A;outline-offset:-3px}
+  @media(max-width:749px){
+    .avonent-health-gallery__slide.avonent-health-gallery__product{flex:0 0 min(83vw,420px);border-radius:15px}
+    .avonent-health-gallery__product .avonent-health-gallery__image{aspect-ratio:1.1/1}
+    .avonent-health-gallery__product-body{padding:18px 18px 20px}
+    .avonent-health-gallery__rating{font-size:13px;gap:9px;margin-bottom:12px}
+    .avonent-health-gallery__stars svg{width:15px;height:15px}
+    .avonent-health-gallery__product-title{font-size:23px}
+    .avonent-health-gallery__product-description{font-size:14px;line-height:1.44;margin:9px 0 14px}
+    .avonent-health-gallery__product-price{font-size:22px}
+    .avonent-health-gallery__product-cta{min-height:44px;font-size:15px;margin-top:15px}
+  }
+  @media(prefers-reduced-motion:reduce){.avonent-health-gallery__product-cta{transition:none}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "00 Avonent Trust Strip",
+  "tag": "section",
+  "class": "avonent-trust-strip-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image carousel below moving bar"
+    },
+    {
+      "type": "text",
+      "id": "gallery_heading",
+      "label": "Heading first line",
+      "default": "Two Ways We"
+    },
+    {
+      "type": "text",
+      "id": "gallery_heading_accent",
+      "label": "Blue highlighted heading text",
+      "default": "Support Your Health"
+    },
+    {
+      "type": "text",
+      "id": "gallery_eyebrow",
+      "label": "Small carousel heading",
+      "default": "OUR PRODUCTS"
+    },
+    {
+      "type": "textarea",
+      "id": "gallery_description",
+      "label": "Carousel description",
+      "default": "Each formula does a different job. Together, they cover more ground."
+    },
+    {"type":"text","id":"rating_prefix","label":"Rating label","default":"Rated"},
+    {
+      "type": "color",
+      "id": "gallery_background_color",
+      "label": "Carousel background",
+      "default": "#F7FBFD"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Icons",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "header",
+      "content": "Carousel"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll speed",
+      "min": 8,
+      "max": 40,
+      "step": 1,
+      "unit": "s",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "header",
+      "content": "90-day guarantee card"
+    },
+    {
+      "type": "image_picker",
+      "id": "guarantee_badge_image",
+      "label": "90-day guarantee badge image"
+    },
+    {
+      "type": "image_picker",
+      "id": "guarantee_background_image",
+      "label": "Background image (optional)"
+    },
+    {
+      "type": "color",
+      "id": "guarantee_accent_color",
+      "label": "Button and badge accents",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_heading",
+      "label": "Guarantee headline",
+      "default": "No Rush, No Risk, No Catch"
+    },
+    {
+      "type": "richtext",
+      "id": "guarantee_description",
+      "label": "Guarantee description",
+      "default": "<p>We want you to feel confident in your purchase. Take a full 90 days to decide if Avonent is right for you. If it isn't, contact us about our money-back guarantee.</p>"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_chip_1",
+      "label": "Highlight 1",
+      "default": "90 days to decide"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_chip_2",
+      "label": "Highlight 2",
+      "default": "Every Batch Tested"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_chip_3",
+      "label": "Highlight 3",
+      "default": "3–5 Day USA Shipping"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_button_label",
+      "label": "Button text",
+      "default": "Find Your Formula"
+    },
+    {
+      "type": "url",
+      "id": "guarantee_button_url",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Homepage FAQ"
+    },
+    {
+      "type": "text",
+      "id": "faq_title",
+      "label": "FAQ heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_description",
+      "label": "FAQ description",
+      "default": "Find answers to common questions about orders, payments, shipping, and returns."
+    },
+    {
+      "type": "text",
+      "id": "faq_q1",
+      "label": "Question 1",
+      "default": "How do I place an order?"
+    },
+    {
+      "type": "richtext",
+      "id": "faq_a1",
+      "label": "Answer 1",
+      "default": "<p>When products are available, select an item and follow the steps at checkout. For assistance, visit our contact page.</p>"
+    },
+    {
+      "type": "text",
+      "id": "faq_q2",
+      "label": "Question 2",
+      "default": "What payment methods do you accept?"
+    },
+    {
+      "type": "richtext",
+      "id": "faq_a2",
+      "label": "Answer 2",
+      "default": "<p>Available payment methods are shown during checkout before you place an order.</p>"
+    },
+    {
+      "type": "text",
+      "id": "faq_q3",
+      "label": "Question 3",
+      "default": "How long does shipping take?"
+    },
+    {
+      "type": "richtext",
+      "id": "faq_a3",
+      "label": "Answer 3",
+      "default": "<p>Delivery times vary by destination and shipping method. Check your shipping confirmation email for tracking details once your order ships.</p>"
+    },
+    {
+      "type": "text",
+      "id": "faq_q4",
+      "label": "Question 4",
+      "default": "What is your return policy?"
+    },
+    {
+      "type": "richtext",
+      "id": "faq_a4",
+      "label": "Answer 4",
+      "default": "<p>Contact Avonent support with your order number to request return assistance and applicable terms.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Four trust cards"
+    },
+    {
+      "type": "text",
+      "id": "proof_1",
+      "label": "Trust card 1",
+      "default": "FDA-Registered Facility"
+    },
+    {
+      "type": "text",
+      "id": "proof_2",
+      "label": "Trust card 2",
+      "default": "3rd-Party Lab Tested"
+    },
+    {
+      "type": "text",
+      "id": "proof_3",
+      "label": "Trust card 3",
+      "default": "Secure Checkout"
+    },
+    {
+      "type": "text",
+      "id": "proof_4",
+      "label": "Trust card 4",
+      "default": "Ships in 24 hours"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "check",
+              "label": "Check circle"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "lab",
+              "label": "Lab flask"
+            },
+            {
+              "value": "flag",
+              "label": "Flag"
+            },
+            {
+              "value": "truck",
+              "label": "Shipping truck"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "30-Day Risk-Free Trial"
+        }
+      ]
+    },
+    {
+      "type": "product_card",
+      "name": "Product carousel card",
+      "settings": [
+        {"type":"product","id":"product","label":"Link real product (overrides example title/price/image)"},
+        {"type":"image_picker","id":"card_image","label":"Real product photo (replaces example packaging)"},
+        {"type":"select","id":"pack_style","label":"Example packaging style","options":[{"value":"soursop","label":"Soursop"},{"value":"garlic","label":"Garlic"}],"default":"soursop"},
+        {"type":"text","id":"image_alt","label":"Image description","default":"Avonent botanical supplement"},
+        {"type":"text","id":"title","label":"Example product name","default":"Avonent Soursop Softgels"},
+        {"type":"textarea","id":"description","label":"Card description","default":"Premium softgels made for an easy daily wellness routine."},
+        {"type":"text","id":"example_price","label":"Example price until product is selected","default":"$39.00"},
+        {"type":"text","id":"rating","label":"Displayed rating out of 5","default":"4.9"},
+        {"type":"text","id":"button_text","label":"Explore button text","default":"Explore Soursop"},
+        {"type":"url","id":"button_link","label":"Explore button link when no product selected"}
+      ]
+    },
+    {
+      "type": "health_slide",
+      "name": "Image carousel slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "slide_image",
+          "label": "Slide image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Optional caption"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Image description",
+          "default": "Avonent botanical ingredients"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "00 Avonent Trust Strip",
+      "blocks": [
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "shield",
+            "text": "30-Day Risk-Free Trial"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "lab",
+            "text": "Third-Party Lab Tested"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "flag",
+            "text": "Ships from USA"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
