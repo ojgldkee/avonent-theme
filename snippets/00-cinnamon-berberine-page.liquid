@@ -1319,7 +1319,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 {% endfor %}
               </div>
 
-              {% if av_cb_product.images.size > 1 %}
+              {% if av_cb_product.images.size > 1 and template.suffix != 'black-walnut-2' %}
                 <button class="av-cb__gallery-arrow av-cb__gallery-arrow--prev" type="button" data-av-cb-gallery-prev aria-label="Previous product image">
                   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14.5 6-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
