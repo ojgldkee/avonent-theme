@@ -168,7 +168,6 @@
                   assign walnut_title = 'Nature’s Forgotten Remedies'
                 endif
                 assign walnut_drawer_line = false
-                assign walnut_drawer_subscription = false
                 if context == 'drawer'
                   if item.product.handle == 'black-walnut-drops' or walnut_kind == 'ebook'
                     assign walnut_drawer_line = true
@@ -178,9 +177,6 @@
                     endif
                     assign walnut_retail_price = walnut_retail_unit | times: item.quantity
                     assign walnut_savings = walnut_retail_price | minus: item.final_line_price
-                  endif
-                  if item.product.handle == 'black-walnut-drops' and item.selling_plan_allocation
-                    assign walnut_drawer_subscription = true
                   endif
                 endif
               %}
@@ -192,7 +188,6 @@
                 ref="cartItemRows[]"
                 data-parent-key="{{ item.parent_relationship.parent.key }}"
                 data-key="{{ item.key }}"
-                {% if walnut_drawer_subscription %}data-av-walnut-subscription-line="{{ item.index | plus: 1 }}"{% endif %}
                 {% if walnut_kind != blank %}
                   data-av-walnut-kind="{{ walnut_kind }}"
                   data-av-walnut-quantity="{{ item.quantity }}"
@@ -506,22 +501,11 @@
                     | default: true, allow_false: true
                   %}
                   <div class="cart-items__quantity-controls">
-                    {% if walnut_drawer_subscription %}
+                    {% if walnut_kind == 'bundle' or walnut_kind == 'bonus' or walnut_kind == 'ebook' %}
                       <input type="hidden" name="updates[]" value="{{ item.quantity }}">
-                      <div class="avonent-walnut-quantity-picker" role="group" aria-label="Black Walnut paid bottle quantity">
-                        <button type="button" class="button button-unstyled" aria-label="Decrease paid bottle quantity" data-av-walnut-step="-1" on:click="/onWalnutQuantityStep"
-                          {% if item.quantity <= 1 or can_update_quantity == false %}disabled{% endif %}>
-                          {{- 'icon-minus.svg' | inline_asset_content -}}
-                        </button>
-                        <output aria-live="polite" aria-label="Paid bottle quantity">{{ item.quantity }}</output>
-                        <button type="button" class="button button-unstyled" aria-label="Increase paid bottle quantity" data-av-walnut-step="1" on:click="/onWalnutQuantityStep"
-                          {% if item.quantity >= 3 or can_update_quantity == false %}disabled{% endif %}>
-                          {{- 'icon-plus.svg' | inline_asset_content -}}
-                        </button>
-                      </div>
-                    {% elsif walnut_kind == 'bundle' or walnut_kind == 'bonus' or walnut_kind == 'ebook' %}
-                      <input type="hidden" name="updates[]" value="{{ item.quantity }}">
-                      {% if walnut_drawer_line == false and walnut_kind != 'ebook' %}
+                      {% if walnut_kind == 'bundle' and walnut_drawer_line %}
+                        <span class="avonent-walnut-cart-quantity">{{ item.quantity }} paid bottles</span>
+                      {% elsif walnut_drawer_line == false and walnut_kind != 'ebook' %}
                         <span class="avonent-walnut-cart-quantity">Qty {{ item.quantity }}</span>
                       {% endif %}
                     {% else %}
@@ -1684,35 +1668,6 @@
     #cart-drawer .avonent-walnut-cart-quantity {
       color: #5e665b;
       font-size: 12px;
-    }
-
-    #cart-drawer .avonent-walnut-quantity-picker {
-      display: inline-grid;
-      grid-template-columns: 36px minmax(24px, auto) 36px;
-      align-items: center;
-      justify-items: center;
-      border: 1px solid #d1ddd2;
-      border-radius: 8px;
-      color: #17271c;
-      font-variant-numeric: tabular-nums;
-    }
-
-    #cart-drawer .avonent-walnut-quantity-picker button {
-      display: grid;
-      place-items: center;
-      min-width: 36px;
-      min-height: 36px;
-      padding: 0;
-      color: inherit;
-    }
-
-    #cart-drawer .avonent-walnut-quantity-picker button:disabled {
-      opacity: .38;
-    }
-
-    #cart-drawer .avonent-walnut-quantity-picker svg {
-      width: 12px;
-      height: 12px;
     }
 
     @media screen and (max-width: 390px) {

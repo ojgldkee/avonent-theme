@@ -41,7 +41,6 @@ export class CartItemsComponent extends createViewEventElement(Component) {
   );
   /** @type {Promise<any> | null} */
   #pendingCartFetch = null;
-  #walnutQuantityPending = false;
 
   /**
    * True when the event was dispatched from outside this cart-items-component (e.g.
@@ -154,7 +153,6 @@ export class CartItemsComponent extends createViewEventElement(Component) {
    * @param {number} line - The line item index.
    */
   onLineItemRemove(line) {
-    if (this.#walnutQuantityPending) return;
     this.updateQuantity({
       line,
       quantity: 0,
@@ -200,33 +198,19 @@ export class CartItemsComponent extends createViewEventElement(Component) {
     });
   }
 
-  /** Switch the paid subscription between the three Black Walnut offers. */
-  onWalnutQuantityStep(event) {
-    const button = event.target.closest('[data-av-walnut-step]');
-    const row = button?.closest('[data-av-walnut-subscription-line]');
-    if (!row || button.disabled || this.#walnutQuantityPending) return;
-
-    const line = Number(row.dataset.avWalnutSubscriptionLine);
-    const quantity = Number(row.querySelector('input[name="updates[]"]').value) + Number(button.dataset.avWalnutStep);
-    if (!Number.isInteger(quantity) || quantity < 1 || quantity > 3) return;
-    this.updateQuantity({ line, quantity, action: 'change', walnutRow: row });
-  }
-
   /**
    * Updates the quantity.
    * @param {Object} config - The config.
    * @param {number} config.line - The line.
    * @param {number} config.quantity - The quantity.
    * @param {string} config.action - The action.
-   * @param {HTMLTableRowElement} [config.walnutRow] - The paid Black Walnut subscription row.
    */
   updateQuantity(config) {
-    if (this.#walnutQuantityPending) return;
     const cartPerformaceUpdateMarker = cartPerformance.createStartingMarker(`${config.action}:user-action`);
 
     this.#disableCartItems();
 
-    const { line, quantity, walnutRow } = config;
+    const { line, quantity } = config;
     const { cartTotal } = this.refs;
 
     const cartItemsComponents = document.querySelectorAll('cart-items-component');
@@ -237,15 +221,12 @@ export class CartItemsComponent extends createViewEventElement(Component) {
       }
     });
 
-    const cartRow = walnutRow ?? this.refs.cartItemRows[line - 1];
+    const cartRow = this.refs.cartItemRows[line - 1];
     const walnutBundleRemoved = quantity === 0 && cartRow?.dataset.avWalnutKind === 'bundle';
-    const sections = {
-      sections: Array.from(sectionsToUpdate).join(','),
-      sections_url: window.location.pathname,
-    };
     const body = JSON.stringify({
       ...(walnutBundleRemoved ? { updates: this.#walnutBundleRemoval(cartRow) } : { line, quantity }),
-      ...sections,
+      sections: Array.from(sectionsToUpdate).join(','),
+      sections_url: window.location.pathname,
     });
     const cartEndpoint = walnutBundleRemoved
       ? `${window.Shopify?.routes?.root || '/'}cart/update.js`
@@ -254,10 +235,7 @@ export class CartItemsComponent extends createViewEventElement(Component) {
     cartTotal?.shimmer();
 
     const deferredUpdatePromise = CartLinesUpdateEvent.createPromise();
-    const lineId = cartRow?.dataset.key ?? '';
-    const checkout = walnutRow && this.closest('#cart-drawer')?.querySelector('button[name="checkout"]:enabled');
-    if (checkout) checkout.disabled = true;
-    if (walnutRow) this.#walnutQuantityPending = true;
+    const lineId = this.refs.cartItemRows[line - 1]?.dataset.key ?? '';
     this.dispatchEvent(
       new CartLinesUpdateEvent({
         action: config.action === 'change' && quantity > 0 ? 'update' : 'remove',
@@ -267,11 +245,13 @@ export class CartItemsComponent extends createViewEventElement(Component) {
       })
     );
 
-    const request = walnutRow
-      ? this.#changeWalnutQuantity(lineId, quantity, sections)
-      : fetch(cartEndpoint, fetchConfig('json', { body })).then(response => response.json());
-    request
-      .then(async (parsedResponseText) => {
+    fetch(cartEndpoint, fetchConfig('json', { body }))
+      .then((response) => {
+        return response.text();
+      })
+      .then((responseText) => {
+        const parsedResponseText = JSON.parse(responseText);
+
         resetShimmer(this);
 
         if (parsedResponseText.errors) {
@@ -303,19 +283,13 @@ export class CartItemsComponent extends createViewEventElement(Component) {
           },
         });
 
-        await morphSection(this.sectionId, parsedResponseText.sections[this.sectionId], {
+        morphSection(this.sectionId, parsedResponseText.sections[this.sectionId], {
           mode: this.isDrawer ? 'hydration' : 'full',
         });
 
         this.#updateCartQuantitySelectorButtonStates();
-        if (parsedResponseText.walnutError) {
-          const paidRow = this.querySelector('[data-av-walnut-subscription-line]');
-          this.#showWalnutError(paidRow, parsedResponseText.walnutError);
-        }
       })
       .catch((error) => {
-        resetShimmer(this);
-        if (walnutRow) this.#showWalnutError(walnutRow, error.message);
         console.error(error);
         deferredUpdatePromise.reject(error);
 
@@ -327,120 +301,9 @@ export class CartItemsComponent extends createViewEventElement(Component) {
         );
       })
       .finally(() => {
-        if (walnutRow) this.#walnutQuantityPending = false;
-        if (checkout) checkout.disabled = false;
         this.#enableCartItems();
         cartPerformance.measureFromMarker(cartPerformaceUpdateMarker);
       });
-  }
-
-  async #changeWalnutQuantity(key, quantity, sections) {
-    const root = window.Shopify?.routes?.root || '/';
-    const bonusId = 68655703687328;
-    const ebookId = 68655263613088;
-    const isWalnutLine = line => line.variant_id === ebookId ||
-      (line.handle === 'black-walnut-drops' &&
-        (line.selling_plan_allocation || line.properties?.['_Avonent bonus'] === 'First order free bottle'));
-    const request = async (route, body) => {
-      const response = await fetch(root + route, body
-        ? fetchConfig('json', { body: JSON.stringify(body) })
-        : { cache: 'no-store', headers: { Accept: 'application/json' } });
-      const result = await response.json();
-      if (!response.ok || result.errors || result.status) {
-        throw new Error(result.description || result.message || 'The bundle could not be updated.');
-      }
-      return result;
-    };
-    const addItem = line => ({
-      id: line.variant_id,
-      quantity: line.quantity,
-      properties: line.properties || {},
-      ...(line.selling_plan_allocation ? { selling_plan: line.selling_plan_allocation.selling_plan.id } : {}),
-    });
-    // Shopify can split a line when discounts change. Match merchandise, plan
-    // and line properties, then use the latest keys to update the split lines.
-    const identity = item => JSON.stringify([
-      item.id,
-      item.selling_plan ?? null,
-      Object.entries(item.properties).sort(([first], [second]) => first.localeCompare(second)),
-    ]);
-    const applyLines = async (cart, items) => {
-      const desired = new Map();
-      for (const item of items) {
-        const id = identity(item);
-        const total = (desired.get(id)?.quantity || 0) + item.quantity;
-        desired.set(id, { ...item, quantity: total });
-      }
-      const remaining = new Map([...desired].map(([id, item]) => [id, item.quantity]));
-      for (const line of cart.items.filter(isWalnutLine)) {
-        const id = identity(addItem(line));
-        if (remaining.has(id)) remaining.set(id, remaining.get(id) - line.quantity);
-      }
-      const additions = [...desired].flatMap(([id, item]) =>
-        remaining.get(id) > 0 ? [{ ...item, quantity: remaining.get(id) }] : []
-      );
-      if (additions.length) {
-        await request('cart/add.js', { items: additions });
-        cart = await request('cart.js');
-      }
-      const updates = {};
-      const limits = new Map([...desired].map(([id, item]) => [id, item.quantity]));
-      for (const line of cart.items.filter(isWalnutLine)) {
-        const id = identity(addItem(line));
-        const limit = limits.get(id) ?? 0;
-        const nextQuantity = Math.min(line.quantity, limit);
-        limits.set(id, limit - nextQuantity);
-        if (nextQuantity !== line.quantity) updates[line.key] = nextQuantity;
-      }
-      return request('cart/update.js', { updates, ...sections });
-    };
-
-    const before = await request('cart.js');
-    const paidLine = before.items.find(line => line.key === key &&
-      line.handle === 'black-walnut-drops' && line.selling_plan_allocation);
-    if (!paidLine) throw new Error('The cart changed. Reopen it to update your bundle.');
-
-    const offer = quantity === 3 ? 'Buy 3 Get 2 Free' : 'Buy 2 Get 1 Free';
-    const paid = { ...addItem(paidLine), quantity, properties: { ...paidLine.properties } };
-    delete paid.properties['_Avonent bundle'];
-    if (quantity > 1) paid.properties['_Avonent bundle'] = offer;
-    const items = [paid];
-    if (quantity > 1) items.push({
-      id: bonusId,
-      quantity: quantity - 1,
-      properties: { '_Avonent bonus': 'First order free bottle', '_Avonent offer': offer },
-    });
-    if (quantity === 3) items.push({
-      id: ebookId,
-      quantity: 1,
-      properties: { '_Avonent gift': 'Buy 3 first-order e-book' },
-    });
-
-    try {
-      const updated = await applyLines(before, items);
-      const bonus = updated.items.filter(line => line.variant_id === bonusId && isWalnutLine(line));
-      const gift = updated.items.filter(line => line.variant_id === ebookId);
-      const paidQuantity = updated.items.filter(line => identity(addItem(line)) === identity(paid))
-        .reduce((total, line) => total + line.quantity, 0);
-      if (paidQuantity !== quantity || bonus.reduce((total, line) => total + line.quantity, 0) !== quantity - 1 ||
-          bonus.some(line => line.final_line_price !== 0) ||
-          gift.reduce((total, line) => total + line.quantity, 0) !== (quantity === 3 ? 1 : 0) ||
-          gift.some(line => line.final_line_price !== 0)) {
-        throw new Error('Shopify could not apply the free items. Your original bundle was restored.');
-      }
-      return updated;
-    } catch (error) {
-      const restored = await applyLines(await request('cart.js'), before.items.filter(isWalnutLine).map(addItem));
-      return { ...restored, walnutError: error.message };
-    }
-  }
-
-  #showWalnutError(row, message) {
-    const container = row?.querySelector('.cart-items__error');
-    const text = container?.querySelector('.cart-item__error-text');
-    if (!text) return;
-    text.textContent = message;
-    container.classList.remove('hidden');
   }
 
   /** Builds a single cart update for the paid bundle and its first-order gifts. */
