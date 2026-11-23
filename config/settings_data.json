@@ -9,10 +9,10 @@
  */
 {
   "current": {
-    "logo": "shopify://shop_images/avonent-header-logo_e0aca380-6c71-447a-98cc-eee56dcc2ba3.png",
+    "logo": "shopify://shop_images/avonent-blue-wordmark-transparent.png",
     "logo_height": 36,
     "logo_height_mobile": 28,
-    "favicon": "shopify://shop_images/ChatGPT_Image_Aug_21_2026_06_32_07_PM.png",
+    "favicon": "shopify://shop_images/avonent-blue-favicon.png",
     "type_body_font": "inter_n4",
     "type_subheading_font": "inter_n5",
     "type_heading_font": "inter_n7",
@@ -82,7 +82,7 @@
     "blocks": {
       "10436698916776057164": {
         "type": "shopify://apps/appstle-subscription/blocks/appstle-subscription-helper/fe257d39-6f88-4f35-ab08-bd437e3aa94e",
-        "disabled": true,
+        "disabled": false,
         "settings": {}
       }
     },
@@ -90,8 +90,8 @@
       "background": "#ffffff",
       "foreground": "#000000",
       "color1": "#333333",
-      "color2": "#EEF1EA",
-      "color3": "#DFDFDF"
+      "color2": "#EDF9FC",
+      "color3": "#D8EEF4"
     }
   },
   "presets": {
@@ -166,8 +166,8 @@
         "background": "#ffffff",
         "foreground": "#000000",
         "color1": "#333333",
-        "color2": "#EEF1EA",
-        "color3": "#DFDFDF"
+        "color2": "#EDF9FC",
+        "color3": "#D8EEF4"
       }
     }
   }
