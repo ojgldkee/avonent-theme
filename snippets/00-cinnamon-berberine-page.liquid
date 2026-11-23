@@ -8,6 +8,11 @@
   endif
   assign av_cb_hero_image = product.featured_image
   assign av_cb_variant = av_cb_product.selected_or_first_available_variant
+  if template.suffix == 'black-walnut-2'
+    assign av_cb_walnut_single_bottle = av_cb_product.variants | where: 'title', '1 bottle' | first
+    assign av_cb_variant = av_cb_walnut_single_bottle | default: av_cb_variant
+    assign av_cb_walnut_bonus_bottle = av_cb_product.variants | where: 'title', 'First-order bonus bottle' | first
+  endif
   assign av_cb_form_id = 'AvonentCinnamonBerberineForm-' | append: av_cb_product.id
   assign av_cb_one_time_unit_price = av_cb_variant.price | default: av_cb_product.price
   assign av_cb_subscription = av_cb_variant.selling_plan_allocations.first
@@ -836,9 +841,6 @@
   assign av_cb_compare_guarantee = '90-Day Money-Back Guarantee'
   assign av_cb_protection_product = all_products['shipping-protection']
   assign av_cb_protection_variant = av_cb_protection_product.selected_or_first_available_variant
-  if template.suffix == 'black-walnut-2'
-    assign av_cb_walnut_single_bottle = av_cb_product.variants | where: 'title', '1 bottle' | first
-  endif
   assign av_cb_initial_qty = 1
   assign av_cb_initial_price = av_cb_subscription_unit_price
   assign av_cb_initial_subscription_compare = av_cb_one_time_unit_price
@@ -851,7 +853,7 @@
   endif
 %}
 
-<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="{% if template.suffix == 'black-walnut-2' %}{{ av_cb_walnut_single_bottle.id }}{% elsif av_cb_product.template_suffix == 'soursop' %}58243205922982{% else %}57944860229798{% endif %}" data-ebook-variant-id="{% if template.suffix == 'black-walnut-2' %}68655263613088{% elsif av_cb_product.template_suffix == 'soursop' %}58170079510694{% else %}57944928780454{% endif %}" data-protection-variant-id="{{ av_cb_protection_variant.id }}">
+<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="{% if template.suffix == 'black-walnut-2' %}{{ av_cb_walnut_bonus_bottle.id | default: av_cb_variant.id }}{% elsif av_cb_product.template_suffix == 'soursop' %}58243205922982{% else %}57944860229798{% endif %}" data-ebook-variant-id="{% if template.suffix == 'black-walnut-2' %}68655263613088{% elsif av_cb_product.template_suffix == 'soursop' %}58170079510694{% else %}57944928780454{% endif %}" data-protection-variant-id="{{ av_cb_protection_variant.id }}">
   <style>
     .av-cb{--blue:#A84F1B;--deep:#7D3612;--ink:#171513;--muted:#645C57;--line:#E7D2C4;--soft:#FFF4EC;--soft2:#FFFBF7;background:#fff;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}.av-cb,.av-cb button,.av-cb input,.av-cb select,.av-cb textarea,.av-cb summary{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif!important}
     html.av-cb-cinnamon-page .avonent-sale-bar__inner{--av-sale-bg:#A84F1B!important;--av-sale-color:#fff!important;background:#A84F1B!important;color:#fff!important}
@@ -2855,7 +2857,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             item.quantity >= values.qty
           );
           const existingBonusQty = currentCart.items
-            .filter(item => isWalnutBonus(item) && item.properties?.['_Avonent offer'] === offer)
+            .filter(item => isWalnutBonus(item) && Number(item.variant_id) === bonusVariantId &&
+              item.properties?.['_Avonent offer'] === offer)
             .reduce((quantity, item) => quantity + item.quantity, 0);
           {% endif %}
 
@@ -2901,7 +2904,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           }
 
           const paidItem = {
-            id: {% if template.suffix == 'black-walnut-2' %}bonusQty > 0 ? bonusVariantId : variantId{% else %}variantId{% endif %},
+            id: variantId,
             quantity: values.qty
           };
 
@@ -2961,7 +2964,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 quantity = matches ? Math.min(quantity, paidRemaining) : 0;
                 paidRemaining -= quantity;
               } else if (isWalnutBonus(item)) {
-                quantity = item.properties?.['_Avonent offer'] === offer ? Math.min(quantity, bonusRemaining) : 0;
+                const matches = Number(item.variant_id) === bonusVariantId && item.properties?.['_Avonent offer'] === offer;
+                quantity = matches ? Math.min(quantity, bonusRemaining) : 0;
                 bonusRemaining -= quantity;
               } else if (Number(item.variant_id) === ebookVariantId) {
                 quantity = Math.min(quantity, giftRemaining);

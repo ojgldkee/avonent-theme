@@ -484,19 +484,21 @@
                     %}
                     {% endif %}
 
+                    {% unless walnut_kind == 'bonus' or walnut_kind == 'ebook' %}
                     <button
                       class="button cart-items__remove"
                       type="button"
                       aria-label="{{ 'accessibility.remove_item' | t: title: item.title | escape }}"
                       on:click="/onLineItemRemove/{{ item.index | plus: 1 }}"
                       {% assign can_remove = item.instructions.can_remove | default: true, allow_false: true %}
-                      {% if can_remove == false or walnut_kind == 'bonus' or walnut_kind == 'ebook' %}
+                      {% if can_remove == false %}
                         hidden
                       {% endif %}
                     >
                       {{- 'icon-delete.svg' | inline_asset_content -}}
                       <span class="visually-hidden">{{ 'accessibility.remove' | t }}</span>
                     </button>
+                    {% endunless %}
                   </div>
                 </td>
                 <td
