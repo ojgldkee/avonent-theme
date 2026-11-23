@@ -13,30 +13,33 @@
       "type": "00-avonent-home-hero",
       "name": "00 Avonent Home Hero",
       "settings": {
-        "mobile_image": "shopify://shop_images/4F83536B-2F43-4E45-A78D-45DE2FA625B4.png",
+        "desktop_image": "shopify://shop_images/avonent-botanical-slide-1.jpg",
+        "mobile_image": "shopify://shop_images/F6A0E980-016A-40EC-BCE5-6C5CA7048B11.png",
         "eyebrow": "",
         "heading": "Feel Better. Live Sharper.",
-        "description": "<p>Avonent brings time-tested botanicals like aged garlic and true Ceylon cinnamon into clean, easy-to-take daily softgels. Centuries of traditional use. Modern research. No fillers, no harsh burn, no marketing tricks.</p>",
-        "button_text": "Shop Avonent Now",
-        "button_link": "shopify://collections/all",
-        "show_button_arrow": false,
+        "description": "<p>Thoughtfully selected botanicals and straightforward daily wellness essentials. Simple routines, grounded in nature.</p>",
+        "button_text": "Find Your Formula",
+        "button_link": "/collections/all",
+        "show_button_arrow": true,
         "guarantee_text": "90-Day Money-Back Guarantee",
         "show_social_proof": true,
         "star_rating": 5,
         "counter_start": 100000,
         "counter_end": 100000,
         "counter_suffix": "+",
-        "customer_text": "customers",
+        "customer_text": "Over 24,000 satisfied customers",
         "counter_duration": 2000,
-        "text_color": "#111111",
+        "text_color": "#ffffff",
         "button_background": "#02c6ea",
-        "button_text_color": "#ffffff",
+        "button_text_color": "#06243a",
         "star_color": "#f4b000",
         "overlay_opacity": 0,
         "content_alignment": "center",
         "vertical_position": "top",
-        "desktop_height": 720,
-        "mobile_height": 720
+        "desktop_height": 650,
+        "mobile_height": 720,
+        "show_guarantee_line": false,
+        "background_position": "center center"
       }
     },
     "00_avonent_trust_strip_Bj7dMJ": {
@@ -62,132 +65,85 @@
             "icon": "flag",
             "text": "Ships from USA"
           }
+        },
+        "product_soursop": {
+          "type": "product_card",
+          "settings": {
+            "product": "",
+            "pack_style": "soursop",
+            "image_alt": "Illustration of Avonent Soursop Softgels packaging",
+            "title": "Avonent Soursop Softgels",
+            "description": "Premium soursop leaf softgels for an easy daily botanical wellness routine.",
+            "example_price": "$39.00",
+            "rating": "4.9",
+            "button_text": "Explore Soursop",
+            "button_link": ""
+          }
+        },
+        "product_garlic": {
+          "type": "product_card",
+          "settings": {
+            "product": "",
+            "pack_style": "garlic",
+            "image_alt": "Illustration of Avonent Garlic Softgels packaging",
+            "title": "Avonent Garlic Softgels",
+            "description": "Odorless aged garlic softgels for everyday heart and circulation support.",
+            "example_price": "$40.00",
+            "rating": "4.9",
+            "button_text": "Explore Garlic",
+            "button_link": ""
+          }
         }
       },
       "block_order": [
         "trust_item_BwDW9U",
         "trust_item_KQPpPn",
-        "trust_item_cgyceP"
+        "trust_item_cgyceP",
+        "product_soursop",
+        "product_garlic"
       ],
       "name": "00 Avonent Trust Carousel",
       "settings": {
+        "gallery_heading": "Two Ways We",
+        "gallery_eyebrow": "OUR PRODUCTS",
+        "gallery_description": "Each formula does a different job. Together, they cover more ground.",
+        "rating_prefix": "Rated",
+        "gallery_background_color": "#f7fbfd",
         "background_color": "#02c6ea",
-        "text_color": "#ffffff",
-        "accent_color": "#ffffff",
+        "text_color": "#0a1720",
+        "accent_color": "#0a1720",
         "speed": 18,
         "padding_top": 16,
-        "padding_bottom": 16
-      }
-    },
-    "00_avonent_featured_products_VTU4KW": {
-      "type": "00-avonent-featured-products",
-      "blocks": {
-        "product_garlic": {
-          "type": "product",
-          "settings": {
-            "product": "aged-garlic-capsules",
-            "button_text": "SHOP GARLIC",
-            "show_sale_badge": true,
-            "benefit_2": "7,500 mg equivalent"
-          }
-        },
-        "product_cinnamon": {
-          "type": "product",
-          "settings": {
-            "product": "ceylon-cinnamon-berberine-capsules",
-            "button_text": "SHOP CINNAMON",
-            "show_sale_badge": true,
-            "benefit_2": "14,400 mg equivalent"
-          }
-        }
-      },
-      "block_order": [
-        "product_garlic",
-        "product_cinnamon"
-      ],
-      "name": "00 Avonent Featured",
-      "settings": {
-        "background_color": "#f7fcfe",
-        "accent_color": "#02c6ea",
-        "card_background": "#ffffff",
-        "card_text_color": "#111111",
-        "card_radius": 22
-      }
-    },
-    "00_avonent_testimonials_NVx8W4": {
-      "type": "00-avonent-testimonials",
-      "blocks": {
-        "review_H8F4gL": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "title": "Simple, easy, and premium.",
-            "review": "<p>I wanted something easy to stay consistent with. The packaging, routine, and overall experience have been great.</p>",
-            "customer_name": "Emily R.",
-            "show_verified": true,
-            "verified_text": "Verified Customer",
-            "show_product": false,
-            "product_label": "Reviewing",
-            "product_name": "Avonent Daily Formula"
-          }
-        },
-        "review_k8UhBt": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "title": "Exactly what I wanted.",
-            "review": "<p>It fits naturally into my routine and feels like a product that was actually designed with quality in mind.</p>",
-            "customer_name": "Jordan T.",
-            "show_verified": true,
-            "verified_text": "Verified Customer",
-            "show_product": false,
-            "product_label": "Reviewing",
-            "product_name": "Avonent Daily Formula"
-          }
-        },
-        "review_9GrVUf": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "title": "Definitely ordering again.",
-            "review": "<p>The experience has been excellent from ordering through delivery. I'm very happy with Avonent so far.</p>",
-            "customer_name": "Michael C.",
-            "show_verified": true,
-            "verified_text": "Verified Customer",
-            "show_product": false,
-            "product_label": "Reviewing",
-            "product_name": "Avonent Daily Formula"
-          }
-        }
-      },
-      "block_order": [
-        "review_H8F4gL",
-        "review_k8UhBt",
-        "review_9GrVUf"
-      ],
-      "name": "00 Avonent Testimonials",
-      "settings": {
-        "eyebrow": "",
-        "heading": "Real Stories, Real Results",
-        "subheading": "<p>Honest experiences from Avonent customers.</p>",
-        "show_summary": false,
-        "summary_rating": 5,
-        "summary_bold_text": "5.0",
-        "summary_text": "from verified customers",
-        "background_color": "#fbf7f2",
-        "text_color": "#171513",
-        "card_background": "#ffffff",
-        "card_text_color": "#171513",
-        "star_color": "#f4b000",
-        "border_color": "#e6dcd2",
-        "card_radius": 22
+        "padding_bottom": 16,
+        "guarantee_badge_image": "shopify://shop_images/avonent-90-day-money-back-badge.png",
+        "guarantee_accent_color": "#02c6ea",
+        "guarantee_heading": "No Rush, No Risk, No Catch",
+        "guarantee_description": "<p>Real results don’t happen overnight, and you deserve the time to see the difference. That’s why we give you a full 90 days to try it, completely risk-free. If you’re not satisfied, we’ll give you every penny back. No pressure, no hassle, no catch.</p>",
+        "guarantee_chip_1": "90 days to decide",
+        "guarantee_chip_2": "Every Batch Tested",
+        "guarantee_chip_3": "3–5 Day USA Shipping",
+        "guarantee_button_label": "Find Your Formula",
+        "guarantee_button_url": "/collections/all",
+        "faq_title": "Frequently Asked Questions",
+        "faq_description": "Find answers to common questions about orders, payments, shipping, and returns.",
+        "faq_q1": "How do I place an order?",
+        "faq_a1": "<p>When products are available, select an item and follow the steps at checkout. For assistance, visit our contact page.</p>",
+        "faq_q2": "What payment methods do you accept?",
+        "faq_a2": "<p>Available payment methods are shown during checkout before you place an order.</p>",
+        "faq_q3": "How long does shipping take?",
+        "faq_a3": "<p>Delivery times vary by destination and shipping method. Check your shipping confirmation email for tracking details once your order ships.</p>",
+        "faq_q4": "What is your return policy?",
+        "faq_a4": "<p>Contact Avonent support with your order number to request return assistance and applicable terms.</p>",
+        "proof_1": "FDA-Registered Facility",
+        "proof_2": "3rd-Party Lab Tested",
+        "proof_3": "Secure Checkout",
+        "proof_4": "Ships in 24 hours",
+        "gallery_heading_accent": "Support Your Health"
       }
     }
   },
   "order": [
     "00_avonent_home_hero_BbUK9F",
-    "00_avonent_trust_strip_Bj7dMJ",
-    "00_avonent_featured_products_VTU4KW",
-    "00_avonent_testimonials_NVx8W4"
+    "00_avonent_trust_strip_Bj7dMJ"
   ]
 }
