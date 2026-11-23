@@ -14,6 +14,51 @@
   {{ block.shopify_attributes }}
   aria-hidden="false"
 >
+  {% if block.settings.black_friday %}
+    <div class="av-bf-bar" id="{{ block_id }}">
+      {% if block.settings.link != blank %}
+        <a href="{{ block.settings.link }}" class="avonent-sale-bar__link" aria-label="Shop the VIP Black Friday sale"></a>
+      {% endif %}
+      <div class="av-bf-bar__copy">
+        <div class="av-bf-bar__title"><span>VIP</span> Black Friday Sale</div>
+        <div class="av-bf-bar__subtitle">Early access · Up to 69% off Black Walnut</div>
+      </div>
+      {% if block.settings.show_countdown %}
+        <div class="av-bf-bar__timer" role="timer" aria-label="VIP Black Friday countdown" hidden>
+          <div><span data-bf-hours></span><small>HR</small></div>
+          <div><span data-bf-minutes></span><small>MIN</small></div>
+          <div><span data-bf-seconds></span><small>SEC</small></div>
+        </div>
+        <script>
+          (() => {
+            const root = document.getElementById({{ block_id | json }});
+            const timer = root?.querySelector('.av-bf-bar__timer');
+            if (!timer) return;
+
+            const storageKey = 'avonent_vip_black_friday_2026_end';
+            const parts = ['hours', 'minutes', 'seconds'].map(unit => timer.querySelector('[data-bf-' + unit + ']'));
+            const initialSeconds = 6300 + Math.floor(Math.random() * 901);
+            let endTime = Date.now() + initialSeconds * 1000;
+            try {
+              const savedEndTime = Number(localStorage.getItem(storageKey));
+              if (savedEndTime > 0 && Number.isFinite(savedEndTime)) endTime = savedEndTime;
+              else localStorage.setItem(storageKey, String(endTime));
+            } catch {}
+
+            const tick = () => {
+              const remaining = Math.ceil((endTime - Date.now()) / 1000);
+              timer.hidden = remaining <= 0;
+              if (timer.hidden || !root.isConnected) return;
+              const digits = [Math.floor(remaining / 3600), Math.floor(remaining / 60) % 60, remaining % 60];
+              parts.forEach((part, index) => { part.textContent = String(digits[index]).padStart(2, '0'); });
+              window.setTimeout(tick, 1000);
+            };
+            tick();
+          })();
+        </script>
+      {% endif %}
+    </div>
+  {% else %}
   <div
     id="{{ block_id }}"
     class="avonent-sale-bar__inner"
@@ -73,8 +118,10 @@
       {% endif %}
     </div>
   </div>
+  {% endif %}
 </slideshow-slide>
 
+{% unless block.settings.black_friday %}
 <script>
   (() => {
     const root = document.getElementById('{{ block_id }}');
@@ -171,8 +218,77 @@
     );
   })();
 </script>
+{% endunless %}
 
 {% stylesheet %}
+
+  .av-bf-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(8px, 3vw, 40px);
+    min-height: 56px;
+    padding: 7px max(clamp(12px, 3vw, 40px), env(safe-area-inset-right)) 7px
+      max(clamp(12px, 3vw, 40px), env(safe-area-inset-left));
+    border-block-end: 1px solid #92703e;
+    background: linear-gradient(100deg, #16141a, #2a211b);
+    color: #fff8ed;
+  }
+
+  .av-bf-bar__title {
+    font-size: clamp(13px, 2.9vw, 21px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: .055em;
+    text-transform: uppercase;
+  }
+
+  .av-bf-bar__title span {
+    color: #f1c570;
+  }
+
+  .av-bf-bar__subtitle {
+    margin-block-start: 4px;
+    color: #e8d8be;
+    font-size: clamp(10px, 2.5vw, 14px);
+    line-height: 1.2;
+  }
+
+  .av-bf-bar__timer {
+    display: flex;
+    flex: 0 0 auto;
+    gap: clamp(4px, 1vw, 9px);
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .av-bf-bar__timer[hidden] {
+    display: none;
+  }
+
+  .av-bf-bar__timer span {
+    display: grid;
+    place-items: center;
+    min-width: clamp(24px, 7.4vw, 39px);
+    min-height: clamp(23px, 6.8vw, 34px);
+    border: 1px solid #b58b50;
+    border-radius: 4px;
+    background: #ffffff0a;
+    font-size: clamp(14px, 3.7vw, 22px);
+    font-weight: 750;
+    line-height: 1;
+  }
+
+  .av-bf-bar__timer small {
+    display: block;
+    margin-block-start: 3px;
+    color: #e8d8be;
+    font-size: 8px;
+    font-weight: 650;
+    letter-spacing: .09em;
+    line-height: 1;
+  }
 
   .avonent-sale-bar {
     display: block;
@@ -428,6 +544,12 @@
     {
       "type": "header",
       "content": "Sale message"
+    },
+    {
+      "type": "checkbox",
+      "id": "black_friday",
+      "label": "Show VIP Black Friday campaign",
+      "default": true
     },
     {
       "type": "text",

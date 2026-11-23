@@ -851,6 +851,15 @@
   elsif av_cb_product.template_suffix == 'soursop'
     assign av_cb_initial_qty = 2
   endif
+  if template.suffix == 'black-walnut-2'
+    assign av_cb_initial_compare = av_cb_one_time_compare_unit
+    if av_cb_subscription != blank
+      assign av_cb_initial_compare = av_cb_initial_subscription_compare
+    endif
+    if av_cb_initial_compare > av_cb_initial_price
+      assign av_cb_initial_vip_savings = av_cb_initial_compare | minus: av_cb_initial_price | times: 100.0 | divided_by: av_cb_initial_compare | round
+    endif
+  endif
 %}
 
 <div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="{% if template.suffix == 'black-walnut-2' %}{{ av_cb_walnut_bonus_bottle.id | default: av_cb_variant.id }}{% elsif av_cb_product.template_suffix == 'soursop' %}58243205922982{% else %}57944860229798{% endif %}" data-ebook-variant-id="{% if template.suffix == 'black-walnut-2' %}68655263613088{% elsif av_cb_product.template_suffix == 'soursop' %}58170079510694{% else %}57944928780454{% endif %}" data-protection-variant-id="{{ av_cb_protection_variant.id }}">
@@ -923,6 +932,28 @@
     .av-cb__sold{background:#fff;border:1px solid #e2eef1;border-radius:16px;padding:16px 18px;margin:0 0 18px;box-shadow:0 10px 30px rgba(7,74,91,.06)}.av-cb__sold-row{display:flex;align-items:center;gap:14px}.av-cb__sold-track{height:10px;background:#e9eef0;border-radius:999px;overflow:hidden;flex:1}.av-cb__sold-fill{height:100%;width:var(--sold);background:var(--blue);border-radius:inherit}.av-cb__sold-text{font-size:16px;font-weight:850;color:var(--deep);white-space:nowrap}
     .av-cb__pricing{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px}.av-cb__pricing--purchase-mode{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px 18px;padding:16px 0 17px;border-top:1px solid #eadfd8;border-bottom:1px solid #eadfd8}.av-cb__pricing-values{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap}.av-cb__purchase-heading{margin:0;color:var(--deep);font-size:21px;font-weight:850;line-height:1.15;letter-spacing:-.02em}.av-cb__sale-price{font-size:27px;font-weight:850;color:var(--blue)}.av-cb__compare-price{font-size:20px;font-weight:650;color:#111;text-decoration:line-through;text-decoration-thickness:1.5px;opacity:.82}.av-cb__sale-badge{display:inline-flex;align-items:center;min-height:31px;padding:0 11px;border-radius:9px;background:var(--blue);color:#fff;font-size:12px;font-weight:850}
     @media(max-width:600px){.av-cb__pricing--purchase-mode{grid-template-columns:1fr auto;gap:8px 12px;padding:14px 0}.av-cb__purchase-heading{font-size:18px}.av-cb__pricing-values{max-width:190px;gap:6px 8px}.av-cb__sale-price{font-size:22px}.av-cb__compare-price{font-size:15px}.av-cb__sale-badge{font-size:9.5px;min-height:25px;padding:0 8px}}
+    .av-cb__pricing--black-friday {
+      flex-wrap: wrap;
+      gap: 5px 8px;
+      margin: 0 0 16px;
+    }
+    .av-cb__pricing--black-friday .av-cb__sale-price {
+      font-size: clamp(19px, 5.5vw, 28px);
+    }
+    .av-cb__pricing--black-friday .av-cb__compare-price {
+      font-size: clamp(14px, 3.5vw, 19px);
+    }
+    .av-cb__vip-savings {
+      padding: 6px 8px;
+      border: 1px solid #9f7842;
+      border-radius: 5px;
+      background: #21191a;
+      color: #ffdc96;
+      font-size: clamp(10px, 2.7vw, 14px);
+      font-weight: 750;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
     .av-cb__low-stock-line{display:flex;align-items:center;gap:12px;margin:7px 0 18px;color:var(--deep);font-size:16px;font-weight:850}.av-cb__low-stock-line:before,.av-cb__low-stock-line:after{content:"";height:2px;background:#e7c2aa;flex:1}.av-cb__low-stock-line span{white-space:nowrap}
     .av-cb__bundles{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px}.av-cb__bundle{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;position:relative;border:1.5px solid #e4c8b7;border-radius:16px;padding:15px 16px;background:#fff;cursor:pointer;text-align:left;transition:.18s ease}.av-cb__bundle:hover,.av-cb__bundle.is-active{border-color:var(--blue);box-shadow:0 0 0 2px rgba(168,79,27,.10)}.av-cb__bundle.is-active{background:#fff8f3}.av-cb__bundle-thumb{width:54px;height:54px;border-radius:10px;background:#fff4ec;border:1px solid #ead3c4;display:grid;place-items:center;overflow:hidden}.av-cb__bundle-thumb img{width:100%;height:100%;object-fit:contain}.av-cb__bundle-thumb-fallback{font-size:9px;font-weight:900;color:var(--deep);letter-spacing:.05em;text-align:center;line-height:1.1}.av-cb__bundle-copy strong{display:block;font-size:17px;color:#111}.av-cb__bundle-copy span{display:block;font-size:12px;color:var(--muted);margin-top:3px}.av-cb__bundle-price{text-align:right}.av-cb__bundle-price strong{display:block;color:var(--blue);font-size:18px}.av-cb__bundle-price s{display:block;color:#111;font-size:13px;margin-top:2px;opacity:.78}.av-cb__badge{position:absolute!important;top:-11px;right:14px;background:var(--blue);color:#fff!important;border-radius:999px;padding:4px 10px;font-size:10px!important;font-weight:850;text-transform:uppercase;letter-spacing:.04em}
     .av-cb__bundle-unlock{display:none!important;grid-column:1/-1;border-top:1px solid #eadfd8;margin-top:2px;padding-top:12px}
@@ -1441,16 +1472,22 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
         {% endif %}
 
+        {% if template.suffix == 'black-walnut-2' %}
+          <div class="av-cb__pricing av-cb__pricing--black-friday">
+            <span class="av-cb__sale-price" data-av-cb-price>{{ av_cb_initial_price | money }}</span>
+            <s class="av-cb__compare-price" data-av-cb-compare-price{% unless av_cb_initial_vip_savings %} hidden{% endunless %}>{% if av_cb_initial_vip_savings %}{{ av_cb_initial_compare | money }}{% endif %}</s>
+            <span class="av-cb__vip-savings" data-av-cb-vip-savings{% unless av_cb_initial_vip_savings %} hidden{% endunless %}>VIP Black Friday – Save {{ av_cb_initial_vip_savings }}%</span>
+          </div>
+        {% else %}
         <div class="av-cb__pricing av-cb__pricing--purchase-mode">
           <span class="av-cb__purchase-heading" data-av-cb-purchase-heading data-one-time-heading="{{ av_cb_one_time_heading | escape }}" data-subscription-heading="{{ av_cb_subscription_heading | escape }}">{% if av_cb_subscription != blank %}{{ av_cb_subscription_heading | escape }}{% else %}{{ av_cb_one_time_heading | escape }}{% endif %}</span>
           <span class="av-cb__pricing-values">
             <span class="av-cb__sale-price" data-av-cb-price>{{ av_cb_initial_price | money }}</span>
             <span class="av-cb__compare-price" data-av-cb-compare-price{% if av_cb_subscription == blank and av_cb_one_time_compare_unit == 0 %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_initial_subscription_compare | money }}{% elsif av_cb_one_time_compare_unit > 0 %}{{ av_cb_one_time_compare_unit | money }}{% endif %}</span>
-            {% unless template.suffix == 'black-walnut-2' %}
             <span class="av-cb__sale-badge">{{ av_cb_sale_badge }}</span>
-            {% endunless %}
           </span>
         </div>
+        {% endif %}
 
         {% if av_cb_show_low_stock %}<div class="av-cb__low-stock-line"><span>{{ av_cb_low_stock_line | escape }}</span></div>{% endif %}
 
@@ -2617,6 +2654,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       {% endif %}
       const total = root.querySelector('[data-av-cb-price]');
       const topCompare = root.querySelector('[data-av-cb-compare-price]');
+      const vipSavings = root.querySelector('[data-av-cb-vip-savings]');
       const btnTotal = root.querySelector('[data-av-cb-button-price]');
       const btnCompare = root.querySelector('[data-av-cb-button-compare]');
       const stickyPrice = root.querySelector('[data-av-cb-sticky-price]');
@@ -2695,6 +2733,11 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         if (btnTotal) btnTotal.textContent = money(values.price);
         if (stickyPrice) stickyPrice.textContent = money(values.price);
         setCompare(topCompare, values.compare, values.price);
+        if (vipSavings) {
+          const savings = values.compare > values.price ? Math.round((values.compare - values.price) * 100 / values.compare) : 0;
+          vipSavings.hidden = savings <= 0;
+          vipSavings.textContent = savings > 0 ? 'VIP Black Friday – Save ' + savings + '%' : '';
+        }
         setCompare(btnCompare, values.compare, values.price);
 
         const showShippingPerks = isSubscription || (isSoursopProduct && !isInternationalSoursopShipping);
