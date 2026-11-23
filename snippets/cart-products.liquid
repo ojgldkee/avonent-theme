@@ -466,6 +466,7 @@
                   %}
                   <div class="cart-items__quantity-controls">
                     {% if walnut_kind == 'bundle' or walnut_kind == 'bonus' or walnut_kind == 'ebook' %}
+                      <input type="hidden" name="updates[]" value="{{ item.quantity }}">
                       <span class="avonent-walnut-cart-quantity">Qty {{ item.quantity }}</span>
                     {% else %}
                     {% render 'volume-pricing-info',
