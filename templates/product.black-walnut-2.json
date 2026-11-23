@@ -1,0 +1,564 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "cinnamon": {
+      "type": "avonent-soursop-editor",
+      "blocks": {
+        "hero": {
+          "type": "hero",
+          "settings": {
+            "show_best_seller": true,
+            "best_seller_text": "Best Seller",
+            "show_choice_badge": true,
+            "choice_badge_text": "#1 Choice for Holistic Practitioners",
+            "display_title": "Black Walnut Cancer Drops",
+            "use_title_image": true,
+            "title_image_alt": "",
+            "title_image_width": 80,
+            "title_image_height": 60,
+            "title_image_height_mobile": 40,
+            "story_heading": "",
+            "hero_description": "Have cancer? Has chemo weakened your immune system? Constantly afraid the cancer will return?\n\nJust 2 droppers a day of this powerful Aged Black Walnut supports your body's natural ability to fight microscopic cancer cells - the way the Amish have done for generations.",
+            "hero_content_mode": "text",
+            "hero_content_image_alt": "",
+            "show_default_benefits": true,
+            "rating_text": "Rated 4.8 • 6,400+ Reviews",
+            "benefit_1_formatted": "<strong>Increase Cancer Killer Cells</strong>",
+            "benefit_2_formatted": "<strong>10,000x More Effective Than Alternative Treatments</strong>",
+            "benefit_3_formatted": "<strong>Doesn’t Harm Healthy Cells</strong>",
+            "benefit_4_formatted": "<strong>Helps You Finally Feel Safe and in Control Again</strong>",
+            "sold_percent": "",
+            "sale_badge": "",
+            "bundle_2_badge": "Free Shipping",
+            "bundle_3_badge": "Free Shipping + E-Book",
+            "bundle_1_title": "",
+            "bundle_1_subtitle": "",
+            "bundle_2_title": "",
+            "bundle_2_subtitle": "",
+            "bundle_3_title": "",
+            "bundle_3_subtitle": "",
+            "add_to_cart_text": "",
+            "refill_text": "",
+            "cancel_text": "",
+            "rating_stars_count": 5,
+            "show_sold": true,
+            "sold_suffix": "Sold",
+            "one_time_heading": "One-Time Purchase",
+            "subscription_heading": "Subscribe & Save",
+            "show_low_stock": true,
+            "low_stock_line": "Low Stock – Selling Fast",
+            "delivery_label": "Order now for delivery by:",
+            "sub_title_1": "Buy 1",
+            "sub_title_2": "Buy 2 Get 1 FREE",
+            "sub_title_3": "Buy 3 Get 2 FREE",
+            "show_bundle_savings": false,
+            "sub_savings_1": "",
+            "sub_savings_2": "",
+            "sub_savings_3": "",
+            "bundle_description_1": "Kickstart cancer killer cells",
+            "bundle_description_2": "Stack up for steady levels.",
+            "bundle_description_3": "Perfect for long term reversal.",
+            "bundle_title_size": 17,
+            "bundle_description_size": 13,
+            "bundle_savings_size": 13,
+            "bundle_price_size": 18,
+            "gift_header": "Gifts Unlocked",
+            "gift_shipping": "FREE Shipping",
+            "gift_ebook": "FREE E-Book",
+            "gift_ebook_note": "Digital soursop guide",
+            "announcement_heading": "Winter Sale",
+            "announcement_subheading": "1 Bottle Free"
+          }
+        },
+        "walnut_reviews_editor": {
+          "type": "walnut_review_settings",
+          "settings": {
+            "heading": "Trustpilot Reviews",
+            "preview_rating": 5
+          }
+        },
+        "walnut_review_slot_1": {
+          "type": "walnut_review",
+          "settings": {
+            "name": "David R.",
+            "title": "",
+            "quote": "I was skeptical at first, but after hearing Dr.\nAnderson's story I decided to try it. Within a few weeks my energy improved dramatically and I felt like my body was finally fighting back. Highly recommend for anyone dealing with immune challenges.",
+            "show_walnut_review": true,
+            "rating": 5
+          }
+        },
+        "walnut_review_slot_2": {
+          "type": "walnut_review",
+          "settings": {
+            "name": "Sarah K.",
+            "title": "",
+            "quote": "After going through multiple rounds of chemo, I was exhausted and my immune system felt completely wiped out. Since starting these Aged Black Walnut Extract Drops, my energy is coming back and I feel stronger. It's been a game changer for my daily resilience.",
+            "show_walnut_review": true,
+            "rating": 5
+          }
+        },
+        "walnut_review_slot_3": {
+          "type": "walnut_review",
+          "settings": {
+            "name": "Jennifer L.",
+            "title": "",
+            "quote": "Chemo side effects had me drained and foggy. These drops helped me feel clearer and more energized. I've been using them daily alongside treatment and I can actually keep up with my grandkids again.\nThis stuff really works.",
+            "show_walnut_review": true,
+            "rating": 5
+          }
+        },
+        "walnut_review_slot_4": {
+          "type": "walnut_review",
+          "settings": {
+            "name": "Robert H.",
+            "title": "",
+            "quote": "Constant fatigue and weakness after treatment made everything hard. Just two droppers a day and I started noticing real improvements in my energy and overall vitality. I wish I had found this sooner.",
+            "show_walnut_review": true,
+            "rating": 5
+          }
+        },
+        "walnut_review_slot_5": {
+          "type": "walnut_review",
+          "settings": {
+            "name": "Michael T.",
+            "title": "",
+            "quote": "My doctor was surprised at how well I was holding up during treatment. I credit these Aged Black Walnut Extract Drops for helping support my immune system when I needed it most. Feeling much better than ! expected.",
+            "show_walnut_review": true,
+            "rating": 5
+          }
+        },
+        "results": {
+          "type": "results",
+          "disabled": true,
+          "settings": {
+            "stats_show": false,
+            "stats_position": "after_compare",
+            "stats_heading": "Avonent by the Numbers",
+            "stats_overlay_color": "#285d31",
+            "stats_overlay_opacity": "78",
+            "stats_duration": "",
+            "stat_1_start": "0",
+            "stat_1_end": "365",
+            "stat_1_suffix": "days",
+            "stat_1_label": "Our soursop leaf fermentation process",
+            "stat_2_start": "0",
+            "stat_2_end": "1000",
+            "stat_2_suffix": "mg",
+            "stat_2_label": "Soursop leaf in each daily serving",
+            "stat_3_start": "0",
+            "stat_3_end": "30",
+            "stat_3_suffix": "servings",
+            "stat_3_label": "Daily servings in each bottle",
+            "stat_4_start": "0",
+            "stat_4_end": "2",
+            "stat_4_suffix": "softgels",
+            "stat_4_label": "Easy-to-take softgels per day",
+            "stats_cta": "",
+            "stats_guarantee": "",
+            "stats_text_color": ""
+          }
+        },
+        "doctor_story": {
+          "type": "doctor_story",
+          "settings": {
+            "show_section": false,
+            "position": "after_trust",
+            "eyebrow": "",
+            "heading": "The Cancer Medicine They Tried to Hide.",
+            "body": "<p>In the early 1900s, John D. Rockefeller, also known as the \"Father of Western Medicine\", saw a way to make billions from medicine.</p><p>But there was one problem.</p><p>Natural remedies like soursop leaves had been used to treat illness for hundreds of years, and they were his biggest competition.</p><p>Rockefeller used his oil money to replace natural medicine with drugs made from petroleum.&nbsp;</p><p>He paid schools to teach doctors about drugs instead of natural treatments.</p><p>Doctors who refused to follow the new rules lost their licenses, and some were even sent to jail.</p><p>He then helped fund the American Cancer Society to control what people knew about cancer and hide natural remedies like soursop.</p><p><strong>Natural medicine wasn't forgotten.</strong></p><p><strong>It was pushed aside for profit.</strong></p>",
+            "background": "#f2f7ef",
+            "accent": "#4f7847"
+          }
+        },
+        "story_image_text": {
+          "type": "story_image_text",
+          "settings": {
+            "show_section": true,
+            "image": "shopify://shop_images/637762BB-FA19-4C93-8492-9BB2E6C34C28.png",
+            "image_alt": "",
+            "heading": "Why Do The Amish Have 60% Lower Cancer Rates?",
+            "body": "<p>The CDC studied the Amish for 20 years. What they found was shocking: dramatically lower cancer rates - even though they don't use modern medicine.</p><p>The secret? A daily tradition using <strong>aged, fermented black walnut</strong> that supercharges the immune system and stops tiny cancer cells before they grow.</p><p>Big Pharma buried the research. Dr. Anderson didn't.</p>",
+            "text_position": "below",
+            "align": "left",
+            "background": "#f5f8f1",
+            "text_color": "#1d3022"
+          }
+        },
+        "story_image_text_extra": {
+          "type": "story_image_text_extra",
+          "settings": {
+            "show_section": true,
+            "image": "shopify://shop_images/5FF5C1E1-81B2-42A3-BD4C-E530EA6B8072.png",
+            "image_alt": "",
+            "heading": "Your Body's Reset Button, In a Bottle.",
+            "body": "<p>This isn't your typical cleanse.</p><p><strong>Aged Black Walnut Extract Drops</strong> deliver the powerful traditional formula used by the Amish for generations to support strong immune defenses.</p><p>Just two droppers a day helps your immune system fight the way it was designed to.</p><p><strong>Reclaim your energy. Support your natural defenses.</strong></p>",
+            "text_position": "below",
+            "align": "left",
+            "background": "#f5f8f1",
+            "text_color": "#1d3022"
+          }
+        },
+        "carousel": {
+          "type": "carousel",
+          "settings": {
+            "carousel_heading": "Why Our Soursop Is Different",
+            "carousel_1_title": "A Simpler Daily Routine",
+            "carousel_1_body": "Cancer treatment can mean hours in the hospital, exhausting appointments, and difficult recovery days. Avonent takes just two softgels with water each day. No needles, infusions, or extra appointments to take your supplement.",
+            "carousel_2_title": "Fermented For 365 Days",
+            "carousel_2_body": "Our exclusive 365-day fermentation process is designed to unlock more of soursop’s powerful compounds, including acetogenins and flavonoids. These compounds have shown the ability to disrupt cancer-cell energy and slow abnormal cell growth in lab studies. By carefully controlling fermentation, we aim to preserve these compounds and create a stronger, more consistent formula.",
+            "carousel_3_title": "Made With Your Strength in Mind",
+            "carousel_3_body": "Cancer treatment can be brutal. It can leave you exhausted, sick, and too weak to enjoy the life you’re fighting for. Your body has already been through enough. That’s why Avonent focuses on pure soursop leaf and its natural compounds, including acetogenins and flavonoids, without a long list of unnecessary additives. You deserve a formula that puts ingredient quality first, not another bottle full of empty promises.",
+            "carousel_4_title": "Tested For Purity & Safety",
+            "carousel_4_body": "When you’re already dealing with serious health concerns, you need to know exactly what you’re taking. Avonent focuses on ingredient verification, contaminant screening, and batch testing instead of relying on promises printed on a bottle."
+          }
+        },
+        "science": {
+          "type": "science",
+          "settings": {
+            "show_section": false,
+            "science_heading": "Real Support. Backed by Science.",
+            "science_intro": "Your body deserves more than empty promises. Ceylon cinnamon extract supports healthy blood sugar, liver function, and daily metabolic balance with research-backed ingredients and a bioavailable MCT oil delivery system.",
+            "science_1_title": "",
+            "science_1_subtitle": "",
+            "science_1_body": "",
+            "science_2_title": "",
+            "science_2_subtitle": "",
+            "science_2_body": "",
+            "science_3_title": "",
+            "science_3_subtitle": "",
+            "science_3_body": "",
+            "science_4_title": "",
+            "science_4_subtitle": "",
+            "science_4_body": "",
+            "science_cta": "",
+            "science_guarantee": "",
+            "science_ticker_1": "",
+            "science_ticker_2": "",
+            "science_ticker_3": "",
+            "science_ticker_4": "",
+            "science_bg": "",
+            "science_accent": ""
+          }
+        },
+        "journey": {
+          "type": "journey",
+          "settings": {
+            "journey_eyebrow": "YOUR DAILY ROUTINE",
+            "journey_heading": "What Happens When You Take Soursop Every Day?",
+            "journey_intro": "For generations, Caribbean families have turned to soursop leaves for natural wellness. See how your health can change when you stay consistent with just 2 softgels a day.",
+            "journey_1_label": "1 Week",
+            "journey_1_body": "Your body begins to feel more balanced. Digestion becomes smoother, and you start feeling less tired throughout the day.",
+            "journey_2_label": "1 Month",
+            "journey_2_body": "Your blood sugar begins to settle, helping you avoid sudden energy crashes. You feel more steady throughout the day, especially after meals.",
+            "journey_3_label": "2 Months",
+            "journey_3_body": "Your immune system grows stronger, helping your body fight off illness. You feel less run down and have more energy for everyday life.",
+            "journey_4_label": "3 Months",
+            "journey_4_body": "Inflammation begins to ease. Your joints feel more comfortable, your digestion improves, and you wake up feeling refreshed.",
+            "journey_5_label": "6 Months",
+            "journey_5_body": "Your body feels stronger from the inside out. Blood sugar stays more balanced, your immune defenses are stronger, and you have more energy throughout the day.",
+            "journey_6_label": "12 Months",
+            "journey_6_body": "After a full year, your body feels healthier and more balanced. Stronger immune defenses, better digestion, and steady blood sugar have become part of your everyday life."
+          }
+        },
+        "compare": {
+          "type": "compare",
+          "settings": {
+            "compare_price": "",
+            "compare_heading": "Why Avonent Stands Apart From Typical Soursop Supplements",
+            "compare_subheading": "Two soursop bottles can look the same but be made to very different standards. Before you buy, make sure you’re getting what you pay for.",
+            "compare_cta": "",
+            "compare_guarantee": "",
+            "ours_image": "shopify://shop_images/7254B3FB-CC9C-45FA-9E7F-93680AC3DDC8.png",
+            "other_image": "shopify://shop_images/EC554163-52C1-41BF-927F-55FC21D42749.png",
+            "ours_name": "Avonent",
+            "other_name": "Other brands",
+            "ours_1": "1,000mg Pure Soursop Leaf",
+            "other_1": "Mixed With Other Herbs & Fillers",
+            "ours_2": "No Sweeteners, Flavors, or Preservatives",
+            "other_2": "Sweeteners, Flavors & Preservatives",
+            "ours_3": "365 Day Fermentation Process",
+            "other_3": "Basic Dried Leaf Powder",
+            "ours_4": "Sources From Jamaican Rainforest Trees",
+            "other_4": "Source Not Disclosed",
+            "ours_5": "2 Easy to Take Softgels",
+            "other_5": "Bitter Taste & Messy Measuring",
+            "ours_6": "Independently Lab Tested",
+            "other_6": "No Verified Testing"
+          }
+        },
+        "benefits": {
+          "type": "benefits",
+          "settings": {
+            "show_section": false,
+            "benefits_heading": "",
+            "benefits_subheading": "",
+            "benefits_item_1": "1,000 mg Per Serving",
+            "benefits_item_2": "Two Softgels Daily",
+            "benefits_item_3": "No Added Sweeteners",
+            "benefits_item_4": "Vegetable Softgels",
+            "benefits_bg": "",
+            "benefits_text": "",
+            "benefits_disclaimer": ""
+          }
+        },
+        "five_reasons": {
+          "type": "five_reasons",
+          "disabled": true,
+          "settings": {
+            "show_section": true,
+            "eyebrow": "5 REASONS WHY",
+            "heading": "Why Avonent Soursop Stands Apart",
+            "intro": "",
+            "button_text": "Try Risk-Free Today",
+            "guarantee_text": "90-Day Money-Back Guarantee",
+            "background": "#f4f8ef",
+            "accent": "#4e7a44",
+            "reason_1_title": "Jamaican Soursop Sourcing",
+            "reason_1_body": "We source our soursop from Jamaica, where the plant has long been part of local herbal traditions.",
+            "reason_2_title": "365-Day Fermentation Process",
+            "reason_2_body": "Our leaves go through a full year of fermentation instead of being dried and packed as basic leaf powder.",
+            "reason_3_title": "A Simple Ingredient List",
+            "reason_3_body": "Soursop leaf and a vegetable softgel, without added sweeteners, flavors, or preservatives.",
+            "reason_4_title": "Two Softgels, Once a Day",
+            "reason_4_body": "Each daily serving provides 1,000 mg of soursop leaf without the hassle of mixing powders or measuring herbal drops.",
+            "reason_5_title": "A 90-Day Money-Back Guarantee",
+            "reason_5_body": "Try the product as directed and contact us within 90 days if it is not right for you, subject to our refund policy."
+          }
+        },
+        "risk_free": {
+          "type": "risk_free",
+          "settings": {
+            "eyebrow": "FEEL THE DIFFERENCE",
+            "heading": "90-Day Risk-Free Trial",
+            "body": "Try Avonent for 90 days. If it is not right for you, contact us within 90 days and we will help with the next steps under our refund policy.",
+            "button_text": "Try Risk-Free Today",
+            "background": "#f4f8ef",
+            "accent": "#4e7a44"
+          }
+        },
+        "faq": {
+          "type": "faq",
+          "settings": {
+            "faq_heading": "Frequently Asked Questions"
+          }
+        },
+        "faq_item_medication": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "Should I stop my medication?",
+            "answer": "No. If you're on prescription medication, we recommend speaking with your doctor before making any changes. These drops are designed to support your body naturally, not replace medical treatment.",
+            "show_item": true
+          }
+        },
+        "faq_item_results": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "How soon will I feel a difference?",
+            "answer": "Most people notice improvements in energy, mental clarity, and reduced fatigue within 2–4 weeks of consistent use. Deeper immune support and lab marker changes often appear after 6–12 weeks of daily use. Results vary based on individual health and consistency.",
+            "show_item": true
+          }
+        },
+        "faq_item_supplements": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "Can I take it with other supplements?",
+            "answer": "Yes. Our formula is natural and generally safe to pair with other supplements. Just check with your doctor if you’re taking medications like blood thinners or anything affecting the liver.",
+            "show_item": true
+          }
+        },
+        "faq_item_guarantee": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "What if it doesn’t work for me?",
+            "answer": "We stand behind our formula. If you don’t feel a difference within 90 days, email us for a full refund—no hassle, no questions.",
+            "show_item": true
+          }
+        },
+        "faq_item_directions": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "What’s the best way to take it?",
+            "answer": "Take 2 full droppers daily. For best absorption, use on an empty stomach or mix with water or juice.",
+            "show_item": true
+          }
+        },
+        "faq_item_taste": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "What does it taste like?",
+            "answer": "It has a bold herbal flavor with natural bitterness from the Black Walnut and Wormwood—balanced by subtle earthiness from clove, garlic, and pumpkin seed. No sugar or sweeteners—just potent plant power.",
+            "show_item": true
+          }
+        },
+        "details": {
+          "type": "details",
+          "settings": {
+            "guarantee_highlight": "",
+            "guarantee_color": "",
+            "stock_title": "",
+            "stock_text": "",
+            "low_stock_line": "",
+            "guarantee_heading": "",
+            "guarantee_body": "",
+            "acc_1_title": "Description",
+            "acc_1_body": "Aged Black Walnut Extract Drops is a potent liquid tincture made from black walnut hulls.\nThis traditional herbal extract has been used for centuries to support the Cancer Battle.\n\nOur formula uses aged black walnuts that undergo an extended fermentation process, resulting in a more concentrated extract compared to standard commercial versions.\n\nFormer medical oncologist Dr. Michael\nAnderson discovered the power of this traditional remedy while researching natural immune support. After testing multiple brands, he found this aged and fermented black walnut extract delivered the best results for supporting his patients' immune systems.\n\nHow to take it:\nJust two droppers a day of this so your body starts working with you again, not against you.",
+            "acc_1_body_formatted": "<p>Aged Black Walnut Extract Drops is a potent liquid tincture made from black walnut hulls.<br/>This traditional herbal extract has been used for centuries to support the Cancer Battle.<br/><br/>Our formula uses aged black walnuts that undergo an extended fermentation process, resulting in a more concentrated extract compared to standard commercial versions.<br/><br/>Former medical oncologist Dr. Michael<br/>Anderson discovered the power of this traditional remedy while researching natural immune support. After testing multiple brands, he found this aged and fermented black walnut extract delivered the best results for supporting his patients' immune systems.<br/><br/><strong>How to take it:</strong><br/>Just two droppers a day of this so your body starts working with you again, not against you.</p>",
+            "acc_2_title": "What does it help with?",
+            "acc_2_body": "This traditional herbal extract is commonly used to support Cancer killer cells:\n\n• Healthy immune system function\n• Natural detoxitication processes\n• Energy levels and mental clarity\n• Overall vitality and wellness",
+            "acc_2_body_formatted": "",
+            "acc_3_title": "When will I see results?",
+            "acc_3_body": "Many people report noticing improvements in energy and digestion within 2-4 weeks of consistent daily use. For deeper immune boosting, most people use it for 60-90 days or longer.",
+            "acc_3_body_formatted": "",
+            "trust_image_alt": ""
+          }
+        },
+        "trust_image": {
+          "type": "trust",
+          "settings": {
+            "alt": "Why Trust Avonent"
+          }
+        },
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "name": "Sarah K.",
+            "title": "Slowly getting my energy and my life back",
+            "quote": "After going through multiple rounds of chemo, I was exhausted and my immune system felt completely wiped out. Since starting these Aged Black Walnut Extract Drops, my energy is coming back and I feel stronger. It's been a game changer for my daily resilience.",
+            "show_walnut_review": false,
+            "walnut_review_source": "",
+            "rating": 5,
+            "rating_display": "5.0",
+            "tag_1": "Energy Recovery",
+            "tag_2": "Feeling Stronger",
+            "verified": true
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "name": "David R.",
+            "title": "Highly recommend for everyone!!!",
+            "quote": "I was skeptical at first, but after hearing Dr.\nAnderson's story I decided to try it. Within a few weeks my energy improved dramatically and I felt like my body was finally fighting back. Highly recommend for anyone dealing with immune challenges.",
+            "show_walnut_review": false,
+            "walnut_review_source": "",
+            "rating": 5,
+            "rating_display": "5.0",
+            "tag_1": "Peace of Mind",
+            "tag_2": "Daily Wellness",
+            "verified": true
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "name": "Jennifer L.",
+            "title": "Fogginess went away",
+            "quote": "Chemo side effects had me drained and foggy. These drops helped me feel clearer and more energized. I've been using them daily alongside treatment and I can actually keep up with my grandkids again.\nThis stuff really works.",
+            "show_walnut_review": false,
+            "walnut_review_source": "",
+            "rating": 5,
+            "rating_display": "5.0",
+            "tag_1": "Daily Confidence",
+            "tag_2": "Feeling in Control",
+            "verified": true
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "name": "Robert H.",
+            "title": "Great product",
+            "quote": "Constant fatigue and weakness after treatment made everything hard. Just two droppers a day and I started noticing real improvements in my energy and overall vitality. I wish I had found this sooner.",
+            "show_walnut_review": false,
+            "walnut_review_source": "",
+            "rating": 5,
+            "rating_display": "5.0",
+            "tag_1": "Easy Routine",
+            "tag_2": "Natural Wellness",
+            "verified": true
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "name": "Michael T.",
+            "title": "Feeling better than I expected",
+            "quote": "My doctor was surprised at how well I was holding up during treatment. I credit these Aged Black Walnut Extract Drops for helping support my immune system when I needed it most. Feeling much better than ! expected.",
+            "show_walnut_review": false,
+            "walnut_review_source": "",
+            "rating": 5,
+            "rating_display": "4.9",
+            "tag_1": "More Energy",
+            "tag_2": "Family Time",
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "hero",
+        "walnut_reviews_editor",
+        "walnut_review_slot_1",
+        "walnut_review_slot_2",
+        "walnut_review_slot_3",
+        "walnut_review_slot_4",
+        "walnut_review_slot_5",
+        "results",
+        "doctor_story",
+        "story_image_text",
+        "story_image_text_extra",
+        "carousel",
+        "science",
+        "journey",
+        "compare",
+        "benefits",
+        "five_reasons",
+        "risk_free",
+        "faq",
+        "faq_item_medication",
+        "faq_item_results",
+        "faq_item_supplements",
+        "faq_item_guarantee",
+        "faq_item_directions",
+        "faq_item_taste",
+        "details",
+        "trust_image",
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_6",
+        "review_4"
+      ],
+      "settings": {
+        "sr_intro": "",
+        "sr_heading": "More Than Numbers, Results That Matter",
+        "sr_heading_size": 30,
+        "sr_heading_color": "#74418a",
+        "sr_text_color": "#111111",
+        "sr_circle_color": "#58c31a",
+        "sr_pct_1": 98,
+        "sr_label_1": "Tumor markers dropped significantly",
+        "sr_pct_2": 97,
+        "sr_label_2": "Energy returned after chemo",
+        "sr_pct_3": 91,
+        "sr_label_3": "Stronger immune system during treatment",
+        "sr_label_4": "",
+        "reviews_heading": "Real stories. Everyday routines.",
+        "walnut_reviews_heading": "Customer Reviews",
+        "walnut_review_preview_stars": 5,
+        "reviews_intro": "Experiences shared by Avonent customers.",
+        "trust_image_alt": "Why Trust Avonent"
+      }
+    }
+  },
+  "order": [
+    "cinnamon"
+  ]
+}
