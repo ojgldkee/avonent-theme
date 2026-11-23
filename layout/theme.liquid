@@ -85,13 +85,19 @@ html.av-cb-cinnamon-page #header-component header-actions{gap:0}
       {%- render 'theme-editor' -%}
     {% endif %}
 
+    {% if request.page_type == 'page' and template.suffix == 'black-walnut-fiction' %}
+      <meta name="robots" content="noindex, nofollow">
+    {% endif %}
     {{ content_for_header }}
-    {% if template.suffix == 'soursop' or product.handle == 'soursop-softgels' %}
+    {% if template.name == 'product' %}
+      {% if template.suffix == 'soursop' or product.handle == 'soursop-softgels' or template.suffix == 'black-walnut-2' %}
+      <script>document.documentElement.classList.add('av-soursop-page'{% if template.suffix == 'black-walnut-2' %}, 'av-black-walnut-page'{% endif %});</script>
       {{ 'avonent-soursop-colors.css' | asset_url | stylesheet_tag }}
+      {% endif %}
     {% endif %}
   </head>
 
-  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}{% if template.suffix == 'soursop' or product.handle == 'soursop-softgels' %} av-soursop-page{% endif %}">
+  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
 
     {% render 'chat-drawer' %}
@@ -237,7 +243,7 @@ html.av-cb-cinnamon-page #header-component header-actions{gap:0}
       {% endunless %}
     </div>
 
-    {% section 'cart-drawer-section' %}
+    {% render 'cart-drawer', render_wrapper: true %}
     {% render 'theme-drawer' %}
 
     {% render 'search-modal' %}
@@ -252,49 +258,23 @@ html.av-cb-cinnamon-page #header-component header-actions{gap:0}
     {% if garlic_ebook_variant != blank and garlic_ebook_variant.price == 0 %}
       <script src="{{ 'avonent-garlic-gift-cart.js' | asset_url }}" data-ebook-variant-id="{{ garlic_ebook_variant.id }}" defer></script>
     {% endif %}
+    {% comment %}Reconcile only the Soursop Buy 3 digital gift at cart and checkout.{% endcomment %}
+    {% liquid
+      assign avonent_soursop_in_cart = false
+      for avonent_cart_line in cart.items
+        if avonent_cart_line.variant.id == 58145310376102
+          assign avonent_soursop_in_cart = true
+          break
+        endif
+      endfor
+    %}
+    <script src="{{ 'avonent-soursop-buy3-gift-cart.js' | asset_url }}" data-soursop-in-cart="{{ avonent_soursop_in_cart }}" defer></script>
+    {% render 'avonent-walnut-buy3-gift-loader' %}
     {% if template.suffix == 'moringa' %}
       <script src="{{ 'avonent-moringa-price-sync.js' | asset_url }}" defer></script>
       <script src="{{ 'avonent-moringa-overrides.js' | asset_url }}" defer></script>
       <script src="{{ 'avonent-real-stories-polish.js' | asset_url }}" defer></script>
     {% endif %}
-    {% comment %} AVONENT_SOURSOP_QUESTIONS_STYLE_ONLY: exact-text visual change only {% endcomment %}
-    <script>
-      (() => {
-        const normalize = (el) => (el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim();
-        const questionOne = 'Have cancer? Has chemo weakened your immune system?';
-        const questionTwo = 'Constantly afraid the cancer will return?';
-
-        function formatSoursopQuestions() {
-          const main = document.getElementById('MainContent');
-          if (!main) return;
-
-          const elements = Array.from(main.querySelectorAll('p, div, span, h1, h2, h3, h4, h5, h6'));
-          const fullText = questionOne + ' ' + questionTwo;
-          const matches = (text) => elements.filter((el) =>
-            normalize(el) === text && !Array.from(el.children).some((child) => normalize(child) === text)
-          );
-          const whole = matches(fullText);
-          const parts = [...matches(questionOne), ...matches(questionTwo)];
-          if (!whole.length && !(matches(questionOne).length && matches(questionTwo).length)) return;
-
-          elements
-            .filter((el) => normalize(el) === 'Soursop Leaf, Made Simple')
-            .filter((el) => !Array.from(el.children).some((child) => normalize(child) === 'Soursop Leaf, Made Simple'))
-            .forEach((el) => el.style.setProperty('display', 'none', 'important'));
-
-          (whole.length ? whole : parts).forEach((el) => {
-            el.style.setProperty('font-weight', '700', 'important');
-          });
-        }
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', formatSoursopQuestions, { once: true });
-        } else {
-          formatSoursopQuestions();
-        }
-        document.addEventListener('shopify:section:load', formatSoursopQuestions);
-      })();
-    </script>
   </body>
 </html>
 
