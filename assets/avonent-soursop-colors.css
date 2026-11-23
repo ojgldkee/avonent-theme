@@ -258,6 +258,12 @@ html.av-soursop-page .av-cb__post-risk-reviews .av-cb__post-risk-read-more {
 }
 /* Do not recolor the rating stars at the top of the product page. */
 
+@media (width > 900px) {
+  html.av-black-walnut-page .av-cb__hero-grid {
+    align-items: start;
+  }
+}
+
 @media (min-width: 990px) {
   html.av-soursop-page:not(.av-black-walnut-page) .av-cb__hero-grid {
     zoom: .85;

@@ -6,6 +6,12 @@
 
   assign cinnamon_product = all_products['ceylon-cinnamon-berberine-capsules']
   assign garlic_product = all_products['aged-garlic-capsules']
+  assign show_core_catalog = false
+  if is_all_collection
+    if cinnamon_product != blank or garlic_product != blank
+      assign show_core_catalog = true
+    endif
+  endif
 
   assign hero_image = section.settings.hero_image
   if hero_image == blank and cinnamon_product != blank
@@ -58,7 +64,7 @@
     {% endunless %}
 
     <ul class="avonent-catalog__grid" role="list">
-      {% if is_all_collection %}
+      {% if show_core_catalog %}
         {% assign core_handles = 'ceylon-cinnamon-berberine-capsules,aged-garlic-capsules' | split: ',' %}
         {% for core_handle in core_handles %}
           {% assign product = all_products[core_handle] %}
@@ -130,6 +136,8 @@
               elsif product_handle_downcase contains 'shipping-protection'
                 assign hide_product = true
               elsif product_handle_downcase == 'ceylon-cinnamon-bonus-bottle'
+                assign hide_product = true
+              elsif product_handle_downcase == 'natures-forgotten-remedies-free-black-walnut-bundle-ebook'
                 assign hide_product = true
               elsif product_handle_downcase == 'ebook-garlic'
                 assign hide_product = true
