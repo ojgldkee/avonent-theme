@@ -151,7 +151,7 @@
                 ref="cartItemRows[]"
                 data-parent-key="{{ item.parent_relationship.parent.key }}"
                 data-key="{{ item.key }}"
-                data-product-handle="{{ item.product.handle }}"
+                data-product-handle="{{ item.product.handle }}" data-av-ebook="{% if item.variant_id == 58170079510694 or item.variant_id == 58243205922982 or item.variant_id == 68655263613088 %}true{% else %}false{% endif %}"
               >
                 <td
                   class="cart-items__media"
@@ -199,12 +199,12 @@
                     <div class="cart-items__title-row">
                       <a
                         href="{{ item.url }}"
-                        class="cart-items__title"
+                        class="cart-items__title{% if context == 'drawer' and item.product.handle == 'black-walnut-drops' and item.properties['_Avonent bundle'] != blank %} avonent-walnut-offer-title{% endif %}"
                         {% if item.parent_relationship.parent != null %}
                           aria-label="{{ 'accessibility.nested_product' | t: product_title: item.product.title, parent_title: item.parent_relationship.parent.title | escape }}"
                         {% endif %}
                       >
-                        {{- item.product.title -}}
+                        {% if context == 'drawer' and item.product.handle == 'black-walnut-drops' and item.properties['_Avonent bundle'] != blank %}{{ item.properties['_Avonent bundle'] | escape }}{% elsif context == 'drawer' and item.product.handle == 'black-walnut-drops' and item.properties['_Avonent bonus'] == 'First order free bottle' and item.final_line_price == 0 %}FREE Bonus Bottle{% else %}{{- item.product.title -}}{% endif %}
                       </a>
                       {% render 'cart-disclosure-tooltip',
                         product: item.product,
@@ -213,6 +213,14 @@
                       %}
                     </div>
 
+                    {% if context == 'drawer' and item.product.handle == 'soursop-softgels' %}
+                      <div class="avonent-soursop-cart-rating">
+                        <span class="avonent-soursop-cart-stars" role="img" aria-label="4.8 out of 5 stars"><span aria-hidden="true">★★★★★</span><span class="avonent-soursop-cart-stars-fill" aria-hidden="true">★★★★★</span></span>
+                        <span><strong>4.8</strong> · 15,233 reviews</span>
+                      </div>
+                    {% endif %}
+
+                    {% if context == 'drawer' and item.product.handle == 'soursop-softgels' %}<div class="av-soursop-line-benefits"><div><span class="av-soursop-line-check" aria-hidden="true"><svg viewBox="0 0 20 20" width="18" height="18" fill="none"><circle cx="10" cy="10" r="10" fill="currentColor"/><path d="M5 10l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><strong>Real Jamaican Soursop Leaves</strong> — Made with <em>Annona muricata</em>, a tropical plant trusted in Caribbean herbal traditions for generations.</span></div><div><span class="av-soursop-line-check" aria-hidden="true"><svg viewBox="0 0 20 20" width="18" height="18" fill="none"><circle cx="10" cy="10" r="10" fill="currentColor"/><path d="M5 10l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><strong>1,000mg of Soursop Per Serving</strong> — A concentrated dose of soursop leaf in every daily serving.</span></div><div><span class="av-soursop-line-check" aria-hidden="true"><svg viewBox="0 0 20 20" width="18" height="18" fill="none"><circle cx="10" cy="10" r="10" fill="currentColor"/><path d="M5 10l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><strong>Helps Protect Your Cells</strong> — Soursop contains natural antioxidants that help fight free radicals and protect against oxidative stress.</span></div></div>{% endif %}
                     {% if context == 'drawer' and item.product.handle == 'ceylon-cinnamon-berberine-capsules' %}
                       <div class="avonent-cinnamon-cart-benefits" aria-label="Ceylon cinnamon product benefits">
                         <div class="avonent-cinnamon-cart-benefit">
@@ -300,11 +308,11 @@
                         </dl>
                       {%- endif -%}
 
-                      {%- if item.selling_plan_allocation -%}
+                      {%- if item.selling_plan_allocation and context != 'drawer' -%}
                         <p>{{ item.selling_plan_allocation.selling_plan.name }}</p>
                       {%- endif -%}
 
-                      {%- if item.line_level_discount_allocations.size > 0 -%}
+                      {%- if context != 'drawer' and item.line_level_discount_allocations.size > 0 -%}
                         <ul
                           class="list-unstyled"
                           role="list"
@@ -319,6 +327,22 @@
                   </div>
 
                   <div class="cart-items__unit-price-wrapper">
+                    {%- if context == 'drawer' and item.variant_id == 58170079510694 or item.variant_id == 58243205922982 or item.variant_id == 68655263613088 -%}
+                      <div class="avonent-ebook-cart-price">{% if item.final_line_price == 0 %}<strong>Free</strong> <s>{% if item.variant_id == 68655263613088 %}{{ item.variant.compare_at_price | money }}{% elsif item.variant_id == 58243205922982 %}{{ item.original_line_price | money }}{% else %}{{ item.original_price | money }}{% endif %}</s>{% else %}{{ item.final_price | money }}{% endif %}</div>
+                    {%- elsif context == 'drawer' and item.product.handle == 'soursop-softgels' -%}
+                      {%- liquid
+                        assign av_pack_count = item.quantity
+                        if item.selling_plan_allocation
+                          for bonus_item in cart.items
+                            if bonus_item.variant_id == 58243205922982 and bonus_item.final_line_price == 0
+                              assign av_pack_count = av_pack_count | plus: bonus_item.quantity
+                            endif
+                          endfor
+                        endif
+                        assign av_pack_price = item.final_line_price | times: 1.0 | divided_by: av_pack_count | round
+                      -%}
+                      <div>{{ av_pack_price | money }} per pack</div>
+                    {%- else -%}
                     {%- if context == 'drawer' and item.product.handle == 'ceylon-cinnamon-berberine-capsules' -%}
                       {%- liquid
                         assign avonent_effective_pack_count = item.quantity
@@ -382,6 +406,7 @@
                       {%- endif -%}
                     {%- endif -%}
 
+                    {%- endif -%}
                     {%- endif -%}
                   </div>
                 </td>
@@ -1184,6 +1209,36 @@
 {% if context == 'drawer' %}
   <!-- AVONENT CART LINE FORCE OVERRIDES -->
   <style>
+#cart-drawer .av-soursop-line-benefits { display:grid; gap:10px; margin-top:14px; }
+#cart-drawer .av-soursop-line-benefits>div { display:grid; grid-template-columns:18px minmax(0,1fr); gap:8px; align-items:start; font-size:13px; line-height:1.45; color:#343a36; }
+#cart-drawer .av-soursop-line-check { color:#557D4B; padding-top:2px; }
+#cart-drawer .av-soursop-line-check svg { display:block; width:18px !important; height:18px !important; }
+#cart-drawer .av-soursop-line-benefits strong { font-weight:750; color:#171717; }
+
+    #cart-drawer tr.cart-items__table-row--full-width-variants[data-av-ebook="true"] { grid-template-areas:"media details empty" "media variants variants" "media quantity quantity" "media unit_price unit_price" "media error error" !important; }
+    #cart-drawer tr.cart-items__table-row--full-width-variants[data-av-ebook="true"] .cart-items__unit-price-wrapper { justify-self:end !important; margin-top:8px !important; }
+    #cart-drawer .avonent-walnut-offer-title { color:#234D22!important; font-weight:850!important; letter-spacing:-.015em!important; }
+    #cart-drawer .avonent-ebook-cart-price strong { color:#355A38; }
+    #cart-drawer .avonent-ebook-cart-price s { color:#645c57; font-weight:400; }
+
+    #cart-drawer .avonent-soursop-cart-rating { display:flex; flex-wrap:wrap; align-items:center; gap:5px 8px; margin-top:8px; color:#596269; font-size:12px; line-height:1.4; }
+    #cart-drawer .avonent-soursop-cart-rating strong { color:#355A38; }
+    #cart-drawer .avonent-soursop-cart-stars { position:relative; display:inline-block; flex:none; color:#DBE8D4; font-size:16px; letter-spacing:1px; white-space:nowrap; line-height:1; }
+    #cart-drawer .avonent-soursop-cart-stars-fill { position:absolute; inset:0 auto 0 0; width:96%; overflow:hidden; color:#557D4B; }
+
+    #cart-drawer tr.cart-items__table-row--full-width-variants[data-product-handle="soursop-softgels"] {
+      grid-template-columns: 88px minmax(0, 1fr) 36px !important;
+      grid-template-areas: "media details empty" "media variants variants" "media quantity quantity" "media unit_price unit_price" "media error error" !important;
+    }
+    #cart-drawer .cart-items__price { display: none !important; }
+    #cart-drawer tr.cart-items__table-row:not([data-product-handle="soursop-softgels"]):not([data-product-handle="ceylon-cinnamon-berberine-capsules"]):not([data-av-ebook="true"]) .cart-items__unit-price-wrapper { display: none !important; }
+    #cart-drawer tr.cart-items__table-row--full-width-variants[data-product-handle="soursop-softgels"] .cart-items__unit-price-wrapper {
+      justify-self: end !important;
+      margin-top: 8px !important;
+      color: #645c57 !important;
+      font-weight: 400 !important;
+    }
+
     #cart-drawer tr.cart-items__table-row[data-product-handle="shipping-protection"] {
       display: none !important;
     }
@@ -1192,7 +1247,7 @@
       position: relative !important;
       display: grid !important;
       grid-template-columns: 88px minmax(0, 1fr) 76px !important;
-      grid-template-rows: auto auto auto auto auto !important;
+      grid-template-rows: minmax(36px, auto) auto auto auto auto !important;
       grid-template-areas:
         "media details empty"
         "media variants price"
@@ -1229,7 +1284,7 @@
     }
 
     #cart-drawer tr.cart-items__table-row--full-width-variants[data-product-handle="ceylon-cinnamon-berberine-capsules"] {
-      grid-template-rows: auto auto auto auto !important;
+      grid-template-rows: minmax(36px, auto) auto auto auto !important;
       grid-template-areas:
         "media details empty"
         "media quantity price"
