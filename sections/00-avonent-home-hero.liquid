@@ -48,7 +48,7 @@
   .avonent-home-hero__image,.avonent-home-hero__placeholder{display:block;width:100%;height:100%;min-height:100%;object-fit:cover;object-position:var(--av-hero-position,center center)}
   .avonent-home-hero__image--mobile{display:none}
   .avonent-home-hero__shade{z-index:-1;background:linear-gradient(90deg,rgba(2,18,38,.90) 0%,rgba(3,28,51,.78) 33%,rgba(2,28,52,.42) 62%,rgba(3,22,40,.12) 100%)}
-  .avonent-home-hero__inner{width:min(100% - 72px,1300px);margin:0 auto;padding:72px 0}
+  .avonent-home-hero__inner{width:calc(100% - 72px);max-width:1300px;margin:0 auto;padding:72px 0}
   .avonent-home-hero__content{display:flex;flex-direction:column;align-items:flex-start;width:min(100%,650px);text-align:left}
   .avonent-home-hero__social-proof{display:flex;align-items:center;gap:12px;color:#fff;font-size:14px;margin-bottom:18px}
   .avonent-home-hero__stars{display:flex;align-items:center;gap:3px;color:var(--av-hero-stars,#ffd160)} .avonent-home-hero__stars svg{width:17px;height:17px;flex:0 0 17px}
@@ -62,13 +62,34 @@
   .avonent-home-hero__button:focus-visible{outline:3px solid #fff;outline-offset:3px}
   .avonent-home-hero__guarantee{display:flex;align-items:center;gap:9px;margin-top:17px;color:#EAF9FD;font-size:14px}
   .avonent-home-hero__guarantee svg{width:20px;height:20px;flex:0 0 20px;color:#53E6FC}
+  @media (min-width: 750px) {
+    .avonent-home-hero {
+      min-height: clamp(360px, 44vw, var(--av-hero-height, 650px));
+    }
+
+    .avonent-home-hero__inner {
+      padding-block: clamp(32px, 5vw, 72px);
+    }
+  }
+
+  @media (min-width: 750px) and (max-height: 800px) {
+    .avonent-home-hero {
+      min-height: clamp(360px, 68vh, var(--av-hero-height, 650px));
+      min-height: max(360px, min(44vw, 68vh, var(--av-hero-height, 650px)));
+    }
+
+    .avonent-home-hero__inner {
+      padding-block: clamp(28px, 6vh, 48px);
+    }
+  }
+
   @media(max-width:749px){
     .avonent-home-hero{min-height:var(--av-hero-mobile-height,700px);align-items:flex-start}
     .avonent-home-hero__image--desktop{display:none}
     .avonent-home-hero__image--mobile{display:block}
     .avonent-home-hero__image{object-position:50% 53%}
     .avonent-home-hero__shade{background:linear-gradient(180deg,rgba(3,22,43,.88) 0%,rgba(3,22,43,.72) 39%,rgba(3,27,46,.38) 68%,rgba(3,27,46,.12) 100%)}
-    .avonent-home-hero__inner{width:min(100% - 38px,600px);padding:60px 0 72px}
+    .avonent-home-hero__inner{width:calc(100% - 38px);max-width:600px;padding:60px 0 72px}
     .avonent-home-hero__content{width:100%}
     .avonent-home-hero__heading{font-size:clamp(39px,9.8vw,54px);line-height:1.08}
     .avonent-home-hero__description{font-size:16px;margin-top:17px}
