@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "cinnamon": {
@@ -10,9 +19,18 @@
             "best_seller_text": "Best Seller",
             "show_choice_badge": true,
             "choice_badge_text": "#1 Choice for Holistic Practitioners",
-            "display_title": "Soursop Softgels",
+            "display_title": "Soursop Cancer Softgels",
+            "use_title_image": true,
+            "title_image": "shopify://shop_images/soursop_text_tight_transparent.png",
+            "title_image_alt": "",
+            "title_image_width": 80,
+            "title_image_height": 60,
+            "title_image_height_mobile": 40,
             "story_heading": "",
             "hero_description": "Have cancer? Has chemo weakened your immune system? Constantly afraid the cancer will return?\n\nJust 2 softgels a day to support your body’s natural ability to fight microscopic cancer cells, using the power of soursop leaves that Jamaican families have trusted for generations.",
+            "hero_content_mode": "text",
+            "hero_content_image_alt": "",
+            "show_default_benefits": true,
             "rating_text": "",
             "benefit_1_formatted": "<strong>Increase Cancer Killer Cells</strong>",
             "benefit_2_formatted": "<strong>10,000x More Effective Than Alternative Treatments</strong>",
@@ -42,15 +60,23 @@
             "sub_title_1": "Buy 1",
             "sub_title_2": "Buy 2 Get 1 FREE",
             "sub_title_3": "Buy 3 Get 2 FREE",
-            "sub_savings_1": "You save 42%",
-            "sub_savings_2": "You save 61%",
-            "sub_savings_3": "You save 65%",
+            "show_bundle_savings": false,
+            "sub_savings_1": "",
+            "sub_savings_2": "",
+            "sub_savings_3": "",
+            "bundle_description_1": "Kickstart cancer killer cells",
+            "bundle_description_2": "Stack up for steady levels.",
+            "bundle_description_3": "Perfect for long term reversal.",
+            "bundle_title_size": 17,
+            "bundle_description_size": 13,
+            "bundle_savings_size": 13,
+            "bundle_price_size": 18,
             "gift_header": "Gifts Unlocked",
             "gift_shipping": "FREE Shipping",
             "gift_ebook": "FREE E-Book",
             "gift_ebook_note": "Digital soursop guide",
-            "announcement_heading": "FALL SALE",
-            "announcement_subheading": "Save up to 65% today"
+            "announcement_heading": "Winter Sale",
+            "announcement_subheading": "1 Bottle Free"
           }
         },
         "results": {
@@ -98,34 +124,6 @@
             "accent": "#4f7847"
           }
         },
-        "story_continuation": {
-          "type": "story_continuation",
-          "disabled": true,
-          "settings": {
-            "show_section": true,
-            "position": "after_trust",
-            "image": "shopify://shop_images/1201E8CB-A8BB-449C-8717-E3F0A3B6C76D.png",
-            "eyebrow": "",
-            "heading": "Why Was Soursop Erased From Cancer Medicine?",
-            "body": "<p>For hundreds of years, families across the Caribbean used <strong>soursop leaves to treat illness.</strong> Generation after generation, cancer never touched their families.</p><p>But everything changed when cancer treatment became a billion-dollar business.</p><p><strong>Soursop was a threat.</strong></p><p>Why? Because a simple leaf could cost the drug industry billions if people chose it over expensive treatments.</p><p>So powerful drug companies buried research, silenced natural healers, and tried to erase soursop from medicine.</p><p><strong>They tried to bury the truth. But they couldn’t bury soursop’s story.</strong></p>",
-            "background": "#fbfcf7",
-            "accent": "#4f7847"
-          }
-        },
-        "story_image_text_extra": {
-          "type": "story_image_text_extra",
-          "settings": {
-            "show_section": true,
-            "image": "shopify://shop_images/avonent-soursop-story-full-width.png",
-            "image_alt": "Vintage soursop story with illustrated photograph and text",
-            "heading": "",
-            "body": "",
-            "text_position": "below",
-            "align": "center",
-            "background": "#f5f8f1",
-            "text_color": "#1d3022"
-          }
-        },
         "story_image_text": {
           "type": "story_image_text",
           "settings": {
@@ -144,18 +142,18 @@
           "type": "carousel",
           "settings": {
             "carousel_heading": "Why Our Soursop Is Different",
-            "carousel_1_image": "shopify://shop_images/IMG_3463.jpg",
-            "carousel_1_title": "Real Jamaican Soursop",
-            "carousel_1_body": "Many brands get their soursop from mass produced farms in Vietnam and the Philippines, where years of heavy farming can drain the soil of key minerals and nutrients. At Avonent, we take a different approach by harvesting our soursop leaves from trees over 50 years old, growing in the rich, natural soil of the Jamaican rainforest.",
+            "carousel_1_image": "shopify://shop_images/FE5A3FA7-E0A4-48B0-A2CC-85B06FDE7D35.png",
+            "carousel_1_title": "A Simpler Daily Routine",
+            "carousel_1_body": "Cancer treatment can mean hours in the hospital, exhausting appointments, and difficult recovery days. Avonent takes just two softgels with water each day. No needles, infusions, or extra appointments to take your supplement.",
             "carousel_2_image": "shopify://shop_images/10ACC725-945E-4C0B-94FF-77D93AEB7466.png",
-            "carousel_2_title": "365 Day Fermentation Process",
-            "carousel_2_body": "Most brands simply dry their soursop leaves and put them into softgels. At Avonent, we take a different approach. Our leaves undergo 365 days of fermentation to help break down plant fibers and release natural compounds, including antioxidants. Because your health deserves more than basic leaf powder.",
-            "carousel_3_image": "shopify://shop_images/F5977AE3-91AC-4299-B448-A313AA47E548.png",
-            "carousel_3_title": "One Plant. Nothing Unnecessary.",
-            "carousel_3_body": "Many soursop products are mixed with sweeteners, flavors, preservatives, or extra herbs. Ours keeps it simple with pure soursop leaf in easy daily softgels. Nothing extra. Nothing your body does not need.",
-            "carousel_4_image": "shopify://shop_images/BD5A7541-1DAC-4AC8-9562-7C8AC9317618.png",
-            "carousel_4_title": "Soursop Without the Bitter Tea",
-            "carousel_4_body": "Get 1,000 mg of soursop leaf per serving in two easy-to-take softgels. No boiling leaves. No bitter drops. No messy measuring. Just a simple daily routine you can actually stick to."
+            "carousel_2_title": "Fermented For 365 Days",
+            "carousel_2_body": "Our exclusive 365-day fermentation process is designed to unlock more of soursop’s powerful compounds, including acetogenins and flavonoids. These compounds have shown the ability to disrupt cancer-cell energy and slow abnormal cell growth in lab studies. By carefully controlling fermentation, we aim to preserve these compounds and create a stronger, more consistent formula.",
+            "carousel_3_image": "shopify://shop_images/561A8CAD-8F25-4537-9343-C1CF1CBAA0D6.png",
+            "carousel_3_title": "Made With Your Strength in Mind",
+            "carousel_3_body": "Cancer treatment can be brutal. It can leave you exhausted, sick, and too weak to enjoy the life you’re fighting for. Your body has already been through enough. That’s why Avonent focuses on pure soursop leaf and its natural compounds, including acetogenins and flavonoids, without a long list of unnecessary additives. You deserve a formula that puts ingredient quality first, not another bottle full of empty promises.",
+            "carousel_4_image": "shopify://shop_images/F5977AE3-91AC-4299-B448-A313AA47E548_d19a9a5b-220a-479a-80f9-c7750da694d4.png",
+            "carousel_4_title": "Tested For Purity & Safety",
+            "carousel_4_body": "When you’re already dealing with serious health concerns, you need to know exactly what you’re taking. Avonent focuses on ingredient verification, contaminant screening, and batch testing instead of relying on promises printed on a bottle."
           }
         },
         "science": {
@@ -188,6 +186,27 @@
             "science_ticker_4": "",
             "science_bg": "",
             "science_accent": ""
+          }
+        },
+        "journey": {
+          "type": "journey",
+          "settings": {
+            "journey_image": "shopify://shop_images/92BFCE50-C2ED-4CE6-AEBE-4BCB6C4BB095.png",
+            "journey_eyebrow": "YOUR DAILY ROUTINE",
+            "journey_heading": "What Happens When You Take Soursop Every Day?",
+            "journey_intro": "For generations, Caribbean families have turned to soursop leaves for natural wellness. See how your health can change when you stay consistent with just 2 softgels a day.",
+            "journey_1_label": "1 Week",
+            "journey_1_body": "Your body begins to feel more balanced. Digestion becomes smoother, and you start feeling less tired throughout the day.",
+            "journey_2_label": "1 Month",
+            "journey_2_body": "Your blood sugar begins to settle, helping you avoid sudden energy crashes. You feel more steady throughout the day, especially after meals.",
+            "journey_3_label": "2 Months",
+            "journey_3_body": "Your immune system grows stronger, helping your body fight off illness. You feel less run down and have more energy for everyday life.",
+            "journey_4_label": "3 Months",
+            "journey_4_body": "Inflammation begins to ease. Your joints feel more comfortable, your digestion improves, and you wake up feeling refreshed.",
+            "journey_5_label": "6 Months",
+            "journey_5_body": "Your body feels stronger from the inside out. Blood sugar stays more balanced, your immune defenses are stronger, and you have more energy throughout the day.",
+            "journey_6_label": "12 Months",
+            "journey_6_body": "After a full year, your body feels healthier and more balanced. Stronger immune defenses, better digestion, and steady blood sugar have become part of your everyday life."
           }
         },
         "compare": {
@@ -271,8 +290,31 @@
         "faq": {
           "type": "faq",
           "settings": {
-            "faq_heading": "Frequently Asked Questions",
-            "use_draggable_faq": true
+            "faq_heading": "Frequently Asked Questions"
+          }
+        },
+        "faq_item_medication": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "Should I stop my medication?",
+            "answer": "No. If you're on prescription medication, we recommend speaking with your doctor before making any changes. These capsules are designed to support your body naturally, not replace medical treatment.",
+            "show_item": true
+          }
+        },
+        "faq_item_supplements": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "Can I take it with other supplements?",
+            "answer": "Yes. Avonent Soursop Leaf can be used alongside your existing supplement routine. Just check with your doctor if you’re taking blood pressure medications, diabetes medications, or blood thinners.",
+            "show_item": true
+          }
+        },
+        "faq_item_guarantee": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "What if it doesn’t work for me?",
+            "answer": "We stand behind our formula with a 90-day money-back guarantee. Try it for yourself, and if you’re not satisfied, simply email us within 90 days for a full refund. No complicated returns, no endless questions, and no hassle. Your purchase is protected.",
+            "show_item": true
           }
         },
         "details": {
@@ -285,12 +327,12 @@
             "low_stock_line": "",
             "guarantee_heading": "",
             "guarantee_body": "",
-            "acc_1_title": "Soursop Leaf Research",
-            "acc_1_body": "<p><strong>What scientists are studying:</strong></p><ul><li><strong>Antioxidant activity:</strong> Soursop leaf extracts fight free radicals in laboratory tests.</li><li><strong>Inflammation research:</strong> Early animal studies explore how leaf extracts affect inflammatory pathways.</li><li><strong>Blood sugar research:</strong> Researchers have studied soursop extracts in animals; effects in people are not established.</li><li><strong>Traditional use:</strong> Soursop leaves have been used in herbal teas for generations.</li></ul>",
-            "acc_2_title": "What's Inside",
-            "acc_2_body": "<p><strong>Soursop leaf — 1,000 mg per daily serving</strong></p><ul><li>Soursop leaf is the featured plant ingredient.</li><li>The leaves are packed in a vegetable softgel.</li><li>No added flavors, sweeteners, or preservatives.</li></ul>",
+            "acc_1_title": "What does it help with?",
+            "acc_1_body": "Soursop leaf contains powerful acetogenins, prized for their role in advanced cellular defense:\n\n- Supports the body’s defenses against abnormal cells\n- Promotes healthy cellular growth and balance\n- Supports natural killer cell activity\n- Helps protect cells from oxidative damage",
+            "acc_2_title": "When will I see results?",
+            "acc_2_body": "Many people report stronger energy, improved stamina, and faster recovery within 2–4 weeks. By 60–90 days, the deeper effects become measurable, with increased natural killer-cell activity, improved white blood cell counts, and stronger cellular defenses against abnormal cells.",
             "acc_3_title": "How It Works",
-            "acc_3_body": "<p><strong>1. Start with the leaves.</strong> Soursop leaves naturally contain flavonoids and other plant compounds.</p><p><strong>2. Prepare by fermentation.</strong> Our leaves go through a 365-day fermentation process, which changes the plant material as it develops.</p><p><strong>3. Keep it simple.</strong> Take two vegetable softgels daily with water, following the bottle directions.</p>",
+            "acc_3_body": "Soursop leaf contains a powerful combination of natural compounds that target the biological processes cancer cells depend on.\n\nAt the center are acetogenins, compounds that interfere with cellular energy production. Alongside them, natural flavonoids and alkaloids act on oxidative stress and cell-growth pathways.\n\nFour powerful mechanisms work together:\n\n• Disrupts Cancer Cell Energy: Acetogenins interfere with ATP production, the fuel cells need to survive and multiply.\n• Targets Abnormal Cell Growth: Plant compounds act on the signals responsible for uncontrolled cell division.\n• Activates Cellular Self-Destruction: Supports apoptosis, the body’s natural process for eliminating damaged cells.\n• Strengthens Cellular Defense: Flavonoids such as quercetin and rutin help combat oxidative stress and protect cellular integrity.\n\nChemotherapy uses powerful drugs to attack cancer, while soursop leaf contains compounds that work on cellular energy and growth pathways in a different way. That’s why we focused Avonent on the compounds found naturally in soursop leaves instead of adding another complicated blend of herbs and vitamins.",
             "trust_image_alt": ""
           }
         },
@@ -384,41 +426,16 @@
             "tag_2": "Peace of Mind",
             "verified": true
           }
-        },
-        "faq_item_medication": {
-          "type": "faq_item",
-          "settings": {
-            "heading": "Should I stop my medication?",
-            "answer": "<p>No. If you're on prescription medication, we recommend speaking with your doctor before making any changes. These capsules are designed to support your body naturally, not replace medical treatment.</p>",
-            "show_item": true
-          }
-        },
-        "faq_item_supplements": {
-          "type": "faq_item",
-          "settings": {
-            "heading": "Can I take it with other supplements?",
-            "answer": "<p>Yes. Avonent Soursop Leaf can be used alongside your existing supplement routine. Just check with your doctor if you’re taking blood pressure medications, diabetes medications, or blood thinners.</p>",
-            "show_item": true
-          }
-        },
-        "faq_item_guarantee": {
-          "type": "faq_item",
-          "settings": {
-            "heading": "What if it doesn’t work for me?",
-            "answer": "<p>We stand behind our formula with a 90-day money-back guarantee. Try it for yourself, and if you’re not satisfied, simply email us within 90 days for a full refund. No complicated returns, no endless questions, and no hassle. Your purchase is protected.</p>",
-            "show_item": true
-          }
         }
       },
       "block_order": [
         "hero",
         "results",
         "doctor_story",
-        "story_continuation",
-        "story_image_text_extra",
         "story_image_text",
         "carousel",
         "science",
+        "journey",
         "compare",
         "benefits",
         "five_reasons",
@@ -437,6 +454,19 @@
         "review_5"
       ],
       "settings": {
+        "sr_intro": "",
+        "sr_heading": "More Than Numbers, Results That Matter",
+        "sr_heading_size": 30,
+        "sr_heading_color": "#74418a",
+        "sr_text_color": "#111111",
+        "sr_circle_color": "#58c31a",
+        "sr_pct_1": 98,
+        "sr_label_1": "Tumor markers dropped significantly",
+        "sr_pct_2": 97,
+        "sr_label_2": "Energy returned after chemo",
+        "sr_pct_3": 91,
+        "sr_label_3": "Stronger immune system during treatment",
+        "sr_label_4": "",
         "reviews_heading": "Real stories. Everyday routines.",
         "reviews_intro": "Experiences shared by Avonent customers.",
         "trust_image": "shopify://shop_images/1FA0CA01-7E0B-48B4-BA27-C66E6A6F100B.png",
