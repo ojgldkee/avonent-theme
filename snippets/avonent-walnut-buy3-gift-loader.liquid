@@ -1,0 +1,10 @@
+{% liquid
+  assign avonent_walnut_in_cart = false
+  for walnut_cart_line in cart.items
+    if walnut_cart_line.variant.id == 68650911137952
+      assign avonent_walnut_in_cart = true
+      break
+    endif
+  endfor
+%}
+<script src="{{ 'avonent-walnut-buy3-gift-cart.js' | asset_url }}" data-walnut-in-cart="{{ avonent_walnut_in_cart }}" defer></script>
